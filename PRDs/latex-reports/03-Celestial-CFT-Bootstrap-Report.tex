@@ -1,0 +1,1166 @@
+\documentclass[11pt,a4paper]{article}
+
+% ============================================================
+% PACKAGES
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{tensor}
+\usepackage{bbm}
+
+% ============================================================
+% PAGE SETUP
+% ============================================================
+\geometry{margin=1in}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    citecolor=green!50!black,
+    urlcolor=purple!70!black
+}
+
+% ============================================================
+% CODE LISTINGS SETUP
+% ============================================================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    language=Python
+}
+
+\lstset{style=pythonstyle}
+
+% ============================================================
+% THEOREM ENVIRONMENTS
+% ============================================================
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}{Remark}[section]
+
+% ============================================================
+% CUSTOM COMMANDS
+% ============================================================
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\CP}{\mathbb{CP}}
+\newcommand{\scrI}{\mathscr{I}}
+\newcommand{\CFT}{\mathrm{CFT}}
+\newcommand{\OPE}{\mathrm{OPE}}
+
+% ============================================================
+% ANNOTATION BOX
+% ============================================================
+\newtcolorbox{annotation}[1][]{
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    title={Analysis Note},
+    #1
+}
+
+\newtcolorbox{pursuitbox}[1][]{
+    colback=green!5!white,
+    colframe=green!60!black,
+    fonttitle=\bfseries,
+    title={Research Direction},
+    #1
+}
+
+\newtcolorbox{warningbox}[1][]{
+    colback=red!5!white,
+    colframe=red!75!black,
+    fonttitle=\bfseries,
+    title={Critical Consideration},
+    #1
+}
+
+\newtcolorbox{physicsbox}[1][]{
+    colback=orange!5!white,
+    colframe=orange!70!black,
+    fonttitle=\bfseries,
+    title={Physical Insight},
+    #1
+}
+
+\newtcolorbox{mathbox}[1][]{
+    colback=purple!5!white,
+    colframe=purple!70!black,
+    fonttitle=\bfseries,
+    title={Mathematical Structure},
+    #1
+}
+
+% ============================================================
+% DOCUMENT BEGIN
+% ============================================================
+\begin{document}
+
+% ============================================================
+% TITLE PAGE
+% ============================================================
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+
+    {\Huge\bfseries Challenge 03:\\[0.5em]
+    Celestial CFT Bootstrap\par}
+
+    \vspace{1.5cm}
+
+    {\Large\itshape Comprehensive Technical Report\par}
+
+    \vspace{2cm}
+
+    \begin{tabular}{ll}
+        \textbf{Domain:} & Quantum Gravity \& Particle Physics \\
+        \textbf{Difficulty:} & High \\
+        \textbf{Timeline:} & 6--12 months \\
+        \textbf{Prerequisites:} & Scattering amplitudes, conformal field theory, \\
+        & Mellin transforms, representation theory
+    \end{tabular}
+
+    \vfill
+
+    {\large Pure Thought AI Challenges\par}
+    {\large\today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ============================================================
+% SECTION 1: EXECUTIVE SUMMARY
+% ============================================================
+\section{Executive Summary}
+
+\textbf{Celestial holography} represents a revolutionary approach to understanding quantum gravity in flat spacetime. It reformulates 4D flat-space scattering amplitudes as correlation functions in a 2D conformal field theory living on the \textbf{celestial sphere} at null infinity. This challenge aims to apply the powerful \textbf{conformal bootstrap} methodology to constrain and classify consistent celestial CFTs compatible with graviton scattering.
+
+\begin{annotation}
+Unlike AdS/CFT, which relates gravity in anti-de Sitter space to CFT on its boundary, celestial holography provides a holographic description for \emph{asymptotically flat} spacetimes---the relevant arena for actual gravitational wave observations and particle physics experiments.
+\end{annotation}
+
+The key innovation is the \textbf{Mellin transform}, which converts momentum-space amplitudes into celestial amplitudes carrying definite conformal weights. These celestial amplitudes satisfy conformal Ward identities, crossing symmetry, and soft theorems---providing a rich set of constraints amenable to bootstrap analysis.
+
+% ============================================================
+% SECTION 2: SCIENTIFIC CONTEXT
+% ============================================================
+\section{Scientific Context and Motivation}
+
+\subsection{From AdS/CFT to Flat Space Holography}
+
+The AdS/CFT correspondence has been spectacularly successful, but the real universe is not Anti-de Sitter---it is asymptotically flat (or de Sitter, accounting for dark energy). The quest for a \textbf{flat space holographic principle} has led to several approaches:
+\begin{itemize}
+    \item BMS symmetry and soft theorems (Strominger et al.)
+    \item Carrollian CFT on null infinity
+    \item \textbf{Celestial holography:} 2D CFT on the celestial sphere
+\end{itemize}
+
+\begin{physicsbox}
+\textbf{The Celestial Sphere:} Consider 4D Minkowski space $\mathbb{R}^{1,3}$. Null infinity $\scrI^{\pm}$ has topology $\mathbb{R} \times S^2$. The $S^2$ factor is the \textbf{celestial sphere}---the sphere of directions from which massless particles can arrive or depart. Celestial holography posits that 4D gravity is equivalent to a 2D CFT on this $S^2$.
+\end{physicsbox}
+
+\subsection{Celestial Amplitudes via Mellin Transform}
+
+The key mathematical operation is the \textbf{Mellin transform} from momentum space to the ``celestial basis'':
+
+\begin{definition}[Celestial Amplitude]
+Given a momentum-space amplitude $A(\omega_i, z_i, \bar{z}_i)$ for $n$ massless particles, the celestial amplitude is:
+\begin{equation}
+    \boxed{\tilde{A}(\Delta_i, z_i, \bar{z}_i) = \int_0^\infty \prod_{i=1}^n d\omega_i \, \omega_i^{\Delta_i - 1} \, A(\omega_i, z_i, \bar{z}_i)}
+\end{equation}
+where:
+\begin{itemize}
+    \item $\omega_i$ are energy variables (with momenta parametrized as $p_i^\mu = \omega_i (1, \hat{n}_i)$)
+    \item $(z_i, \bar{z}_i)$ are stereographic coordinates on the celestial sphere
+    \item $\Delta_i$ are \textbf{conformal weights} (generally complex)
+\end{itemize}
+\end{definition}
+
+\begin{annotation}
+The Mellin transform trades energy $\omega$ for conformal weight $\Delta$. Particles with definite energy become superpositions over the principal continuous series of $\SL(2,\C)$ representations. The resulting celestial amplitudes transform as CFT correlators under Lorentz transformations.
+\end{annotation}
+
+\subsection{The Core Question}
+
+\begin{tcolorbox}[colback=yellow!10!white,colframe=orange!80!black,title=\textbf{Central Research Question}]
+\textbf{What is the consistent space of celestial CFTs compatible with graviton scattering amplitudes?}
+
+The celestial CFT must satisfy:
+\begin{enumerate}
+    \item $\SL(2,\C)$ covariance (celestial conformal symmetry)
+    \item Crossing symmetry (OPE associativity)
+    \item Unitarity (positive norms / positive spectral density)
+    \item Weinberg soft graviton theorem
+    \item Regge boundedness at high energies
+\end{enumerate}
+\end{tcolorbox}
+
+\subsection{Why This Matters}
+
+\begin{enumerate}[label=\textbf{(\arabic*)}]
+    \item \textbf{New Holographic Paradigm:} Connects 4D gravity to 2D CFT without requiring AdS geometry---directly applicable to the real universe.
+
+    \item \textbf{Rigorous Constraints:} The bootstrap approach carves out the space of consistent theories using only fundamental principles.
+
+    \item \textbf{Testable Predictions:} Produces ``islands'' (allowed regions) and ``no-go'' exclusions that can be verified by explicit amplitude calculations.
+
+    \item \textbf{Unification:} May connect to the broader program of flat-space holography, including BMS symmetry and memory effects.
+\end{enumerate}
+
+% ============================================================
+% SECTION 3: MATHEMATICAL FORMULATION
+% ============================================================
+\section{Mathematical Formulation}
+
+\subsection{Kinematics: Celestial Sphere Coordinates}
+
+A null 4-momentum in Minkowski space can be parametrized as:
+\begin{equation}
+    p^\mu = \omega \, q^\mu(z, \bar{z}), \quad q^\mu = (1 + z\bar{z}, z + \bar{z}, -i(z - \bar{z}), 1 - z\bar{z})
+\end{equation}
+where $(z, \bar{z}) \in \C$ are stereographic coordinates on $S^2 \cong \CP^1$.
+
+\begin{mathbox}
+\textbf{Lorentz Group Action:} The Lorentz group $\SL(2,\C)$ acts on the celestial sphere via Möbius transformations:
+\begin{equation}
+    z \mapsto \frac{az + b}{cz + d}, \quad \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in \SL(2,\C)
+\end{equation}
+This is precisely the global conformal group of a 2D CFT!
+\end{mathbox}
+
+\subsection{Conformal Primary Wavefunctions}
+
+Instead of plane waves $e^{ip \cdot x}$, celestial holography uses \textbf{conformal primary wavefunctions}:
+\begin{equation}
+    \phi_{\Delta}^{\pm}(X; z, \bar{z}) = \int_0^\infty d\omega \, \omega^{\Delta - 1} e^{\pm i\omega q \cdot X}
+\end{equation}
+
+These transform under Lorentz transformations as:
+\begin{equation}
+    \phi_{\Delta}^{\pm}(X; z, \bar{z}) \to |cz + d|^{-2\Delta} \phi_{\Delta}^{\pm}(X; z', \bar{z}')
+\end{equation}
+which is precisely the transformation of a \textbf{CFT primary operator} with weights $(\Delta, \bar{\Delta}) = (\Delta/2, \Delta/2)$ for scalars.
+
+\subsection{Celestial Amplitudes as CFT Correlators}
+
+The celestial amplitude $\tilde{A}(\Delta_i, z_i, \bar{z}_i)$ transforms as an $n$-point correlator in 2D CFT:
+\begin{equation}
+    \tilde{A}(\Delta_i, z_i, \bar{z}_i) \sim \left\langle \calO_{\Delta_1}(z_1, \bar{z}_1) \cdots \calO_{\Delta_n}(z_n, \bar{z}_n) \right\rangle_{\CFT}
+\end{equation}
+
+\begin{annotation}
+\textbf{Key Insight:} This is not a metaphor---celestial amplitudes \emph{are} CFT correlators. They satisfy conformal Ward identities, have OPE expansions, and (conjecturally) arise from some underlying 2D CFT on the celestial sphere.
+\end{annotation}
+
+\subsection{Constraints on Celestial CFT}
+
+\subsubsection{Constraint 1: $\SL(2,\C)$ Covariance}
+
+Celestial amplitudes must transform covariantly under Lorentz (= conformal) transformations:
+\begin{equation}
+    \tilde{A}(\Delta_i, z_i, \bar{z}_i) \to \prod_i |cz_i + d|^{-2\Delta_i} \tilde{A}(\Delta_i, z_i', \bar{z}_i')
+\end{equation}
+
+This determines the kinematic structure of $n$-point functions up to conformally invariant cross-ratios.
+
+\subsubsection{Constraint 2: Crossing Symmetry (OPE Associativity)}
+
+The \textbf{Operator Product Expansion (OPE)} in the celestial CFT:
+\begin{equation}
+    \calO_{\Delta_1}(z_1) \calO_{\Delta_2}(z_2) = \sum_{\Delta} C_{\Delta_1 \Delta_2}^{\Delta} \frac{\calO_\Delta(z_2)}{(z_1 - z_2)^{\Delta_1 + \Delta_2 - \Delta}}
+\end{equation}
+
+\textbf{Crossing symmetry} requires that the OPE is \emph{associative}:
+\begin{equation}
+    \boxed{(\calO_1 \calO_2) \calO_3 = \calO_1 (\calO_2 \calO_3)}
+\end{equation}
+
+For 4-point functions, this gives the \textbf{crossing equation}:
+\begin{equation}
+    \sum_{\Delta_s} C_s^2(\Delta_s) G_{\Delta_s}(z, \bar{z}) = \sum_{\Delta_t} C_t^2(\Delta_t) G_{\Delta_t}(1-z, 1-\bar{z})
+\end{equation}
+where $G_\Delta$ are conformal blocks.
+
+\subsubsection{Constraint 3: Unitarity}
+
+For a unitary CFT, the OPE coefficients squared must be non-negative:
+\begin{equation}
+    \boxed{|C_{\Delta_1 \Delta_2}^\Delta|^2 \geq 0}
+\end{equation}
+
+This is the \textbf{positivity condition} that makes the bootstrap a convex optimization problem.
+
+\begin{warningbox}
+\textbf{Subtlety:} Celestial CFT involves the \textbf{principal continuous series} of $\SL(2,\C)$, where $\Delta = 1 + i\lambda$ with $\lambda \in \R$. Unitarity must be properly defined for this non-compact situation.
+\end{warningbox}
+
+\subsubsection{Constraint 4: Soft Graviton Theorem}
+
+Weinberg's \textbf{soft graviton theorem} states that in the limit where one graviton becomes soft ($\omega \to 0$):
+\begin{equation}
+    A_{n+1}(\omega \to 0) \sim \frac{S^{(0)}}{\omega} A_n + S^{(1)} A_n + O(\omega)
+\end{equation}
+
+In the celestial basis, this becomes a \textbf{pole structure}:
+\begin{equation}
+    \boxed{\tilde{A}(\Delta \to 0) \sim \frac{S^{(0)}}{\Delta} + \frac{S^{(1)}}{\Delta^2} + \cdots}
+\end{equation}
+
+where $S^{(0)}$ is the Weinberg soft factor (sum of $\varepsilon \cdot p_i / p \cdot p_i$ terms).
+
+\subsubsection{Constraint 5: Regge Boundedness}
+
+At high energies, the amplitude must be bounded:
+\begin{equation}
+    |\tilde{A}(\Delta)| \lesssim |\Delta|^N \quad \text{as } |\Delta| \to \infty
+\end{equation}
+
+This ensures convergence of OPE sums and dispersion relations.
+
+\subsection{Bootstrap Formulation}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{Celestial Bootstrap Problem}]
+\textbf{Find:} Celestial OPE data $\{C_{ijk}, \Delta_i\}$
+
+\textbf{Satisfying:}
+\begin{enumerate}
+    \item $\SL(2,\C)$ covariance
+    \item Crossing symmetry (OPE associativity)
+    \item Unitarity ($C^2 \geq 0$ or appropriate positivity for continuous spectrum)
+    \item Soft theorems (pole structure at $\Delta \to 0, 1$)
+    \item Regge boundedness
+\end{enumerate}
+
+\textbf{Goal:} Either construct explicit OPE data, or prove no solution exists for given assumptions (e.g., minimal gap $\Delta_{\text{gap}}$).
+\end{tcolorbox}
+
+% ============================================================
+% SECTION 4: IMPLEMENTATION APPROACH
+% ============================================================
+\section{Implementation Approach}
+
+\subsection{Phase 1: Celestial Amplitude Calculator (Months 1--2)}
+
+\textbf{Goal:} Build a Mellin transform engine to compute celestial amplitudes from momentum-space expressions.
+
+\subsubsection{Mellin Transform Implementation}
+
+\begin{lstlisting}[language=Python, caption={Mellin transform for celestial amplitudes}]
+from mpmath import mp
+import numpy as np
+from scipy.integrate import quad
+
+mp.dps = 50  # High precision arithmetic
+
+def mellin_transform(amplitude_func, omega_vars: list,
+                     delta_vars: list, z_vars: list) -> complex:
+    """
+    Compute celestial amplitude via Mellin transform
+
+    A_tilde(Delta_i) = integral d^n omega prod_i omega_i^{Delta_i-1} A(omega_i)
+
+    Args:
+        amplitude_func: Momentum-space amplitude A(omega, z, zbar)
+        omega_vars: List of energy integration variables
+        delta_vars: List of conformal weights (can be complex!)
+        z_vars: List of celestial coordinates (z, zbar) pairs
+
+    Returns:
+        Celestial amplitude value (complex)
+    """
+    n_particles = len(omega_vars)
+
+    def integrand(*omegas):
+        # Momentum-space amplitude
+        A = amplitude_func(omegas, z_vars)
+
+        # Mellin weight factors
+        weight = 1.0
+        for i, (omega, delta) in enumerate(zip(omegas, delta_vars)):
+            weight *= omega**(delta - 1)
+
+        return A * weight
+
+    # Multi-dimensional integration
+    # For principal series: Delta = 1 + i*lambda, integrate along contour
+    result = multi_integrate(integrand, [(0, np.inf)] * n_particles)
+
+    return result
+
+
+def multi_integrate(func, limits, method='adaptive'):
+    """
+    Multi-dimensional numerical integration
+
+    Uses nested quadrature for moderate dimensions,
+    Monte Carlo for high dimensions.
+    """
+    from scipy.integrate import nquad
+
+    result, error = nquad(func, limits)
+    return result
+\end{lstlisting}
+
+\subsubsection{Three-Point Graviton Amplitude}
+
+\begin{lstlisting}[language=Python, caption={Celestial 3-point graviton amplitude}]
+def graviton_3pt_momentum(omega1, omega2, omega3, z1, z2, z3,
+                           zbar1, zbar2, zbar3, helicities):
+    """
+    Tree-level 3-graviton amplitude in momentum space
+
+    For (+++) or (---) helicity configurations, this vanishes.
+    For mixed helicity, involves spinor-helicity brackets.
+
+    Args:
+        omega_i: Energies
+        z_i, zbar_i: Celestial coordinates
+        helicities: Tuple of helicities (+1 or -1)
+
+    Returns:
+        Amplitude (includes momentum-conserving delta function)
+    """
+    # Spinor-helicity brackets
+    # <ij> = sqrt(omega_i * omega_j) * (zbar_i - zbar_j)
+    # [ij] = sqrt(omega_i * omega_j) * (z_i - z_j)
+
+    h1, h2, h3 = helicities
+
+    # MHV amplitude: (++-) configuration
+    if h1 == 1 and h2 == 1 and h3 == -1:
+        bracket_12 = np.sqrt(omega1 * omega2) * (zbar1 - zbar2)
+        bracket_23 = np.sqrt(omega2 * omega3) * (zbar2 - zbar3)
+        bracket_31 = np.sqrt(omega3 * omega1) * (zbar3 - zbar1)
+
+        # Parke-Taylor-like structure
+        amplitude = bracket_12**4 / (bracket_12 * bracket_23 * bracket_31)
+
+    else:
+        amplitude = 0  # Other helicity configurations
+
+    # Momentum conservation (delta function)
+    # Handled by integration measure
+
+    return amplitude
+
+
+def celestial_3pt_graviton(Delta1, Delta2, Delta3, z1, z2, z3,
+                            zbar1, zbar2, zbar3, helicities):
+    """
+    Celestial 3-point graviton amplitude
+
+    After Mellin transform, this should have pure conformal structure:
+    A_tilde ~ C_123 / ((z12)^{a} (z23)^{b} (z31)^{c})
+    with exponents determined by conformal weights.
+    """
+    def amplitude_func(omegas, z_data):
+        omega1, omega2, omega3 = omegas
+        return graviton_3pt_momentum(
+            omega1, omega2, omega3,
+            z1, z2, z3, zbar1, zbar2, zbar3,
+            helicities
+        )
+
+    return mellin_transform(
+        amplitude_func,
+        [omega1, omega2, omega3],
+        [Delta1, Delta2, Delta3],
+        [(z1, zbar1), (z2, zbar2), (z3, zbar3)]
+    )
+\end{lstlisting}
+
+\begin{annotation}
+\textbf{Expected Structure:} The celestial 3-point amplitude should take the form:
+\begin{equation}
+    \tilde{A}_3 = C(\Delta_i) \cdot \frac{1}{z_{12}^{\Delta_1 + \Delta_2 - \Delta_3} z_{23}^{\Delta_2 + \Delta_3 - \Delta_1} z_{31}^{\Delta_3 + \Delta_1 - \Delta_2}}
+\end{equation}
+Verify this structure numerically as a consistency check.
+\end{annotation}
+
+\subsection{Phase 2: Conformal Block Decomposition (Months 2--4)}
+
+\textbf{Goal:} Implement celestial conformal blocks and OPE decomposition.
+
+\subsubsection{Celestial Conformal Blocks}
+
+\begin{lstlisting}[language=Python, caption={Celestial conformal blocks}]
+from mpmath import hyp2f1
+
+def celestial_conformal_block(Delta, z, zbar, Delta_ext):
+    """
+    Conformal block for celestial CFT
+
+    For 2D CFT on the sphere, conformal blocks are hypergeometric:
+    G_Delta(z, zbar) = z^{Delta/2} zbar^{Delta/2} F(Delta, ..., z) F(..., zbar)
+
+    For celestial CFT with continuous spectrum, use principal series.
+
+    Args:
+        Delta: Internal conformal dimension (can be complex: 1 + i*lambda)
+        z, zbar: Cross-ratio coordinates
+        Delta_ext: External dimensions [Delta_1, Delta_2, Delta_3, Delta_4]
+
+    Returns:
+        Conformal block value
+    """
+    Delta1, Delta2, Delta3, Delta4 = Delta_ext
+
+    # Holomorphic and anti-holomorphic parts
+    h = Delta / 2  # Holomorphic weight
+    hbar = Delta / 2  # Anti-holomorphic weight
+
+    # For scalar external operators
+    a = (Delta1 - Delta2) / 2
+    b = (Delta3 - Delta4) / 2
+
+    # Hypergeometric function for holomorphic block
+    # g_h(z) = z^h * 2F1(h-a, h+b; 2h; z)
+    g_h = z**h * float(hyp2f1(h - a, h + b, 2*h, z))
+    g_hbar = zbar**hbar * float(hyp2f1(hbar - a, hbar + b, 2*hbar, zbar))
+
+    return g_h * g_hbar
+
+
+def conformal_block_series(Delta, z, zbar, Delta_ext, order=20):
+    """
+    Conformal block via series expansion for better numerics
+
+    Uses the Zamolodchikov recursion relation for efficiency.
+    """
+    # Implementation of recursion
+    # G_Delta = z^Delta * sum_n c_n(Delta) z^n
+    pass
+\end{lstlisting}
+
+\subsubsection{OPE Decomposition}
+
+\begin{lstlisting}[language=Python, caption={OPE decomposition of celestial amplitudes}]
+import numpy as np
+from scipy.optimize import minimize
+
+def ope_decomposition(celestial_4pt, z_grid, zbar_grid,
+                       Delta_spectrum, Delta_ext):
+    """
+    Decompose celestial 4-point function into conformal blocks
+
+    A_tilde_4 = sum_Delta C^2(Delta) G_Delta(z, zbar)
+
+    Args:
+        celestial_4pt: Function or array of 4-point amplitude values
+        z_grid, zbar_grid: Grid of cross-ratio values
+        Delta_spectrum: List of conformal dimensions to include
+        Delta_ext: External operator dimensions
+
+    Returns:
+        Dictionary {Delta: C^2} of OPE coefficients squared
+    """
+    n_points = len(z_grid)
+    n_ops = len(Delta_spectrum)
+
+    # Build matrix of conformal blocks
+    G_matrix = np.zeros((n_points, n_ops), dtype=complex)
+    for i, (z, zbar) in enumerate(zip(z_grid, zbar_grid)):
+        for j, Delta in enumerate(Delta_spectrum):
+            G_matrix[i, j] = celestial_conformal_block(
+                Delta, z, zbar, Delta_ext
+            )
+
+    # Amplitude values at grid points
+    A_values = np.array([celestial_4pt(z, zbar)
+                        for z, zbar in zip(z_grid, zbar_grid)])
+
+    # Solve for OPE coefficients: A = G @ C^2
+    # Use non-negative least squares for unitarity
+    from scipy.optimize import nnls
+    C_squared, residual = nnls(G_matrix.real, A_values.real)
+
+    return {Delta: c2 for Delta, c2 in zip(Delta_spectrum, C_squared)}
+\end{lstlisting}
+
+\subsection{Phase 3: Crossing Equations and Soft Theorems (Months 4--6)}
+
+\textbf{Goal:} Formulate crossing symmetry and soft theorem constraints.
+
+\subsubsection{Crossing Equation}
+
+\begin{lstlisting}[language=Python, caption={Crossing symmetry verification}]
+def crossing_equation(ope_data_s, ope_data_t, z, zbar, Delta_ext):
+    """
+    Verify/impose s-channel = t-channel OPE
+
+    sum_{Delta_s} C_s^2(Delta_s) G_{Delta_s}(z, zbar)
+        = sum_{Delta_t} C_t^2(Delta_t) G_{Delta_t}(1-z, 1-zbar)
+
+    Args:
+        ope_data_s: Dict {Delta: C^2} for s-channel
+        ope_data_t: Dict {Delta: C^2} for t-channel
+        z, zbar: Cross-ratio point
+        Delta_ext: External dimensions
+
+    Returns:
+        Crossing residual (should be ~ 0)
+    """
+    # s-channel sum
+    lhs = sum(C2 * celestial_conformal_block(Delta, z, zbar, Delta_ext)
+              for Delta, C2 in ope_data_s.items())
+
+    # t-channel sum (note: z -> 1-z)
+    rhs = sum(C2 * celestial_conformal_block(Delta, 1-z, 1-zbar, Delta_ext)
+              for Delta, C2 in ope_data_t.items())
+
+    return abs(lhs - rhs)
+
+
+def verify_crossing_symmetry(ope_data, z_grid, tol=1e-6):
+    """
+    Verify crossing symmetry at multiple points
+    """
+    violations = []
+    for z, zbar in z_grid:
+        residual = crossing_equation(ope_data, ope_data, z, zbar, ...)
+        if residual > tol:
+            violations.append((z, zbar, residual))
+
+    return len(violations) == 0, violations
+\end{lstlisting}
+
+\subsubsection{Soft Theorem Constraints}
+
+\begin{lstlisting}[language=Python, caption={Soft graviton theorem implementation}]
+def impose_soft_theorem(ope_data, Delta_soft=0):
+    """
+    Impose Weinberg soft graviton theorem
+
+    In celestial basis, as Delta -> 0:
+    A_tilde(Delta) ~ S^(0)/Delta + S^(1)/Delta^2 + ...
+
+    S^(0) is the leading soft factor (sum of epsilon.p_i / p.p_i)
+
+    Args:
+        ope_data: Current OPE data
+        Delta_soft: Small conformal weight (approaching soft limit)
+
+    Returns:
+        Constraint residual
+    """
+    # Extract behavior near Delta = 0
+    def celestial_amplitude_near_soft(Delta, z, zbar):
+        # Reconstruct amplitude from OPE
+        return sum(C2 * celestial_conformal_block(Delta_int, z, zbar, ...)
+                   for Delta_int, C2 in ope_data.items())
+
+    # Check pole structure
+    epsilon = 1e-4
+    A_eps = celestial_amplitude_near_soft(epsilon, z_test, zbar_test)
+
+    # Leading pole: should go like 1/Delta
+    residue_0 = A_eps * epsilon
+
+    # Compare to Weinberg soft factor
+    weinberg_factor = compute_weinberg_soft(z_test, zbar_test, ...)
+
+    return abs(residue_0 - weinberg_factor)
+
+
+def compute_weinberg_soft(z, zbar, external_data):
+    """
+    Compute Weinberg soft graviton factor
+
+    S^(0) = sum_i (epsilon.p_i) / (p_soft.p_i)
+
+    For celestial coordinates, this becomes a sum over external
+    operators weighted by their positions on the celestial sphere.
+    """
+    S0 = 0
+    for i, (z_i, zbar_i, Delta_i) in enumerate(external_data):
+        # Soft factor contribution from particle i
+        S0 += (zbar - zbar_i) / ((z - z_i) * (zbar - zbar_i))
+
+    return S0
+\end{lstlisting}
+
+\subsection{Phase 4: Bootstrap SDP (Months 6--9)}
+
+\textbf{Goal:} Formulate and solve the celestial bootstrap as a semidefinite program.
+
+\begin{lstlisting}[language=Python, caption={Celestial bootstrap SDP formulation}]
+import cvxpy as cp
+import numpy as np
+
+def setup_celestial_bootstrap_sdp(Delta_gap, Delta_max,
+                                   z_grid, Delta_ext):
+    """
+    Set up SDP for celestial CFT bootstrap
+
+    Variables: OPE coefficients C^2(Delta) for Delta in spectrum
+    Constraints:
+        1. Positivity: C^2(Delta) >= 0 (unitarity)
+        2. Crossing symmetry: sum C^2 G_s = sum C^2 G_t
+        3. Soft theorem: correct pole structure
+        4. Normalization
+
+    Args:
+        Delta_gap: Minimum conformal dimension (gap assumption)
+        Delta_max: Maximum dimension to include
+        z_grid: Cross-ratio grid for sampling constraints
+        Delta_ext: External operator dimensions
+
+    Returns:
+        cvxpy Problem object
+    """
+    # Discretize spectrum above the gap
+    # For continuous spectrum: use Gauss quadrature points
+    Delta_spectrum = np.linspace(Delta_gap, Delta_max, num=100)
+    n_ops = len(Delta_spectrum)
+
+    # Variables: OPE coefficients squared
+    C_squared = cp.Variable(n_ops, nonneg=True)
+
+    constraints = []
+
+    # 1. Positivity: automatic from nonneg=True
+
+    # 2. Crossing symmetry at each z point
+    for z, zbar in z_grid:
+        # s-channel blocks
+        G_s = np.array([celestial_conformal_block(D, z, zbar, Delta_ext)
+                       for D in Delta_spectrum])
+        # t-channel blocks
+        G_t = np.array([celestial_conformal_block(D, 1-z, 1-zbar, Delta_ext)
+                       for D in Delta_spectrum])
+
+        # Crossing: sum C^2 G_s = sum C^2 G_t
+        constraints.append(G_s.real @ C_squared == G_t.real @ C_squared)
+        constraints.append(G_s.imag @ C_squared == G_t.imag @ C_squared)
+
+    # 3. Soft theorem (simplified: fix coefficient at Delta near 0)
+    # constraints.append(soft_theorem_constraint(C_squared, ...))
+
+    # 4. Normalization: fix identity contribution
+    constraints.append(C_squared[0] == 1)  # Identity operator
+
+    return C_squared, constraints, Delta_spectrum
+
+
+def solve_celestial_bootstrap(Delta_gap):
+    """
+    Solve for consistent celestial CFT with given gap
+
+    Returns:
+        Dictionary with status and OPE data (if feasible)
+    """
+    C_squared, constraints, spectrum = setup_celestial_bootstrap_sdp(
+        Delta_gap, Delta_max=10, z_grid=generate_z_grid(20),
+        Delta_ext=[1, 1, 1, 1]  # External gravitons
+    )
+
+    # Feasibility problem
+    problem = cp.Problem(cp.Minimize(0), constraints)
+
+    try:
+        problem.solve(solver=cp.SCS, verbose=True)
+
+        if problem.status == cp.OPTIMAL:
+            ope_data = {D: c2 for D, c2 in zip(spectrum, C_squared.value)
+                       if c2 > 1e-6}
+            return {'status': 'feasible', 'ope_data': ope_data}
+        else:
+            return {'status': 'infeasible',
+                    'dual_certificate': extract_dual(constraints)}
+
+    except Exception as e:
+        return {'status': 'error', 'message': str(e)}
+\end{lstlisting}
+
+\begin{warningbox}
+\textbf{Continuous Spectrum Challenge:} Unlike typical CFT bootstrap where the spectrum is discrete, celestial CFT has a \emph{continuous} spectrum (principal series). The SDP must be discretized carefully, and results should be checked for sensitivity to discretization.
+\end{warningbox}
+
+\subsection{Phase 5: Extract Results and Certificates (Months 9--12)}
+
+\textbf{Goal:} Map allowed regions and generate verifiable certificates.
+
+\begin{lstlisting}[language=Python, caption={Scanning celestial CFT space}]
+def scan_celestial_cft_space(Delta_gap_range, Delta_ext):
+    """
+    Scan over gap assumptions and map allowed vs. forbidden regions
+
+    Args:
+        Delta_gap_range: Range of gap values to test
+        Delta_ext: External operator dimensions
+
+    Returns:
+        Results dictionary with phase diagram data
+    """
+    results = {}
+
+    for Delta_gap in Delta_gap_range:
+        print(f"\nTesting Delta_gap = {Delta_gap}")
+
+        result = solve_celestial_bootstrap(Delta_gap)
+        results[Delta_gap] = result
+
+        if result['status'] == 'feasible':
+            print(f"  FEASIBLE: Found consistent OPE data")
+            # Verify and export
+            verify_celestial_cft(result['ope_data'])
+            export_ope_data(result['ope_data'], f'celestial_gap{Delta_gap}.json')
+
+        elif result['status'] == 'infeasible':
+            print(f"  INFEASIBLE: No solution exists")
+            # Export extremal functional
+            export_extremal_functional(
+                result['dual_certificate'],
+                f'extremal_gap{Delta_gap}.json'
+            )
+
+    # Generate phase diagram
+    plot_celestial_phase_diagram(results)
+
+    return results
+\end{lstlisting}
+
+% ============================================================
+% SECTION 5: DETAILED RESEARCH DIRECTIONS
+% ============================================================
+\section{Detailed Research Directions}
+
+\subsection{Direction 1: MHV Sector Bootstrap}
+
+\begin{pursuitbox}
+\textbf{Simplification:} Focus on the MHV (Maximally Helicity Violating) sector where graviton amplitudes take the simplest form.
+
+\textbf{Approach:}
+\begin{enumerate}
+    \item Compute celestial MHV amplitudes explicitly for 3, 4, 5 particles
+    \item Extract OPE data from these known amplitudes
+    \item Bootstrap: can we \emph{derive} the MHV amplitudes from crossing + soft theorems alone?
+\end{enumerate}
+
+\textbf{Expected Outcome:} Demonstrate that celestial bootstrap reproduces known graviton scattering in the MHV sector.
+\end{pursuitbox}
+
+\subsection{Direction 2: Subleading Soft Theorems}
+
+Beyond the leading Weinberg soft factor, there are \textbf{subleading} soft theorems:
+\begin{equation}
+    \tilde{A}(\Delta) = \frac{S^{(0)}}{\Delta} + S^{(1)} + \Delta \, S^{(2)} + O(\Delta^2)
+\end{equation}
+
+\begin{pursuitbox}
+\textbf{Investigation:} How do subleading soft theorems constrain the celestial OPE?
+
+These are related to:
+\begin{itemize}
+    \item BMS supertranslations ($S^{(0)}$)
+    \item Superrotations ($S^{(1)}$)
+    \item Higher memory effects ($S^{(2)}$)
+\end{itemize}
+\end{pursuitbox}
+
+\subsection{Direction 3: Celestial OPE and Collinear Limits}
+
+When two particles become collinear, the celestial amplitude should factorize:
+\begin{equation}
+    \lim_{z_1 \to z_2} \tilde{A}_n \sim \sum_{\Delta} \frac{C_{\Delta_1 \Delta_2}^\Delta}{(z_1 - z_2)^{\Delta_1 + \Delta_2 - \Delta}} \tilde{A}_{n-1}
+\end{equation}
+
+\begin{pursuitbox}
+\textbf{Study:} Extract celestial OPE coefficients from known collinear limits of graviton amplitudes. Compare with bootstrap predictions.
+\end{pursuitbox}
+
+\subsection{Direction 4: Gluon Amplitudes and Yang-Mills}
+
+Celestial holography applies beyond gravity:
+\begin{itemize}
+    \item \textbf{Gluon amplitudes} map to a celestial CFT with different structure
+    \item \textbf{Color structure} introduces new OPE channels
+    \item \textbf{Soft gluon theorem} differs from graviton case
+\end{itemize}
+
+\begin{pursuitbox}
+\textbf{Extension:} Develop celestial bootstrap for Yang-Mills theory. Compare and contrast with gravity.
+\end{pursuitbox}
+
+\subsection{Direction 5: Loop Corrections and Infrared Divergences}
+
+Loop amplitudes have \textbf{infrared divergences} that affect celestial amplitudes:
+\begin{itemize}
+    \item Soft and collinear divergences modify the Mellin transform
+    \item May require IR regularization (dimensional regularization, mass regulator)
+    \item Celestial interpretation of IR physics is an active research area
+\end{itemize}
+
+% ============================================================
+% SECTION 6: SUCCESS CRITERIA
+% ============================================================
+\section{Success Criteria}
+
+\subsection{Minimum Viable Result (6 months)}
+
+\begin{itemize}
+    \item[$\checkmark$] Mellin transform engine working for tree-level graviton amplitudes
+    \item[$\checkmark$] 3-point and 4-point celestial amplitudes computed
+    \item[$\checkmark$] $\SL(2,\C)$ covariance verified numerically
+    \item[$\checkmark$] Soft theorems checked
+    \item[$\checkmark$] \textbf{First bootstrap result:} Crossing equation setup for MHV sector
+    \item[$\checkmark$] Either: Allowed OPE data found, or: no-go region certified
+\end{itemize}
+
+\subsection{Strong Result (9 months)}
+
+\begin{itemize}
+    \item[$\checkmark$] Multi-channel bootstrap including all helicity sectors
+    \item[$\checkmark$] Soft + subleading soft theorems incorporated
+    \item[$\checkmark$] Rigorous allowed region in OPE space determined
+    \item[$\checkmark$] Or: Exclusion of certain conformal weight ranges proved
+    \item[$\checkmark$] Extremal functionals extracted and verified
+\end{itemize}
+
+\subsection{Publication-Quality Result (12 months)}
+
+\begin{itemize}
+    \item[$\checkmark$] Comprehensive celestial CFT space mapped for graviton scattering
+    \item[$\checkmark$] Phase diagram of consistent theories
+    \item[$\checkmark$] Novel predictions or no-go theorems
+    \item[$\checkmark$] Formal verification of key results
+    \item[$\checkmark$] Comparison with explicit amplitude calculations
+\end{itemize}
+
+% ============================================================
+% SECTION 7: VERIFICATION PROTOCOL
+% ============================================================
+\section{Verification Protocol}
+
+\begin{lstlisting}[language=Python, caption={Comprehensive celestial CFT verification}]
+def verify_celestial_cft(ope_data):
+    """
+    Comprehensive verification of celestial CFT solution
+
+    Checks:
+    1. SL(2,C) covariance of reconstructed amplitudes
+    2. Crossing symmetry
+    3. Soft graviton theorem
+    4. Unitarity (positivity)
+
+    Args:
+        ope_data: Dictionary {Delta: C^2} of OPE coefficients
+
+    Returns:
+        "VERIFIED" if all checks pass
+    """
+    # 1. Verify SL(2,C) covariance
+    for transformation in sl2c_generators():
+        transformed = apply_lorentz_transformation(ope_data, transformation)
+        if not is_equivalent(transformed, ope_data):
+            return "FAILED: SL(2,C) covariance violated"
+
+    # 2. Check crossing symmetry at multiple points
+    z_test_points = generate_crossing_test_points(n=50)
+    for z, zbar in z_test_points:
+        s_channel = ope_sum(ope_data, 's', z, zbar)
+        t_channel = ope_sum(ope_data, 't', z, zbar)
+        if abs(s_channel - t_channel) > 1e-8:
+            return f"FAILED: Crossing violated at z={z}"
+
+    # 3. Verify soft theorem
+    soft_behavior = extract_soft_limit(ope_data, Delta_soft=1e-3)
+    weinberg_soft = compute_weinberg_soft(...)
+    if not is_close(soft_behavior, weinberg_soft, rtol=1e-6):
+        return "FAILED: Soft theorem violated"
+
+    # 4. Unitarity (positive spectral density)
+    for Delta, C2 in ope_data.items():
+        if C2 < -1e-10:
+            return f"FAILED: Negative OPE coefficient at Delta={Delta}"
+
+    return "VERIFIED"
+\end{lstlisting}
+
+% ============================================================
+% SECTION 8: COMMON PITFALLS
+% ============================================================
+\section{Common Pitfalls and Mitigations}
+
+\subsection{Mellin Transform Convergence}
+
+\begin{warningbox}
+\textbf{Problem:} The Mellin integral $\int_0^\infty d\omega \, \omega^{\Delta-1} A(\omega)$ may not converge for all $\Delta$.
+
+\textbf{Solutions:}
+\begin{itemize}
+    \item Work on the principal series: $\Delta = 1 + i\lambda$ with $\lambda \in \R$
+    \item Use analytic continuation from convergent region
+    \item Regularize with exponential damping: $\omega^{\Delta-1} e^{-\epsilon\omega}$
+\end{itemize}
+\end{warningbox}
+
+\subsection{Continuous vs.\ Discrete Spectrum}
+
+\begin{warningbox}
+\textbf{Problem:} Standard bootstrap techniques assume discrete spectrum; celestial CFT has continuous principal series.
+
+\textbf{Solutions:}
+\begin{itemize}
+    \item Discretize carefully using Gauss quadrature adapted to the measure
+    \item Check results are stable under discretization refinement
+    \item Use functional analysis techniques for continuous bootstrap
+\end{itemize}
+\end{warningbox}
+
+\subsection{Shadow Operators and Redundancy}
+
+\begin{warningbox}
+\textbf{Problem:} Celestial operators $\calO_\Delta$ and their shadows $\calO_{2-\Delta}$ are related, leading to redundancy in the OPE.
+
+\textbf{Solution:}
+\begin{itemize}
+    \item Impose shadow symmetry as an additional constraint
+    \item Or restrict to $\mathrm{Re}(\Delta) \geq 1$ (half the spectrum)
+    \item Document the convention clearly
+\end{itemize}
+\end{warningbox}
+
+% ============================================================
+% SECTION 9: MILESTONE CHECKLIST
+% ============================================================
+\section{Milestone Checklist}
+
+\subsection{Phase 1: Amplitude Infrastructure (Months 1--2)}
+\begin{itemize}
+    \item[$\square$] Mellin transform calculator implemented
+    \item[$\square$] 3-point celestial amplitude computed
+    \item[$\square$] 4-point MHV celestial amplitude computed
+    \item[$\square$] $\SL(2,\C)$ covariance verified numerically
+    \item[$\square$] Spinor-helicity formalism working
+\end{itemize}
+
+\subsection{Phase 2: Conformal Blocks (Months 2--4)}
+\begin{itemize}
+    \item[$\square$] Celestial conformal blocks implemented
+    \item[$\square$] Principal series representations handled correctly
+    \item[$\square$] OPE decomposition working for test cases
+    \item[$\square$] Cross-ratio dependence verified
+\end{itemize}
+
+\subsection{Phase 3: Constraints (Months 4--6)}
+\begin{itemize}
+    \item[$\square$] Crossing equations formulated
+    \item[$\square$] Soft theorem constraints implemented
+    \item[$\square$] Subleading soft theorems added
+    \item[$\square$] Combined constraint system tested
+\end{itemize}
+
+\subsection{Phase 4: Bootstrap Solver (Months 6--9)}
+\begin{itemize}
+    \item[$\square$] SDP formulation complete
+    \item[$\square$] Solver running and converging
+    \item[$\square$] First feasibility/infeasibility result
+    \item[$\square$] Gap scan initiated
+\end{itemize}
+
+\subsection{Phase 5: Results \& Verification (Months 9--12)}
+\begin{itemize}
+    \item[$\square$] Allowed/forbidden regions mapped
+    \item[$\square$] Extremal functionals extracted
+    \item[$\square$] Results verified against known amplitudes
+    \item[$\square$] Publication draft prepared
+\end{itemize}
+
+% ============================================================
+% SECTION 10: RESOURCES
+% ============================================================
+\section{Resources and References}
+
+\subsection{Foundational Papers}
+
+\begin{enumerate}
+    \item Pasterski, Shao, Strominger (2017): ``Flat Space Amplitudes and Conformal Symmetry of the Celestial Sphere'' [arXiv:1701.00049]
+
+    \item Pasterski, Shao (2017): ``Conformal Basis for Flat Space Amplitudes'' [arXiv:1705.01027]
+
+    \item Strominger (2018): ``Lectures on the Infrared Structure of Gravity and Gauge Theory'' [arXiv:1703.05448]
+
+    \item Raclariu (2021): ``Lectures on Celestial Holography'' [arXiv:2107.02075]
+
+    \item Pasterski (2021): ``Celestial Amplitudes'' [TASI lectures]
+\end{enumerate}
+
+\subsection{Bootstrap References}
+
+\begin{enumerate}
+    \item Simmons-Duffin (2016): ``The Conformal Bootstrap'' [arXiv:1602.07982]
+
+    \item Poland, Rychkov, Vichi (2019): ``The Conformal Bootstrap: Theory, Numerical Techniques, and Applications'' [arXiv:1805.04405]
+\end{enumerate}
+
+\subsection{Software}
+
+\begin{itemize}
+    \item \textbf{mpmath:} Arbitrary precision --- \texttt{pip install mpmath}
+    \item \textbf{CVXPY:} Convex optimization --- \texttt{pip install cvxpy}
+    \item \textbf{SymPy:} Symbolic computation --- \texttt{pip install sympy}
+    \item \textbf{Spinor-Helicity packages:} Various implementations available
+\end{itemize}
+
+% ============================================================
+% CONCLUSION
+% ============================================================
+\section{Conclusion}
+
+Celestial holography represents a bold new paradigm for understanding quantum gravity in the real, asymptotically flat universe. The celestial bootstrap approach---constraining the space of consistent celestial CFTs using crossing symmetry, unitarity, and soft theorems---offers a rigorous path toward classifying possible theories.
+
+Success in this challenge would:
+\begin{enumerate}
+    \item Establish the celestial bootstrap as a viable tool for constraining gravity
+    \item Produce novel predictions for graviton scattering (or prove certain structures impossible)
+    \item Connect the S-matrix bootstrap to the holographic program
+    \item Open new directions in flat-space holography
+\end{enumerate}
+
+The interplay between scattering amplitudes, conformal field theory, and optimization provides a rich mathematical structure amenable to rigorous analysis and machine verification.
+
+\end{document}

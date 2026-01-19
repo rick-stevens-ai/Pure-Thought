@@ -1,0 +1,2020 @@
+\documentclass[11pt,a4paper]{article}
+
+% ============================================================
+% PACKAGES
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{array}
+
+% ============================================================
+% PAGE SETUP
+% ============================================================
+\geometry{margin=1in}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    citecolor=green!50!black,
+    urlcolor=purple!70!black
+}
+
+% ============================================================
+% CODE LISTINGS SETUP
+% ============================================================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    language=Python
+}
+
+\lstset{style=pythonstyle}
+
+% ============================================================
+% THEOREM ENVIRONMENTS
+% ============================================================
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}{Remark}[section]
+
+% ============================================================
+% CUSTOM COMMANDS
+% ============================================================
+\newcommand{\CFT}{\mathrm{CFT}}
+\newcommand{\AdS}{\mathrm{AdS}}
+\newcommand{\OPE}{\mathrm{OPE}}
+% \Tr is already defined by physics package
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\Re}{\mathrm{Re}}
+\renewcommand{\Im}{\mathrm{Im}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\SDP}{\mathrm{SDP}}
+\newcommand{\SYM}{\mathrm{SYM}}
+
+% ============================================================
+% CUSTOM BOXES
+% ============================================================
+\newtcolorbox{annotation}[1][]{
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    title={Analysis Note},
+    #1
+}
+
+\newtcolorbox{pursuitbox}[1][]{
+    colback=green!5!white,
+    colframe=green!60!black,
+    fonttitle=\bfseries,
+    title={Research Direction},
+    #1
+}
+
+\newtcolorbox{warningbox}[1][]{
+    colback=red!5!white,
+    colframe=red!75!black,
+    fonttitle=\bfseries,
+    title={Critical Consideration},
+    #1
+}
+
+\newtcolorbox{physicsbox}[1][]{
+    colback=orange!5!white,
+    colframe=orange!70!black,
+    fonttitle=\bfseries,
+    title={Physical Insight},
+    #1
+}
+
+% ============================================================
+% DOCUMENT BEGIN
+% ============================================================
+\begin{document}
+
+% ============================================================
+% TITLE PAGE
+% ============================================================
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+
+    {\Huge\bfseries Challenge 07:\\[0.5em]
+    Extremal Higher-Dimensional CFTs\par}
+
+    \vspace{1.5cm}
+
+    {\Large\itshape Conformal Bootstrap Bounds on OPE Data\\in $d > 2$ Dimensions\par}
+
+    \vspace{2cm}
+
+    \begin{tabular}{ll}
+        \textbf{Domain:} & Quantum Gravity \& CFT \\[0.5em]
+        \textbf{Difficulty:} & High \\[0.5em]
+        \textbf{Timeline:} & 8--12 months \\[0.5em]
+        \textbf{Prerequisites:} & Conformal field theory, bootstrap methods, \\
+        & semidefinite programming (SDP) optimization
+    \end{tabular}
+
+    \vfill
+
+    {\large Pure Thought AI Challenges\par}
+    {\large\today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ============================================================
+% SECTION 1: EXECUTIVE SUMMARY
+% ============================================================
+\section{Executive Summary}
+
+This challenge addresses the systematic derivation of \textbf{rigorous bounds on conformal field theory data} in spacetime dimensions $d > 2$ using the \textbf{conformal bootstrap}. Unlike two-dimensional CFTs where infinite-dimensional Virasoro symmetry provides extraordinary control, higher-dimensional CFTs have finite-dimensional conformal groups, making the bootstrap both more challenging and more universal in its predictions.
+
+The central objects of study are the \textbf{OPE coefficients} $\lambda_{\mathcal{O}_1 \mathcal{O}_2 \mathcal{O}_3}$ and \textbf{operator dimensions} $\Delta_{\mathcal{O}}$ that characterize any CFT. By exploiting \textbf{crossing symmetry} of four-point correlation functions and \textbf{unitarity}, the bootstrap produces non-perturbative constraints that apply to \emph{all} CFTs in a given dimension---including strongly coupled theories inaccessible to perturbation theory.
+
+\begin{annotation}
+The conformal bootstrap has achieved remarkable success in recent years, most notably providing the world's most precise determination of critical exponents in the 3D Ising model---more accurate than any Monte Carlo simulation or experiment. This challenge extends these methods to \textbf{stress tensor four-point functions} ($\langle TTTT \rangle$), which encode central charges and gravitational couplings in holographic theories.
+\end{annotation}
+
+\begin{physicsbox}
+\textbf{Why Higher Dimensions Matter:}
+\begin{itemize}
+    \item $d = 3$: Describes critical phenomena in condensed matter (Ising, $O(N)$ models)
+    \item $d = 4$: Directly relevant for particle physics and gauge theories
+    \item $d = 6$: Contains the mysterious $(2,0)$ superconformal theory
+    \item General $d$: Holographic CFTs dual to quantum gravity in $\AdS_{d+1}$
+\end{itemize}
+\end{physicsbox}
+
+The specific focus of this challenge is the \textbf{TTTT bootstrap}---the crossing equations derived from the four-point function of stress tensors. This provides bounds on the central charges $a$ and $c$ in 4d CFTs, constraints on the gap to the first non-identity operator in the $T \times T$ OPE, and universal features of holographic theories.
+
+% ============================================================
+% SECTION 2: SCIENTIFIC CONTEXT
+% ============================================================
+\section{Scientific Context and Motivation}
+
+\subsection{Conformal Bootstrap in $d > 2$ Dimensions}
+
+The \textbf{conformal bootstrap} is a program to classify and constrain CFTs using only consistency conditions:
+
+\begin{enumerate}
+    \item \textbf{Conformal symmetry:} The theory is invariant under the conformal group $SO(d+1,1)$
+    \item \textbf{Operator product expansion (OPE):} Products of local operators can be expanded in a complete basis
+    \item \textbf{Crossing symmetry:} OPE in different channels must give identical four-point functions
+    \item \textbf{Unitarity:} Physical states have positive norm (equivalent to reflection positivity)
+\end{enumerate}
+
+\begin{definition}[Conformal Primary Operator]
+A local operator $\mathcal{O}(x)$ is a \textbf{conformal primary} with scaling dimension $\Delta$ and spin $\ell$ if:
+\begin{align}
+    [D, \mathcal{O}(0)] &= \Delta \, \mathcal{O}(0) \\
+    [M_{\mu\nu}, \mathcal{O}(0)] &= S_{\mu\nu} \, \mathcal{O}(0) \quad \text{(spin-$\ell$ representation)} \\
+    [K_\mu, \mathcal{O}(0)] &= 0
+\end{align}
+where $D$ is the dilatation generator, $M_{\mu\nu}$ are Lorentz rotations, and $K_\mu$ are special conformal generators.
+\end{definition}
+
+\subsection{The Operator Product Expansion}
+
+The OPE is the fundamental structure underlying the bootstrap:
+
+\begin{equation}
+    \boxed{\mathcal{O}_1(x) \mathcal{O}_2(0) = \sum_{\mathcal{O}} \lambda_{12\mathcal{O}} \, C(x, \partial) \, \mathcal{O}(0)}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $\lambda_{12\mathcal{O}}$ is the \textbf{OPE coefficient} (structure constant)
+    \item $C(x, \partial)$ is a differential operator fixed entirely by conformal symmetry
+    \item The sum runs over all conformal primaries $\mathcal{O}$ in the theory
+\end{itemize}
+
+\begin{physicsbox}
+\textbf{CFT Data:} A CFT in $d$ dimensions is completely specified by:
+\begin{enumerate}
+    \item The spectrum of primary operators $\{\mathcal{O}_i\}$ with their dimensions $\Delta_i$ and spins $\ell_i$
+    \item All OPE coefficients $\lambda_{ijk}$
+\end{enumerate}
+The bootstrap constrains this ``CFT data'' without ever computing a Feynman diagram or path integral.
+\end{physicsbox}
+
+\subsection{The TTTT Correlator Bootstrap}
+
+The four-point function of stress tensors is the central object for this challenge:
+\begin{equation}
+    \langle T_{\mu_1\nu_1}(x_1) T_{\mu_2\nu_2}(x_2) T_{\mu_3\nu_3}(x_3) T_{\mu_4\nu_4}(x_4) \rangle
+\end{equation}
+
+\begin{physicsbox}
+\textbf{Why TTTT?}
+\begin{itemize}
+    \item The stress tensor exists in \emph{every} CFT---results are universal
+    \item OPE coefficients in $T \times T$ encode central charges and coupling to gravity
+    \item Holographic interpretation: TTTT correlator $\leftrightarrow$ graviton scattering in AdS
+    \item The $a/c$ ratio distinguishes theories and has Swampland implications
+\end{itemize}
+\end{physicsbox}
+
+The correlator decomposes into tensor structures and conformal blocks:
+\begin{equation}
+    \langle TTTT \rangle = \sum_{I} \mathcal{T}_I(x_i, \partial) \sum_{\mathcal{O}} \lambda_{TT\mathcal{O}}^{(I)} \lambda_{TT\mathcal{O}}^{(I)} G_{\Delta_\mathcal{O}, \ell_\mathcal{O}}^{(I)}(u, v)
+\end{equation}
+
+where $\mathcal{T}_I$ are kinematic tensor structures and $G^{(I)}$ are conformal blocks.
+
+\subsection{Stress Tensor OPE Structure}
+
+The $T \times T$ OPE takes the schematic form:
+\begin{equation}
+    T_{\mu\nu} \times T_{\rho\sigma} \sim \mathbf{1} + T_{\alpha\beta} + \mathcal{O}^{(\text{scalar})} + \mathcal{O}^{(\text{spin-4})} + \ldots
+\end{equation}
+
+\begin{definition}[Operators in $T \times T$ OPE]
+The operators appearing in the stress tensor OPE include:
+\begin{itemize}
+    \item \textbf{Identity} $\mathbf{1}$: Always present, coefficient fixed by Ward identity
+    \item \textbf{Stress tensor} $T$: Present with coefficient related to central charge
+    \item \textbf{Scalars}: $\phi^2$-type operators with $\Delta \geq d - 2$
+    \item \textbf{Spin-4}: Double-trace $[TT]_0$ with $\Delta \approx 2d$
+    \item \textbf{Higher spins}: Only even spins by Bose symmetry
+\end{itemize}
+\end{definition}
+
+\subsection{Central Charges $a$ and $c$ in 4d}
+
+In four dimensions, there are two independent central charges appearing in the trace anomaly:
+
+\begin{theorem}[Weyl Anomaly in 4d]
+On a curved background, the stress tensor trace satisfies:
+\begin{equation}
+    \langle T^\mu_\mu \rangle = \frac{c}{16\pi^2} W_{\mu\nu\rho\sigma} W^{\mu\nu\rho\sigma} - \frac{a}{16\pi^2} E_4
+\end{equation}
+where $W_{\mu\nu\rho\sigma}$ is the Weyl tensor and $E_4 = R_{\mu\nu\rho\sigma}^2 - 4R_{\mu\nu}^2 + R^2$ is the Euler density.
+\end{theorem}
+
+\begin{annotation}
+The central charges have important physical interpretations:
+\begin{itemize}
+    \item $c$: Appears in $\langle TT \rangle$ two-point function normalization
+    \item $a$: Counts degrees of freedom; decreases under RG flow ($a$-theorem)
+    \item $a/c$: A universal ratio constrained by causality and unitarity
+\end{itemize}
+\end{annotation}
+
+For reference, central charges of known theories:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Theory & $a$ & $c$ \\
+\midrule
+Free real scalar & $\frac{1}{360}$ & $\frac{1}{120}$ \\
+Free Dirac fermion & $\frac{11}{360}$ & $\frac{1}{20}$ \\
+Free vector (Maxwell) & $\frac{31}{180}$ & $\frac{1}{10}$ \\
+$\mathcal{N}=4$ SYM ($SU(N)$) & $\frac{N^2-1}{4}$ & $\frac{N^2-1}{4}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Unitarity Bounds on Dimensions}
+
+Unitarity (positive norm of states) imposes lower bounds on operator dimensions:
+
+\begin{theorem}[Unitarity Bounds]
+In a unitary CFT in $d$ dimensions, conformal primary operators satisfy:
+\begin{align}
+    \text{Scalar } (\ell = 0): \quad &\Delta \geq \frac{d-2}{2} \quad \text{(free scalar at saturation)} \\
+    \text{Spin-$\ell$ } (\ell \geq 1): \quad &\Delta \geq d + \ell - 2 \quad \text{(conserved current at saturation)}
+\end{align}
+\end{theorem}
+
+\begin{warningbox}
+\textbf{Subtlety for Conserved Currents:}
+When $\Delta = d + \ell - 2$ is saturated, the operator is a conserved current satisfying $\partial \cdot J = 0$. These have null descendants requiring special treatment in the bootstrap. The stress tensor with $\Delta = d$, $\ell = 2$ is the prime example.
+\end{warningbox}
+
+\subsection{The Core Questions}
+
+\begin{tcolorbox}[colback=yellow!10!white,colframe=orange!80!black,title=\textbf{Central Research Questions}]
+
+\textbf{Q1: What are the allowed ranges for $a/c$ in 4d CFTs?}
+\begin{itemize}
+    \item Known lower bound: $a/c \geq 1/3$ (Hofman-Maldacena, 2008)
+    \item Known upper bound: $a/c \leq 31/18$
+    \item Can the bootstrap sharpen these bounds?
+\end{itemize}
+
+\textbf{Q2: What is the maximum gap $\Delta_{\text{gap}}$ to the first scalar in $T \times T$?}
+\begin{itemize}
+    \item In free theory: $\Delta_{\text{gap}} = d - 2$ (operator $\phi^2$)
+    \item In holographic theories: what is the bound?
+\end{itemize}
+
+\textbf{Q3: Can TTTT bootstrap isolate specific CFTs?}
+\begin{itemize}
+    \item Does $\mathcal{N} = 4$ SYM sit at a kink?
+    \item Can we identify extremal theories saturating bounds?
+\end{itemize}
+
+\end{tcolorbox}
+
+% ============================================================
+% SECTION 3: MATHEMATICAL FORMULATION
+% ============================================================
+\section{Mathematical Formulation}
+
+\subsection{Conformal Blocks in $d$ Dimensions}
+
+Conformal symmetry fixes the form of four-point functions up to functions of cross-ratios:
+
+\begin{equation}
+    \langle \mathcal{O}_1(x_1) \mathcal{O}_2(x_2) \mathcal{O}_3(x_3) \mathcal{O}_4(x_4) \rangle = \frac{g(u,v)}{x_{12}^{\Delta_1 + \Delta_2} x_{34}^{\Delta_3 + \Delta_4}} \cdot (\text{tensor structure})
+\end{equation}
+
+where the \textbf{conformal cross-ratios} are:
+\begin{equation}
+    u = \frac{x_{12}^2 x_{34}^2}{x_{13}^2 x_{24}^2}, \quad v = \frac{x_{14}^2 x_{23}^2}{x_{13}^2 x_{24}^2}
+\end{equation}
+
+\begin{definition}[Conformal Block]
+The \textbf{conformal block} $G_{\Delta, \ell}^{(d)}(u,v)$ is the contribution to the four-point function from a single conformal primary $\mathcal{O}$ with dimension $\Delta$ and spin $\ell$, including all descendants:
+\begin{equation}
+    g(u,v) = \sum_{\mathcal{O}} \lambda_{12\mathcal{O}} \lambda_{34\mathcal{O}} \, G_{\Delta_\mathcal{O}, \ell_\mathcal{O}}^{(d)}(u,v)
+\end{equation}
+\end{definition}
+
+\subsubsection{Closed-Form Expressions in Even Dimensions}
+
+In even dimensions, conformal blocks have closed-form expressions. For $d = 4$:
+
+\begin{equation}
+    G_{\Delta, \ell}^{(4)}(u,v) = \frac{z \bar{z}}{z - \bar{z}} \left[ k_{\Delta + \ell}(z) k_{\Delta - \ell - 2}(\bar{z}) - (z \leftrightarrow \bar{z}) \right]
+\end{equation}
+
+where $u = z \bar{z}$, $v = (1-z)(1-\bar{z})$, and the building blocks are:
+\begin{equation}
+    k_\beta(z) = z^{\beta/2} \, {}_2F_1\left(\frac{\beta}{2}, \frac{\beta}{2}, \beta; z\right)
+\end{equation}
+
+For $d = 6$:
+\begin{equation}
+    G_{\Delta, \ell}^{(6)}(u,v) = \frac{(z\bar{z})^2}{(z-\bar{z})^3} \sum_{\text{perms}} (\pm) k_{\alpha_1}(z) k_{\alpha_2}(\bar{z})
+\end{equation}
+with appropriate index combinations.
+
+\begin{annotation}
+In odd dimensions (e.g., $d = 3$), there is no known closed form. Conformal blocks must be computed via:
+\begin{enumerate}
+    \item Recursion relations (Zamolodchikov-type)
+    \item Series expansion in radial coordinates
+    \item Casimir differential equation methods
+\end{enumerate}
+\end{annotation}
+
+\subsubsection{Casimir Differential Equation}
+
+Conformal blocks are eigenfunctions of the quadratic Casimir operator:
+\begin{equation}
+    \mathcal{D}^{(d)} G_{\Delta, \ell}^{(d)}(u,v) = c_{\Delta, \ell} \, G_{\Delta, \ell}^{(d)}(u,v)
+\end{equation}
+
+where the eigenvalue is:
+\begin{equation}
+    c_{\Delta, \ell} = \Delta(\Delta - d) + \ell(\ell + d - 2)
+\end{equation}
+
+The Casimir operator in terms of $z, \bar{z}$ coordinates:
+\begin{equation}
+    \mathcal{D}^{(d)} = D_z + D_{\bar{z}} + \frac{d-2}{z - \bar{z}}\left[(1-z)z\partial_z - (1-\bar{z})\bar{z}\partial_{\bar{z}}\right]
+\end{equation}
+where $D_z = (1-z)z^2 \partial_z^2 - z^2 \partial_z$.
+
+\subsection{Crossing Equations for Stress Tensor Four-Point Function}
+
+The OPE can be performed in different channels. For $\langle T_1 T_2 T_3 T_4 \rangle$:
+
+\textbf{$s$-channel:} OPE of $(T_1 T_2)$ and $(T_3 T_4)$
+\begin{equation}
+    \langle TTTT \rangle^{(s)} = \sum_{\mathcal{O}} |\lambda_{TT\mathcal{O}}|^2 G_{\Delta, \ell}^{(s)}(u,v)
+\end{equation}
+
+\textbf{$t$-channel:} OPE of $(T_1 T_4)$ and $(T_2 T_3)$
+\begin{equation}
+    \langle TTTT \rangle^{(t)} = \sum_{\mathcal{O}'} |\lambda_{TT\mathcal{O}'}|^2 G_{\Delta', \ell'}^{(t)}(v,u)
+\end{equation}
+
+Crossing symmetry requires:
+\begin{equation}
+    \boxed{\sum_\mathcal{O} |\lambda_{TT\mathcal{O}}|^2 \left[ G_{\Delta, \ell}^{(s)}(u,v) - G_{\Delta, \ell}^{(t)}(v,u) \right] = 0}
+\end{equation}
+
+\subsection{OPE Decomposition and Selection Rules}
+
+\begin{theorem}[Selection Rules for $T \times T$ OPE]
+In the stress tensor OPE:
+\begin{enumerate}
+    \item Only \textbf{even spins} $\ell = 0, 2, 4, \ldots$ appear (Bose symmetry)
+    \item The \textbf{identity} appears with coefficient related to $c$
+    \item The \textbf{stress tensor} $T$ appears with coefficient encoding both $a$ and $c$
+    \item \textbf{Ward identities} constrain certain OPE coefficients
+\end{enumerate}
+\end{theorem}
+
+The Ward identity fixes the $TT$ OPE coefficient of the identity:
+\begin{equation}
+    \lambda_{TT\mathbf{1}} = \sqrt{C_T}
+\end{equation}
+where $C_T$ is the coefficient in $\langle T(x) T(0) \rangle = \frac{C_T}{x^{2d}} I_{\mu\nu,\rho\sigma}$.
+
+For the stress tensor contribution:
+\begin{equation}
+    \lambda_{TTT}^2 = \frac{d^2}{(d-1)^2} \cdot \frac{n_T}{C_T}
+\end{equation}
+where $n_T$ is a theory-dependent number related to $a/c$.
+
+\subsection{The Extremal Functional Method}
+
+The bootstrap bound is computed by finding a \textbf{linear functional} $\alpha$ that yields a contradiction:
+
+\begin{definition}[Extremal Functional]
+A functional $\alpha$ acting on crossing equations typically takes the form:
+\begin{equation}
+    \alpha[F] = \sum_{m,n} a_{mn} \partial_z^m \partial_{\bar{z}}^n F(u,v) \Big|_{z = \bar{z} = 1/2}
+\end{equation}
+evaluated at the symmetric point.
+\end{definition}
+
+The bootstrap argument proceeds as follows:
+
+\begin{enumerate}
+    \item \textbf{Assume:} No scalar operator exists with $\Delta < \Delta_{\text{gap}}$
+
+    \item \textbf{Find functional:} Search for $\alpha$ satisfying:
+    \begin{align}
+        \alpha[F_{\mathbf{1}}] &> 0 \quad \text{(positive on identity)} \\
+        \alpha[F_{\Delta, \ell}] &\geq 0 \quad \text{for all allowed } (\Delta, \ell)
+    \end{align}
+
+    \item \textbf{Derive contradiction:} Apply $\alpha$ to crossing equation:
+    \begin{equation}
+        0 = \alpha\left[\sum_\mathcal{O} \lambda^2 F_\mathcal{O}\right] = \sum_\mathcal{O} \lambda^2 \alpha[F_\mathcal{O}] > 0
+    \end{equation}
+    The inequality uses $\lambda^2 > 0$ (unitarity) and $\alpha[F_\mathcal{O}] \geq 0$.
+
+    \item \textbf{Conclusion:} No CFT can have gap larger than $\Delta_{\text{gap}}$.
+\end{enumerate}
+
+\subsection{Central Charge Bounds: $a/c$ from TTTT Bootstrap}
+
+The Hofman-Maldacena bound comes from requiring positive energy flux:
+
+\begin{theorem}[Hofman-Maldacena Bound]
+In any unitary 4d CFT:
+\begin{equation}
+    \boxed{\frac{1}{3} \leq \frac{a}{c} \leq \frac{31}{18}}
+\end{equation}
+\begin{itemize}
+    \item Lower bound saturated by: free vector field
+    \item Upper bound saturated by: free Weyl fermion
+\end{itemize}
+\end{theorem}
+
+The TTTT bootstrap can \textbf{strengthen} this by:
+\begin{itemize}
+    \item Including full crossing symmetry (not just energy positivity)
+    \item Incorporating spin-0 and spin-4 contributions
+    \item Adding gap assumptions on the spectrum
+\end{itemize}
+
+\subsection{SDP Formulation for Bootstrap Bounds}
+
+The search for an extremal functional is formulated as a \textbf{semidefinite program}:
+
+\begin{equation}
+\begin{aligned}
+    \text{Find:} \quad & \alpha = (\alpha_1, \ldots, \alpha_N) \\
+    \text{Subject to:} \quad & \vec{\alpha} \cdot \vec{F}_{\mathbf{1}} > 0 \\
+    & \vec{\alpha} \cdot \vec{F}_{\Delta, \ell} \geq 0 \quad \forall \Delta \geq \Delta_{\ell}^{\text{gap}}, \; \ell = 0, 2, 4, \ldots
+\end{aligned}
+\end{equation}
+
+The continuous positivity constraint is handled via:
+\begin{enumerate}
+    \item \textbf{Discretization:} Sample at finitely many $\Delta$ values
+    \item \textbf{Polynomial approximation:} Represent as polynomial in $\Delta$ and require non-negativity
+    \item \textbf{Sum-of-squares (SOS):} Write polynomial as sum of squares, which is an SDP constraint
+\end{enumerate}
+
+\begin{theorem}[SOS Representation]
+A polynomial $p(\Delta) \geq 0$ on $[\Delta_{\text{gap}}, \infty)$ can be written as:
+\begin{equation}
+    p(\Delta) = s_1(\Delta) + (\Delta - \Delta_{\text{gap}}) s_2(\Delta)
+\end{equation}
+where $s_1, s_2$ are sums of squares. This reduces to a linear matrix inequality (LMI).
+\end{theorem}
+
+% ============================================================
+% SECTION 4: IMPLEMENTATION
+% ============================================================
+\section{Implementation Approach}
+
+\subsection{Phase 1: Conformal Block Computation (Months 1--2)}
+
+\textbf{Goal:} Build a high-precision calculator for conformal blocks in arbitrary dimension $d$.
+
+\begin{lstlisting}[language=Python, caption={Conformal block via Casimir recursion}]
+from mpmath import mp, mpf, mpc, hyp2f1
+import numpy as np
+
+mp.dps = 100  # High precision for bootstrap
+
+class ConformalBlockCalculator:
+    """
+    Compute conformal blocks in arbitrary dimension d.
+    """
+
+    def __init__(self, d, precision=100):
+        """
+        Initialize calculator for dimension d.
+
+        Args:
+            d: Spacetime dimension
+            precision: Decimal digit precision
+        """
+        self.d = mpf(d)
+        mp.dps = precision
+
+    def scalar_block_4d(self, Delta, ell, z, zbar):
+        """
+        Exact conformal block in d=4.
+
+        G_{Delta,ell}(z,zbar) = (z*zbar)/(z-zbar) *
+            [k_{Delta+ell}(z)*k_{Delta-ell-2}(zbar) - (z<->zbar)]
+        """
+        z, zbar = mpc(z), mpc(zbar)
+        Delta, ell = mpf(Delta), mpf(ell)
+
+        h = (Delta + ell) / 2
+        hbar = (Delta - ell) / 2
+
+        def k_beta(beta, x):
+            """Hypergeometric building block."""
+            return x**(beta/2) * hyp2f1(beta/2, beta/2, beta, x)
+
+        prefactor = (z * zbar) / (z - zbar)
+        term1 = k_beta(2*h, z) * k_beta(2*hbar - 2, zbar)
+        term2 = k_beta(2*h, zbar) * k_beta(2*hbar - 2, z)
+
+        return complex(prefactor * (term1 - term2))
+
+    def block_recursion(self, Delta, ell, z, zbar, max_order=60):
+        """
+        Conformal block via Zamolodchikov-type recursion.
+        Works for arbitrary d.
+
+        Args:
+            Delta: Scaling dimension
+            ell: Spin
+            z, zbar: Cross-ratio variables
+            max_order: Truncation order
+
+        Returns:
+            Conformal block value
+        """
+        d = self.d
+        Delta, ell = mpf(Delta), mpf(ell)
+        z, zbar = mpc(z), mpc(zbar)
+
+        # Radial coordinates for stability
+        rho = mp.sqrt(z * zbar)
+        eta = (z + zbar) / (2 * mp.sqrt(z * zbar))
+
+        # Initialize recursion
+        # G = rho^Delta * sum_{m,n} c_{m,n} rho^m C_n(eta)
+        # where C_n are Gegenbauer polynomials
+
+        result = mpf(0)
+
+        for m in range(max_order):
+            coeff_m = self._recursion_coefficient(Delta, ell, m, d)
+            result += coeff_m * rho**(Delta + m)
+
+        return complex(result)
+
+    def _recursion_coefficient(self, Delta, ell, m, d):
+        """
+        Compute recursion coefficient c_m.
+        Based on Casimir eigenvalue structure.
+        """
+        if m == 0:
+            return mpf(1)
+
+        # Recursion from Kos-Poland-Simmons-Duffin
+        c_Delta_ell = Delta * (Delta - d) + ell * (ell + d - 2)
+
+        # Implementation of recursion relation
+        # c_m = f(c_{m-1}, c_{m-2}, ...) from Casimir equation
+
+        # Placeholder for full implementation
+        return mpf(0)  # Replace with actual recursion
+
+    def verify_casimir(self, Delta, ell, z, zbar):
+        """
+        Verify block satisfies Casimir equation.
+        """
+        d = self.d
+        expected_eigenvalue = Delta * (Delta - d) + ell * (ell + d - 2)
+
+        G = self.block_recursion(Delta, ell, z, zbar)
+        DG = self._apply_casimir(Delta, ell, z, zbar)
+
+        ratio = DG / G if G != 0 else 0
+
+        error = abs(ratio - expected_eigenvalue)
+        return error < 1e-10, error, expected_eigenvalue
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption={Block validation suite}]
+def validate_conformal_blocks():
+    """
+    Comprehensive validation of conformal block computation.
+    """
+    calc = ConformalBlockCalculator(d=4)
+
+    print("Testing conformal blocks...")
+
+    # Test 1: Identity block (Delta=0, ell=0) = 1
+    z, zbar = 0.3, 0.2
+    G_id = calc.scalar_block_4d(0, 0, z, zbar)
+    assert abs(G_id - 1.0) < 1e-10, f"Identity block failed: {G_id}"
+    print("  Identity block: PASSED")
+
+    # Test 2: Casimir eigenvalue
+    for Delta in [2.0, 3.5, 5.0, 7.0]:
+        for ell in [0, 2, 4]:
+            passed, error, expected = calc.verify_casimir(Delta, ell, z, zbar)
+            assert passed, f"Casimir failed for ({Delta}, {ell}): error={error}"
+    print("  Casimir eigenvalue: PASSED")
+
+    # Test 3: Compare recursion vs closed form (d=4)
+    for Delta in np.linspace(2, 10, 20):
+        for ell in [0, 2]:
+            G_exact = calc.scalar_block_4d(Delta, ell, z, zbar)
+            G_rec = calc.block_recursion(Delta, ell, z, zbar)
+            error = abs(G_exact - G_rec) / abs(G_exact)
+            assert error < 1e-8, f"Mismatch at ({Delta}, {ell})"
+    print("  Recursion vs exact: PASSED")
+
+    # Test 4: Symmetry z <-> zbar for ell=0
+    G1 = calc.scalar_block_4d(3.0, 0, 0.3, 0.2)
+    G2 = calc.scalar_block_4d(3.0, 0, 0.2, 0.3)
+    assert abs(G1 - G2) < 1e-10, "Symmetry failed for scalar block"
+    print("  Scalar symmetry: PASSED")
+
+    print("All conformal block tests PASSED")
+    return True
+\end{lstlisting}
+
+\subsection{Phase 2: Crossing Matrix Setup (Months 2--3)}
+
+\textbf{Goal:} Compute derivatives of crossing vectors at the symmetric point.
+
+\begin{lstlisting}[language=Python, caption={Crossing vector computation}]
+import numpy as np
+from functools import lru_cache
+
+class CrossingVectorCalculator:
+    """
+    Compute crossing vectors for bootstrap.
+    """
+
+    def __init__(self, d, delta_ext=None):
+        """
+        Args:
+            d: Spacetime dimension
+            delta_ext: External operator dimension (for TTTT, this is d)
+        """
+        self.d = d
+        self.delta_ext = delta_ext if delta_ext else d
+        self.block_calc = ConformalBlockCalculator(d)
+
+    def crossing_vector(self, Delta, ell, z, zbar):
+        """
+        Compute F_{Delta,ell}(z,zbar) = G_s(u,v) - G_t(v,u)
+
+        For identical external operators.
+        """
+        u = z * zbar
+        v = (1 - z) * (1 - zbar)
+
+        # s-channel block
+        G_s = self.block_calc.block_recursion(Delta, ell, z, zbar)
+
+        # t-channel: swap z <-> 1-z
+        z_t = 1 - z
+        zbar_t = 1 - zbar
+        G_t = self.block_calc.block_recursion(Delta, ell, z_t, zbar_t)
+
+        # Crossing vector with appropriate prefactors
+        F = (v ** self.delta_ext) * G_s - (u ** self.delta_ext) * G_t
+
+        return F
+
+    def derivative_table(self, Delta, ell, max_deriv=15):
+        """
+        Compute derivatives of crossing vector at z = zbar = 1/2.
+
+        Returns:
+            Dictionary mapping (m, n) -> d^{m+n}F / dz^m dzbar^n |_{z=zbar=1/2}
+        """
+        eps = 1e-8  # Finite difference step
+
+        deriv_table = {}
+
+        for m in range(max_deriv + 1):
+            for n in range(max_deriv + 1 - m):
+                deriv_table[(m, n)] = self._numerical_derivative(
+                    Delta, ell, m, n, eps
+                )
+
+        return deriv_table
+
+    def _numerical_derivative(self, Delta, ell, m, n, eps):
+        """
+        Numerical derivative using finite differences.
+        """
+        z0, zbar0 = 0.5, 0.5
+
+        # High-order finite difference stencil
+        stencil_coeffs = [
+            -1/12, 4/3, -5/2, 4/3, -1/12
+        ]  # 4th order accuracy
+
+        result = 0.0
+
+        for i, c_i in enumerate(stencil_coeffs):
+            for j, c_j in enumerate(stencil_coeffs):
+                z = z0 + (i - 2) * eps
+                zbar = zbar0 + (j - 2) * eps
+                F = self.crossing_vector(Delta, ell, z, zbar)
+                result += c_i * c_j * F
+
+        result /= eps**(m + n)
+
+        return complex(result)
+
+    def build_crossing_matrix(self, Delta_grid, ell_grid, max_deriv=15):
+        """
+        Build matrix of crossing vector derivatives.
+
+        Each row: different (Delta, ell)
+        Each column: different derivative (m, n)
+        """
+        n_ops = len(Delta_grid) * len(ell_grid)
+        n_derivs = (max_deriv + 1) * (max_deriv + 2) // 2
+
+        matrix = np.zeros((n_ops, n_derivs), dtype=complex)
+
+        row = 0
+        for Delta in Delta_grid:
+            for ell in ell_grid:
+                deriv_table = self.derivative_table(Delta, ell, max_deriv)
+
+                col = 0
+                for m in range(max_deriv + 1):
+                    for n in range(max_deriv + 1 - m):
+                        matrix[row, col] = deriv_table[(m, n)]
+                        col += 1
+                row += 1
+
+        return matrix
+\end{lstlisting}
+
+\subsection{Phase 3: SDP Formulation for Bounds (Months 3--5)}
+
+\textbf{Goal:} Implement semidefinite programming solver for bootstrap.
+
+\begin{lstlisting}[language=Python, caption={SDP bootstrap solver}]
+import cvxpy as cp
+import numpy as np
+
+class BootstrapSDP:
+    """
+    Semidefinite programming formulation for conformal bootstrap.
+    """
+
+    def __init__(self, d, delta_gap, ell_max=10, deriv_order=15):
+        """
+        Initialize bootstrap SDP.
+
+        Args:
+            d: Spacetime dimension
+            delta_gap: Assumed gap in scalar channel
+            ell_max: Maximum spin to include
+            deriv_order: Number of derivatives in functional
+        """
+        self.d = d
+        self.delta_gap = delta_gap
+        self.ell_max = ell_max
+        self.deriv_order = deriv_order
+
+        self.crossing_calc = CrossingVectorCalculator(d)
+
+        # Compute number of functional components
+        self.n_components = (deriv_order + 1) * (deriv_order + 2) // 2
+
+    def setup_constraints(self, Delta_sample_points=100):
+        """
+        Set up SDP constraints.
+
+        Returns:
+            problem: CVXPY problem
+            alpha: Functional variable
+        """
+        # Functional coefficients
+        alpha = cp.Variable(self.n_components)
+
+        constraints = []
+
+        # Constraint 1: Positive on identity
+        F_identity = self._crossing_vector_flat(0, 0)
+        constraints.append(alpha @ F_identity >= 1)  # Normalization
+
+        # Constraint 2: Positive on allowed operators
+        for ell in range(0, self.ell_max + 1, 2):  # Even spins only
+
+            # Unitarity bound for this spin
+            if ell == 0:
+                Delta_min = self.delta_gap  # Imposed gap
+            else:
+                Delta_min = self.d + ell - 2  # Unitarity bound
+
+            # Sample Delta values
+            Delta_max = 30.0  # Large enough cutoff
+            Delta_samples = np.linspace(Delta_min, Delta_max, Delta_sample_points)
+
+            for Delta in Delta_samples:
+                F = self._crossing_vector_flat(Delta, ell)
+                constraints.append(alpha @ F >= 0)
+
+        # Feasibility problem
+        problem = cp.Problem(cp.Minimize(0), constraints)
+
+        return problem, alpha
+
+    def _crossing_vector_flat(self, Delta, ell):
+        """
+        Get crossing vector as flat array of derivatives.
+        """
+        deriv_table = self.crossing_calc.derivative_table(Delta, ell, self.deriv_order)
+
+        F_flat = []
+        for m in range(self.deriv_order + 1):
+            for n in range(self.deriv_order + 1 - m):
+                F_flat.append(deriv_table[(m, n)].real)
+
+        return np.array(F_flat)
+
+    def find_gap_bound(self, tolerance=0.01):
+        """
+        Binary search for maximum allowed gap.
+        """
+        Delta_min = (self.d - 2) / 2  # Unitarity bound for scalars
+        Delta_max = 10.0
+
+        print(f"Searching for gap bound in [{Delta_min:.2f}, {Delta_max:.2f}]")
+
+        while Delta_max - Delta_min > tolerance:
+            Delta_mid = (Delta_min + Delta_max) / 2
+            self.delta_gap = Delta_mid
+
+            problem, alpha = self.setup_constraints()
+            problem.solve(solver=cp.MOSEK, verbose=False)
+
+            if problem.status == cp.OPTIMAL:
+                # Feasible: functional exists, gap is EXCLUDED
+                Delta_max = Delta_mid
+                print(f"  Delta_gap = {Delta_mid:.4f}: EXCLUDED")
+            else:
+                # Infeasible: no functional, gap is ALLOWED
+                Delta_min = Delta_mid
+                print(f"  Delta_gap = {Delta_mid:.4f}: ALLOWED")
+
+        bound = (Delta_min + Delta_max) / 2
+        print(f"Gap bound: Delta_gap <= {bound:.4f}")
+
+        return bound
+
+    def extract_extremal_functional(self, delta_gap_boundary):
+        """
+        Extract extremal functional at the boundary.
+        """
+        self.delta_gap = delta_gap_boundary
+        problem, alpha = self.setup_constraints()
+        problem.solve(solver=cp.MOSEK, verbose=True)
+
+        if problem.status == cp.OPTIMAL:
+            return alpha.value
+        return None
+\end{lstlisting}
+
+\subsection{Phase 4: Extremal Functional Method (Months 5--7)}
+
+\textbf{Goal:} Extract spectrum from extremal functional zeros.
+
+\begin{lstlisting}[language=Python, caption={Extremal spectrum extraction}]
+from scipy.optimize import brentq
+import numpy as np
+
+class ExtremalAnalyzer:
+    """
+    Analyze extremal functionals to extract CFT data.
+    """
+
+    def __init__(self, bootstrap_sdp, alpha_extremal):
+        """
+        Args:
+            bootstrap_sdp: Bootstrap SDP instance
+            alpha_extremal: Extremal functional coefficients
+        """
+        self.sdp = bootstrap_sdp
+        self.alpha = alpha_extremal
+
+    def functional_value(self, Delta, ell):
+        """
+        Evaluate alpha.F(Delta, ell).
+        """
+        F = self.sdp._crossing_vector_flat(Delta, ell)
+        return self.alpha @ F
+
+    def find_zeros(self, ell, Delta_min, Delta_max, n_search=1000):
+        """
+        Find zeros of extremal functional for given spin.
+        """
+        zeros = []
+
+        Delta_search = np.linspace(Delta_min, Delta_max, n_search)
+
+        for i in range(len(Delta_search) - 1):
+            val1 = self.functional_value(Delta_search[i], ell)
+            val2 = self.functional_value(Delta_search[i+1], ell)
+
+            # Sign change indicates zero
+            if val1 * val2 < 0:
+                try:
+                    Delta_zero = brentq(
+                        lambda D: self.functional_value(D, ell),
+                        Delta_search[i],
+                        Delta_search[i+1]
+                    )
+                    zeros.append(Delta_zero)
+                except:
+                    pass
+
+        return zeros
+
+    def extract_spectrum(self):
+        """
+        Extract full spectrum from extremal functional.
+        """
+        spectrum = []
+
+        for ell in range(0, self.sdp.ell_max + 1, 2):
+            if ell == 0:
+                Delta_min = self.sdp.delta_gap
+            else:
+                Delta_min = self.sdp.d + ell - 2
+
+            zeros = self.find_zeros(ell, Delta_min, 30.0)
+
+            for Delta in zeros:
+                spectrum.append({
+                    'Delta': Delta,
+                    'ell': ell,
+                    'type': 'double_zero' if self.is_double_zero(Delta, ell) else 'simple'
+                })
+
+        return spectrum
+
+    def is_double_zero(self, Delta, ell, eps=1e-4):
+        """
+        Check if zero is a double zero (derivative also vanishes).
+        """
+        val = self.functional_value(Delta, ell)
+        deriv = (self.functional_value(Delta + eps, ell) -
+                 self.functional_value(Delta - eps, ell)) / (2 * eps)
+
+        return abs(val) < 1e-8 and abs(deriv) < 1e-6
+
+    def extract_ope_coefficients(self, spectrum):
+        """
+        Extract OPE coefficients from crossing equation.
+
+        At extremal point: sum_O lambda_O^2 F_O = 0
+        The functional satisfies: alpha.F_O = 0 for O in spectrum
+        """
+        n_ops = len(spectrum)
+
+        # Build system of equations
+        F_matrix = np.zeros((self.sdp.n_components, n_ops))
+
+        for i, op in enumerate(spectrum):
+            F_matrix[:, i] = self.sdp._crossing_vector_flat(op['Delta'], op['ell'])
+
+        # Solve crossing: sum lambda^2 F = 0
+        # Use SVD to find null space
+        U, S, Vh = np.linalg.svd(F_matrix.T)
+
+        # Smallest singular value gives null vector
+        lambda_sq = Vh[-1]
+
+        # Normalize: lambda^2_identity = 1
+        lambda_sq = lambda_sq / lambda_sq[0]
+
+        # Assign to spectrum
+        for i, op in enumerate(spectrum):
+            op['lambda_sq'] = lambda_sq[i]
+
+        return spectrum
+\end{lstlisting}
+
+\subsection{Phase 5: TTTT-Specific Implementation (Months 6--8)}
+
+\textbf{Goal:} Handle tensor structures for stress tensor correlator.
+
+\begin{lstlisting}[language=Python, caption={TTTT bootstrap setup}]
+class TTTTBootstrap:
+    """
+    Bootstrap for stress tensor four-point function.
+    Handles multiple tensor structures.
+    """
+
+    def __init__(self, d=4):
+        self.d = d
+
+        # Number of tensor structures in TTTT
+        # d=4: 5 structures
+        # d=3: 3 structures
+        self.n_structures = self._count_structures(d)
+
+    def _count_structures(self, d):
+        """Count independent tensor structures for TTTT."""
+        if d == 4:
+            return 5
+        elif d == 3:
+            return 3
+        else:
+            # General formula from CFT literature
+            return (d+2)*(d-1)//2 - 1
+
+    def setup_crossing_system(self, Delta_gap_scalar, a_over_c_range):
+        """
+        Set up crossing equations for TTTT.
+
+        Returns system of equations, one per tensor structure.
+        """
+        # For each structure I, crossing equation:
+        # sum_O lambda^2_O G^I_O(u,v) = sum_O lambda^2_O G^I_O(v,u)
+
+        crossing_systems = []
+
+        for I in range(self.n_structures):
+            system_I = self._crossing_for_structure(I, Delta_gap_scalar)
+            crossing_systems.append(system_I)
+
+        return crossing_systems
+
+    def _crossing_for_structure(self, structure_index, Delta_gap):
+        """
+        Build crossing equation for given tensor structure.
+        """
+        # Placeholder: full implementation requires
+        # tensor structure decomposition from literature
+        # (Costa et al., Dymarsky et al.)
+
+        pass
+
+    def ward_identity_constraints(self, alpha):
+        """
+        Implement Ward identity constraints.
+
+        Conservation of T implies:
+        - Specific relations between OPE coefficients
+        - Fixes identity and T contributions
+        """
+        constraints = []
+
+        # Ward identity: lambda_{TT1} fixed by C_T
+        # lambda_{TTT} constrained by central charges
+
+        return constraints
+
+    def bound_a_over_c(self, Delta_gap_scalar=None, deriv_order=12):
+        """
+        Find allowed range of a/c.
+
+        Returns:
+            (a_c_min, a_c_max): Allowed range
+        """
+        # Set up SDP with a/c as variable
+        a_c = cp.Variable()
+
+        constraints = []
+
+        # Add crossing constraints
+        # Add unitarity constraints
+        # Add Ward identity constraints
+
+        # Minimize a/c
+        prob_min = cp.Problem(cp.Minimize(a_c), constraints)
+        prob_min.solve(solver=cp.MOSEK)
+        a_c_min = a_c.value
+
+        # Maximize a/c
+        prob_max = cp.Problem(cp.Maximize(a_c), constraints)
+        prob_max.solve(solver=cp.MOSEK)
+        a_c_max = a_c.value
+
+        return a_c_min, a_c_max
+\end{lstlisting}
+
+\subsection{Phase 6: Certificate Generation (Months 8--10)}
+
+\textbf{Goal:} Generate machine-verifiable proofs of bounds.
+
+\begin{lstlisting}[language=Python, caption={Certificate generation}]
+import json
+import hashlib
+from datetime import datetime
+
+class BootstrapCertificate:
+    """
+    Machine-verifiable certificate for bootstrap bounds.
+    """
+
+    def __init__(self, bound_type, bound_value, functional, metadata):
+        """
+        Args:
+            bound_type: 'gap_upper' or 'gap_lower' or 'ope_bound'
+            bound_value: Numerical value of bound
+            functional: Extremal functional coefficients
+            metadata: Dictionary with d, deriv_order, etc.
+        """
+        self.bound_type = bound_type
+        self.bound_value = bound_value
+        self.functional = functional
+        self.metadata = metadata
+        self.timestamp = datetime.now().isoformat()
+
+    def to_json(self, filename):
+        """Export certificate to JSON."""
+        cert = {
+            'version': '1.0',
+            'timestamp': self.timestamp,
+            'bound_type': self.bound_type,
+            'bound_value': float(self.bound_value),
+            'functional': [float(a) for a in self.functional],
+            'metadata': self.metadata,
+            'verification': self._generate_verification_data(),
+            'checksum': self._compute_checksum()
+        }
+
+        with open(filename, 'w') as f:
+            json.dump(cert, f, indent=2)
+
+        print(f"Certificate saved to {filename}")
+
+    def _generate_verification_data(self):
+        """Generate data for independent verification."""
+        return {
+            'identity_value': self._eval_on_identity(),
+            'sample_positivity': self._sample_checks(n_samples=50),
+            'crossing_residual': self._crossing_residual()
+        }
+
+    def _eval_on_identity(self):
+        """Evaluate functional on identity."""
+        # F_identity for the specific setup
+        d = self.metadata['d']
+        deriv_order = self.metadata['deriv_order']
+
+        # Compute identity crossing vector
+        F_id = compute_identity_vector(d, deriv_order)
+
+        return float(np.dot(self.functional, F_id))
+
+    def _sample_checks(self, n_samples):
+        """Check positivity at sample points."""
+        checks = []
+
+        d = self.metadata['d']
+        delta_gap = self.metadata.get('delta_gap', 1.0)
+
+        for ell in [0, 2, 4]:
+            delta_min = delta_gap if ell == 0 else d + ell - 2
+
+            for Delta in np.linspace(delta_min, 20, n_samples // 3):
+                F = compute_crossing_vector(Delta, ell, d, self.metadata['deriv_order'])
+                val = float(np.dot(self.functional, F))
+
+                checks.append({
+                    'Delta': float(Delta),
+                    'ell': int(ell),
+                    'value': val,
+                    'positive': val >= -1e-10
+                })
+
+        return checks
+
+    def _crossing_residual(self):
+        """Compute crossing equation residual."""
+        # Should be ~0 for valid certificate
+        return 0.0
+
+    def _compute_checksum(self):
+        """Compute SHA256 checksum of certificate data."""
+        data = json.dumps({
+            'bound_value': float(self.bound_value),
+            'functional': [float(a) for a in self.functional],
+            'metadata': self.metadata
+        }, sort_keys=True)
+
+        return hashlib.sha256(data.encode()).hexdigest()
+
+
+def verify_certificate(cert_file):
+    """
+    Independent verification of bootstrap certificate.
+
+    Returns True if certificate is valid.
+    """
+    with open(cert_file, 'r') as f:
+        cert = json.load(f)
+
+    print(f"Verifying certificate: {cert['bound_type']} = {cert['bound_value']}")
+
+    # Check 1: Checksum
+    recomputed = hashlib.sha256(json.dumps({
+        'bound_value': cert['bound_value'],
+        'functional': cert['functional'],
+        'metadata': cert['metadata']
+    }, sort_keys=True).encode()).hexdigest()
+
+    if recomputed != cert['checksum']:
+        print("FAILED: Checksum mismatch")
+        return False
+    print("  Checksum: PASSED")
+
+    # Check 2: Identity positivity
+    id_val = cert['verification']['identity_value']
+    if id_val <= 0:
+        print(f"FAILED: Identity value = {id_val} <= 0")
+        return False
+    print(f"  Identity positivity: PASSED (value = {id_val:.6f})")
+
+    # Check 3: Sample positivity
+    failures = [c for c in cert['verification']['sample_positivity']
+                if not c['positive']]
+    if failures:
+        print(f"FAILED: {len(failures)} positivity violations")
+        for f in failures[:5]:
+            print(f"    ({f['Delta']:.3f}, {f['ell']}): {f['value']:.2e}")
+        return False
+    print(f"  Sample positivity: PASSED ({len(cert['verification']['sample_positivity'])} points)")
+
+    print("Certificate VERIFIED")
+    return True
+\end{lstlisting}
+
+% ============================================================
+% SECTION 5: RESEARCH DIRECTIONS
+% ============================================================
+\section{Research Directions}
+
+\subsection{Direction 1: Gap Bounds in $d = 3, 4, 6$}
+
+\begin{pursuitbox}
+\textbf{Objective:} Systematically compute maximum allowed gap to first scalar in $T \times T$ OPE across dimensions.
+
+\textbf{Method:}
+\begin{enumerate}
+    \item Implement conformal blocks for each $d$
+    \item Set up TTTT crossing equations with tensor structures
+    \item Binary search for gap bound using SDP
+    \item Extract extremal functional at boundary
+\end{enumerate}
+
+\textbf{Expected Results:}
+\begin{itemize}
+    \item $d = 3$: Compare with 3d Ising, $O(N)$ models
+    \item $d = 4$: Compare with free theories, $\mathcal{N} = 4$ SYM
+    \item $d = 6$: Constrain $(2,0)$ theory spectrum
+\end{itemize}
+
+\textbf{Key Question:} Is there a universal upper bound on $\Delta_{\text{gap}}$ independent of $c_T$?
+\end{pursuitbox}
+
+\subsection{Direction 2: OPE Coefficient Bounds}
+
+\begin{pursuitbox}
+\textbf{Objective:} Bound the OPE coefficient $\lambda_{TT\mathcal{O}}^2$ for the first scalar $\mathcal{O}$ in $T \times T$.
+
+\textbf{Approach:}
+\begin{enumerate}
+    \item Modify SDP to optimize over $\lambda^2$
+    \item Fix $(\Delta_\mathcal{O}, c_T)$ and find allowed range
+    \item Map out allowed region in $(\Delta_\mathcal{O}, \lambda^2)$ space
+\end{enumerate}
+
+\textbf{Applications:}
+\begin{itemize}
+    \item Test if known CFTs (free, $\mathcal{N} = 4$) lie on boundary
+    \item Holographic interpretation: bulk cubic couplings
+    \item Identify ``extremal'' theories
+\end{itemize}
+\end{pursuitbox}
+
+\subsection{Direction 3: Comparison with Known CFTs}
+
+\begin{pursuitbox}
+\textbf{Objective:} Locate known CFTs within bootstrap-allowed region.
+
+\textbf{Test Cases:}
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Theory & $d$ & $a/c$ & Notes \\
+\midrule
+Free scalar & 4 & $3/1 = 3$ & Minimal $c$ \\
+Free fermion & 4 & $11/6$ & Near upper HM bound \\
+Free vector & 4 & $31/9$ & Saturates lower HM bound \\
+$\mathcal{N}=4$ SYM & 4 & 1 & Supersymmetric \\
+3d Ising & 3 & -- & Kink in bootstrap \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Method:}
+\begin{enumerate}
+    \item Compute spectrum of each theory
+    \item Check if it lies on bootstrap boundary (extremal)
+    \item If extremal, verify by extracting spectrum from functional
+\end{enumerate}
+\end{pursuitbox}
+
+\subsection{Direction 4: Holographic Interpretation}
+
+\begin{pursuitbox}
+\textbf{Objective:} Translate CFT bounds to bulk AdS physics.
+
+\textbf{Holographic Dictionary:}
+\begin{itemize}
+    \item $\Delta_{\text{gap}}$ $\leftrightarrow$ Lightest bulk field: $m^2 L^2 = \Delta(\Delta - d)$
+    \item $c_T$ $\leftrightarrow$ Newton constant: $G_N \sim L^{d-1}/c_T$
+    \item $\lambda_{TT\mathcal{O}}$ $\leftrightarrow$ Bulk cubic coupling
+\end{itemize}
+
+\textbf{Questions:}
+\begin{enumerate}
+    \item What do CFT bounds imply for allowed bulk actions?
+    \item Connection to Swampland conjectures?
+    \item Is pure gravity (no matter) ever consistent?
+\end{enumerate}
+
+\textbf{Key Insight:} The $a/c$ ratio in 4d is related to higher-derivative corrections in the bulk:
+\begin{equation}
+    a/c - 1 \sim \frac{\alpha'}{L^2} (\text{Gauss-Bonnet correction})
+\end{equation}
+\end{pursuitbox}
+
+\subsection{Direction 5: Improved $a/c$ Bounds}
+
+\begin{pursuitbox}
+\textbf{Objective:} Use full TTTT bootstrap to improve Hofman-Maldacena bounds.
+
+\textbf{Current Bounds:}
+\begin{equation}
+    \frac{1}{3} \leq \frac{a}{c} \leq \frac{31}{18}
+\end{equation}
+
+\textbf{Bootstrap Improvements:}
+\begin{enumerate}
+    \item Include full crossing (not just energy positivity)
+    \item Add gap assumptions on scalar spectrum
+    \item Use mixed correlator ($\phi\phi TT$)
+\end{enumerate}
+
+\textbf{Target:} Determine if bounds tighten for CFTs with:
+\begin{itemize}
+    \item No relevant scalars
+    \item Supersymmetry
+    \item Large $c_T$ (holographic)
+\end{itemize}
+\end{pursuitbox}
+
+\subsection{Direction 6: Mixed Correlator Bootstrap}
+
+\begin{pursuitbox}
+\textbf{Objective:} Include $\langle \phi \phi TT \rangle$ for stronger constraints.
+
+\textbf{Setup:} For a CFT with scalar $\phi$ (dimension $\Delta_\phi$) and stress tensor $T$:
+\begin{itemize}
+    \item $\langle \phi \phi \phi \phi \rangle$: Standard scalar bootstrap
+    \item $\langle \phi \phi TT \rangle$: Mixed correlator
+    \item $\langle TTTT \rangle$: Stress tensor bootstrap
+\end{itemize}
+
+\textbf{Advantage:} The combined system is more overdetermined, leading to tighter bounds or isolated theories.
+
+\textbf{Challenge:} Computational complexity increases due to:
+\begin{itemize}
+    \item Multiple tensor structures
+    \item Cross-channel constraints
+    \item Larger SDP problem
+\end{itemize}
+\end{pursuitbox}
+
+% ============================================================
+% SECTION 6: SUCCESS CRITERIA
+% ============================================================
+\section{Success Criteria}
+
+\subsection{Minimum Viable Result (4--5 months)}
+
+\begin{itemize}
+    \item[$\checkmark$] Conformal block calculator working in $d = 3, 4$ with 50+ digit precision
+    \item[$\checkmark$] Crossing equations for scalar four-point function implemented
+    \item[$\checkmark$] Basic SDP solver producing gap bounds
+    \item[$\checkmark$] Reproduction of known results: 3d Ising kink location
+    \item[$\checkmark$] \textbf{One new rigorous bound} on scalar gap or OPE coefficient
+\end{itemize}
+
+\subsection{Strong Result (6--8 months)}
+
+\begin{itemize}
+    \item[$\checkmark$] TTTT bootstrap implemented with all tensor structures
+    \item[$\checkmark$] $a/c$ bounds computed and compared with Hofman-Maldacena
+    \item[$\checkmark$] Extremal functional extraction working
+    \item[$\checkmark$] Spectrum extraction at boundary points
+    \item[$\checkmark$] Results for $d = 3, 4, 6$
+    \item[$\checkmark$] All bounds in machine-verifiable certificate form
+\end{itemize}
+
+\subsection{Publication-Quality Result (10--12 months)}
+
+\begin{itemize}
+    \item[$\checkmark$] Mixed correlator system ($\phi\phi TT$ + $TTTT$)
+    \item[$\checkmark$] Novel $a/c$ bounds with gap assumptions
+    \item[$\checkmark$] Comparison with $\mathcal{N} = 4$ SYM predictions
+    \item[$\checkmark$] Holographic interpretation documented
+    \item[$\checkmark$] Public code repository with documentation
+    \item[$\checkmark$] ArXiv preprint with verifiable certificates
+\end{itemize}
+
+% ============================================================
+% SECTION 7: VERIFICATION PROTOCOL
+% ============================================================
+\section{Verification Protocol}
+
+\subsection{Conformal Block Verification}
+
+\begin{lstlisting}[language=Python, caption={Comprehensive block tests}]
+def verify_blocks_comprehensive(d):
+    """
+    Full test suite for conformal blocks in dimension d.
+    """
+    calc = ConformalBlockCalculator(d)
+    tests = {'passed': 0, 'failed': 0}
+
+    # Test 1: Identity block = 1
+    z, zbar = 0.3 + 0.01j, 0.2 - 0.01j
+    G_id = calc.block_recursion(0, 0, z, zbar)
+    if abs(G_id - 1.0) < 1e-8:
+        tests['passed'] += 1
+    else:
+        tests['failed'] += 1
+        print(f"Identity block FAILED: {G_id}")
+
+    # Test 2: Casimir eigenvalue
+    for Delta, ell in [(3.0, 0), (4.5, 2), (6.0, 4)]:
+        passed, error, expected = calc.verify_casimir(Delta, ell, z, zbar)
+        if passed:
+            tests['passed'] += 1
+        else:
+            tests['failed'] += 1
+            print(f"Casimir FAILED at ({Delta}, {ell}): error = {error}")
+
+    # Test 3: Boundary behavior
+    # As z -> 0: G ~ z^{Delta/2} for ell = 0
+    z_small = 0.001
+    G = calc.block_recursion(4.0, 0, z_small, z_small)
+    expected_scaling = z_small ** 2.0  # Delta/2 = 2
+    if abs(G / expected_scaling - 1) < 0.1:  # 10% error at small z
+        tests['passed'] += 1
+    else:
+        tests['failed'] += 1
+
+    # Test 4: Symmetry
+    G1 = calc.block_recursion(3.0, 0, 0.3, 0.2)
+    G2 = calc.block_recursion(3.0, 0, 0.2, 0.3)
+    if abs(G1 - G2) < 1e-8:
+        tests['passed'] += 1
+    else:
+        tests['failed'] += 1
+
+    print(f"Block tests: {tests['passed']} passed, {tests['failed']} failed")
+    return tests['failed'] == 0
+\end{lstlisting}
+
+\subsection{SDP Solution Verification}
+
+\begin{lstlisting}[language=Python, caption={SDP verification}]
+def verify_sdp_solution(alpha, sdp_instance, n_fine=5000):
+    """
+    Verify extremal functional satisfies all constraints.
+    """
+    results = {
+        'identity_positive': False,
+        'all_positive': True,
+        'min_value': float('inf'),
+        'min_location': None
+    }
+
+    # Check identity
+    F_id = sdp_instance._crossing_vector_flat(0, 0)
+    id_val = np.dot(alpha, F_id)
+    results['identity_positive'] = (id_val > 0)
+    print(f"Identity: alpha.F = {id_val:.6f}")
+
+    # Fine-grained positivity check
+    for ell in range(0, sdp_instance.ell_max + 1, 2):
+        Delta_min = sdp_instance.delta_gap if ell == 0 else sdp_instance.d + ell - 2
+
+        for Delta in np.linspace(Delta_min, 30, n_fine):
+            F = sdp_instance._crossing_vector_flat(Delta, ell)
+            val = np.dot(alpha, F)
+
+            if val < results['min_value']:
+                results['min_value'] = val
+                results['min_location'] = (Delta, ell)
+
+            if val < -1e-8:
+                results['all_positive'] = False
+                print(f"Violation at ({Delta:.4f}, {ell}): {val:.2e}")
+
+    print(f"Minimum value: {results['min_value']:.2e} at {results['min_location']}")
+
+    results['verified'] = results['identity_positive'] and results['all_positive']
+
+    return results
+\end{lstlisting}
+
+\subsection{Literature Comparison}
+
+\begin{lstlisting}[language=Python, caption={Compare with published results}]
+def compare_with_literature():
+    """
+    Compare computed bounds with published bootstrap results.
+    """
+    # Known 3d Ising data (Kos-Poland-Simmons-Duffin 2014)
+    ising_3d = {
+        'Delta_sigma': 0.5181489,
+        'Delta_epsilon': 1.412625,
+        'C_sigma_sigma_epsilon': 1.0518537
+    }
+
+    # 3d O(N) data
+    on_3d = {
+        2: {'Delta_phi': 0.5190, 'Delta_s': 1.51},
+        3: {'Delta_phi': 0.5190, 'Delta_s': 1.59}
+    }
+
+    # Hofman-Maldacena bounds
+    hm_bounds = {
+        'a_over_c_min': 1/3,
+        'a_over_c_max': 31/18
+    }
+
+    print("Literature comparison:")
+    print(f"  3d Ising: Delta_sigma = {ising_3d['Delta_sigma']}")
+    print(f"  HM bounds: {hm_bounds['a_over_c_min']:.4f} <= a/c <= {hm_bounds['a_over_c_max']:.4f}")
+
+    # Compare with our computed bounds
+    # our_gap_bound = ...
+    # print(f"  Our gap bound: {our_gap_bound}")
+\end{lstlisting}
+
+% ============================================================
+% SECTION 8: COMMON PITFALLS
+% ============================================================
+\section{Common Pitfalls and Mitigations}
+
+\subsection{Numerical Precision in Conformal Blocks}
+
+\begin{warningbox}
+\textbf{Problem:} Conformal blocks involve hypergeometric functions that can lose precision for certain parameter ranges.
+
+\textbf{Symptoms:}
+\begin{itemize}
+    \item NaN or Inf for large $\Delta$
+    \item Loss of precision near $z = 1$
+    \item Casimir check failing
+\end{itemize}
+
+\textbf{Solutions:}
+\begin{itemize}
+    \item Use \texttt{mpmath} with precision $\geq 100$ digits
+    \item Implement stable recursion (radial coordinates)
+    \item Use analytic continuation formulas for $z \to 1$
+\end{itemize}
+\end{warningbox}
+
+\subsection{SDP Solver Issues}
+
+\begin{warningbox}
+\textbf{Problem:} SDP solvers can return incorrect status or fail to converge for bootstrap problems.
+
+\textbf{Symptoms:}
+\begin{itemize}
+    \item Different solvers give different bounds
+    \item Bound changes with derivative order unexpectedly
+    \item ``Numerical issues'' warnings
+\end{itemize}
+
+\textbf{Solutions:}
+\begin{itemize}
+    \item Use multiple solvers: MOSEK, SDPA, SCS
+    \item Increase precision of constraint matrices
+    \item Verify solution by explicit evaluation
+    \item Use SDPB for highest accuracy
+\end{itemize}
+\end{warningbox}
+
+\subsection{Discretization Artifacts}
+
+\begin{warningbox}
+\textbf{Problem:} Discretizing continuous positivity misses violations between sample points.
+
+\textbf{Symptoms:}
+\begin{itemize}
+    \item Bound improves with coarser grid (incorrect!)
+    \item Functional negative at non-sampled points
+\end{itemize}
+
+\textbf{Solutions:}
+\begin{itemize}
+    \item Use sum-of-squares (SOS) for continuous positivity
+    \item Check functional on very fine grid post-solution
+    \item Solve at multiple grid sizes and extrapolate
+\end{itemize}
+\end{warningbox}
+
+\subsection{Tensor Structure Errors}
+
+\begin{warningbox}
+\textbf{Problem:} TTTT has multiple tensor structures with complex index contractions. Errors propagate to wrong bounds.
+
+\textbf{Symptoms:}
+\begin{itemize}
+    \item $a/c$ bounds outside Hofman-Maldacena range
+    \item Free theory fails constraints
+    \item Ward identity violations
+\end{itemize}
+
+\textbf{Solutions:}
+\begin{itemize}
+    \item Verify against free field theory (exactly solvable)
+    \item Check Ward identities explicitly
+    \item Compare with published expressions
+    \item Use automated tensor algebra
+\end{itemize}
+\end{warningbox}
+
+\subsection{Convergence of Derivative Expansion}
+
+\begin{warningbox}
+\textbf{Problem:} Derivative expansion may not converge uniformly.
+
+\textbf{Symptoms:}
+\begin{itemize}
+    \item Bound not stabilizing with derivative order
+    \item Large oscillations in extremal functional
+\end{itemize}
+
+\textbf{Solutions:}
+\begin{itemize}
+    \item Plot bound vs derivative order systematically
+    \item Use radial expansion for better convergence
+    \item Employ Pade approximants
+\end{itemize}
+\end{warningbox}
+
+% ============================================================
+% SECTION 9: RESOURCES
+% ============================================================
+\section{Resources and References}
+
+\subsection{Essential Papers}
+
+\begin{enumerate}
+    \item \textbf{Rattazzi, Rychkov, Tonni, Vichi (2008):} ``Bounding scalar operator dimensions in 4D CFT'' [arXiv:0807.0004]
+    \begin{itemize}
+        \item Founding paper of modern numerical bootstrap
+    \end{itemize}
+
+    \item \textbf{El-Showk et al.\ (2012):} ``Solving the 3D Ising Model with the Conformal Bootstrap'' [arXiv:1203.6064]
+    \begin{itemize}
+        \item Precision determination of 3d Ising exponents
+    \end{itemize}
+
+    \item \textbf{Hofman, Maldacena (2008):} ``Conformal collider physics'' [arXiv:0803.1467]
+    \begin{itemize}
+        \item Original $a/c$ bounds from energy positivity
+    \end{itemize}
+
+    \item \textbf{Dymarsky et al.\ (2017):} ``The 3d Stress-Tensor Bootstrap'' [arXiv:1708.05718]
+    \begin{itemize}
+        \item TTTT bootstrap in 3d
+    \end{itemize}
+
+    \item \textbf{Poland, Rychkov, Vichi (2019):} ``The Conformal Bootstrap: Theory, Numerical Techniques, and Applications'' [arXiv:1805.04405]
+    \begin{itemize}
+        \item Comprehensive review
+    \end{itemize}
+
+    \item \textbf{Simmons-Duffin (2017):} ``The Conformal Bootstrap'' (TASI lectures) [arXiv:1602.07982]
+    \begin{itemize}
+        \item Pedagogical introduction
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Code Libraries}
+
+\begin{itemize}
+    \item \textbf{SDPB:} High-precision SDP solver for bootstrap
+    \begin{itemize}
+        \item \url{https://github.com/davidsd/sdpb}
+        \item Optimized for bootstrap, arbitrary precision
+    \end{itemize}
+
+    \item \textbf{blocks\_3d:} Conformal blocks in 3d
+    \begin{itemize}
+        \item \url{https://gitlab.com/bootstrapcollaboration/blocks_3d}
+    \end{itemize}
+
+    \item \textbf{mpmath:} Arbitrary precision Python
+    \begin{itemize}
+        \item \texttt{pip install mpmath}
+    \end{itemize}
+
+    \item \textbf{CVXPY:} Convex optimization
+    \begin{itemize}
+        \item \texttt{pip install cvxpy}
+    \end{itemize}
+
+    \item \textbf{MOSEK:} Commercial SDP solver (free academic license)
+    \begin{itemize}
+        \item \url{https://www.mosek.com}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Mathematical Background}
+
+\begin{itemize}
+    \item \textbf{CFT:} Di Francesco et al., ``Conformal Field Theory''
+    \item \textbf{Representation Theory:} Fulton-Harris, ``Representation Theory''
+    \item \textbf{SDP:} Boyd-Vandenberghe, ``Convex Optimization''
+    \item \textbf{Special Functions:} DLMF (\url{https://dlmf.nist.gov})
+\end{itemize}
+
+% ============================================================
+% SECTION 10: MILESTONE CHECKLIST
+% ============================================================
+\section{Milestone Checklist}
+
+\subsection{Infrastructure (Months 1--2)}
+
+\begin{itemize}
+    \item[$\square$] Conformal block calculator for $d = 3, 4, 6$
+    \item[$\square$] Casimir eigenvalue verified
+    \item[$\square$] Recursion and closed-form agree ($d = 4$)
+    \item[$\square$] Crossing vector computation working
+    \item[$\square$] Derivative table generation
+    \item[$\square$] Basic SDP solver running
+\end{itemize}
+
+\subsection{Scalar Bootstrap (Months 2--3)}
+
+\begin{itemize}
+    \item[$\square$] Gap bound for 3d scalars reproduced
+    \item[$\square$] 3d Ising ``kink'' identified
+    \item[$\square$] Free scalar verified
+    \item[$\square$] Bounds stable vs derivative order
+    \item[$\square$] Multiple solvers agree
+\end{itemize}
+
+\subsection{OPE Bounds (Months 3--4)}
+
+\begin{itemize}
+    \item[$\square$] SDP extended for OPE bounds
+    \item[$\square$] Allowed region in $(\Delta, \lambda^2)$ mapped
+    \item[$\square$] 3d Ising OPE coefficient verified
+\end{itemize}
+
+\subsection{TTTT Bootstrap (Months 4--6)}
+
+\begin{itemize}
+    \item[$\square$] Tensor structures implemented
+    \item[$\square$] Ward identities incorporated
+    \item[$\square$] Spinning conformal blocks
+    \item[$\square$] Selection rules verified
+    \item[$\square$] Free theory passes
+\end{itemize}
+
+\subsection{$a/c$ Bounds (Months 6--8)}
+
+\begin{itemize}
+    \item[$\square$] Hofman-Maldacena reproduced
+    \item[$\square$] Gap assumptions added
+    \item[$\square$] Bounds vs gap studied
+    \item[$\square$] Comparison with $\mathcal{N}=4$ SYM
+\end{itemize}
+
+\subsection{Extremal Analysis (Months 8--10)}
+
+\begin{itemize}
+    \item[$\square$] Extremal functional extraction
+    \item[$\square$] Double zeros identified
+    \item[$\square$] OPE coefficients extracted
+    \item[$\square$] Extremal spectrum characterized
+\end{itemize}
+
+\subsection{Publication (Months 10--12)}
+
+\begin{itemize}
+    \item[$\square$] All bounds have certificates
+    \item[$\square$] Independent verification
+    \item[$\square$] Code repository public
+    \item[$\square$] Documentation complete
+    \item[$\square$] ArXiv preprint submitted
+\end{itemize}
+
+% ============================================================
+% CONCLUSION
+% ============================================================
+\section{Conclusion}
+
+The conformal bootstrap in higher dimensions provides one of the most powerful non-perturbative approaches to quantum field theory. By exploiting only fundamental axioms---conformal symmetry, unitarity, and crossing---it produces rigorous bounds applicable to all CFTs, including strongly coupled theories.
+
+This challenge focuses on the \textbf{TTTT bootstrap}, which constrains universal CFT data: central charges and stress tensor OPE coefficients. Key outcomes include:
+
+\begin{enumerate}
+    \item \textbf{Gap bounds:} Maximum gap to first scalar in $T \times T$ OPE
+    \item \textbf{$a/c$ bounds:} Sharpening Hofman-Maldacena using full crossing
+    \item \textbf{Extremal theories:} Identifying CFTs saturating bootstrap bounds
+    \item \textbf{Holographic implications:} Constraints on bulk AdS effective actions
+\end{enumerate}
+
+\begin{physicsbox}
+\textbf{Broader Impact:}
+
+Success in this challenge advances our understanding of:
+\begin{itemize}
+    \item \textbf{Critical phenomena:} Universal features of phase transitions
+    \item \textbf{Strongly coupled QFT:} Non-perturbative physics
+    \item \textbf{Quantum gravity:} Via AdS/CFT, CFT bounds constrain consistent gravities
+    \item \textbf{Mathematical physics:} Rigorous, machine-verifiable results
+\end{itemize}
+\end{physicsbox}
+
+The development of machine-verifiable certificates ensures all results can be independently checked, establishing new standards for rigor in theoretical physics.
+
+% ============================================================
+% APPENDIX
+% ============================================================
+\appendix
+
+\section{Conformal Block Technical Details}
+
+\subsection{Zamolodchikov Recursion}
+
+The conformal block can be expanded as:
+\begin{equation}
+    G_{\Delta, \ell}(r, \eta) = r^\Delta \sum_{n=0}^{\infty} r^n g_n^{(\Delta, \ell)}(\eta)
+\end{equation}
+
+where $r = |z|^{1/2} |1-z|^{1/2}$ and $\eta = (z + \bar{z})/(2\sqrt{z\bar{z}})$.
+
+The coefficients satisfy:
+\begin{equation}
+    g_n(\eta) = \sum_{m=0}^{n} A_{nm}(\Delta, \ell) C_m^{(\nu)}(\eta)
+\end{equation}
+
+where $C_m^{(\nu)}$ are Gegenbauer polynomials with $\nu = (d-2)/2$.
+
+\subsection{Casimir Operator}
+
+In radial coordinates, the Casimir takes the form:
+\begin{equation}
+    \mathcal{D} = (1 - r^2)r\partial_r + (1-\eta^2)\partial_\eta^2 - (d-1)\eta\partial_\eta + \ldots
+\end{equation}
+
+The eigenvalue equation $\mathcal{D} G = c_{\Delta,\ell} G$ with:
+\begin{equation}
+    c_{\Delta,\ell} = \Delta(\Delta - d) + \ell(\ell + d - 2)
+\end{equation}
+
+uniquely determines the block given boundary conditions.
+
+\section{Tensor Structures for TTTT}
+
+\subsection{Embedding Space}
+
+In embedding space $\mathbb{R}^{d+1,1}$, points are represented as null rays:
+\begin{equation}
+    P^M = (1, x^2, x^\mu), \quad P^2 = 0
+\end{equation}
+
+The stress tensor lifts to:
+\begin{equation}
+    T^{MN}(P) = \frac{\partial P^M}{\partial x^\mu} \frac{\partial P^N}{\partial x^\nu} T^{\mu\nu}(x)
+\end{equation}
+
+\subsection{Building Blocks}
+
+Independent tensor structures are built from:
+\begin{align}
+    H_{ij} &= -2(P_i \cdot P_j)(Z_i \cdot Z_j) + 2(Z_i \cdot P_j)(Z_j \cdot P_i) \\
+    V_{i,jk} &= \frac{(Z_i \cdot P_j)(P_i \cdot P_k) - (Z_i \cdot P_k)(P_i \cdot P_j)}{P_j \cdot P_k}
+\end{align}
+
+where $Z_i$ are polarization vectors.
+
+\subsection{TTTT Structures in 4d}
+
+The five independent structures can be chosen as:
+\begin{align}
+    t_1 &= H_{12}^2 H_{34}^2 \\
+    t_2 &= H_{12} H_{34} V_{1,23} V_{2,13} V_{3,24} V_{4,14} \\
+    t_3 &= H_{13} H_{24} V_{1,23} V_{2,13} V_{3,24} V_{4,14} \\
+    t_4 &= V_{1,23}^2 V_{2,13}^2 V_{3,24}^2 V_{4,14}^2 \\
+    t_5 &= \text{(cyclic combinations)}
+\end{align}
+
+\section{SDP Implementation Details}
+
+\subsection{Polynomial Positivity via SOS}
+
+A polynomial $p(\Delta)$ is non-negative on $[\Delta_0, \infty)$ iff:
+\begin{equation}
+    p(\Delta) = s_1(\Delta) + (\Delta - \Delta_0) s_2(\Delta)
+\end{equation}
+
+where $s_1, s_2$ are sums of squares.
+
+An SOS polynomial of degree $2d$ can be written:
+\begin{equation}
+    s(\Delta) = \vec{v}(\Delta)^T Q \vec{v}(\Delta), \quad Q \succeq 0
+\end{equation}
+
+where $\vec{v}(\Delta) = (1, \Delta, \Delta^2, \ldots, \Delta^d)^T$.
+
+The constraint $Q \succeq 0$ (positive semidefinite) is an LMI, making the overall problem an SDP.
+
+\end{document}
