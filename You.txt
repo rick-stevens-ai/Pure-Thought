@@ -1,0 +1,180 @@
+You’re right—there’s a lot more “foundational” to go after than just
+cranking more loops. Under your constraints (no external data, only code
+we write + proofs/derivations), the sweet spot is axiom-driven
+consistency for QFT+gravity: modularity, unitarity, causality, crossing,
+symmetry, positivity. Here’s a focused menu
+of quantum-gravity/particle-theory tracks where we can make genuine
+headway and produce verifiable artifacts (proofs, certificates,
+infeasibility witnesses), not just pretty numerics.
+
+1) AdS₃ “Pure Gravity” via the Modular Bootstrap
+
+Problem. Do extremal 2D CFTs with only Virasoro descendants below the
+gap (the “pure AdS₃ gravity” dual) exist for large central charge c=24k?
+Why it’s perfect. Entirely first-principles: modular invariance,
+unitarity, integrality. No data.
+Plan.
+
+-   Build from scratch: a high-precision modular bootstrap/LP+SDP solver
+    with exact rational certificates (dual functionals) and
+    integer-degeneracy constraints.
+
+-   Search for feasible partition functions with spectral gaps; when
+    infeasible, return dual certificates = proof of impossibility for
+    given (c, gap).
+    Milestones.
+
+-   60–90d: Reproduce known constraints (k=1 Monster point).
+
+-   6–12mo: Either explicit extremal-like spectra at new k, or rigorous
+    no-go regions (publishable).
+
+2) Gravitational Positivity & Causality Bounds (Flat Space)
+
+Problem. Bound higher-derivative operators in graviton EFTs (e.g., R²,
+R³ terms) using analyticity/crossing/unitarity + eikonal/shockwave
+causality.
+Why it fits. Pure dispersion theory + convex optimization; certificates
+are dual polynomials or SOS decompositions.
+Plan.
+
+-   Implement dispersion relations with subtractions compatible with
+    gravity’s IR behavior; include t-channel pole handling and Regge
+    tails.
+
+-   Build SoS/SDP machinery that outputs dual certificates proving an
+    operator region is forbidden/allowed.
+    Milestones. 3–9mo: New multi-coupling bounds that tighten or
+    disambiguate known results, with machine-checkable proofs.
+
+3) Celestial CFT Bootstrap (4D QG ↔ 2D Celestial)
+
+Problem. Enforce SL(2,ℂ) covariance, crossing, unitarity, and
+soft-theorem constraints on celestial correlators to carve out the
+consistent “celestial CFT” space for graviton scattering.
+Why it fits. It’s all symmetry, kinematics, and consistency; verifiable
+by symbolic/analytic checks.
+Plan.
+
+-   From scratch: Mellin transform pipeline for tree/1-loop toy
+    amplitudes we derive ourselves, then impose celestial
+    crossing/Regge/soft limits as SDP inequalities.
+
+-   Produce extremal functionals that certify or exclude OPE data
+    patterns.
+    Milestones. 6–12mo: First rigorous “islands” or no-go regions for
+    simple sectors (e.g., identical-helicity subsectors).
+
+4) Modular-Lightcone Bootstrap for Stress-Tensor Dominated CFTs
+(Holographic CFT)
+
+Problem. In large-c, sparse-spectrum CFTs (holographic), derive sharp
+bounds on higher-spin gaps/OPE coefficients implied by causality/chaos
+(Regge) + crossing.
+Why it fits. Uses only crossing, unitarity, modular constraints on
+thermal correlators, and chaos bounds—no data.
+Plan.
+
+-   Implement Lorentzian inversion + lightcone expansions; certify
+    inequalities via SDP/SoS.
+
+-   Produce formal certificates that a given bulk higher-derivative term
+    must be small/vanish to avoid superluminality/ANEC violation.
+    Milestones. 6–9mo: Tighter “gravitational bootstrap” exclusion plots
+    for higher-spin exchanges.
+
+5) Positive Geometry for Gravity (Beyond Planar N=4 SYM)
+
+Problem. Identify or rule out positive-geometry/canonical-form
+structures (amplituhedron-like) for (super)gravity sectors.
+Why it fits. Pure combinatorics/algebraic geometry; outputs are
+constructive geometries and residue identities that we can symbolically
+verify.
+Plan.
+
+-   Implement from scratch: canonical-form solvers for
+    polytopes/Grassmannians; finite-field sampling + rational
+    reconstruction for integrands; symbol integrability checks.
+
+-   Search for minimal geometries reproducing low-loop graviton
+    integrands we derive ourselves from on-shell recursion + unitarity
+    cuts.
+    Milestones. 9–12mo: New positive-geometry proposals or no-go
+    theorems for specific helicity/loop sectors.
+
+6) Non-perturbative S-matrix Bootstrap with Gravity Inputs
+
+Problem. Carve out the space of unitary, crossing-symmetric,
+analytic 2→2 amplitudes obeying gravitational soft theorems and proper
+high-energy behavior.
+Why it fits. Fully axiomatic; feasibility ↔ convex optimization with
+certificates.
+Plan.
+
+-   Build partial-wave + Roy-like equation machinery adapted to massless
+    exchange and IR dressing; impose soft (Weinberg) behavior as hard
+    constraints.
+
+-   Return dual certificates excluding inconsistent Wilson-coefficient
+    tuples.
+    Milestones. 6–12mo: First rigorous islands/exclusion regions for
+    EFTs with gravity + light matter.
+
+7) Extremal Higher-Dimensional CFTs with Stress Tensor (d>2)
+
+Problem. Are there “nearly extremal” unitary CFTs in d=3,4 with a large
+gap to higher-spin currents (pure-gravity-like holographic duals)?
+Why it fits. Standard bootstrap + extremal functional method; no data.
+Plan.
+
+-   Mixed-correlator bootstrap including Tμν; certify islands/no-go via
+    dual functionals.
+    Milestones. 6–12mo: Stronger universal lower bounds on higher-spin
+    gaps (holography-relevant).
+
+8) Swampland-via-Modularity & Higher-Form Symmetries (AdS/CFT interface)
+
+Problem. Use modularity, integrality, and higher-form symmetry
+constraints to produce theorem-level obstructions to QG-inconsistent
+spectra.
+Why it fits. All logic; certificates = infeasibility proofs for
+partition functions/OPE data subject to symmetry charges/anomalies.
+Plan.
+
+-   Couple modular bootstrap to discrete/higher-form anomaly constraints
+    (cobordism-style).
+    Milestones. 9–12mo: New rigorous “no such CFT” results under
+    explicit symmetry assumptions.
+
+What we’d actually build (once) and reuse everywhere
+
+-   Modular/Conformal Bootstrap Stack (our own SDP with exact/rational
+    logging → dual certificates; extremal functional solvers;
+    lightcone/Regge modules).
+
+-   Dispersive/Positivity Engine (sum rules with rigorous error control,
+    SoS certificates, handling massless t-channel poles and Regge
+    growth).
+
+-   On-Shell/Amplitude Lab (BCFW + generalized unitarity we implement;
+    symbol/integrability checker; finite-field + reconstruction;
+    canonical-form finder).
+
+-   Proof Channel for everything (Lean/Isabelle scripts for theorems;
+    DRAT/FRAT for SAT instances; algebraic certificates for SOS/SDP).
+
+Near-term “foundational” wins to target first
+
+1.  AdS₃ extremal CFT existence/no-go at new k — either construction or
+    certified impossibility is a genuine landmark.
+
+2.  Multi-coupling gravitational EFT bounds with airtight dispersive
+    certificates.
+
+3.  Celestial bootstrap feasibility region for a minimal consistent
+    subsector (a first real “island” would be big).
+
+Pick any one and I’ll lay out the week-1 sprint (modules, proof objects,
+and the first certification targets). My vote: start with AdS₃ modular
+bootstrap (clearest path to a theorem), run gravitational positivity in
+parallel, then bring in celestial once the dispersive stack is humming.

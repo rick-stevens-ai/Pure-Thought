@@ -1,0 +1,152 @@
+Love this scope. Here’s a map of high‑level scientific areas—beyond
+biology, chemistry, materials, and particle physics—where we can make
+real progress with pure thought + fresh code only (no external datasets,
+no lab work, no legacy software). For each, I name the core
+objects/axioms and the kinds of verifiable artifacts (proofs,
+certificates, tight bounds, constructive models) we can produce.
+
+A) Physics & Math‑of‑Physics
+
+1.  Quantum information & many‑body theory
+    Objects: quantum channels, entanglement cones, error‑correcting
+    codes, locality constraints.
+    Artifacts: code families with distance/rate proofs;
+    entanglement/complexity inequalities; no‑go theorems for phases from
+    axioms.
+
+2.  Statistical mechanics & nonequilibrium thermodynamics
+    Objects: large deviations, fluctuation theorems, transport bounds.
+    Artifacts: universal inequalities (speed–precision–dissipation),
+    exact solutions for idealized models, certified variational bounds.
+
+3.  Fluid dynamics & turbulence (mathematical)
+    Objects: Navier–Stokes/Euler invariants, energy/enstrophy cascades,
+    Lyapunov/entropy methods.
+    Artifacts: rigorously improved bounds on dissipation and mixing,
+    stability/instability certificates, counterexamples.
+
+4.  Plasma physics & fusion theory
+    Objects: Vlasov–Maxwell/MHD stability, transport barriers,
+    wave–particle resonance.
+    Artifacts: stability criteria with proofs, transport bounds,
+    certified equilibria for idealized geometries.
+
+5.  General relativity & classical field theory
+    Objects: hyperbolic PDEs, positive‑energy theorems, cosmic
+    censorship conditions.
+    Artifacts: new existence/uniqueness/stability results; exact
+    solutions in symmetry‑reduced settings with proof certificates.
+
+6.  Astrophysics & cosmology (theory/consistency)
+    Objects: dispersion/positivity constraints, bootstrap conditions,
+    gravitational consistency bounds.
+    Artifacts: axiomatic exclusion regions, analyticity/causality
+    inequalities, constructive toy universes consistent with
+    constraints.
+
+7.  Photonics/phononics & metamaterials (continuum side)
+    Objects: Maxwell/elastic eigenvalue problems, topological indices.
+    Artifacts: unit‑cell designs with rigorous bandgap/topology
+    certificates (interval arithmetic, dual bounds).
+
+8.  AMO physics (few‑body & control)
+    Objects: exactly solvable models, quantum control protocols,
+    scattering in idealized potentials.
+    Artifacts: optimal control pulses with provable guarantees; new
+    solvable families and scattering identities.
+
+B) Earth, Planetary & Space Systems
+
+9.  Geophysical fluid dynamics & idealized climate
+    Objects: rotating/stratified PDEs, energy–entropy budgets, wave–mean
+    flow interactions.
+    Artifacts: hard bounds (e.g., on heat transport), provable
+    impossibility/necessity of certain circulation regimes.
+
+10. Celestial mechanics & planetary system architecture
+    Objects: N‑body Hamiltonian dynamics, resonance webs, KAM/Arnold
+    diffusion.
+    Artifacts: stability windows and resonance maps with proofs;
+    extremal configurations and certified long‑time bounds.
+
+11. Solid‑Earth geophysics (theory of inverses & waves)
+    Objects: elastodynamics, inverse problems under constraints,
+    fracture/rigidity theory.
+    Artifacts: identifiability/no‑go theorems; certified reconstructions
+    for idealized media; bounds on what any inversion can recover.
+
+12. Space weather & magnetospheric dynamics (reduced models)
+    Objects: simplified MHD, reconnection criteria, wave–particle
+    diffusion.
+    Artifacts: threshold theorems and transport bounds; certified
+    solutions for canonical configurations.
+
+C) Information, Computation & Inference (as basic science)
+
+13. Information theory & coding (general)
+    Objects: channel capacity, rate–distortion, constrained/noisy
+    channels.
+    Artifacts: new bounds and explicit code constructions with provable
+    rates/distances; converse theorems.
+
+14. Theoretical computer science & complexity
+    Objects: lower bounds, PCP/Sum‑of‑Squares hierarchies, fine‑grained
+    complexity.
+    Artifacts: separations, integrality gaps, reductions, and certified
+    algorithms; proof logs (DRAT/SoS certificates).
+
+15. Cryptography & distributed computation
+    Objects: security reductions, multiparty protocols, proof systems.
+    Artifacts: schemes with provable security in standard models;
+    impossibility theorems; verified protocol proofs.
+
+16. Control theory, dynamical systems & robotics (theory)
+    Objects: Lyapunov/barrier certificates, reachability, optimal
+    control under constraints.
+    Artifacts: controllers with machine‑checkable safety/performance
+    certificates; impossibility bounds for specific plants.
+
+17. Statistics & learning theory
+    Objects: minimax risks, PAC‑Bayes, algorithmic stability,
+    identifiability.
+    Artifacts: tight lower/upper bounds; optimal estimators for stylized
+    families; certified generalization guarantees.
+
+18. Network science & epidemic/contagion models (theory)
+    Objects: percolation thresholds, spectral bounds, control of
+    spreading processes.
+    Artifacts: threshold theorems, optimal intervention strategies with
+    proofs, extremal graph constructions.
+
+D) Math, Logic & Foundations (cross‑cutting enablers)
+
+19. Automated theorem proving & formal methods for science
+    Objects: formal axiomatizations of physical/chemical models;
+    proof‑carrying numerics.
+    Artifacts: machine‑checked theorems about models and algorithms;
+    certified solvers (interval/SoS/SAT) usable across domains.
+
+20. Numerical analysis with certificates
+    Objects: stability/accuracy of integrators, PDE discretizations,
+    rounding‑error analysis.
+    Artifacts: integrators and solvers with provable error/stability
+    regions; verified arithmetic libraries.
+
+21. Combinatorics, geometry, and algebraic topology (as engines)
+    Objects: extremal constructions, spectral graph theory,
+    K‑theory/cohomology tools.
+    Artifacts: general theorems and constructive gadgets that feed
+    directly into multiple scientific areas above.
+
+How to use this map
+
+-   Pick 4–6 areas spanning PDE/continuum, information/algorithms,
+    and geometry/topology so the tooling cross‑pollinates.
+
+-   For each chosen area, we’ll target outputs that come
+    with independent verifiers: proof assistants, SoS/SAT certificates,
+    or interval‑arithmetic bounds.
+
+If you tell me which of these resonate most with your mission, I’ll
+propose a concrete “Week‑1” build plan per area (tooling, certification
+formats, and first theorems/bounds to aim for).

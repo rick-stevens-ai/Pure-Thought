@@ -1,0 +1,1287 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% Page geometry
+\geometry{
+    a4paper,
+    left=25mm,
+    right=25mm,
+    top=30mm,
+    bottom=30mm,
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Pure Thought Challenge 29}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+    pdfauthor={Pure Thought AI Challenges},
+    pdftitle={PRD 29: Chemical Reaction Networks and the Origin of Life},
+}
+
+% Code listing style
+\definecolor{codegray}{rgb}{0.95,0.95,0.95}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    backgroundcolor=\color{codegray},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    breakatwhitespace=true,
+    captionpos=b,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    tabsize=4,
+    showstringspaces=false,
+}
+
+\lstset{style=pythonstyle}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Custom commands
+\newcommand{\checklist}[1]{\item[$\square$] #1}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+
+% Title information
+\title{\textbf{PRD 29: Chemical Reaction Networks and the Origin of Life} \\
+\large Pure Thought AI Challenge 29}
+\author{Pure Thought AI Challenges Project}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+This document presents a comprehensive Product Requirement Document (PRD) for implementing a pure-thought computational challenge. The problem can be tackled using only symbolic mathematics, exact arithmetic, and fresh code---no experimental data or materials databases required until final verification. All results must be accompanied by machine-checkable certificates.
+\end{abstract}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+
+\textbf{Domain}: Biology & Systems Chemistry
+
+\textbf{Timeline}: 6-9 months
+
+\textbf{Difficulty}: High
+
+\textbf{Prerequisites}: Chemical kinetics, graph theory, dynamical systems, information theory, thermodynamics
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{1. Problem Statement}
+
+
+\subsubsection{Scientific Context}
+
+The \textbf{origin of life} is one of science's deepest mysteries: how did non-living chemistry give rise to self-replicating, evolving systems capable of Darwinian evolution? A leading hypothesis posits that life emerged from \textbf{autocatalytic reaction networks}—collections of molecules that catalyze their own production from simple precursors. This framework, pioneered by Stuart Kauffman, Manfred Eigen, and others, treats the origin of life as a phase transition in chemical space.
+
+
+\textbf{Key concepts}:
+
+\begin{itemize}
+\item \textbf{Autocatalytic sets}: Chemical reaction networks where every reaction is catalyzed by molecules within the set, and all molecules can be produced from a simple "food set" of externally supplied compounds
+
+\item \textbf{RAF sets} (Reflexively Autocatalytic and Food-generated): Formal mathematical definition requiring closure and catalytic completeness
+
+\item \textbf{Hypercycles}: Eigen's model of catalytic cycles forming stable coexistence states
+
+\item \textbf{Molecular evolution}: Once autocatalytic sets emerge, natural selection operates on variation and heredity
+
+
+\end{itemize}
+
+The formose reaction (autocatalytic synthesis of sugars from formaldehyde) and the metabolic pathways of modern cells provide empirical evidence for autocatalytic chemistry's central role in biology.
+
+
+
+\subsubsection{Core Question}
+
+\textbf{Can we algorithmically detect minimal autocatalytic sets in realistic chemical reaction networks and characterize their emergence from combinatorial chemistry?}
+
+
+Key challenges:
+
+\begin{itemize}
+\item \textbf{RAF detection}: Given a network with 100+ species and 1000+ reactions, find all minimal autocatalytic subsets (NP-hard in general)
+
+\item \textbf{Catalytic closure}: Verify that every reaction has a catalyst from within the set
+
+\item \textbf{Food-generation}: Prove all molecules are reachable from the food set via catalyzed reactions
+
+\item \textbf{Thermodynamic viability}: Check ΔG < 0 for all reactions under given conditions
+
+\item \textbf{Dynamical stability}: Verify hypercycle coexistence against parasites and fluctuations
+
+\item \textbf{Information content}: Quantify emergence of complexity via Shannon entropy and mutual information
+
+
+
+\subsubsection{Why This Matters}
+
+\item \textbf{Origin of life}: Provides testable hypotheses for abiogenesis in primordial soup or hydrothermal vents
+
+\item \textbf{Synthetic biology}: Guide design of minimal autocatalytic reaction sets for artificial cells
+
+\item \textbf{Astrobiology}: Predict probability of life emergence on exoplanets with different chemistries
+
+\item \textbf{Evolutionary theory}: Understand pre-Darwinian selection at the chemical level
+
+\item \textbf{Complex systems}: General principles for emergence of self-organization
+
+
+
+\subsubsection{Pure Thought Advantages}
+
+\end{itemize}
+
+Autocatalytic sets are \textbf{ideal for pure thought investigation}:
+
+\begin{itemize}
+\item ✅ Based on \textbf{graph algorithms} (reachability, closure)
+
+\item ✅ Thermodynamics computable from \textbf{standard free energies} (database lookup)
+
+\item ✅ Dynamics solvable via \textbf{ODE integration} (deterministic kinetics)
+
+\item ✅ Information theory \textbf{exact} (Shannon entropy formulas)
+
+\item ✅ All results \textbf{certified via symbolic computation}
+
+\item ❌ NO wet lab experiments until validation phase
+
+\item ❌ NO empirical reaction rate measurements initially
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{2. Mathematical Formulation}
+
+
+\subsubsection{Chemical Reaction Networks}
+
+\end{itemize}
+
+\textbf{Reaction network}: Tuple (S, R, C, F) where:
+
+\begin{itemize}
+\item S = {s₁,...,sₙ}: species (molecules)
+
+\item R = {r₁,...,rₘ}: reactions rᵢ: Σⱼ aᵢⱼsⱼ → Σⱼ bᵢⱼsⱼ
+
+\item C: S × R → {0,1}: catalysis relation (C(s,r) = 1 if s catalyzes r)
+
+\item F ⊆ S: food set (externally supplied)
+
+
+\end{itemize}
+
+\textbf{Reaction graph}: Directed hypergraph where nodes are species, hyperedges are reactions.
+
+
+\textbf{Stoichiometry matrix}: ν ∈ ℤⁿˣᵐ where νᵢⱼ = bᵢⱼ - aᵢⱼ (net production of species i in reaction j).
+
+
+
+\subsubsection{RAF Sets (Hordijk & Steel)}
+
+\textbf{Definition}: Subset R' ⊆ R is a RAF set if:
+
+
+\begin{itemize}
+\item \textbf{Reflexively Autocatalytic}: ∀r ∈ R', ∃s ∈ cl_F(R') such that C(s,r) = 1
+
+\end{itemize}
+
+   (Every reaction is catalyzed by something producible in the set)
+
+
+\begin{itemize}
+\item \textbf{Food-generated}: All reactants in R' are either in F or produced by reactions in R'
+
+\end{itemize}
+
+   cl_F(R') = closure of F under reactions in R'
+
+
+\textbf{Minimal RAF} (maxRAF): A RAF set with no proper subset that is also RAF.
+
+
+\textbf{Theorem (Hordijk-Steel 2004)}: For random catalytic networks with sufficient connectivity, RAF sets emerge with high probability above a critical complexity threshold.
+
+
+
+\subsubsection{Hypercycles (Eigen & Schuster)}
+
+\textbf{Hypercycle}: n species forming catalytic cycle: s₁ → s₂ → ... → sₙ → s₁ where sᵢ catalyzes production of sᵢ₊₁.
+
+
+\textbf{Dynamics}:
+
+\begin{lstlisting}
+dxᵢ/dt = kᵢxᵢ₋₁xᵢ - dᵢxᵢ - φxᵢ
+\end{lstlisting}
+where φ = Σⱼ kⱼxⱼ₋₁xⱼ (selection flux).
+
+
+\textbf{Coexistence condition}: All species maintain positive concentration at steady state.
+
+
+\textbf{Theorem (Eigen)}: Hypercycles are stable against competitive exclusion if cycle length n ≤ 5.
+
+
+
+\subsubsection{Thermodynamic Constraints}
+
+\textbf{Gibbs free energy}: For reaction aA + bB → cC + dD,
+
+\begin{lstlisting}
+ΔG = ΔG° + RT ln([C]ᶜ[D]ᵈ / [A]ᵃ[B]ᵇ)
+\end{lstlisting}
+
+\textbf{Thermodynamic viability}: Reaction proceeds forward if ΔG < 0.
+
+
+\textbf{Constraint on RAF}: All reactions in set must satisfy ΔG < 0 under specified concentrations.
+
+
+
+\subsubsection{Information Theory}
+
+\textbf{Shannon entropy}: H(X) = -Σᵢ pᵢ log pᵢ (bits) where pᵢ = concentration of species i.
+
+
+\textbf{Mutual information}: I(X;Y) = H(X) + H(Y) - H(X,Y) quantifies correlation between species.
+
+
+\textbf{Information emergence}: RAF sets exhibit I(X;Y) > 0, indicating functional relationships.
+
+
+
+\subsubsection{Certificates}
+
+All results must come with \textbf{machine-checkable certificates}:
+
+
+\begin{itemize}
+\item \textbf{RAF certificate}: Reachability graph proving all molecules producible from food
+
+\item \textbf{Catalytic closure certificate}: Witness s ∈ cl_F(R') for each reaction r
+
+\item \textbf{Thermodynamic certificate}: ΔG < 0 verified for all reactions
+
+\item \textbf{Stability certificate}: Jacobian eigenvalues of steady state all negative
+
+
+\end{itemize}
+
+\textbf{Export format}: JSON with reaction network and RAF set:
+
+\begin{lstlisting}
+{
+  "network": {"species": ["A", "B", "C"], "reactions": [...], "food": ["A"]},
+  "raf_set": {"reactions": [0, 2, 5], "species": ["A", "B", "C"]},
+  "is_minimal": true,
+  "thermodynamically_viable": true,
+  "hypercycle_stable": true
+}
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{3. Implementation Approach}
+
+
+\subsubsection{Phase 1 (Months 1-2): RAF Detection Algorithms}
+
+\textbf{Goal}: Implement efficient RAF detection for networks with 50-100 species.
+
+
+\begin{lstlisting}
+import networkx as nx
+from typing import Set, List, Tuple
+import numpy as np
+
+class ReactionNetwork:
+    """Chemical reaction network with catalysis."""
+
+    def __init__(self, species: List[str], reactions: List[dict], food_set: Set[str]):
+        """
+        Args:
+            species: List of molecule names
+            reactions: [{reactants: [s1,s2], products: [s3], catalyst: s4}, ...]
+            food_set: Externally supplied molecules
+        """
+        self.species = species
+        self.reactions = reactions
+        self.food_set = food_set
+
+        # Build indices
+        self.species_to_idx = {s: i for i, s in enumerate(species)}
+
+        # Build catalysis graph
+        self.catalysis_graph = self._build_catalysis_graph()
+
+
+    def _build_catalysis_graph(self) -> nx.DiGraph:
+        """Build graph where edges s → r mean s catalyzes reaction r."""
+        G = nx.DiGraph()
+
+        # Add nodes for species and reactions
+        for s in self.species:
+            G.add_node(('species', s))
+
+        for i, rxn in enumerate(self.reactions):
+            G.add_node(('reaction', i))
+
+            # Add edge from catalyst to reaction
+            if 'catalyst' in rxn and rxn['catalyst']:
+                G.add_edge(('species', rxn['catalyst']), ('reaction', i))
+
+        return G
+
+
+def find_all_raf_sets(network: ReactionNetwork, max_size: int = None) -> List[Set[int]]:
+    """
+    Find all RAF sets in network.
+
+    Algorithm (Hordijk & Steel):
+    1. Compute closure cl_F = all species producible from food
+    2. For each subset R' ⊆ R, check if RAF
+    3. Prune search using reachability constraints
+
+    Returns:
+        List of RAF sets (as sets of reaction indices)
+    """
+    # Compute reachable species from food
+    reachable = compute_food_closure(network, set(range(len(network.reactions))))
+
+    # Only consider reactions using reachable species
+    viable_reactions = [
+        i for i, rxn in enumerate(network.reactions)
+        if all(r in reachable for r in rxn['reactants'])
+    ]
+
+    raf_sets = []
+
+    # Search over subsets (exponential—use heuristics for large networks)
+    if max_size is None:
+        max_size = min(10, len(viable_reactions))
+
+    for size in range(1, max_size + 1):
+        for candidate in combinations(viable_reactions, size):
+            candidate_set = set(candidate)
+            if is_raf_set(network, candidate_set):
+                raf_sets.append(candidate_set)
+
+    return raf_sets
+
+
+def is_raf_set(network: ReactionNetwork, reaction_subset: Set[int]) -> bool:
+    """
+    Check if reaction subset forms a RAF set.
+
+    Conditions:
+    1. Reflexively autocatalytic: every reaction catalyzed by molecule in closure
+    2. Food-generated: all reactants producible from food
+    """
+    # Compute closure
+    closure = compute_food_closure(network, reaction_subset)
+
+    # Check catalysis for each reaction
+    for rxn_idx in reaction_subset:
+        rxn = network.reactions[rxn_idx]
+
+        catalyst = rxn.get('catalyst')
+        if catalyst is None:
+            return False  # No catalyst assigned
+
+        if catalyst not in closure:
+            return False  # Catalyst not producible
+
+    # Check all reactants are in closure
+    for rxn_idx in reaction_subset:
+        rxn = network.reactions[rxn_idx]
+        for reactant in rxn['reactants']:
+            if reactant not in closure:
+                return False
+
+    return True
+
+
+def compute_food_closure(network: ReactionNetwork, reaction_subset: Set[int]) -> Set[str]:
+    """
+    Compute cl_F(R'): all species producible from food using reactions in subset.
+
+    Fixed-point iteration.
+    """
+    closure = set(network.food_set)
+
+    changed = True
+    while changed:
+        changed = False
+
+        for rxn_idx in reaction_subset:
+            rxn = network.reactions[rxn_idx]
+
+            # Check if all reactants available
+            if all(r in closure for r in rxn['reactants']):
+                # Add products to closure
+                for product in rxn['products']:
+                    if product not in closure:
+                        closure.add(product)
+                        changed = True
+
+    return closure
+
+
+def find_minimal_raf_sets(network: ReactionNetwork) -> List[Set[int]]:
+    """
+    Find all maxRAF sets (minimal RAF sets with no proper subset being RAF).
+    """
+    all_rafs = find_all_raf_sets(network)
+
+    # Filter to minimal ones
+    minimal_rafs = []
+
+    for raf in all_rafs:
+        is_minimal = True
+
+        # Check if any proper subset is also RAF
+        for other_raf in all_rafs:
+            if other_raf < raf:  # Proper subset
+                is_minimal = False
+                break
+
+        if is_minimal:
+            minimal_rafs.append(raf)
+
+    return minimal_rafs
+
+
+from itertools import combinations
+
+def raf_detection_exhaustive(network: ReactionNetwork) -> dict:
+    """
+    Exhaustive RAF detection with certificates.
+    """
+    minimal_rafs = find_minimal_raf_sets(network)
+
+    # Generate certificates
+    certificates = []
+    for raf_set in minimal_rafs:
+        closure = compute_food_closure(network, raf_set)
+
+        cert = {
+            'raf_reactions': list(raf_set),
+            'raf_species': list(closure),
+            'is_minimal': True,
+            'size': len(raf_set),
+            'catalysis_verified': verify_catalysis(network, raf_set, closure)
+        }
+        certificates.append(cert)
+
+    return {
+        'n_minimal_rafs': len(minimal_rafs),
+        'minimal_rafs': minimal_rafs,
+        'certificates': certificates
+    }
+
+
+def verify_catalysis(network: ReactionNetwork, raf_set: Set[int], closure: Set[str]) -> bool:
+    """Verify every reaction has catalyst in closure."""
+    for rxn_idx in raf_set:
+        catalyst = network.reactions[rxn_idx].get('catalyst')
+        if catalyst not in closure:
+            return False
+    return True
+\end{lstlisting}
+
+\textbf{Validation}: Test on formose reaction network (Breslow 1959).
+
+
+
+\subsubsection{Phase 2 (Months 2-4): Hypercycle Dynamics}
+
+\textbf{Goal}: Simulate hypercycle ODEs and analyze stability.
+
+
+\begin{lstlisting}
+from scipy.integrate import odeint
+from scipy.linalg import eig
+
+def hypercycle_ode(n_species: int, catalysis_rates: np.ndarray, decay_rates: np.ndarray) -> dict:
+    """
+    Simulate n-species hypercycle dynamics.
+
+    dx_i/dt = k_i x_{i-1} x_i - d_i x_i - φ x_i
+
+    where φ = Σ_j k_j x_{j-1} x_j (selection flux).
+    """
+    def dydt(x, t):
+        dxdt = np.zeros(n_species)
+
+        # Compute selection flux
+        phi = sum(catalysis_rates[i] * x[(i-1) % n_species] * x[i]
+                  for i in range(n_species))
+
+        for i in range(n_species):
+            i_prev = (i - 1) % n_species
+
+            production = catalysis_rates[i] * x[i_prev] * x[i]
+            decay = decay_rates[i] * x[i]
+            dilution = phi * x[i]
+
+            dxdt[i] = production - decay - dilution
+
+        return dxdt
+
+    # Initial conditions (small random perturbation)
+    x0 = np.ones(n_species) / n_species + 0.01 * np.random.randn(n_species)
+    x0 = np.maximum(x0, 0.001)  # Ensure positive
+
+    # Integrate
+    t = np.linspace(0, 1000, 10000)
+    sol = odeint(dydt, x0, t)
+
+    # Check coexistence
+    final_state = sol[-1]
+    coexists = all(final_state > 1e-3)
+
+    # Compute stability (Jacobian at equilibrium)
+    if coexists:
+        J = compute_hypercycle_jacobian(final_state, catalysis_rates, decay_rates)
+        eigenvalues = eig(J)[0]
+        is_stable = all(np.real(eigenvalues) < 0)
+    else:
+        is_stable = False
+        eigenvalues = None
+
+    return {
+        'trajectory': sol,
+        'time': t,
+        'coexists': coexists,
+        'final_state': final_state,
+        'is_stable': is_stable,
+        'eigenvalues': eigenvalues
+    }
+
+
+def compute_hypercycle_jacobian(x_eq: np.ndarray, k: np.ndarray, d: np.ndarray) -> np.ndarray:
+    """
+    Compute Jacobian matrix at equilibrium.
+
+    J_ij = ∂(dx_i/dt) / ∂x_j
+    """
+    n = len(x_eq)
+    J = np.zeros((n, n))
+
+    for i in range(n):
+        i_prev = (i - 1) % n
+
+        # Diagonal term
+        J[i, i] = k[i] * x_eq[i_prev] - d[i] - sum(k[j] * x_eq[(j-1) % n] for j in range(n))
+
+        # Off-diagonal (coupling through catalysis)
+        J[i, i_prev] = k[i] * x_eq[i]
+
+        # Selection flux coupling
+        for j in range(n):
+            j_prev = (j - 1) % n
+            J[i, j] -= k[j] * x_eq[j_prev] * x_eq[i] / n  # Approximate
+
+    return J
+
+
+def test_hypercycle_stability(n_range: range = range(2, 10)) -> dict:
+    """
+    Test Eigen's conjecture: hypercycles stable only for n ≤ 5.
+    """
+    results = {}
+
+    for n in n_range:
+        # Random catalysis and decay rates
+        k = np.random.uniform(0.5, 2.0, n)
+        d = np.random.uniform(0.1, 0.5, n)
+
+        hypercycle_result = hypercycle_ode(n, k, d)
+
+        results[n] = {
+            'coexists': hypercycle_result['coexists'],
+            'stable': hypercycle_result['is_stable']
+        }
+
+    return results
+\end{lstlisting}
+
+\textbf{Validation}: Reproduce Eigen & Schuster (1979) stability threshold n ≈ 5.
+
+
+
+\subsubsection{Phase 3 (Months 4-5): Thermodynamic Constraints}
+
+\textbf{Goal}: Verify ΔG < 0 for all reactions in RAF sets.
+
+
+\begin{lstlisting}
+def compute_reaction_free_energy(reaction: dict,
+                                 concentrations: dict,
+                                 standard_free_energies: dict,
+                                 T: float = 298.15) -> float:
+    """
+    Compute Gibbs free energy change for reaction.
+
+    ΔG = ΔG° + RT ln(Q)
+
+    where Q = [products] / [reactants] (reaction quotient).
+    """
+    R = 8.314  # J/(mol·K)
+
+    # Compute ΔG°
+    delta_G_standard = 0
+    for product in reaction['products']:
+        delta_G_standard += standard_free_energies.get(product, 0)
+    for reactant in reaction['reactants']:
+        delta_G_standard -= standard_free_energies.get(reactant, 0)
+
+    # Compute reaction quotient Q
+    Q = 1.0
+    for product in reaction['products']:
+        Q *= concentrations.get(product, 1e-6)
+    for reactant in reaction['reactants']:
+        Q /= max(concentrations.get(reactant, 1e-6), 1e-10)
+
+    # Gibbs free energy
+    delta_G = delta_G_standard + R * T * np.log(Q)
+
+    return delta_G
+
+
+def verify_thermodynamic_viability(network: ReactionNetwork,
+                                  raf_set: Set[int],
+                                  concentrations: dict,
+                                  standard_free_energies: dict) -> dict:
+    """
+    Verify all reactions in RAF set have ΔG < 0.
+    """
+    viable = True
+    delta_Gs = []
+
+    for rxn_idx in raf_set:
+        rxn = network.reactions[rxn_idx]
+
+        delta_G = compute_reaction_free_energy(rxn, concentrations, standard_free_energies)
+        delta_Gs.append(delta_G)
+
+        if delta_G >= 0:
+            viable = False
+
+    return {
+        'thermodynamically_viable': viable,
+        'delta_Gs': delta_Gs,
+        'max_delta_G': max(delta_Gs) if delta_Gs else 0,
+        'mean_delta_G': np.mean(delta_Gs) if delta_Gs else 0
+    }
+\end{lstlisting}
+
+\textbf{Validation}: Check formose reaction ΔG values against literature.
+
+
+
+\subsubsection{Phase 4 (Months 5-7): Information-Theoretic Analysis}
+
+\textbf{Goal}: Quantify information emergence in autocatalytic sets.
+
+
+\begin{lstlisting}
+from scipy.stats import entropy
+
+def compute_shannon_entropy(concentrations: np.ndarray) -> float:
+    """
+    Shannon entropy H(X) = -Σ p_i log_2(p_i).
+
+    Measures diversity of molecular species.
+    """
+    # Normalize to probabilities
+    probs = concentrations / np.sum(concentrations)
+    probs = probs[probs > 0]  # Remove zeros
+
+    H = entropy(probs, base=2)  # bits
+
+    return H
+
+
+def compute_mutual_information(conc_X: np.ndarray, conc_Y: np.ndarray) -> float:
+    """
+    Mutual information I(X;Y) between two molecular species.
+
+    I(X;Y) = H(X) + H(Y) - H(X,Y)
+    """
+    # Joint distribution (discretize concentrations)
+    hist_2d, _, _ = np.histogram2d(conc_X, conc_Y, bins=10)
+    hist_2d = hist_2d / np.sum(hist_2d)  # Normalize
+
+    # Marginals
+    hist_X = np.sum(hist_2d, axis=1)
+    hist_Y = np.sum(hist_2d, axis=0)
+
+    # Entropies
+    H_X = entropy(hist_X[hist_X > 0], base=2)
+    H_Y = entropy(hist_Y[hist_Y > 0], base=2)
+    H_XY = entropy(hist_2d[hist_2d > 0].flatten(), base=2)
+
+    I_XY = H_X + H_Y - H_XY
+
+    return I_XY
+
+
+def information_analysis_raf(network: ReactionNetwork,
+                             raf_set: Set[int],
+                             trajectory: np.ndarray) -> dict:
+    """
+    Compute information-theoretic properties of RAF dynamics.
+    """
+    n_species = len(network.species)
+
+    # Shannon entropy over time
+    entropies = [compute_shannon_entropy(trajectory[t]) for t in range(len(trajectory))]
+
+    # Mutual information matrix
+    I_matrix = np.zeros((n_species, n_species))
+
+    for i in range(n_species):
+        for j in range(i+1, n_species):
+            I_matrix[i, j] = compute_mutual_information(trajectory[:, i], trajectory[:, j])
+            I_matrix[j, i] = I_matrix[i, j]
+
+    return {
+        'entropy_trajectory': entropies,
+        'final_entropy': entropies[-1],
+        'entropy_increase': entropies[-1] - entropies[0],
+        'mutual_information_matrix': I_matrix,
+        'mean_mutual_information': np.mean(I_matrix[I_matrix > 0])
+    }
+\end{lstlisting}
+
+\textbf{Validation}: Verify H(X) increases as RAF set emerges from simple precursors.
+
+
+
+\subsubsection{Phase 5 (Months 7-8): Origin of Life Scenarios}
+
+\textbf{Goal}: Apply RAF theory to prebiotic chemistry (formose, amino acids, nucleotides).
+
+
+\begin{lstlisting}
+def formose_reaction_network() -> ReactionNetwork:
+    """
+    Construct formose reaction network (autocatalytic sugar synthesis).
+
+    HCHO → glycolaldehyde → glyceraldehyde → ... → sugars
+    """
+    species = [
+        'HCHO',  # Formaldehyde (food)
+        'glycolaldehyde',
+        'glyceraldehyde',
+        'dihydroxyacetone',
+        'erythrose',
+        'ribose'
+    ]
+
+    reactions = [
+        {'reactants': ['HCHO', 'HCHO'], 'products': ['glycolaldehyde'],
+         'catalyst': 'glycolaldehyde'},  # Autocatalytic
+        {'reactants': ['HCHO', 'glycolaldehyde'], 'products': ['glyceraldehyde'],
+         'catalyst': 'glyceraldehyde'},
+        {'reactants': ['glyceraldehyde', 'HCHO'], 'products': ['erythrose'],
+         'catalyst': 'erythrose'},
+        {'reactants': ['erythrose', 'HCHO'], 'products': ['ribose'],
+         'catalyst': 'ribose'}
+    ]
+
+    food_set = {'HCHO'}
+
+    return ReactionNetwork(species, reactions, food_set)
+
+
+def amino_acid_network() -> ReactionNetwork:
+    """
+    Simplified amino acid synthesis from HCN, NH3, H2O.
+    """
+    # ... (similar construction)
+    pass
+
+
+def origin_of_life_analysis(network: ReactionNetwork) -> dict:
+    """
+    Complete origin of life analysis pipeline.
+    """
+    # 1. Find RAF sets
+    raf_result = raf_detection_exhaustive(network)
+
+    # 2. Thermodynamic viability
+    concentrations = {s: 0.001 for s in network.species}  # 1 mM
+    concentrations.update({s: 1.0 for s in network.food_set})  # 1 M food
+
+    standard_free_energies = estimate_standard_free_energies(network.species)
+
+    thermo_results = []
+    for raf_set in raf_result['minimal_rafs']:
+        thermo = verify_thermodynamic_viability(network, raf_set, concentrations, standard_free_energies)
+        thermo_results.append(thermo)
+
+    # 3. Hypercycle stability (if applicable)
+    # ... (check if RAF forms hypercycle structure)
+
+    # 4. Information emergence
+    # ... (simulate dynamics and compute entropy)
+
+    return {
+        'raf_detection': raf_result,
+        'thermodynamics': thermo_results,
+        'conclusion': 'VIABLE' if any(t['thermodynamically_viable'] for t in thermo_results) else 'NOT_VIABLE'
+    }
+
+
+def estimate_standard_free_energies(species: List[str]) -> dict:
+    """
+    Estimate ΔG° from group contribution methods or database lookup.
+    """
+    # Placeholder: use Benson group additivity or lookup tables
+    free_energies = {}
+
+    for s in species:
+        # Approximate: small organic molecules ~ -100 to -200 kJ/mol
+        free_energies[s] = -150.0 + 50.0 * np.random.randn()
+
+    return free_energies
+\end{lstlisting}
+
+\textbf{Validation}: Reproduce Kauffman's autocatalytic set emergence threshold.
+
+
+
+\subsubsection{Phase 6 (Months 8-9): Certificate Generation}
+
+\textbf{Goal}: Generate complete certificates for all RAF sets found.
+
+
+\begin{lstlisting}
+from dataclasses import dataclass, asdict
+import json
+
+@dataclass
+class RAFCertificate:
+    """Complete certificate for RAF set."""
+
+    network_name: str
+    n_species: int
+    n_reactions: int
+    food_set: List[str]
+
+    # RAF properties
+    raf_reactions: List[int]
+    raf_species: List[str]
+    is_minimal: bool
+
+    # Verification
+    catalytic_closure_verified: bool
+    food_generation_verified: bool
+    thermodynamically_viable: bool
+    mean_delta_G: float
+
+    # Dynamics
+    hypercycle_stable: bool
+
+    # Information
+    shannon_entropy: float
+    mutual_information_mean: float
+
+    # Metadata
+    computation_date: str
+
+    def export_json(self, filename: str):
+        with open(filename, 'w') as f:
+            json.dump(asdict(self), f, indent=2)
+
+    def verify(self) -> bool:
+        checks = [
+            len(self.raf_reactions) > 0,
+            len(self.raf_species) >= len(self.food_set),
+            self.catalytic_closure_verified,
+            self.food_generation_verified
+        ]
+        return all(checks)
+
+
+def generate_raf_certificate(network: ReactionNetwork, raf_set: Set[int]) -> RAFCertificate:
+    """Generate complete certificate for RAF set."""
+    closure = compute_food_closure(network, raf_set)
+
+    # Thermodynamics
+    concentrations = {s: 0.001 for s in network.species}
+    standard_free_energies = estimate_standard_free_energies(network.species)
+    thermo = verify_thermodynamic_viability(network, raf_set, concentrations, standard_free_energies)
+
+    cert = RAFCertificate(
+        network_name='Formose',
+        n_species=len(network.species),
+        n_reactions=len(network.reactions),
+        food_set=list(network.food_set),
+        raf_reactions=list(raf_set),
+        raf_species=list(closure),
+        is_minimal=True,
+        catalytic_closure_verified=verify_catalysis(network, raf_set, closure),
+        food_generation_verified=(closure.issuperset(
+            set(r for rxn_idx in raf_set for r in network.reactions[rxn_idx]['reactants'])
+        )),
+        thermodynamically_viable=thermo['thermodynamically_viable'],
+        mean_delta_G=thermo['mean_delta_G'],
+        hypercycle_stable=False,  # Would require dynamics
+        shannon_entropy=0.0,  # Would require simulation
+        mutual_information_mean=0.0,
+        computation_date='2026-01-17'
+    )
+
+    return cert
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{4. Example Starting Prompt}
+
+\textbf{Prompt for AI System}:
+
+
+You are tasked with finding autocatalytic sets in chemical reaction networks to model the origin of life. Your goals:
+
+
+\begin{itemize}
+\item \textbf{RAF Detection (Months 1-2)}:
+
+\item Implement formose reaction network (6 species, 10 reactions)
+
+\item Find all minimal RAF sets
+
+\item Verify catalytic closure and food-generation
+
+
+\item \textbf{Hypercycle Dynamics (Months 2-4)}:
+
+\item Simulate n-species hypercycles for n = 2,...,10
+
+\item Verify Eigen's stability threshold (n ≤ 5)
+
+\item Compute Jacobian eigenvalues
+
+
+\item \textbf{Thermodynamics (Months 4-5)}:
+
+\item Compute ΔG for all reactions
+
+\item Verify viability: ΔG < 0
+
+\item Use group contribution methods
+
+
+\item \textbf{Information Theory (Months 5-7)}:
+
+\item Compute Shannon entropy H(X)
+
+\item Compute mutual information I(X;Y)
+
+\item Track entropy increase over time
+
+
+\item \textbf{Origin of Life (Months 7-8)}:
+
+\item Apply to formose, amino acids, nucleotides
+
+\item Find minimal autocatalytic sets
+
+\item Compare to literature thresholds
+
+
+\item \textbf{Certificates (Months 8-9)}:
+
+\item Generate RAFCertificate for each set
+
+\item Export to JSON
+
+\item Verify all certificates
+
+
+\end{itemize}
+
+\textbf{Success Criteria}:
+
+\begin{itemize}
+\item MVR (2-4 months): RAF detection for toy networks
+
+\item Strong (6-8 months): Formose analysis, hypercycle stability
+
+\item Publication (9 months): Complete origin-of-life scenario
+
+
+\end{itemize}
+
+\textbf{References}:
+
+\begin{itemize}
+\item Kauffman (1986): Autocatalytic sets
+
+\item Eigen & Schuster (1979): Hypercycle theory
+
+\item Hordijk & Steel (2004): RAF algorithm
+
+
+\end{itemize}
+
+Begin by implementing RAF detection for formose network.
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{5. Success Criteria}
+
+
+\subsubsection{Minimum Viable Result (Months 1-4)}
+
+\textbf{Core Achievements}:
+
+\begin{itemize}
+\item ✅ RAF detection for networks with 10-20 species
+
+\item ✅ Catalytic closure verification
+
+\item ✅ Basic hypercycle simulation (n ≤ 5)
+
+\item ✅ Certificate generation
+
+
+\end{itemize}
+
+\textbf{Validation}:
+
+\begin{itemize}
+\item Find RAF in formose network
+
+\item Reproduce Eigen stability threshold
+
+
+\end{itemize}
+
+\textbf{Deliverables}:
+
+\begin{itemize}
+\item Python module \texttt{raf_detection.py}
+
+\item Jupyter notebook: formose analysis
+
+\item JSON certificates for 3+ RAF sets
+
+
+
+\subsubsection{Strong Result (Months 4-8)}
+
+\end{itemize}
+
+\textbf{Extended Capabilities}:
+
+\begin{itemize}
+\item ✅ Thermodynamic viability checks
+
+\item ✅ Information-theoretic analysis
+
+\item ✅ Hypercycle stability for n ≤ 10
+
+\item ✅ Multiple prebiotic networks
+
+
+\end{itemize}
+
+\textbf{Publications Benchmark}:
+
+\begin{itemize}
+\item Reproduce Hordijk & Steel (2004) results
+
+\item Match thermodynamic thresholds
+
+
+\end{itemize}
+
+\textbf{Deliverables}:
+
+\begin{itemize}
+\item Database of 10+ networks
+
+\item Entropy vs time plots
+
+\item Stability phase diagrams
+
+
+
+\subsubsection{Publication-Quality Result (Months 8-9)}
+
+\end{itemize}
+
+\textbf{Novel Contributions}:
+
+\begin{itemize}
+\item ✅ Novel RAF sets in unexplored chemistry
+
+\item ✅ Thermodynamic-information tradeoffs
+
+\item ✅ Predictive model for RAF emergence
+
+\item ✅ Experimental predictions
+
+
+\end{itemize}
+
+\textbf{Deliverables}:
+
+\begin{itemize}
+\item Arxiv preprint on origin of life
+
+\item Public database of RAF sets
+
+\item Web tool for RAF detection
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{6. Verification Protocol}
+
+\begin{lstlisting}
+def verify_raf_certificate(cert: RAFCertificate) -> dict:
+    results = {
+        'catalysis_verified': cert.catalytic_closure_verified,
+        'food_generation_verified': cert.food_generation_verified,
+        'thermodynamically_viable': cert.thermodynamically_viable,
+        'certificate_valid': cert.verify()
+    }
+
+    results['all_checks_passed'] = all(v for v in results.values() if isinstance(v, bool))
+
+    return results
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{7. Resources and Milestones}
+
+
+\subsubsection{Essential References}
+
+\item \textbf{Foundational Papers}:
+
+\item Kauffman (1986): "Autocatalytic sets of proteins"
+
+\item Eigen & Schuster (1979): \textit{The Hypercycle}
+
+\item Hordijk & Steel (2004): "Detecting autocatalytic, self-sustaining sets"
+
+
+\item \textbf{Modern Work}:
+
+\item Xavier et al. (2020): "Autocatalytic chemical networks at the origin of life"
+
+\item Vasas et al. (2012): "Evolution before genes"
+
+
+
+\subsubsection{Milestone Checklist}
+
+\item [ ] \textbf{Month 1}: RAF detection implemented
+
+\item [ ] \textbf{Month 2}: Formose network analyzed
+
+\item [ ] \textbf{Month 3}: Hypercycle simulations working
+
+\item [ ] \textbf{Month 4}: Thermodynamic checks complete
+
+\item [ ] \textbf{Month 5}: Information theory implemented
+
+\item [ ] \textbf{Month 6}: 5+ networks analyzed
+
+\item [ ] \textbf{Month 7}: Origin-of-life scenarios tested
+
+\item [ ] \textbf{Month 8}: Certificates generated
+
+\item [ ] \textbf{Month 9}: Database exported
+
+
+
+\bigskip\hrule\bigskip
+
+\end{itemize}
+
+\textbf{End of PRD 29}
+
+
+\end{document}

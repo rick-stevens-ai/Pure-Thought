@@ -1,0 +1,680 @@
+# PRD 16: N-Representability and the 2-RDM Method
+
+**Domain**: Chemistry & Quantum Many-Body Theory
+**Timeline**: 6-9 months
+**Difficulty**: High
+**Prerequisites**: Quantum mechanics, linear algebra, convex optimization, functional analysis
+
+---
+
+## 1. Problem Statement
+
+### Scientific Context
+
+**The N-representability problem** is central to quantum chemistry: Given a 2-electron reduced density matrix (2-RDM), when does it come from an N-electron wavefunction?
+
+Traditional quantum chemistry methods scale poorly:
+- **Full CI** (Configuration Interaction): Exponential in system size (intractable for N > ~20 electrons)
+- **DFT** (Density Functional Theory): Approximate exchange-correlation functional unknown
+- **Coupled Cluster**: Polynomial scaling but still expensive for large systems
+
+The **2-RDM method** offers a revolutionary alternative:
+- The ground state energy depends ONLY on the 2-RDM (not the full N-electron wavefunction)
+- 2-RDM has polynomial size: O(n⁴) where n = number of orbitals
+- **Key challenge**: Constrain 2-RDM to be N-representable (comes from actual N-electron state)
+
+**N-Representability Conditions**:
+1. **P-conditions** (necessary, based on Pauli exclusion)
+2. **Q-conditions** (necessary, from 3-RDM positivity)
+3. **G-conditions** (necessary, from higher-order RDMs)
+4. **T1/T2 conditions** (stronger necessary conditions)
+
+When combined with **semidefinite programming (SDP)**, this becomes a tractable variational method.
+
+### Core Question
+
+**Can we solve the electronic structure problem for molecules using ONLY 2-RDM constraints and SDP optimization—without computing the exponentially-large wavefunction?**
+
+Specifically:
+- Formulate energy minimization as SDP over 2-RDM cone
+- Implement P, Q, G, T conditions as SDP constraints
+- Optimize 2-RDM to find ground state energy
+- Extract properties: dipole moments, bond energies, excitation spectra
+- Certify bounds: E_variational ≥ E_exact (variational principle)
+- Compare accuracy to Full CI (benchmark) and DFT (practical baseline)
+
+### Why This Matters
+
+**Theoretical Impact**:
+- Bypasses exponential wall of quantum many-body problem
+- Provides rigorous lower bounds on ground state energy
+- Connects quantum chemistry to convex optimization
+
+**Practical Benefits**:
+- Polynomial scaling: can treat larger molecules than Full CI
+- Systematic improvability: add tighter constraints → better energy
+- Black-box: no functional approximations needed (unlike DFT)
+
+**Pure Thought Advantages**:
+- Hamiltonian specified exactly (Coulomb interactions + kinetic energy)
+- N-representability is pure mathematics (convex geometry)
+- SDP solvers provide certificates of optimality
+- No empirical fitting or experimental data
+
+---
+
+## 2. Mathematical Formulation
+
+### Problem Definition
+
+The **electronic Hamiltonian** for a molecule is:
+```
+Ĥ = Σ_i h_i + (1/2) Σ_{ij} v_{ij}
+```
+
+where h_i is single-electron kinetic + nuclear attraction, v_{ij} = 1/|r_i - r_j| is Coulomb repulsion.
+
+**Ground state energy**:
+```
+E_0 = min_{|Ψ⟩} ⟨Ψ|Ĥ|Ψ⟩
+```
+
+This can be rewritten using only 1-RDM (D) and 2-RDM (Γ):
+```
+E[D, Γ] = Tr(h D) + (1/2) Tr(v Γ)
+```
+
+**2-RDM Optimization Problem**:
+```
+minimize    E[D, Γ]
+subject to  Γ ∈ N-representable cone
+            Tr(D) = N  (particle number)
+```
+
+**N-Representability Cone**:
+The set of all 2-RDMs that come from N-electron states. Characterized by:
+
+1. **P-conditions**: Γ ≥ 0, D ≥ 0 (positivity)
+2. **Q-conditions**: Q ≥ 0 where Q is 3-RDM contracted from Γ
+3. **G-conditions**: G-matrix ≥ 0 (particle-hole positivity)
+4. **T1, T2**: Higher-order positivity conditions
+
+### Certificate of Optimality
+
+Given optimal 2-RDM Γ*:
+
+1. **Energy Lower Bound**: E[Γ*] ≤ E_exact (variational principle)
+2. **Dual Certificate**: SDP dual provides rigorous bound
+3. **Precision**: |E[Γ*] - E_exact| < ε (certificate of accuracy)
+4. **Properties**: Extract ⟨O⟩ = Tr(O Γ*) for any 2-body observable O
+
+### Input/Output Specification
+
+**Input**:
+```python
+from sympy import *
+import numpy as np
+from typing import List, Tuple
+
+class MolecularSystem:
+    num_electrons: int  # N
+    num_orbitals: int  # n (spatial orbitals)
+
+    # Hamiltonian matrices
+    h_matrix: np.ndarray  # h_ij (n×n): kinetic + nuclear
+    v_tensor: np.ndarray  # v_ijkl (n×n×n×n): Coulomb integrals
+
+    # Geometry (for reference, not used in optimization)
+    atoms: List[Tuple[str, np.ndarray]]  # [(element, position), ...]
+```
+
+**Output**:
+```python
+class TwoRDMCertificate:
+    system: MolecularSystem
+
+    # Optimized RDMs
+    one_rdm: np.ndarray  # D_ij (n×n)
+    two_rdm: np.ndarray  # Γ_ijkl (n×n×n×n)
+
+    # Energy
+    ground_state_energy: float  # E_0
+    energy_components: dict  # {'kinetic': ..., 'nuclear': ..., 'coulomb': ...}
+
+    # Convergence
+    sdp_solver_status: str  # "optimal", "infeasible", etc.
+    primal_objective: float
+    dual_objective: float
+    duality_gap: float  # Should be ~0 for converged solution
+
+    # Comparison
+    exact_energy: Optional[float]  # If known (e.g., H2, small molecules)
+    error_vs_exact: Optional[float]  # |E_2RDM - E_exact|
+
+    # Properties
+    dipole_moment: np.ndarray
+    bond_lengths: dict  # Optimized geometry
+    natural_orbitals: np.ndarray  # Eigenvectors of D
+    occupation_numbers: np.ndarray  # Eigenvalues of D
+
+    # Verification artifacts
+    constraint_violations: dict  # Check P, Q, G conditions
+    dual_certificate: np.ndarray  # SDP dual solution
+```
+
+---
+
+## 3. Implementation Approach
+
+### Phase 1: Hamiltonian Construction (Month 1)
+
+Build molecular Hamiltonian from atomic positions:
+
+```python
+import numpy as np
+from scipy.special import erf
+from pyscf import gto, scf
+
+def build_molecular_hamiltonian(atoms: List[Tuple[str, np.ndarray]],
+                                basis: str = 'sto-3g') -> MolecularSystem:
+    """
+    Construct h_matrix and v_tensor for molecule.
+
+    Uses Gaussian basis sets and PySCF for integral evaluation.
+    """
+    # Build molecule in PySCF
+    mol = gto.M(
+        atom=[(elem, pos) for elem, pos in atoms],
+        basis=basis,
+        unit='Angstrom'
+    )
+
+    # Number of spatial orbitals
+    n_orb = mol.nao
+
+    # One-electron integrals: h_ij = ⟨i| -∇²/2 + V_nuc |j⟩
+    h_matrix = mol.intor('int1e_kin') + mol.intor('int1e_nuc')
+
+    # Two-electron integrals: v_ijkl = ⟨ij|1/r₁₂|kl⟩
+    v_tensor = mol.intor('int2e')  # (n×n×n×n)
+
+    # Reshape to physicist's notation
+    v_tensor = v_tensor.reshape(n_orb, n_orb, n_orb, n_orb)
+
+    return MolecularSystem(
+        num_electrons=mol.nelectron,
+        num_orbitals=n_orb,
+        h_matrix=h_matrix,
+        v_tensor=v_tensor,
+        atoms=atoms
+    )
+
+def compute_exact_energy_small_molecules(system: MolecularSystem) -> float:
+    """
+    For benchmarking: compute exact Full CI energy for small systems.
+
+    Only works for N ≤ ~12 electrons (combinatorial explosion beyond).
+    """
+    from pyscf import fci
+
+    mol = gto.M(
+        atom=system.atoms,
+        basis='sto-3g'
+    )
+
+    # Full CI calculation
+    mf = scf.RHF(mol).run()
+    cisolver = fci.FCI(mol, mf.mo_coeff)
+    E_fci = cisolver.kernel()[0]
+
+    return E_fci
+```
+
+**Validation**: Reproduce H₂ binding curve using exact integrals.
+
+### Phase 2: SDP Formulation with P-Conditions (Months 1-3)
+
+Implement basic 2-RDM optimization with P-conditions only:
+
+```python
+import cvxpy as cp
+
+def optimize_2rdm_p_conditions(system: MolecularSystem) -> TwoRDMCertificate:
+    """
+    Minimize energy subject to P-conditions (positivity + traces).
+
+    This is a semidefinite program (SDP).
+    """
+    n = system.num_orbitals
+    N = system.num_electrons
+
+    # Variables
+    # 1-RDM: D[i,j] = ⟨a†_i a_j⟩
+    D = cp.Variable((n, n), symmetric=True)
+
+    # 2-RDM: Γ[i,j,k,l] = ⟨a†_i a†_j a_l a_k⟩
+    # Represent as matrix via reshaping
+    Gamma = cp.Variable((n*n, n*n), symmetric=True)
+
+    # Objective: E = Tr(h D) + (1/2) Tr(v Γ)
+    h_flat = system.h_matrix.flatten()
+    v_flat = system.v_tensor.reshape(n*n, n*n)
+
+    energy = cp.trace(system.h_matrix @ D) + 0.5 * cp.trace(v_flat @ Gamma)
+
+    # Constraints
+    constraints = []
+
+    # P1: Positivity
+    constraints.append(D >> 0)  # D is positive semidefinite
+    constraints.append(Gamma >> 0)  # Γ is positive semidefinite
+
+    # P2: Trace constraints
+    constraints.append(cp.trace(D) == N)  # Number of electrons
+
+    # Contraction: D_ij = (1/(N-1)) Σ_k Γ_ijkk
+    for i in range(n):
+        for j in range(n):
+            contraction_sum = 0
+            for k in range(n):
+                idx = (i*n + j, k*n + k)
+                contraction_sum += Gamma[idx]
+
+            constraints.append(D[i, j] == contraction_sum / (N - 1))
+
+    # P3: Normalization of 2-RDM
+    # Tr(Γ) = N(N-1)/2
+    constraints.append(cp.trace(Gamma) == N*(N-1)/2)
+
+    # Solve SDP
+    prob = cp.Problem(cp.Minimize(energy), constraints)
+    prob.solve(solver=cp.MOSEK, verbose=True)
+
+    # Extract solution
+    D_opt = D.value
+    Gamma_opt = Gamma.value.reshape(n, n, n, n)
+
+    cert = TwoRDMCertificate(
+        system=system,
+        one_rdm=D_opt,
+        two_rdm=Gamma_opt,
+        ground_state_energy=prob.value,
+        sdp_solver_status=prob.status,
+        primal_objective=prob.value,
+        dual_objective=prob.value,  # Should be equal at optimum
+        duality_gap=abs(prob.value - prob.value)
+    )
+
+    return cert
+```
+
+**Test**: H₂ molecule—compare to exact energy, check error.
+
+### Phase 3: Q-Conditions (Months 3-5)
+
+Add Q-conditions (3-RDM positivity):
+
+```python
+def optimize_2rdm_pq_conditions(system: MolecularSystem) -> TwoRDMCertificate:
+    """
+    Add Q-conditions: 3-RDM contracted from 2-RDM must be positive.
+
+    Q-matrix elements: Q_ijk,lmn = ⟨a†_i a†_j a†_k a_n a_m a_l⟩
+
+    These can be expressed as linear combinations of Γ elements.
+    """
+    n = system.num_orbitals
+    N = system.num_electrons
+
+    D = cp.Variable((n, n), symmetric=True)
+    Gamma = cp.Variable((n*n, n*n), symmetric=True)
+
+    energy = cp.trace(system.h_matrix @ D) + 0.5 * cp.trace(system.v_tensor.reshape(n*n, n*n) @ Gamma)
+
+    constraints = [
+        D >> 0,
+        Gamma >> 0,
+        cp.trace(D) == N,
+        # ... (P-conditions as before)
+    ]
+
+    # Q-conditions: Build Q-matrix from Γ
+    # Q has size (n³ × n³)—can be very large!
+    # Use sparse representation or sampling
+
+    # Simplified Q-condition (for small systems)
+    Q_dim = n**3
+
+    Q_matrix = cp.Variable((Q_dim, Q_dim), symmetric=True)
+
+    # Relate Q to Γ via contraction formulas
+    # Q_ijk,lmn = (expressed as linear function of Γ_abcd)
+
+    for block in generate_q_blocks(n):
+        # Each block is a smaller SDP constraint
+        constraints.append(Q_matrix[block] >> 0)
+
+    # ... (contraction relations)
+
+    prob = cp.Problem(cp.Minimize(energy), constraints)
+    prob.solve(solver=cp.MOSEK)
+
+    return TwoRDMCertificate(...)
+```
+
+**Challenge**: Q-conditions increase problem size dramatically—need smart implementation.
+
+### Phase 4: G and T Conditions (Months 5-7)
+
+Implement advanced N-representability conditions:
+
+```python
+def optimize_2rdm_full_conditions(system: MolecularSystem,
+                                  conditions: List[str] = ['P', 'Q', 'G', 'T1', 'T2']) -> TwoRDMCertificate:
+    """
+    Full 2-RDM optimization with all known N-representability conditions.
+
+    - G-conditions: Particle-hole duality (Γ and its complement both ≥ 0)
+    - T1, T2: Higher-order positivity (from 4-RDM, 5-RDM contractions)
+    """
+    n = system.num_orbitals
+    N = system.num_electrons
+
+    D = cp.Variable((n, n), symmetric=True)
+    Gamma = cp.Variable((n**2, n**2), symmetric=True)
+
+    energy = ...  # As before
+
+    constraints = []
+
+    if 'P' in conditions:
+        constraints.extend(p_conditions(D, Gamma, N))
+
+    if 'Q' in conditions:
+        Q = construct_q_matrix(Gamma, n)
+        constraints.append(Q >> 0)
+
+    if 'G' in conditions:
+        # G-matrix: measures particle-hole symmetry
+        G = construct_g_matrix(Gamma, n, N)
+        constraints.append(G >> 0)
+
+    if 'T1' in conditions:
+        # T1 conditions (from 3-RDM → 4-RDM contractions)
+        T1_matrices = construct_t1_conditions(Gamma, n, N)
+        for T in T1_matrices:
+            constraints.append(T >> 0)
+
+    if 'T2' in conditions:
+        # T2 conditions (strongest known necessary conditions)
+        T2_matrices = construct_t2_conditions(Gamma, n, N)
+        for T in T2_matrices:
+            constraints.append(T >> 0)
+
+    prob = cp.Problem(cp.Minimize(energy), constraints)
+
+    # May need specialized SDP solver for large problems
+    prob.solve(solver=cp.MOSEK, mosek_params={'MSK_DPAR_INTPNT_CO_TOL_DFEAS': 1e-8})
+
+    cert = TwoRDMCertificate(
+        system=system,
+        one_rdm=D.value,
+        two_rdm=Gamma.value.reshape(n, n, n, n),
+        ground_state_energy=prob.value,
+        sdp_solver_status=prob.status,
+        primal_objective=prob.value,
+        dual_objective=prob.dual_value,
+        duality_gap=abs(prob.value - prob.dual_value)
+    )
+
+    # Extract properties
+    cert.natural_orbitals, cert.occupation_numbers = np.linalg.eigh(D.value)
+    cert.dipole_moment = compute_dipole(D.value, system)
+
+    return cert
+
+def construct_g_matrix(Gamma: cp.Variable, n: int, N: int) -> cp.Variable:
+    """
+    Construct G-matrix from 2-RDM.
+
+    G represents particle-hole transformed 2-RDM.
+    """
+    # G_ijkl = δ_ik δ_jl N(N-1)/2 - (N-1) Γ_ijkl + Γ_ikjl
+
+    G = cp.Variable((n**2, n**2), symmetric=True)
+
+    # ... (implement G-matrix formula)
+
+    return G
+```
+
+### Phase 5: Benchmarking and Validation (Months 7-8)
+
+Test on standard molecules:
+
+```python
+def benchmark_suite() -> dict:
+    """
+    Run 2-RDM method on standard test molecules.
+
+    Compare to Full CI (exact) and DFT (practical baseline).
+    """
+    test_molecules = {
+        'H2': (['H', 'H'], [[0, 0, 0], [0, 0, 0.74]]),
+        'LiH': (['Li', 'H'], [[0, 0, 0], [0, 0, 1.60]]),
+        'BeH2': (['Be', 'H', 'H'], [[0, 0, 0], [0, 0, 1.33], [0, 0, -1.33]]),
+        'H2O': (['O', 'H', 'H'], [[0, 0, 0], [0.76, 0.59, 0], [-0.76, 0.59, 0]]),
+        'N2': (['N', 'N'], [[0, 0, 0], [0, 0, 1.10]]),
+    }
+
+    results = {}
+
+    for name, (atoms_list, positions) in test_molecules.items():
+        atoms = list(zip(atoms_list, positions))
+
+        print(f"Testing {name}...")
+
+        # Build Hamiltonian
+        system = build_molecular_hamiltonian(atoms, basis='6-31g')
+
+        # 2-RDM method
+        cert = optimize_2rdm_full_conditions(system, conditions=['P', 'Q', 'G', 'T1'])
+
+        # Full CI (if small enough)
+        E_exact = None
+        if system.num_electrons <= 10:
+            E_exact = compute_exact_energy_small_molecules(system)
+            cert.exact_energy = E_exact
+            cert.error_vs_exact = abs(cert.ground_state_energy - E_exact)
+
+        # DFT (B3LYP)
+        E_dft = compute_dft_energy(atoms, basis='6-31g')
+
+        results[name] = {
+            '2RDM_energy': cert.ground_state_energy,
+            'exact_energy': E_exact,
+            'dft_energy': E_dft,
+            '2RDM_error': cert.error_vs_exact,
+            'certificate': cert
+        }
+
+    return results
+
+def plot_convergence_vs_conditions():
+    """
+    Show how adding more conditions improves accuracy.
+    """
+    system = build_molecular_hamiltonian([('H', [0,0,0]), ('H', [0,0,0.74])])
+
+    condition_sets = [
+        ['P'],
+        ['P', 'Q'],
+        ['P', 'Q', 'G'],
+        ['P', 'Q', 'G', 'T1'],
+        ['P', 'Q', 'G', 'T1', 'T2']
+    ]
+
+    energies = []
+    for conds in condition_sets:
+        cert = optimize_2rdm_full_conditions(system, conditions=conds)
+        energies.append(cert.ground_state_energy)
+
+    E_exact = compute_exact_energy_small_molecules(system)
+
+    # Plot: energy vs number of conditions
+    # Should converge toward E_exact as more conditions added
+```
+
+### Phase 6: Property Calculation and Export (Months 8-9)
+
+Compute molecular properties from optimized 2-RDM:
+
+```python
+def compute_properties_from_2rdm(cert: TwoRDMCertificate) -> dict:
+    """
+    Extract physical observables from 2-RDM.
+    """
+    D = cert.one_rdm
+    Gamma = cert.two_rdm
+
+    properties = {}
+
+    # Dipole moment: μ = Σ_ij D_ij ⟨i|r|j⟩
+    r_integrals = compute_position_integrals(cert.system)
+    properties['dipole'] = np.einsum('ij,ijα->α', D, r_integrals)
+
+    # Bond order: measure of chemical bonding strength
+    properties['bond_orders'] = compute_bond_orders(D, cert.system.atoms)
+
+    # Natural orbitals and occupations
+    occs, nos = np.linalg.eigh(D)
+    properties['natural_occupations'] = occs[::-1]  # Decreasing order
+    properties['natural_orbitals'] = nos[:, ::-1]
+
+    # Electron correlation: deviation from Hartree-Fock
+    HF_energy = compute_hartree_fock(cert.system)
+    properties['correlation_energy'] = cert.ground_state_energy - HF_energy
+
+    # Export certificate
+    export_2rdm_certificate(cert, properties)
+
+    return properties
+
+def export_2rdm_certificate(cert: TwoRDMCertificate, props: dict, output_path: Path):
+    """
+    Export certificate as HDF5 with all data.
+    """
+    import h5py
+
+    with h5py.File(output_path, 'w') as f:
+        f.create_dataset('one_rdm', data=cert.one_rdm)
+        f.create_dataset('two_rdm', data=cert.two_rdm)
+
+        f.attrs['energy'] = cert.ground_state_energy
+        f.attrs['duality_gap'] = cert.duality_gap
+        f.attrs['num_electrons'] = cert.system.num_electrons
+
+        # Properties
+        grp = f.create_group('properties')
+        for key, val in props.items():
+            grp.create_dataset(key, data=val)
+```
+
+---
+
+## 4. Example Starting Prompt
+
+```
+You are a quantum chemist implementing the 2-RDM method for electronic structure. Solve
+molecular Hamiltonians using ONLY RDM constraints and SDP—no wavefunction computation.
+
+OBJECTIVE: Find ground state energy of H₂O using 2-RDM method, compare to Full CI.
+
+PHASE 1 (Month 1): Hamiltonian construction
+- Build h_matrix and v_tensor for H₂O (10 electrons, 6-31g basis)
+- Validate integrals against PySCF
+- Compute Hartree-Fock energy (baseline)
+
+PHASE 2 (Months 1-3): P-conditions SDP
+- Formulate energy minimization with D, Γ variables
+- Implement positivity, trace, and contraction constraints
+- Solve using MOSEK SDP solver
+- Test on H₂: verify P-only gives ~80% correlation
+
+PHASE 3 (Months 3-5): Add Q-conditions
+- Construct 3-RDM positivity constraints
+- Use sparse/block structure for efficiency
+- Re-solve H₂: should improve to ~95% correlation
+
+PHASE 4 (Months 5-7): G and T conditions
+- Implement G-matrix (particle-hole duality)
+- Add T1 conditions (if computationally feasible)
+- Benchmark on LiH, BeH₂, H₂O
+
+PHASE 5 (Months 7-8): Full benchmarking
+- Compare 2RDM vs Full CI vs DFT for 5 molecules
+- Plot: energy error vs N-representability conditions
+- Verify variational principle: E_2RDM ≥ E_exact
+
+PHASE 6 (Months 8-9): Properties
+- Compute dipole moments, bond orders
+- Extract natural orbitals and occupations
+- Export certificates with dual bounds
+
+SUCCESS CRITERIA:
+- MVR: H₂ energy within 1 mHartree of exact using P+Q
+- Strong: H₂O energy within 5 mHartree using P+Q+G
+- Publication: Systematic study of 10 molecules, scalability analysis
+
+VERIFICATION:
+- Energy satisfies E_2RDM ≥ E_FCI (variational principle)
+- Duality gap < 10⁻⁶ (SDP converged)
+- Natural occupations ∈ [0, 1] (N-representability)
+- Dipole moments match experiment within 10%
+
+Pure quantum mechanics + convex optimization. No empirical functionals.
+All results certificate-based with SDP dual bounds.
+```
+
+---
+
+## 5. Success Criteria
+
+**MVR** (3 months): P+Q method working for H₂, within 1 mHartree
+**Strong** (6-7 months): P+Q+G for 5 molecules, systematic comparison
+**Publication** (8-9 months): Benchmark suite, scalability analysis, property calculations
+
+---
+
+## 6. Verification Protocol
+
+- Cross-check against Full CI (Molpro, PySCF FCI module)
+- Verify variational principle holds
+- Check SDP dual certificates
+- Compare properties to experimental values
+
+---
+
+## 7. Resources & Milestones
+
+**References**:
+- Mazziotti (2012): "Two-Electron Reduced Density Matrix as the Basic Variable"
+- Nakata et al. (2001): "Variational Calculations using Reduced Density Matrices"
+- Gidofalvi & Mazziotti (2008): "Active-Space Two-Electron Reduced-Density-Matrix Method"
+
+**Milestones**:
+- Month 3: P+Q working for diatomics
+- Month 6: G-conditions implemented
+- Month 8: Benchmark suite complete
+
+---
+
+## 8. Extensions
+
+- **Excited States**: Constrained 2-RDM for electronically excited states
+- **Time-Dependent**: 2-RDM approach to dynamics
+- **Periodic Systems**: 2-RDM for solids (momentum-space formulation)
+
+---
+
+**End of PRD 16**

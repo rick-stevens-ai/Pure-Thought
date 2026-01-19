@@ -1,0 +1,371 @@
+Fantastic question. In materials science there’s a lot you can do with
+pure thought + fresh code—no datasets, no experiments, no legacy
+software—provided you lean on symmetry, topology, variational
+principles, and rigorous optimization. Below is a portfolio of problems
+where we can produce theorems, certificates, or constructive designs
+using only code we write ourselves. I’ve grouped them by theme and, for
+each, sketched what, why it fits the constraint, how we’d attack it,
+and what artifact proves we’re right.
+
+0) Shared “Day‑0” toolchain (reused across all tracks)
+
+-   Group/rep engine for all 230 space groups + double groups +
+    time‑reversal + magnetic (Shubnikov) groups; character tables,
+    induction/restriction, little groups at high‑symmetry k.
+
+-   Topological/K‑theory & symmetry‑indicator stack to compute band
+    representations (eBRs), symmetry indicators, Stiefel–Whitney
+    classes, Chern/(\mathbb{Z}_2) invariants, Wilson loops; all from
+    first principles.
+
+-   Verified PDE/eigenvalue solvers (Maxwell, elastodynamics)
+    with interval arithmetic to certify spectral gaps and error bounds.
+
+-   Convex & polynomial optimization with proofs: SDP/SoS with exact
+    rational certificates; MILP/SAT with DRAT/FRAT logs.
+
+-   Isomorphism‑free lattice/graph enumerators for tight‑binding,
+    mechanical frameworks, and microstructures.
+
+Artifacts we’ll always emit: Lean/Isabelle lemmas for theorems, SDP dual
+certificates (exact), SAT proof logs, interval‑verified spectra. No
+trust required.
+
+1) Topological Band Theory Without Materials Data
+
+What. A complete, constructive classification of which band
+topologies are possible for minimal orbital contents and
+symmetries—across all (magnetic) space groups—plus minimal tight‑binding
+models that realize them.
+
+Why it fits. Entirely symmetry + topology; no parameters from experiment
+or databases.
+
+How.
+
+-   Compute eBR decompositions for all Wyckoff positions: determine when
+    a set of bands cannot be written as a sum of eBRs → topological.
+
+-   Enumerate minimal graphs (tight‑binding lattices) per space group;
+    search hoppings (range ≤ R) that realize desired invariants; certify
+    Chern/(\mathbb{Z}_2) via K‑theory/Wilson loops.
+
+-   Prove nodal features enforced by nonsymmorphic
+    symmetries (hourglass, nodal chains) and produce minimal
+    Hamiltonians.
+
+Artifacts. An atlas of minimal models (code + proofs) mapping symmetry →
+achievable topologies, and no‑go theorems where impossible.
+
+Milestone. 3–6 months: full non‑magnetic catalog; 6–12 months: magnetic
+groups with anti‑unitary symmetries.
+
+2) Flat Chern Bands with Provable Geometry (for fractionalization)
+
+What. Design compact tight‑binding lattices that realize flat (or nearly
+flat) bands with target Chern number and provably good quantum
+geometry (Berry curvature uniformity and Fubini–Study metric bounds).
+
+Why it fits. Pure graph theory + algebra; verification is exact linear
+algebra and topology.
+
+How.
+
+-   Enumerate finite‑range hopping graphs; impose algebraic constraints
+    for a target Bloch polynomial structure.
+
+-   Certify Chern numbers exactly (e.g., lattice index theorems)
+    and prove lower bounds on flatness ratio using SoS relaxations of
+    dispersion curvature.
+
+-   Generate Wannier obstruction certificates (non‑existence of
+    symmetric, localized Wannier functions) as topological proof of
+    fractionalization viability.
+
+Artifacts. Tight‑binding Hamiltonians + certificates of Chern number and
+flatness bounds.
+
+3) RBCE (Relativistic Band & Crystal‑Field Engineering) — Theorem‑Level
+Symmetry Catalog
+
+(This aligns directly with your RBCE review focus.)
+
+What. A proof‑level classification of single‑ion anisotropy and
+(g)‑tensor anisotropy for all (d^n) configurations across every point
+group, including maximizers of magnetocrystalline anisotropy that mimic
+rare‑earth behavior.
+
+Why it fits. It’s group theory + crystal field + SOC; no materials
+inputs needed.
+
+How.
+
+-   Enumerate point‑group irreps; build the crystal‑field Hamiltonian +
+    SOC in a canonical basis; diagonalize symbolically where possible,
+    otherwise with exact arithmetic.
+
+-   Derive closed‑form anisotropy energy expansions and prove upper
+    bounds on (K_1, K_2) versus CF/SOC parameters for each symmetry.
+
+-   Determine necessary/sufficient symmetry conditions for Ising‑like
+    single‑ion behavior and narrow optical transitions (for optical
+    qubits).
+
+Artifacts. A theorem‑backed atlas: (site symmetry, (d^n)) → allowed
+splitting patterns, max anisotropy certificates, and explicit model
+Hamiltonians.
+
+4) Photonic/Phononic Crystals: Rigorous Bandgap Existence & Optimization
+
+What. Microstructures (2D/3D) with certified complete bandgaps at the
+lowest possible index/contrast and provablegap‑to‑midgap maxima under
+symmetry/fill‑fraction constraints.
+
+Why it fits. PDE eigenproblems we can solve and certify from scratch; no
+data.
+
+How.
+
+-   Build verified FEM/plane‑wave solvers with interval arithmetic;
+    output rigorous lower/upper eigenvalue bounds → a certified gap.
+
+-   Conduct topology optimization under symmetry groups; prove
+    optimality via dual (SoS/shape‑derivative) certificates
+    or constructive near‑optima with a posteriori bounds.
+
+Artifacts. Microstructure blueprints + interval‑verified band diagrams;
+dual certificates for optimality claims.
+
+5) Universal Bounds for Effective Properties of Composites (beyond
+Hashin–Shtrikman)
+
+What. Sharp bounds on effective conductivity, permittivity, and
+elasticity for given phase properties, volume fractions, and
+symmetries; cross‑property bounds (e.g., linking elastic and thermal
+responses).
+
+Why it fits. Variational principles → convex optimization →
+certificates.
+
+How.
+
+-   Pose G‑closure problems as SDP moment relaxations; produce exact
+    dual certificates giving provable bounds.
+
+-   Construct microstructures that attain bounds via algorithmic inverse
+    homogenization; verify with interval‑certified solvers.
+
+Artifacts. New analytical bounds + constructive microstructures + proof
+certificates.
+
+6) Topological Mechanics: Zero‑Modes, Polarization & Programmable
+Metamaterials
+
+What. Complete classification and constructive design of Maxwell
+frames with topological polarization (robust boundary modes)
+and programmable mechanical response.
+
+Why it fits. Pure rigidity theory + topology of the compatibility
+matrix.
+
+How.
+
+-   Enumerate periodic frameworks under space‑group constraints; compute
+    topological invariants (e.g., winding of (\det R(\mathbf{k}))).
+
+-   Use SAT/MILP to enforce isostaticity, target mode counts, and
+    forbidden self‑stresses; certify with DRAT proofsand symbolic
+    checks.
+
+Artifacts. Lattice designs with certified zero‑mode counts and
+topological indices; printable unit cells (geometry files).
+
+7) Nodal/Anomalous Semimetals from Nonsymmorphic Symmetry
+
+What. A general classification of enforced nodal features (loops,
+chains, hourglass fermions) with minimal models and proofs of stability
+under SOC and time‑reversal variants.
+
+Why it fits. Symmetry algebra + band connectivity; no parameters.
+
+How.
+
+-   Compute little‑group projective reps with/without SOC; prove when
+    compatibility relations force crossings.
+
+-   Output canonical tight‑binding models and symbolic proofs of
+    symmetry‑protected degeneracies.
+
+Artifacts. A playbook: symmetry → nodal topology + minimal Hamiltonian +
+proof.
+
+8) Real‑Space Topological Invariants for Disordered Media
+(non‑commutative geometry)
+
+What. Certified algorithms for Chern/(\mathbb{Z}_2) indices
+in aperiodic/disordered systems (electrons, phonons, photonics), with
+finite‑volume error bounds.
+
+Why it fits. Mathematics of (C^*)-algebras; verification is internal.
+
+How.
+
+-   Implement non‑commutative Chern numbers, Bott indices, spectral
+    localizers; prove a priori error bounds vs. system size/disorder.
+
+-   Provide interval‑verified invariants for generated disordered
+    samples.
+
+Artifacts. Algorithms + proofs; reference models showing certified
+quantization in finite domains.
+
+9) Fracton Elasticity & Defect Topology in Crystals
+
+What. A rigorous bridge between crystal
+defects (disclinations/dislocations) and fracton gauge theories;
+classification of non‑Abelian defect braiding in 3D crystals.
+
+Why it fits. Group theory + homotopy + topological field theory; no
+parameters.
+
+How.
+
+-   Compute fundamental groups of order‑parameter manifolds with
+    space‑group actions; classify defect fusion/braiding rules.
+
+-   Produce exact algebraic data (fusion tables, 3‑cocycles) with proofs
+    of coherence.
+
+Artifacts. Formal classification tables + Lean‑checked group‑cohomology
+statements.
+
+10) Moiré Crystals: Commensurability, Symmetry, and “Magic‑Angle”
+Conditions
+
+What. A general theory of commensurate moiré superlattices (not only
+graphene) and rigorous conditions for flat‑band formation in continuum
+models.
+
+Why it fits. Number theory + symmetry + spectral analysis; verification
+by our own solvers.
+
+How.
+
+-   Enumerate commensurate twist/strain conditions via Diophantine
+    methods; derive symmetry groups and mini‑Brillouin zones.
+
+-   Analyze continuum Hamiltonians; prove small‑parameter criteria for
+    band collapse using operator perturbation theory.
+
+Artifacts. Catalog of commensurate families + proofs of flatness
+criteria; minimal models.
+
+11) Ionic Transport as Percolation on Crystal Graphs (rigorous
+thresholds)
+
+What. Upper/lower bounds on percolation thresholds and minimal hopping
+networks for fast‑ion conductors under purely geometric constraints (no
+energies).
+
+Why it fits. Graph theory + percolation + isoperimetric inequalities.
+
+How.
+
+-   Generate crystal sublattices/graphs; compute Cheeger constants;
+    derive rigorous percolation bounds; verify with SAT‑certified
+    constructions.
+
+-   Extend to directed percolation for anisotropic diffusion.
+
+Artifacts. Threshold bounds with proofs + extremal graph examples.
+
+12) Superconductivity: No‑Go & Necessity Results from Symmetry Alone
+
+What. Prove which pairings are impossible/mandatory under given lattice
+symmetries and Fermi‑surface topologies (without material parameters),
+including topological superconductor necessity under certain
+constraints.
+
+Why it fits. Representation theory + topology of BdG Hamiltonians.
+
+How.
+
+-   Classify pairing irreps; compute (K)-theory classes under
+    crystalline symmetries; derive obstruction theorems for trivial
+    superconductivity.
+
+-   Construct minimal BdG models achieving allowed classes.
+
+Artifacts. Symmetry → pairing table with theorems; minimal models +
+topological invariant proofs.
+
+13) Cross‑Property Limits & Trade‑offs (e.g., strong magnets vs.
+conductivity)
+
+What. Prove Pareto fronts between properties (e.g., elastic anisotropy
+vs. isotropy, bandgap vs. dielectric constant) that no microstructure
+can beat.
+
+Why it fits. Linear response + convex duality.
+
+How.
+
+-   Pose as multi‑objective variational problems; derive supporting
+    hyperplane certificates; construct near‑optimal microstructures.
+
+Artifacts. Provable trade‑off curves + designs that sit on (or certify
+distance to) the frontier.
+
+What to start first (highest leverage under your mission)
+
+1.  RBCE symmetry atlas (Track 3): directly advances your
+    “rare‑earth‑like without rare earths” agenda; produces hard theorems
+    and constructive motifs.
+
+2.  Topological band atlas (Track 1) + flat Chern band design (Track 2):
+    foundational and broadly impactful, giving minimal Hamiltonians for
+    desired phases.
+
+3.  Certified photonic/phononic bandgaps (Track 4): yields publishable,
+    fabrication‑ready unit cells with airtight gap certificates—high
+    practical value.
+
+Week‑1 sprints (if you say “go”)
+
+Sprint A — RBCE
+
+-   Implement double‑group irreps for all 32 point groups; validate
+    against internal group‑axiom tests.
+
+-   Generate CF+SOC Hamiltonians for (d^n) (n=1…9) with a canonical
+    parameterization; compute symbolic anisotropy expansions.
+
+-   Prove: “No uniaxial anisotropy in cubic (O_h) without SOC”
+    (baseline), then derive necessary symmetry conditions for Ising‑like
+    behavior.
+    Artifacts: first Lean lemmas + a small table of (site symmetry,
+    (d^n)) → allowed anisotropy terms.
+
+Sprint B — Topological band atlas
+
+-   eBR database (from scratch): induction of site irreps → band reps;
+    write decomposition and compatibility code.
+
+-   Produce minimal topological models for a handful of space groups
+    (e.g., (p2_12_12_1), (P4/nmm), (P2_13)).
+    Artifacts: tight‑binding files + K‑theory certificates.
+
+Sprint C — Certified photonic gaps
+
+-   Verified Maxwell eigensolver for a 2D TE/TM case with interval
+    bounds.
+
+-   Reproduce a known gap with a rigorous certificate; then push to
+    lower index contrast via topology optimization + dual bounds.
+    Artifacts: geometry + interval‑verified gap plot + dual certificate.
+
+If you pick any 2–3 tracks, I’ll draft detailed module layouts (APIs,
+certificate formats), initial theorems to target, and the daily run plan
+for the first two weeks. Given your current RBCE effort, I suggest we
+lead with RBCE + Topological band atlas, and run Certified photonic
+gaps in parallel as the first “closed‑loop” PDE+certificate win.

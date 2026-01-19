@@ -1,0 +1,244 @@
+Outstanding—quantum information + many‑body theory is tailor‑made for
+“pure thought + fresh code only.” Below is a portfolio of problem
+tracks where progress comes from axioms, convexity, algebra, and
+combinatorics. Each track is feasible with our own solvers and
+produces verifiable artifacts (SDP duals, SAT proofs,
+interval‑arithmetic bounds, Lean/Isabelle lemmas). No data, no
+experiments, no legacy codes.
+
+Day‑0 tooling we build once and reuse
+
+-   Noncommutative SDP/SoS & NPA: exact‑arithmetic semidefinite solvers
+    (with dual certificates) for operator inequalities, correlation
+    sets, and Bell bounds.
+
+-   Stabilizer/QECC lab: code constructors (LDPC, hypergraph product,
+    homological/fracton), distance lower‑bound certificates (SAT/MILP),
+    and provable‑performance decoders.
+
+-   Tensor‑network engine with certificates: MPS/PEPS/TN contractions,
+    error bars via interval arithmetic; parent‑Hamiltonian and gap
+    verifiers (Knabe/martingale methods).
+
+-   Hamiltonian complexity kit: gadgets, perturbative reductions,
+    commuting vs. non‑commuting checks, and proof logs.
+
+-   Anyon/MTC algebra tools: fusion categories, modular data, anomaly
+    tests (obstruction cocycles) with machine‑checked coherence.
+
+A) Quantum error correction & fault tolerance
+
+1.  LDPC & hypergraph‑product codes with proofs
+    Goal: New families with better rate–distance–degree tradeoffs;
+    provable decoding guarantees in adversarial/noise‑model‑free
+    regimes.
+    Artifacts: Code constructions; distance/minimum‑weight certificates
+    (SAT/ILP); decoder worst‑case bounds; impossibility theorems for
+    certain parameter triples.
+
+2.  Fracton and subsystem codes
+    Goal: Classify foliated phases; construct finite‑rate,
+    finite‑distance 3D codes with local checks; prove mobility
+    constraints.
+    Artifacts: Stabilizer presentations + logical operator structure
+    proofs; bounds on distance vs. check weight.
+
+3.  Magic‑state distillation & resource monotones
+    Goal: Tight upper/lower bounds on distillation rates; exact
+    monotones (Wigner negativity/robustness) for families of protocols.
+    Artifacts: Convex‑program certificates; optimality proofs for
+    specific distillers.
+
+B) Nonlocal games, self‑testing, and device‑independent theory
+
+4.  New Bell inequalities & Tsirelson‑type bounds
+    Goal: Discover inequalities with maximal quantum–classical gaps;
+    certify with NPA duals.
+    Artifacts: Inequality families, optimal quantum values (SDP duals),
+    explicit achieving measurements/states.
+
+5.  Robust self‑testing of many‑body states
+    Goal: Games that rigidly characterize MPS/PEPS and topological
+    orders.
+    Artifacts: Proofs of rigidity constants; circuits that realize the
+    optimal strategies; device‑independent certification templates.
+
+6.  Complexity‑theoretic games (compression/parallel repetition)
+    Goal: Simpler explicit games encoding hard languages; quantitative
+    parallel‑repetition bounds.
+    Artifacts: Game definitions and analytical repetition theorems with
+    certificates.
+
+C) Entanglement theory & resource cones
+
+7.  Separability & PPT frontiers with certificates
+    Goal: Sharper hierarchies (DPS/SoS) for deciding separability in
+    fixed dimensions; worst‑case integrality gaps.
+    Artifacts: SDP hierarchies with exact duals; explicit bound
+    entangled states + proofs.
+
+8.  Entropy inequalities and cones
+    Goal: New linear/convex inequalities for special families
+    (stabilizer, Gaussian) and constraints linking mutual information,
+    squashed entanglement, etc.
+    Artifacts: Symbolic proofs (for stabilizer/Gaussian) and
+    SDP‑verified inequalities elsewhere.
+
+9.  Resource theories beyond entanglement (coherence, magic, asymmetry)
+    Goal: Tight conversion rates under free operations;
+    catalytic/non‑catalytic gaps.
+    Artifacts: Conic dual certificates; exact conversion examples and
+    impossibility proofs.
+
+D) Hamiltonian complexity & quantum PCP direction
+
+10. Physically plausible QMA‑hardness & commuting‑Hamiltonian boundaries
+    Goal: New completeness/hardness results for local models (limited
+    degree, geometry, stoquastic/near‑stoquastic).
+    Artifacts: Gadget reductions with mechanically checkable proofs;
+    explicit instances.
+
+11. NLTS & local testability of quantum codes
+    Goal: Broaden NLTS families; connect testability to decoding
+    properties.
+    Artifacts: Constructions + spectral gap and testability proofs;
+    integrality‑gap instances for relaxations.
+
+12. Quantum PCP building blocks (gap amplification)
+    Goal: Graph‑product and agreement‑test gadgets adapted to quantum
+    constraints.
+    Artifacts: Formal gap amplification statements with explicit
+    constants.
+
+E) Ground states, gaps, and phases of matter
+
+13. Certified spectral gaps for parent Hamiltonians
+    Goal: Generalize Knabe/martingale techniques; automate discovery of
+    local gap witnesses.
+    Artifacts: Provable lower bounds on gaps for new MPS/PEPS families;
+    machine‑checked inequalities.
+
+14. Area laws & entanglement scaling under weaker hypotheses
+    Goal: Push conditions guaranteeing area laws in 1D/2D (e.g., new
+    correlation‑decay criteria).
+    Artifacts: Theorems with explicit constants; counterexamples with
+    proofs.
+
+15. Topological order & anyon condensation with proofs
+    Goal: Classify gapped boundaries/defects; derive anomaly constraints
+    on 2D/3D orders from categorical data.
+    Artifacts: Fusion/braiding tables; obstruction cocycle certificates;
+    exactly‑solvable commuting‑projector models.
+
+16. Fracton phases & rigidity
+    Goal: Systematic construction and no‑go theorems for
+    subsystem‑symmetric orders.
+    Artifacts: Algebraic classification; explicit Hamiltonians; mobility
+    restriction proofs.
+
+F) Dynamics, simulation, and control (all with rigorous guarantees)
+
+17. Lieb–Robinson & operator spreading
+    Goal: Tighter light‑cone velocities and tail bounds for finite‑range
+    and power‑law interactions.
+    Artifacts: Inequalities with explicit constants; certified numerics
+    confirming sharpness.
+
+18. Hamiltonian simulation with optimal schedules
+    Goal: Depth/precision trade‑offs for Trotter/QSP/LCU under
+    structural constraints; exact constant optimization.
+    Artifacts: Worst‑case optimal bounds with proofs; explicit
+    decompositions showing tightness.
+
+19. Adiabatic theorems with quantitative constants
+    Goal: Gap‑dependent schedules minimizing total time; diabatic error
+    bounds.
+    Artifacts: Certified schedules and error certificates; provably
+    optimal scalings.
+
+20. Open‑system engineering (Lindbladians)
+    Goal: Local dissipators that prepare target phases uniquely and
+    rapidly; mixing‑time bounds.
+    Artifacts: Log‑Sobolev/gap certificates; constructive jump‑operator
+    sets.
+
+21. Sign‑problem (un)avoidability
+    Goal: Decide stoquasticity under local basis changes; characterize
+    classes where sign‑free forms are impossible.
+    Artifacts: SAT/ILP certificates of (non)existence; explicit
+    unitaries when possible.
+
+G) Randomness, designs, and complexity of circuits
+
+22. Explicit unitary designs & anti‑concentration
+    Goal: Minimal‑depth constructions achieving t‑design properties on
+    given graphs.
+    Artifacts: Moment operator spectra; exact bounds; explicit circuits.
+
+23. Shadow tomography & compressed sensing limits
+    Goal: Minimax lower/upper bounds for shadow estimators under
+    measurement constraints.
+    Artifacts: Information‑theoretic converses and achievable schemes
+    with proofs.
+
+24. Random circuit theory & ETH/chaos proxies
+    Goal: Rigorous results for OTOCs/spectral form factors in local
+    ensembles.
+    Artifacts: Exact asymptotics via Weingarten calculus; certified
+    constants.
+
+H) Bosonic/continuous‑variable (CV) quantum information
+
+25. Gaussian channel capacities & converses
+    Goal: Tight capacity and strong‑converse bounds under energy
+    constraints for canonical channels.
+    Artifacts: SDP formulations with dual proofs; extremal
+    encoders/decoders in closed form where possible.
+
+26. CV entanglement & non‑Gaussianity witnesses
+    Goal: Sharp separability/steering criteria beyond Gaussian states.
+    Artifacts: Moment‑matrix SoS certificates; explicit witness
+    operators.
+
+I) Measurement‑based & distributed quantum computation
+
+27. Universality and flow in MBQC
+    Goal: Characterize minimal graph‑state resources (gflow/Pauli flow,
+    constant‑depth gadgets).
+    Artifacts: Graph‑minor certificates; universality/no‑go theorems.
+
+28. Distributed protocols & DI‑crypto
+    Goal: Device‑independent randomness/QKD rates via new games and
+    finite‑key reductions (information‑theoretic only).
+    Artifacts: Security theorems with explicit constants; NPA‑backed
+    bounds.
+
+What I’d start first (fastest path to rigorous, publishable wins)
+
+-   QECC (A1–A3) for constructive codes + certificates.
+
+-   Nonlocal games/self‑testing (B4–B6) using our NPA/nc‑SoS stack.
+
+-   Gaps & parent Hamiltonians (E13) with an automated gap‑witness
+    generator.
+
+-   Sign‑problem (F21) classification with crisp SAT/ILP certificates.
+
+-   Unitary designs (G22) for explicit, depth‑optimal constructions.
+
+Week‑1 sprints (concrete)
+
+-   Build: exact‑arithmetic SDP with block‑symmetry; NPA layers;
+    DRAT/FRAT plumbing; interval‑arithmetic linear algebra.
+
+-   Validate: reproduce known CHSH/Tsirelson value and a simple LDPC
+    code’s distance with certificates.
+
+-   Push: auto‑search a new Bell inequality family; run gap‑witness
+    search on a small PEPS parent Hamiltonian; attempt a local‑basis
+    stoquasticity decision on 2‑local instances—each returning
+    machine‑checkable artifacts.
+
+If you pick 3–5 tracks from above, I’ll draft module layouts,
+certificate formats, and a day‑by‑day plan to get first results within
+two weeks.

@@ -1,0 +1,331 @@
+Absolutely—there’s a rich slate of biology problems that are 100%
+first‑principles, proof‑ or certificate‑driven, and can be attacked with
+nothing but logic and code we write ourselves. Below is a curated
+portfolio organized by theme. For each track I list what to attempt, why
+it’s viable without data, how we’d prosecute it with GPT‑5 + fresh code,
+and what verifiable artifacts we’d produce (proofs, certificates,
+enumerations). I’ve biased this toward areas where you can
+get theorem‑level results or airtight impossibility/optimality bounds.
+
+A) Origin‑of‑Life & Chemical Reaction Networks (CRNs)
+
+A1. Minimal Autocatalytic Cores & Universality
+
+-   Problem. Find provably minimal reaction sets that are autocatalytic
+    or universal (can implement arbitrary computation/self‑replication)
+    under mass‑action kinetics.
+
+-   Why no data needed. CRNs are finite algebraic objects: properties
+    like autocatalysis, persistence, and universality reduce to
+    graph/semigroup and dynamical criteria.
+
+-   Approach.
+
+    -   Build a CRN Analyzer: stoichiometric kernels, siphons/traps, P‑
+        and T‑invariants (Petri nets), deficiency/endotacticity tests,
+        and reachability via integer programming/SAT.
+
+    -   Use branch‑and‑bound with isomorphism‑free enumeration to search
+        reaction sets up to size n, with DRAT/SMT certificates of
+        minimality and infeasibility.
+
+-   Artifacts. Catalog of minimal autocatalytic sets
+    with machine‑checkable witnesses (certifying no smaller set exists),
+    plus Lean/Isabelle formal proofs for key lemmas.
+
+A2. Persistence/Permanence & Global Behavior for Structured Classes
+
+-   Problem. Prove permanence (no species goes extinct) and
+    existence/uniqueness of attractors for new families (e.g.,
+    generalized endotactic or “nearly complex‑balanced” networks).
+
+-   Approach.
+
+    -   Construct Lyapunov functions via sum‑of‑squares (SoS) and
+        logarithmic potentials; verify with exact rational arithmetic.
+
+    -   Derive forward‑invariance polytopes and barrier certificates
+        (again SoS) to show boundedness/persistence.
+
+-   Artifacts. Formal SoS certificates and proofs of permanence for
+    nontrivial classes; counterexamples with DRAT proofs where
+    permanence fails.
+
+A3. Self‑Assembly & Tiling Complexity for Prebiotic Polymers
+
+-   Problem. Tight upper/lower bounds on tile
+    complexity and error‑robust self‑assembly of target shapes/patterns
+    in abstract tile assembly models (ATAM).
+
+-   Approach. SAT‑backed construction search; canonical
+    form verification for assemblies; undecidability reductions where
+    applicable.
+
+-   Artifacts. New best bounds and explicit tile sets with checkable
+    assembly proofs.
+
+B) Information‑Theoretic Biology (limits that any experiment must obey)
+
+B1. Channel Capacity of Genotype→Phenotype Maps
+
+-   Problem. Upper/lower bounds on the mutual information between genome
+    of length L and a coarse‑grained phenotype under biophysically
+    constrained maps (e.g., thresholded networks).
+
+-   Approach.
+
+    -   Model genotype→phenotype as constrained circuits or graph
+        dynamics; derive rate–distortion and Fano/Le Cam lower bounds;
+        construct achievability codes (explicit mappings) to close gaps.
+
+-   Artifacts. Theorems and constructive encoders/decoders (code we
+    write) with proofs of capacity bounds.
+
+B2. Speed–Accuracy–Energy Tradeoffs (Biochemical Sensing & Proofreading)
+
+-   Problem. Tighten the thermodynamic uncertainty relations for
+    finite‑time inference by biochemical networks; derive
+    sharp speed–dissipation–accuracy frontiers.
+
+-   Approach.
+
+    -   Write a stochastic thermodynamics toolkit (master equations,
+        large‑deviation theory, martingales) with interval‑arithmetic
+        error control.
+
+    -   Use convex duality to produce certificate‑style
+        inequalities (e.g., SoS on cumulant generating functions).
+
+-   Artifacts. New universal inequalities with proofs; worst‑case
+    optimal protocols constructed algorithmically.
+
+B3. Identifiability & Sample‑Complexity Impossibility for Inference
+
+-   Problem. Exact identifiability conditions and minimax lower
+    bounds for reconstructing regulatory networks or fitness landscapes
+    from limited, noisy observations.
+
+-   Approach. Information bounds (Assouad/Fano), algebraic
+    identifiability analysis for polynomial ODEs, and adversarial
+    construction of indistinguishable model pairs (with SAT
+    certificates).
+
+-   Artifacts. Clean theorems: what cannot be inferred below a
+    threshold; tightness via explicit constructions.
+
+C) Evolutionary Dynamics & Control (theorems, not data)
+
+C1. Hitting‑Time Bounds on Crossing Fitness Valleys
+
+-   Problem. Sharp upper/lower bounds for the expected time to escape
+    local optima under point mutations, recombination, and epistasis
+    patterns.
+
+-   Approach. Spectral gap and conductance methods; exact results on toy
+    landscapes; comparison theorems between Moran/Wright‑Fisher
+    processes; large‑deviation upper/lower bounds via potential
+    functions.
+
+-   Artifacts. Provable bounds and extremal landscape constructions
+    achieving them; verified symbolic calculations.
+
+C2. Robust Therapy Scheduling (Adversarial Evolution)
+
+-   Problem. In replicator/lotka‑volterra ecological models with
+    drug‑response tradeoffs, prove worst‑case regret
+    bounds and structure of optimal policies (e.g., bang‑bang vs.
+    mixed).
+
+-   Approach. Formulate as differential games; derive viscosity
+    solutions/Isaacs conditions in simple classes; certify optimality
+    via Hamilton–Jacobi inequalities (SoS).
+
+-   Artifacts. Theorems guaranteeing performance under model ambiguity;
+    constructive schedules with proofs.
+
+C3. Viral Quasispecies Error Thresholds Beyond Classical Assumptions
+
+-   Problem. Tighten error‑threshold results for general alphabet sizes
+    and epistatic fitness landscapes with recombination.
+
+-   Approach. Operator‑norm bounds for mutation–selection matrices;
+    perturbation theory; variational characterizations.
+
+-   Artifacts. Closed‑form bounds and exact constructions; verified by
+    exact rational linear algebra.
+
+D) Sequences, Structures, and Folding (combinatorics & certificates)
+
+D1. RNA Secondary Structure Enumeration & Extremal Design
+
+-   Problem. Exact counts/asymptotics for structures with stacking/loop
+    constraints; sequences with provably uniqueMFE structures under
+    abstract energy models.
+
+-   Approach. Generating functions + saddle‑point asymptotics;
+    dynamic‑programming recurrences with interval‑arithmetic energy
+    bounds; SAT encodings for uniqueness.
+
+-   Artifacts. Theorems and certified enumerations; minimal‑length
+    designs for specific motifs with DRAT proofs of uniqueness.
+
+D2. Protein Lattice Models (HP and beyond)
+
+-   Problem. Design sequences with guaranteed ground‑state folds; prove
+    complexity/approximability thresholds for variants (e.g., side‑chain
+    models).
+
+-   Approach. Integer programming and SAT with proof logs; constructive
+    gadgets showing hardness/tractability transitions; automated search
+    for extremal sequences.
+
+-   Artifacts. New best constructions and complexity theorems;
+    certificates verifying optimality.
+
+E) Phylogenetics & Algebraic Statistics (pure algebra/geometry)
+
+E1. New Phylogenetic Invariants & Identifiability with
+Indels/Duplications
+
+-   Problem. Extend polynomial invariants and identifiability results to
+    models with insertions/deletions or gene duplication/loss.
+
+-   Approach. Build from scratch a Gröbner basis engine and work over
+    group‑based or nonstationary models; derive new determinantal and
+    toric relations.
+
+-   Artifacts. Invariants with formal algebraic proofs; conditions
+    guaranteeing tree identifiability without likelihoods.
+
+E2. Lower Bounds on Tree/Network Recovery with Finite Sites
+
+-   Problem. Prove sharp impossibility/sample‑complexity bounds for
+    inferring deep nodes with limited sequence length and heterotachy.
+
+-   Approach. Information inequalities + explicit hard instances (pairs
+    of models producing ε‑close distributions).
+
+-   Artifacts. Theorems with constructive indistinguishable examples
+    (code generates and verifies them).
+
+F) Coding Theory for Biology‑Constrained Channels
+
+F1. DNA/XNA Storage and Synthesis–Sequencing Channels
+
+-   Problem. Codes that obey composition constraints (GC content,
+    run‑length, forbidden motifs) and correct asymmetric indel errors,
+    with provable rates and distances.
+
+-   Approach. Construct constrained codes (automata +
+    enumerators), Varshamov–Gilbert‑type lower bounds, sphere‑packing
+    upper bounds, and explicit encoder/decoder implementations.
+
+-   Artifacts. New code families with formal rate/distance proofs;
+    complexity‑optimal encoders we implement.
+
+F2. Minimal Barcoding Schemes with Collision Guarantees
+
+-   Problem. Set systems for combinatorial indexing
+    with provable collision/decoder error bounds under worst‑case noise.
+
+-   Approach. Combinatorial designs, list‑decoding bounds, and
+    adversarial channel models; explicit constructions (e.g., algebraic
+    geometry codes under constraints).
+
+-   Artifacts. Tighter bounds and constructive barcodes with proofs.
+
+G) Morphogenesis & Pattern Formation (PDEs, graphs, certificates)
+
+G1. Necessary/Sufficient Conditions for Turing Patterning on
+Graphs/Manifolds
+
+-   Problem. Characterize reaction–diffusion systems that must/cannot
+    pattern given Laplacian spectra and kinetic Jacobians.
+
+-   Approach. Derive spectral inequalities and sum‑of‑squares
+    Lyapunov conditions that certify (in)stability; extend
+    to network‑coupled systems.
+
+-   Artifacts. General theorems + constructive counterexamples; SoS
+    certificates for (in)stability regions.
+
+G2. Developmental Robustness Bounds
+
+-   Problem. Tradeoffs between noise, gradient precision, and boundary
+    sharpness in positional‑information systems.
+
+-   Approach. Stochastic PDEs; Cramér–Rao and Fisher‑information bounds
+    for gradient sensing; optimal filter constructions achieving bounds.
+
+-   Artifacts. Tight bounds and explicit optimal estimator dynamics.
+
+H) Formal Languages for Biochemical Computation
+
+H1. “Small Language” for Reaction Classes & Self‑Replication (ties to
+your project)
+
+-   Problem. A typed, compositional language that captures classes of
+    chemical reactions and guarantees properties (conservation,
+    autocatalysis, monotonicity).
+
+-   Approach. Design a type system and equational theory; implement
+    a proof‑carrying compiler that emits (i) executable CRNs and (ii)
+    formal certificates (Lean) for desired properties.
+
+-   Artifacts. A language+compiler pair with machine‑checked theorems
+    about any program (reaction class) it emits.
+
+The “Day‑0” toolchain we’d build once and reuse
+
+1.  CRN & Petri‑Net Lab: stoichiometry, invariants, siphons/traps;
+    symbolic deficiency/endotacticity checks; reachability via MILP/SAT
+    with proof logs.
+
+2.  Exact Algebra & SoS Stack: rational/Algebraic‑number arithmetic;
+    Gröbner bases; semidefinite programming with exact certificate
+    emission.
+
+3.  Stochastic Thermodynamics & LDP Kit: master‑equation solvers with
+    interval arithmetic; variational duals for large deviations;
+    automated inequality prover.
+
+4.  Evolutionary Processes Engine: Moran/WF/replicator simulators with
+    symbolic analysis (spectral gaps, hitting times) and verifiable
+    bounds.
+
+5.  Combinatorics & Codes Workshop: constrained code
+    constructors/decoders; automata/generating‑function tools;
+    list‑decoding analyzers with proofs.
+
+6.  Proof Back‑Ends: Lean/Isabelle for theorems; DRAT/FRAT logs for SAT;
+    SoS/SDP dual certificates; all artifacts auto‑generated and
+    re‑checked.
+
+Near‑term “foundational” wins (my picks)
+
+1.  Minimal autocatalytic CRNs (A1) with certificates of minimality —
+    decisive for origin‑of‑life theory.
+
+2.  Genotype→phenotype information bounds (B1) with constructive maps —
+    clarifies ultimate limits of biological design.
+
+3.  RNA structure extremal design (D1) — clean theorems + checkable
+    constructions that bridge combinatorics and biophysics.
+
+Week‑1 plan for Track A1 (if you want to start here)
+
+-   Specify canonical CRN encoding; implement stoichiometric analysis
+    and Petri‑net invariants.
+
+-   Write SAT encodings for “is autocatalytic?”, “is minimal?”, “no
+    smaller network exists.”
+
+-   Generate isomorphism‑free CRNs up to 4 species / ≤6 reactions; run
+    LLM‑guided search; produce first minimality DRAT proofs.
+
+-   Draft Lean lemmas linking autocatalysis predicates ↔ integer cone
+    properties of the stoichiometric matrix.
+
+If you tell me which 2–3 tracks resonate most (e.g., origin‑of‑life vs.
+evolution vs. coding theory), I’ll spin up concrete module layouts,
+certificate formats, and the first target theorems to prove.

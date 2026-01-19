@@ -1,0 +1,894 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% Page geometry
+\geometry{
+    a4paper,
+    left=25mm,
+    right=25mm,
+    top=30mm,
+    bottom=30mm,
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Pure Thought Challenge 07}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+    pdfauthor={Pure Thought AI Challenges},
+    pdftitle={Challenge 07: Extremal Higher-Dimensional CFTs with Stress Tensor},
+}
+
+% Code listing style
+\definecolor{codegray}{rgb}{0.95,0.95,0.95}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    backgroundcolor=\color{codegray},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    breakatwhitespace=true,
+    captionpos=b,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    tabsize=4,
+    showstringspaces=false,
+}
+
+\lstset{style=pythonstyle}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Custom commands
+\newcommand{\checklist}[1]{\item[$\square$] #1}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+
+% Title information
+\title{\textbf{Challenge 07: Extremal Higher-Dimensional CFTs with Stress Tensor} \\
+\large Pure Thought AI Challenge 07}
+\author{Pure Thought AI Challenges Project}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+This document presents a comprehensive Product Requirement Document (PRD) for implementing a pure-thought computational challenge. The problem can be tackled using only symbolic mathematics, exact arithmetic, and fresh code---no experimental data or materials databases required until final verification. All results must be accompanied by machine-checkable certificates.
+\end{abstract}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+
+\textbf{Domain:} Quantum Gravity & Particle Physics
+
+\textbf{Difficulty:} Medium-High
+
+\textbf{Timeline:} 6-12 months
+
+\textbf{Prerequisites:} Conformal field theory, conformal bootstrap, AdS/CFT
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{Problem Statement}
+
+
+\subsubsection{Scientific Context}
+The conformal bootstrap has produced rigorous universal bounds on conformal field theory data using only crossing symmetry and unitarity. For large central charge CFTs with sparse spectra—theories dual to Einstein gravity in Anti-de Sitter space—we can ask foundational questions about the maximum possible spectral gaps.
+
+
+These questions directly constrain pure quantum gravity. If a CFT has only the stress tensor and a large gap to the next operator, its holographic dual is pure Einstein gravity without additional light fields.
+
+
+
+\subsubsection{The Core Question}
+\textbf{What is the maximum possible gap to the first non-conserved operator in a unitary CFT_d with only the stress tensor (and its descendants)?}
+
+
+More precisely:
+
+\begin{itemize}
+\item Given dimension d and central charge c_T
+
+\item Assuming the operator spectrum contains: identity, stress tensor T_μν, and possibly higher-spin conserved currents
+
+\item What is the maximum Δ_gap to the first non-conserved primary operator?
+
+
+\end{itemize}
+
+\textbf{Related questions:}
+
+\begin{itemize}
+\item Can higher-spin conserved currents (J = 4, 6, ...) exist without non-conserved operators below some gap?
+
+\item What are universal lower bounds on operator dimensions?
+
+
+
+\subsubsection{Why This Matters}
+\item \textbf{AdS/CFT:} Bounds on Δ_gap constrain pure Einstein gravity theories
+
+\item \textbf{Universal results:} Apply to all holographic CFTs regardless of details
+
+\item \textbf{Rigorous:} Derived via extremal functional method with certificates
+
+\item \textbf{Testable:} Compare to known CFTs (free theories, holographic examples)
+
+\item \textbf{Gravitational constraints:} Proves Einstein gravity is "special"
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{Mathematical Formulation}
+
+
+\subsubsection{Problem Definition}
+
+\end{itemize}
+
+Consider a unitary CFT in d spacetime dimensions with stress tensor T_μν.
+
+
+\textbf{Stress tensor 4-point function:}
+
+\begin{lstlisting}
+G(x₁, x₂, x₃, x₄) = ⟨T(x₁) T(x₂) T(x₃) T(x₄)⟩
+\end{lstlisting}
+
+\textbf{Conformal block decomposition:}
+
+\begin{lstlisting}
+G = Σ_{Δ,J} C²_{T,T,O_{Δ,J}} G_{Δ,J}(u,v)
+\end{lstlisting}
+
+where:
+
+\begin{itemize}
+\item (Δ, J) = conformal dimension and spin of exchanged operator
+
+\item C_{T,T,O} = OPE coefficient
+
+\item G_{Δ,J}(u,v) = conformal block
+
+\item u, v = conformal cross-ratios
+
+
+\end{itemize}
+
+\textbf{Operator content assumptions:}
+
+\begin{itemize}
+\item Identity: Δ = 0
+
+\item Stress tensor: Δ = d, J = 2 (conserved)
+
+\item Possibly higher-spin currents: Δ = d, J = 4, 6, 8, ...
+
+\item Gap assumption: No primary operators with d < Δ < Δ_gap
+
+
+\end{itemize}
+
+\textbf{Constraints:}
+
+
+\begin{itemize}
+\item \textbf{Crossing symmetry:}
+
+\begin{lstlisting}
+   G(u,v) = G(v,u)
+\end{lstlisting}
+
+\item \textbf{Unitarity:} All OPE coefficients squared C² ≥ 0
+
+
+\item \textbf{Ward identities:} Conservation of T_μν imposes relations
+
+
+\item \textbf{Gap assumption:} Spectrum restricted as above
+
+
+
+\subsubsection{Optimization Formulation}
+
+\end{itemize}
+
+\textbf{Upper bound on gap (impossibility):}
+
+
+Find an extremal functional α(Δ, J) such that:
+
+\begin{lstlisting}
+Σ_{Δ,J} α(Δ, J) [crossing equation for G_{Δ,J}] < 0
+\end{lstlisting}
+with:
+
+\begin{itemize}
+\item α(Δ, J) ≥ 0 for all (identity, T, higher-spin currents)
+
+\item α(Δ, J) ≥ 0 for Δ < Δ_gap (excluded region)
+
+
+\end{itemize}
+
+This proves no CFT with gap ≥ Δ_gap exists.
+
+
+\textbf{Lower bound on gap (construction):}
+
+
+Exhibit an explicit CFT (or holographic model) with gap = Δ_gap achieving the bound.
+
+
+
+\subsubsection{Certificate of Correctness}
+
+\textbf{If claiming Δ_gap is maximum:}
+
+\begin{itemize}
+\item \textbf{Extremal functional:} α(Δ, J) proving Δ > Δ_gap is impossible
+
+\item \textbf{Verification:} Check α ≥ 0 on allowed region
+
+\item \textbf{Verification:} Compute α applied to crossing equation, verify < 0
+
+\item \textbf{Verification:} Check all derivatives/positivity conditions
+
+
+\end{itemize}
+
+\textbf{If claiming Δ_gap is achievable:}
+
+\begin{itemize}
+\item \textbf{Explicit CFT:} Construct theory with this gap
+
+\item Or: Holographic model (bulk theory) predicting this gap
+
+\item \textbf{Verification:} Compute spectrum, verify gap
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{Implementation Approach}
+
+
+\subsubsection{Phase 1: Conformal Blocks for Stress Tensor (Months 1-2)}
+
+\end{itemize}
+
+\textbf{Implement ⟨TTTT⟩ conformal blocks:}
+
+
+\begin{lstlisting}
+import numpy as np
+from mpmath import mp, hyp2f1
+mp.dps = 100
+
+def stress_tensor_conformal_block(Delta, J, u, v, d=3):
+    """
+    Compute conformal block for stress tensor 4-point function
+
+    ⟨T T T T⟩ conformal block for exchange of operator (Δ, J)
+
+    Uses Casimir differential equation or recursion relations
+    """
+    # For external operators with Δ_ext = d (stress tensor)
+    # Internal operator: (Δ, J)
+
+    # Simplified: use hypergeometric functions
+    # Full implementation requires solving Casimir equation
+
+    z, zbar = conformal_cross_ratios_to_z(u, v)
+
+    # Prefactor from  three-point function kinematics
+    prefactor = compute_three_point_prefactor(d, d, Delta, J)
+
+    # Hypergeometric piece (schematic)
+    block = prefactor * z**(Delta/2) * zbar**(Delta/2) * \
+            hyp2f1(Delta/2, Delta/2, Delta, z) * \
+            hyp2f1(Delta/2, Delta/2, Delta, zbar)
+
+    return block
+
+def conformal_cross_ratios_to_z(u, v):
+    """
+    Convert (u,v) cross-ratios to (z, z̄)
+
+    u = z z̄, v = (1-z)(1-z̄)
+    """
+    # Solve for z, z̄
+    discriminant = np.sqrt(v**2 - 2*v*(u+1) + (u-1)**2)
+    z = (v - discriminant) / (2*v - 2)
+    zbar = (v + discriminant) / (2*v - 2)
+
+    return z, zbar
+
+def compute_three_point_prefactor(Delta1, Delta2, Delta3, J):
+    """
+    Compute kinematic prefactor from ⟨T T O⟩ three-point function
+
+    Depends on spacetime dimension d and operator quantum numbers
+    """
+    # Implement using conformal representation theory
+    # Depends on structure constants
+    pass
+\end{lstlisting}
+
+\textbf{Implement recursion relations:}
+
+
+\begin{lstlisting}
+def casimir_differential_equation(g, Delta, J, d):
+    """
+    Conformal blocks satisfy Casimir differential equation
+
+    D g(z, z̄) = C_2(Δ, J) g(z, z̄)
+
+    where D is Casimir differential operator
+    """
+    # Second-order PDE in z, z̄
+    # Can be solved via series expansion or numerically
+    pass
+
+def recursion_relation_conformal_block(Delta, J, n_max):
+    """
+    Use Zamolodchikov-like recursion to build conformal blocks
+    """
+    coefficients = np.zeros(n_max)
+    coefficients[0] = 1  # Normalization
+
+    for n in range(1, n_max):
+        # Recursion: a_n = f(a_{n-1}, a_{n-2}, Δ, J)
+        coefficients[n] = compute_recursion_coefficient(
+            coefficients[n-1], coefficients[n-2], Delta, J
+        )
+
+    return coefficients
+\end{lstlisting}
+
+
+\subsubsection{Phase 2: Crossing Equation (Months 2-3)}
+
+\textbf{Set up crossing symmetry:}
+
+
+\begin{lstlisting}
+def crossing_equation_TTTT(spectrum, u_point, v_point, d=3):
+    """
+    Crossing: ⟨T₁ T₂ T₃ T₄⟩ = ⟨T₁ T₄ T₃ T₂⟩
+
+    Σ C²(Δ,J) G_{Δ,J}(u,v) = Σ C²(Δ,J) G_{Δ,J}(v,u)
+    """
+    # s-channel sum
+    s_channel = 0
+    for Delta, J, C_squared in spectrum:
+        block_s = stress_tensor_conformal_block(Delta, J, u_point, v_point, d)
+        s_channel += C_squared * block_s
+
+    # t-channel sum (swap u ↔ v)
+    t_channel = 0
+    for Delta, J, C_squared in spectrum:
+        block_t = stress_tensor_conformal_block(Delta, J, v_point, u_point, d)
+        t_channel += C_squared * block_t
+
+    # Crossing equation residual
+    residual = s_channel - t_channel
+
+    return residual
+
+def setup_crossing_matrix(Delta_grid, J_values, test_points, d=3):
+    """
+    Discretize crossing equation on grid
+
+    Returns matrix M such that M · C² = 0 enforces crossing
+    """
+    n_operators = len(Delta_grid) * len(J_values)
+    n_test_points = len(test_points)
+
+    M = np.zeros((n_test_points, n_operators))
+
+    for i, (u, v) in enumerate(test_points):
+        for j, (Delta, J) in enumerate(product(Delta_grid, J_values)):
+            # s-channel block
+            block_s = stress_tensor_conformal_block(Delta, J, u, v, d)
+            # t-channel block
+            block_t = stress_tensor_conformal_block(Delta, J, v, u, d)
+
+            M[i, j] = block_s - block_t
+
+    return M
+\end{lstlisting}
+
+
+\subsubsection{Phase 3: Ward Identities & Conservation (Months 3-4)}
+
+\textbf{Stress tensor conservation constraints:}
+
+
+\begin{lstlisting}
+def stress_tensor_ward_identity(correlator, d):
+    """
+    Conservation: ∂^μ T_μν = 0
+
+    Imposes constraints on OPE coefficients and form of correlator
+    """
+    # For ⟨T T⟩: fixed by conformal symmetry
+    # For ⟨T T T⟩: constrains form
+    # For ⟨T T T T⟩: additional sum rules
+
+    # Ward identity: certain derivative of correlator vanishes
+    # ∂_μ₁ ⟨T^μν(x₁) T(x₂) T(x₃) T(x₄)⟩ = contact terms
+
+    pass
+
+def implement_conservation_constraints(OPE_data):
+    """
+    Conservation of T implies:
+    - OPE T × T contains only operators with specific properties
+    - Recursion relations among OPE coefficients
+    """
+    # Conserved spin-J current: Δ = d + J - 2
+    # For stress tensor (J=2): Δ = d
+
+    constraints = []
+
+    # T × T OPE must contain identity + T + higher-spins or gaps
+    for Delta, J in OPE_data:
+        if J % 2 == 1:  # Odd spin forbidden by symmetry
+            constraints.append((Delta, J, 'forbidden'))
+        elif J > 0 and Delta < d:  # Sub-leading twist
+            constraints.append((Delta, J, 'forbidden'))
+
+    return constraints
+\end{lstlisting}
+
+
+\subsubsection{Phase 4: Extremal Functional Method (Months 4-8)}
+
+\textbf{Linear functional approach:}
+
+
+\begin{lstlisting}
+def extremal_functional_method(Delta_gap, J_max, d=3, n_derivatives=4):
+    """
+    Find extremal functional α(Δ, J) proving Δ_gap is impossible
+
+    The functional must:
+    1. Be positive on allowed operators (ID, T, higher-spins)
+    2. Be positive for Δ < Δ_gap (excluded region)
+    3. Make crossing equation negative (proving inconsistency)
+    """
+    # Functional is determined by its action on conformal blocks
+    # Parametrize by derivatives at crossing-symmetric point
+
+    # α is linear functional: α[G] = Σ_n α_n ∂_z^n G|_{z=z̄=1/2}
+
+    alpha_coeffs = cp.Variable(n_derivatives)
+
+    constraints = []
+
+    # 1. POSITIVITY on identity
+    alpha_identity = evaluate_functional_on_identity(alpha_coeffs)
+    constraints.append(alpha_identity >= 0)
+
+    # 2. POSITIVITY on stress tensor
+    alpha_T = evaluate_functional_on_stress_tensor(alpha_coeffs, d)
+    constraints.append(alpha_T >= 0)
+
+    # 3. POSITIVITY on allowed higher-spin currents (if any)
+    for J in [4, 6, 8]:  # Spin-4, 6, 8 currents
+        if allow_higher_spins:
+            alpha_J = evaluate_functional_on_current(alpha_coeffs, d, J)
+            constraints.append(alpha_J >= 0)
+
+    # 4. POSITIVITY for Δ < Δ_gap (excluded region)
+    Delta_test_points = np.linspace(d+0.01, Delta_gap-0.01, 50)
+    for Delta_test in Delta_test_points:
+        for J_test in [0, 2, 4]:
+            alpha_test = evaluate_functional_on_block(
+                alpha_coeffs, Delta_test, J_test, d
+            )
+            constraints.append(alpha_test >= 0)
+
+    # 5. NORMALIZATION: make crossing equation negative
+    # α[crossing equation] < 0
+    alpha_crossing = evaluate_functional_on_crossing(alpha_coeffs, d)
+    constraints.append(alpha_crossing == -1)  # Normalize to -1
+
+    # Solve feasibility problem
+    problem = cp.Problem(cp.Minimize(0), constraints)
+    problem.solve(solver=cp.MOSEK)
+
+    if problem.status == 'optimal':
+        return {
+            'status': 'bound_proven',
+            'Delta_gap_max': Delta_gap,
+            'functional': alpha_coeffs.value
+        }
+    else:
+        return {
+            'status': 'gap_allowed',
+            'Delta_gap': Delta_gap
+        }
+
+def evaluate_functional_on_block(alpha_coeffs, Delta, J, d):
+    """
+    Evaluate functional α on conformal block G_{Δ,J}
+
+    α[G] = Σ_n α_n (∂_z^n G)|_{z=z̄=1/2}
+    """
+    # Compute derivatives of conformal block
+    derivatives = []
+    z_sym = 0.5
+
+    for n in range(len(alpha_coeffs)):
+        deriv_n = compute_nth_derivative_block(Delta, J, z_sym, n, d)
+        derivatives.append(deriv_n)
+
+    # α[G] = dot product
+    alpha_value = np.dot(alpha_coeffs, derivatives)
+
+    return alpha_value
+\end{lstlisting}
+
+
+\subsubsection{Phase 5: Binary Search for Maximum Gap (Months 8-10)}
+
+\begin{lstlisting}
+def binary_search_maximum_gap(d=3, J_max=8):
+    """
+    Find maximum Δ_gap via binary search
+
+    For each candidate gap, check if extremal functional exists
+    """
+    Delta_min = d + 0.01  # Just above stress tensor
+    Delta_max = 3*d  # Conservative upper bound
+
+    tolerance = 0.01
+
+    while Delta_max - Delta_min > tolerance:
+        Delta_mid = (Delta_min + Delta_max) / 2
+
+        print(f"Testing gap = {Delta_mid:.3f}")
+
+        result = extremal_functional_method(Delta_mid, J_max, d)
+
+        if result['status'] == 'bound_proven':
+            # Gap this large is impossible
+            Delta_max = Delta_mid
+            print(f"  → Gap {Delta_mid:.3f} ruled out")
+        else:
+            # Gap this large might be allowed
+            Delta_min = Delta_mid
+            print(f"  → Gap {Delta_mid:.3f} allowed")
+
+    return {
+        'max_gap': Delta_min,
+        'dimension': d,
+        'status': 'converged'
+    }
+\end{lstlisting}
+
+
+\subsubsection{Phase 6: Verification & Comparison (Months 10-12)}
+
+\begin{lstlisting}
+def verify_gap_bound(Delta_gap_claimed, extremal_functional, d):
+    """
+    Verify claimed maximum gap
+    """
+    print(f"Verifying maximum gap Δ_gap = {Delta_gap_claimed} in d={d}")
+
+    # 1. Check functional is positive on identity
+    alpha_ID = evaluate_functional_on_identity(extremal_functional)
+    assert alpha_ID >= -1e-10, f"Functional negative on identity: {alpha_ID}"
+
+    # 2. Check functional is positive on stress tensor
+    alpha_T = evaluate_functional_on_stress_tensor(extremal_functional, d)
+    assert alpha_T >= -1e-10, f"Functional negative on T: {alpha_T}"
+
+    # 3. Check functional is positive for Δ < Δ_gap
+    for Delta_test in np.linspace(d+0.1, Delta_gap_claimed-0.1, 100):
+        alpha_test = evaluate_functional_on_block(extremal_functional, Delta_test, 0, d)
+        assert alpha_test >= -1e-8, f"Functional negative at Δ={Delta_test}: {alpha_test}"
+
+    # 4. Check functional makes crossing negative
+    alpha_crossing = evaluate_functional_on_crossing(extremal_functional, d)
+    assert alpha_crossing < -1e-6, f"Crossing not negative: {alpha_crossing}"
+
+    print("All checks passed! Bound verified.")
+
+    # 5. Compare to known CFTs
+    compare_to_known_cfts(Delta_gap_claimed, d)
+
+    return True
+
+def compare_to_known_cfts(Delta_gap_bound, d):
+    """
+    Compare bound to known CFT examples
+    """
+    known_cfts = {
+        'd=3': {
+            'Free scalar': {'gap': 2.0, 'description': '□φ=0'},
+            'Ising CFT': {'gap': 0.5181489, 'description': 'σ primary'},
+            'O(N) model': {'gap': 'varies', 'description': 'φ^i primary'},
+        }
+    }
+
+    if f'd={d}' in known_cfts:
+        print(f"\nComparison with known d={d} CFTs:")
+        for name, data in known_cfts[f'd={d}'].items():
+            if isinstance(data['gap'], (int, float)):
+                if data['gap'] < Delta_gap_bound:
+                    print(f"  ✓ {name}: gap={data['gap']:.4f} < {Delta_gap_bound:.4f} (consistent)")
+                else:
+                    print(f"  ✗ {name}: gap={data['gap']:.4f} > {Delta_gap_bound:.4f} (VIOLATION!)")
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{Example Starting Prompt}
+
+\begin{lstlisting}
+I need you to implement the conformal bootstrap for stress tensor 4-point functions
+to derive universal bounds on operator gaps in CFTs.
+
+GOAL: Find the maximum gap Δ_gap to the first non-conserved operator in a d=3 CFT
+with only the identity and stress tensor.
+
+PHASE 1 - Build conformal blocks:
+1. Implement the conformal block G_{Δ,J}(z, z̄) for ⟨TTTT⟩ correlator
+
+2. For d=3, implement blocks for:
+   - Identity exchange
+   - Stress tensor exchange
+   - Generic scalar exchange (Δ, J=0)
+   - Generic spin-2 exchange (Δ, J=2)
+
+3. Verify blocks satisfy Casimir differential equation
+
+PHASE 2 - Crossing symmetry:
+4. Write down the crossing equation: G(u,v) = G(v,u)
+
+5. Discretize at test points and set up matrix equation
+
+PHASE 3 - Linear functional:
+6. Parametrize functional α by derivatives at crossing-symmetric point
+
+7. Impose positivity:
+   - α[ID] ≥ 0
+   - α[T] ≥ 0
+   - α[G_{Δ,J}] ≥ 0 for all Δ < Δ_gap
+
+8. Impose α[crossing equation] < 0 (proves inconsistency)
+
+PHASE 4 - Optimization:
+9. Formulate as linear program and solve using cvxpy + MOSEK
+
+10. Binary search to find maximum Δ_gap where functional exists
+
+PHASE 5 - Verification:
+11. Extract extremal functional and verify all positivity conditions
+
+12. Compare bound to known CFTs (Ising, free theories)
+
+13. Plot functional action on conformal block spectrum
+
+Please implement with high precision and cross-check against bootstrap literature.
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{Success Criteria}
+
+
+\subsubsection{Minimum Viable Result (6 months)}
+
+✅ \textbf{Bootstrap infrastructure:}
+
+\begin{itemize}
+\item Stress tensor conformal blocks implemented for d=3
+
+\item Crossing equation verified numerically
+
+\item Linear functional method working
+
+
+\end{itemize}
+
+✅ \textbf{First bound:}
+
+\begin{itemize}
+\item Maximum gap bound in d=3 obtained
+
+\item Extremal functional extracted and verified
+
+\item Comparison with Ising CFT confirms consistency
+
+
+
+\subsubsection{Strong Result (9 months)}
+
+\end{itemize}
+
+✅ \textbf{Multiple dimensions:}
+
+\begin{itemize}
+\item Bounds obtained for d=3, 4, 5
+
+\item Universal patterns identified
+
+\item With and without higher-spin currents
+
+
+\end{itemize}
+
+✅ \textbf{Rigorous certificates:}
+
+\begin{itemize}
+\item All extremal functionals verified
+
+\item Positivity checked to high precision
+
+\item Comparison with holographic predictions
+
+
+
+\subsubsection{Publication-Quality Result (12 months)}
+
+\end{itemize}
+
+✅ \textbf{Comprehensive classification:}
+
+\begin{itemize}
+\item Complete gap bounds for d=2-6
+
+\item Phase diagram: (d, c_T) → maximum gap
+
+\item Identification of "allowed" vs "forbidden" regions
+
+
+\end{itemize}
+
+✅ \textbf{Formal verification:}
+
+\begin{itemize}
+\item Functional positivity certified
+
+\item Lean formalization of crossing symmetry
+
+\item Publication with numerical data repository
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{Verification Protocol}
+
+\begin{lstlisting}
+def verify_extremal_functional(alpha, Delta_gap, d):
+    """
+    Comprehensive verification of extremal functional
+    """
+    # 1. Positivity on identity
+    assert alpha_on_identity(alpha) >= 0
+
+    # 2. Positivity on stress tensor
+    assert alpha_on_stress_tensor(alpha, d) >= 0
+
+    # 3. Positivity for Δ < Δ_gap
+    for Delta in np.linspace(d, Delta_gap, 200):
+        for J in [0, 2, 4]:
+            assert alpha_on_block(alpha, Delta, J, d) >= -1e-10
+
+    # 4. Negativity on crossing
+    assert alpha_on_crossing(alpha, d) < -1e-6
+
+    # 5. Consistency with known CFTs
+    for cft_name, cft_gap in known_gaps(d).items():
+        assert cft_gap <= Delta_gap, f"{cft_name} violates bound!"
+
+    return "BOUND VERIFIED"
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{Milestone Checklist}
+
+\item [ ] Conformal blocks for ⟨TTTT⟩ implemented (d=3)
+
+\item [ ] Casimir equation verified
+
+\item [ ] Crossing symmetry checked numerically
+
+\item [ ] Ward identities for T conservation implemented
+
+\item [ ] Linear functional method coded
+
+\item [ ] First gap bound obtained (d=3)
+
+\item [ ] Extremal functional positivity verified
+
+\item [ ] Binary search for maximum gap working
+
+\item [ ] Comparison with Ising CFT done
+
+\item [ ] Results for d=4,5 obtained
+
+\item [ ] Holographic comparison completed
+
+\item [ ] Publication draft with data
+
+
+
+\bigskip\hrule\bigskip
+
+\end{itemize}
+
+\textbf{Next Steps:} Start by implementing conformal blocks for identity and stress tensor exchange in d=3. Verify crossing symmetry numerically before attempting the linear functional optimization.
+
+
+\end{document}

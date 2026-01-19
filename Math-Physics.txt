@@ -1,0 +1,308 @@
+Alright — you’ve been handed a thinking machine with ~1T tokens/day and
+the only I/O you’ll allow is code we generate and run ourselves (no
+external datasets, no legacy codes, no lab work). That pushes us toward
+problems where progress can be made by logic, mathematics, constructive
+algorithms, and internal consistency checks — i.e., domains where the
+“oracle” is proof, derivation, or algorithmic search with verifiable
+certificates. Below is a concise but sharp plan: selection principles,
+the core architecture we should stand up on day 0, and a portfolio of
+problem tracks that can genuinely move with this constraint. Each track
+lists: what to attempt, why it’s viable without data, how GPT-5 +
+self-written code attacks it, and hard milestones.
+
+Guiding principles
+
+-   Proofs > predictions. Target questions that resolve to theorems,
+    bounds, constructive counterexamples, or certificates (SAT/SMT
+    proofs, SDP dual certificates, cut-generating proofs, Gröbner bases,
+    etc.).
+
+-   Self-consistency or first principles only. Physics tracks should
+    rely on unitarity, causality, crossing, locality, symmetry,
+    convexity; chemistry on quantum mechanics and variational
+    principles; math/CS on formal axioms.
+
+-   Search where verification is cheap. Use massive search guided by LLM
+    plans, but always demand fast verifiers (proof checkers, unit tests,
+    symbolic algebra identities).
+
+-   Formalize by default. Everything gets emitted as (a) human-readable
+    proofs, and (b) machine-checkable artifacts (Lean/Isabelle/Coq,
+    DRAT/FRAT for SAT, Sum-of-Squares certificates, interval arithmetic
+    bounds).
+
+Day-0 system we build once, use everywhere
+
+1.  Autoprover Farm. Multi-agent proof workshop that proposes lemmas,
+    attempts multiple proof styles (induction, contradiction, SOS,
+    compactness, etc.), and round-trips through proof assistants
+    (Lean/Isabelle) we bootstrap from source (we can re-implement a
+    minimal kernel if we must).
+
+2.  Symbolic-Numeric Engine. From-scratch CAS: exact rationals,
+    algebraic numbers, Gröbner bases, resultants, differential
+    operators, tensor calculus, interval arithmetic, automatic
+    differentiation; plus self-coded SDP/QP/LP solvers with proof
+    logging (e.g., dual certificates, SoS).
+
+3.  Search with certificates. SAT/SMT (CDCL, DPLL(T)), branch-and-bound,
+    A* over combinatorial spaces, with certified proof traces
+    (DRAT/LLRF, etc.).
+
+4.  Amplitude/Bootstrap toolbox. Code to set up and solve
+    crossing/positivity SDPs, build symbol alphabets, do finite-field
+    reconstructions, IBP reductions, sector decomposition — all written
+    by us and verified.
+
+5.  Tensor Network & Coding Theory Lab. From-scratch TN contractions,
+    MPO/MPS/PEPS variational solvers (with rigorous error bars via
+    interval arithmetic), and constructive code search (LDPC/QECC) with
+    decoding simulations and distance certificates.
+
+With that scaffolding, here’s the problem portfolio most likely to yield
+real, citable advances under your constraints.
+
+A. Conformal Bootstrap (3D/4D CFTs)
+
+Goal. Tighten or close islands for landmark CFTs (3D Ising, O(N),
+Gross–Neveu); derive new rigorous bounds on operator dimensions/OPE
+coefficients.
+Why “no data” works. Constraints are axiomatic (unitarity, crossing,
+conformal symmetry).
+How. Generate an SDP stack (primal–dual interior-point) + positivity
+functionals; produce dual certificates. Automate basis selection,
+extremal functional flows, and error-bounded truncation.
+Milestones.
+
+-   90d: Reproduce known islands with a fresh solver + certificates.
+
+-   180d: Sharpen bounds; new mixed-correlator bounds for O(N) at
+    previously unreachable N.
+
+-   1y: New rigorous kink/island locations; publishable best-in-class
+    bounds.
+
+B. S-Matrix & EFT Positivity Bootstrap
+
+Goal. New bounds on Wilson coefficients in SMEFT/HEFT; rule out swaths
+of low-energy theories; new UV/IR consistency relations.
+Why it fits. Follows only from analyticity, unitarity, crossing,
+locality.
+How. Construct dispersion relations; solve as convex programs (SoS/SOS)
+with polynomial positivity; emit dual certificates.
+Milestones. 6–12 months: tighten multi-parameter bounds beyond current
+literature; derive model-independent inequalities.
+
+C. Multi-Loop QFT Integrals & IBP/Canonical Forms
+
+Goal. Push analytic/numeric evaluation of Feynman integrals (new
+families, higher loops, higher legs).
+Why it fits. Pure algebraic geometry + analysis (IBP, differential
+equations, symbols, finite fields).
+How. Self-coded IBP reduction (Laporta variants), syzygy finding,
+canonical basis hunting, finite-field sampling + rational
+reconstruction; symbol alphabet discovery via Landau analysis (all from
+scratch).
+Milestones.
+
+-   120d: New analytic results for previously unknown 4–5 loop
+    topologies.
+
+-   1y: Concrete 7–8 loop integral families in φ⁴ / planar sectors with
+    closed forms or high-precision constants.
+
+D. Quantum Error-Correcting Codes (QECC), esp. LDPC & Hypergraph Product
+Variants
+
+Goal. Construct new families approaching capacity with improved distance
+and sparse checks; new decoders with provable guarantees.
+Why it fits. Pure combinatorics & algebraic topology; verification via
+code distance lower bounds and decoding performance (simulated from
+scratch).
+How. LLM-led search over Tanner graphs/topological constructions; SAT
+for distance certificates; design new BP/OSD/ML decoding heuristics with
+provable bounds.
+Milestones.
+
+-   90d: Novel code instances beating known small-length records.
+
+-   1y: Infinite families with improved asymptotics & proofs.
+
+E. Tensor-Network Theory & Rigorous Approximations
+
+Goal. New approximation guarantees (e.g., ground state energy bounds)
+for frustration-free/local Hamiltonians; constructive area-law regimes.
+Why it fits. Theorems + certified numerics (interval arithmetic).
+How. Prove convergence of variational TN classes under new
+locality/spectral-gap assumptions; produce counterexamples or bounds
+with exact arithmetic.
+Milestones. Formal theorems for new classes + certified benchmarks.
+
+F. Extremal Combinatorics & Ramsey-Type Bounds (SAT/SMT Certificates)
+
+Goal. Improve small Ramsey numbers / van der Waerden / cap sets /
+Turán-type bounds.
+Why it fits. All proof by construction or contradiction with
+certificates (DRAT, etc.).
+How. Massive LLM-guided SAT instance generation; automated proof
+logging; human-readable proof distillation.
+Milestones. New best-known bounds with machine-checkable proofs.
+
+G. Sum-of-Squares (SoS) Hierarchies for Physics/Chemistry Inequalities
+
+Goal. Rigorous bounds for ground-state energies in toy Hamiltonians,
+polynomial inequalities in stability/interaction models.
+Why it fits. Pure convex algebra with certificates.
+How. Implement SoS/Positivstellensatz stack; log Gram matrix
+decompositions; verify with exact rational arithmetic.
+Milestones. Publishable certified bounds better than prior numerics.
+
+H. Topological Phases: Classification via Cobordism/K-Theory
+
+Goal. Extend the symmetry-protected/topological order classification to
+tricky crystalline groups and anti-unitary symmetries.
+Why it fits. Pure algebraic topology + group theory; constructive
+invariants.
+How. Automate spectral sequences, compute group cohomology, twisted
+equivariant K-theory; produce canonical representatives.
+Milestones. New tables/periodicity results; explicit constructions for
+edge theories.
+
+I. RBCE (Relativistic Band & Crystal-Field Engineering) — Proof-Level
+Symmetry Catalog
+
+Goal. Rigorous classification of space-group/point-group environments
+that extremize single-ion anisotropy for d-electrons;
+necessary/sufficient conditions for “rare-earth-like” behavior.
+Why it fits. Group theory + crystal fields + SOC — no data required; we
+can compute all irreps and splitting patterns from axioms.
+How. Auto-enumerate all space groups; compute CF Hamiltonians, SOC
+coupling; prove bounds on anisotropy constants; produce constructive
+lattices.
+Milestones. A theorem-level atlas of “max-anisotropy motifs” with
+constructive examples.
+
+J. Amplitude Analyticity: Symbol Alphabets & Cluster Algebra Discovery
+
+Goal. Determine symbol alphabets for multi-leg amplitudes in
+planar/nonplanar sectors; prove integrability constraints.
+Why it fits. Pure algebraic/analytic structure; checks via coproduct
+identities.
+How. Landau singularity computation + matroid/cluster-algebra mining;
+verify with differential equations and integrability.
+Milestones. New alphabet proposals with proofs of integrability/branch
+cut structure.
+
+K. New Aperiodic Tilings & Self-Assembly Theory
+
+Goal. Fewer-tile aperiodic sets, growth rules, reversible self-assembly
+bounds.
+Why it fits. Constructive combinatorics + certificates via local rules
+and simulation proofs.
+How. SAT-assisted rule search; formal local-rule proofs (simulate &
+certify) and undecidability reductions where relevant.
+Milestones. Strict improvements over current monotile/finite-set
+results.
+
+L. Numerical Analysis with Certificates
+
+Goal. New time-integrators/solvers with provable stability/accuracy
+regions (for stiff PDEs, Hamiltonian systems).
+Why it fits. Pure analysis + constructive schemes; verify via interval
+arithmetic.
+How. Search Butcher tableaus for strong stability preserving (SSP)
+schemes with proofs; certified symplecticity and error constants.
+Milestones. New best-known SSP bounds or symplectic integrators.
+
+M. Foundations of Turbulence (Rigorous Bounds & Invariants)
+
+Goal. Prove sharper energy/enstrophy cascade bounds; exact
+constraint-satisfying closure families.
+Why it fits. Theorems + invariant-preserving constructions; no data.
+How. Variational methods, Lie-symmetry analysis, convex duality for flux
+bounds; certify with interval arithmetic.
+Milestones. Tighter rigorous bounds; constructive closure families with
+proved properties.
+
+N. Reaction-Network Universality & Autocatalysis Theorems
+
+Goal. Minimal universal reaction sets; conditions for emergent
+autocatalysis/replication.
+Why it fits. Pure graph/stoichiometric cone analysis and Lyapunov
+arguments.
+How. Compute siphons, invariants, persistence criteria; construct
+universal CRNs and prove reachability.
+Milestones. New minimality results; sharper necessary/sufficient
+conditions.
+
+O. Information-Theoretic Limits in Biology & Materials
+
+Goal. Tight bounds on sequence–structure channel capacity, mutational
+robustness, and measurement-limited identifiability in materials
+discovery.
+Why it fits. Shannon + combinatorics + coding arguments; no empirical
+data.
+How. Derive converse/achievability bounds with SoS/SAT-assisted
+constructions for toy models.
+Milestones. Publishable bounds that frame what any
+experiment could achieve.
+
+Execution pattern (per track)
+
+-   Self-contained toolchain emitted by GPT-5 (solver + checker + proof
+    exporter).
+
+-   Many-shot strategy generation (varying gauges, bases, relaxations).
+
+-   Parallel search with early proof certificates. Always generate
+    verifiable artifacts (Lean files, DRAT clauses, dual SDPs, interval
+    bounds).
+
+-   Human-quality “explanations last.” Once a machine certificate
+    exists, synthesize the polished proof/exposition.
+
+12-month macro-plan (sketch)
+
+-   Month 1–2: Stand up Autoprover Farm, Symbolic-Numeric Engine,
+    SAT/SMT with proof logging, a minimal Lean-like kernel, and an
+    SDP/SoS solver that emits exact/rational certificates.
+
+-   Month 3–4: Replicate cornerstone results in A/B/C (bootstrap &
+    integrals) and F (Ramsey) to validate pipelines.
+
+-   Month 5–8: Push new bounds in A/B, first new QECC families (D), new
+    SSP/symplectic integrators (L).
+
+-   Month 9–12: Deliver at least 3 “best-known” world results with
+    machine-checkable proofs (A/B/F), plus one structural classification
+    (I or H).
+
+Token budget & parallelism
+
+-   80% to search/proof attempts; 20% to verification and proof
+    polishing.
+
+-   Begin with A, B, D, F, I as highest-likelihood short-to-midterm wins
+    yielding rigorous outputs with strong scientific impact (physics,
+    quantum info, math for science).
+
+-   Keep C, J as moonshots that can pop spectacularly once tooling
+    matures.
+
+Why this portfolio is right for your constraint
+
+-   Every track is data-free and experiment-free, grounded in axioms,
+    symmetry, or first principles.
+
+-   Each yields objective artifacts (proofs/certificates) that are
+    verifiable without trust.
+
+-   The payoff is scientifically nontrivial: tighter bounds in CFT/EFT,
+    new families of QECCs, stronger extremal combinatorics, constructive
+    symmetry classifications for materials — all publishable and
+    foundational.
+
+If you want, I can spin up the initial work plan for Track A
+(Bootstrap) or Track D (QECC) right away: module layout, solver specs,
+certification formats, and the first week’s experiments. Which track do
+you want to lead with?

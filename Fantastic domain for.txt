@@ -1,0 +1,253 @@
+Fantastic domain for “pure thought + fresh code.” Below is a portfolio
+of problem tracks in celestial mechanics and planetary theory that need
+no external data or legacy software—just axioms (Newton/GR
+approximations), dynamical systems, number theory, and validated
+numerics. Each item states what, why it fits the constraint, how we’d
+attack it, and the verifiable artifacts we’d produce (machine‑checkable
+proofs, certificates, interval bounds).
+
+Day‑0 tooling (we build once, use everywhere)
+
+-   Validated ODE/PDE numerics: interval arithmetic, Taylor
+    models/Lohner algorithm, Krawczyk/radii‑polynomial a‑posteriori
+    proofs; reversible symplectic integrators with certified error
+    bounds.
+
+-   Hamiltonian normal‑form engine: Lie transforms, Birkhoff/averaging
+    to very high order, with rigorous remainder bounds.
+
+-   KAM/Nekhoroshev/Arnold‑diffusion suite: Diophantine checks,
+    quantitative KAM steps, Nekhoroshev exponents/domains,
+    computer‑assisted diffusion proofs.
+
+-   Invariant‑manifold & global dynamics: validated computation of
+    stable/unstable manifolds, Conley index / covering relations to
+    prove connections.
+
+-   Algebraic geometry for polynomial
+    systems: Gröbner/resultants/α‑theory for central configurations and
+    periodic‑orbit conditions.
+
+-   Control & optimization with certificates: Pontryagin solvers
+    + barrier/Lyapunov certificates for feasibility/optimality.
+
+Artifacts throughout: Lean/Isabelle lemmas, interval‑verified
+enclosures, DRAT/FRAT logs (SAT), dual/Conley certificates, reproducible
+code.
+
+A) Long‑time stability of planetary systems
+
+What. Quantitative KAM existence and Nekhoroshev stability domains for
+near‑integrable multi‑planet Hamiltonians (including post‑Newtonian
+corrections).
+Why. Pure analysis/normal forms; no ephemerides required.
+How. High‑order averaging + validated numerics to bound remainders,
+compute Diophantine constants, and certify invariant tori/long‑time
+action confinement.
+Artifacts. Formal normal forms + interval certificates for tori
+existence and explicit time‑scale bounds.
+
+B) Hill/Lagrange stability & collision avoidance
+
+What. Sharpened Lagrange/Hill stability criteria for hierarchical
+triples and multi‑planet chains; certified collision‑free regions for
+given integrals of motion.
+Why. Based on invariants (energy/angular momentum) and comparison
+theorems.
+How. Derive analytic inequalities + SAT‑backed counterexample search;
+validated flow to certify no‑collision regions.
+Artifacts. Theorems with explicit constants; infeasibility
+certificates for would‑be collision scenarios.
+
+C) Resonance webs & overlap boundaries
+
+What. Rigorous maps of mean‑motion/secular resonance widths
+and Chirikov‑type overlap thresholds in parameterized families (mass
+ratios, spacings, eccentricities).
+Why. Entirely Hamiltonian/number‑theoretic; no data.
+How. Compute normal forms and frequency maps with interval error
+control; prove width bounds and chaos thresholds.
+Artifacts. Certified resonance atlases + proof‑backed overlap criteria.
+
+D) Existence and classification of periodic orbits (“choreographies”)
+
+What. New families of periodic orbits in the N‑body and restricted
+three‑body problems; stability (Floquet) classification.
+Why. Variational principles + symmetry → purely mathematical.
+How. Variational solvers with symmetry constraints; validated
+continuation (Krawczyk/radii polynomials) to enclose true orbits and
+multipliers.
+Artifacts. Libraries of orbits with machine‑verified
+existence/stability.
+
+E) Central configurations & Smale‑type programs (small N, structured
+masses)
+
+What. Certified classification of central configurations for N=5–8 under
+symmetry/mass patterns; lower/upper bounds on their counts.
+Why. Polynomial systems amenable to algebraic certification.
+How. Gröbner/resultant elimination + α‑theory to certify isolated
+solutions; SAT proofs for nonexistence in constrained subcases.
+Artifacts. Exhaustive catalogs with proof certificates.
+
+F) Arnold diffusion in planetary‑style models
+
+What. Computer‑assisted proofs of diffusing orbits crossing resonance
+webs in a priori unstable setups (e.g., perturbed three‑body).
+Why. No data; pure dynamical systems.
+How. Construct transition chains via normally hyperbolic invariant
+manifolds, validate connecting orbits with Conley index/covering
+relations.
+Artifacts. Certified diffusion existence with topological
+certificates and bounds on drift/time.
+
+G) Invariant manifolds & low‑energy transport (CR3BP & beyond)
+
+What. Certified heteroclinic/homoclinic connections among
+libration‑point orbits; topological structure of transit regions.
+Why. Geometry of flows; useful to mission design but proven without
+ephemerides.
+How. Validated manifold computation; Conley‑Morse decompositions and
+isolating blocks.
+Artifacts. Connection proofs + reproducible geometry of “tubes” with
+interval error bounds.
+
+H) Co‑orbital (Trojan/horseshoe) dynamics
+
+What. Rigorous existence & measure of stable co‑orbital regions across
+mass‑ratio/inclination ranges; transition to chaos.
+Why. CR3BP/ER3BP analysis; no data.
+How. Normal forms near equilibria; KAM persistence; validated
+simulations for boundaries.
+Artifacts. Certified domain maps + persistence theorems.
+
+I) Spin–orbit dynamics & Cassini states
+
+What. Existence, stability, and capture probabilities for spin–orbit
+resonances under broad dissipation classes.
+Why. Reduced Hamiltonian + weakly dissipative perturbations.
+How. Averaging + Melnikov‑type analysis; rigorous capture bounds with
+interval control of separatrix areas.
+Artifacts. Theorems with explicit parameter‑free (dimensionless) bounds.
+
+J) Tidal evolution: universal timescale bounds
+
+What. Parameter‑free upper/lower bounds on tidal
+circularization/synchronization times across abstract dissipation
+models.
+Why. Energy–angular momentum budgets + monotonicity; no material
+properties needed beyond inequality classes.
+How. Variational inequalities; comparison between dissipation models;
+barrier certificates.
+Artifacts. Inequalities + extremal model families achieving bounds.
+
+K) Escape, capture, and scattering in few‑body systems
+
+What. Certified capture cross‑sections and escape thresholds in
+restricted three‑body scattering; non‑collision escape bounds.
+Why. Conservative/weakly dissipative dynamics; no data.
+How. Symbolic reduction to scattering maps; rigorous enclosures of
+scattering invariants; Conley index for capture regions.
+Artifacts. Cross‑section bounds with proofs; example trajectories with
+interval certificates.
+
+L) Non‑collision singularities & regularization
+
+What. New non‑collision singularity families (or no‑go regions) for
+N‑body with N≥4; improved regularizationdomains.
+Why. Pure analytic/variational construction.
+How. Blow‑up/regularization (Levi‑Civita, KS) + validated continuations;
+SAT searches for geometric configurations enabling singularity
+scenarios.
+Artifacts. Proofs or certified infeasibility for classes of
+masses/initial data.
+
+M) Post‑Newtonian corrections in multi‑body stability
+
+What. Impact of 1PN terms on secular dynamics/resonance structure;
+certified modifications of stability domains.
+Why. Adds small analytic correction to Hamiltonian; still axiomatic.
+How. Include PN terms in normal forms; recompute KAM/Nekhoroshev
+certificates.
+Artifacts. Adjusted bounds with explicit constants.
+
+N) Mission design fundamentals with proofs
+
+What. Lower bounds on ΔV/time for classes of transfers; optimality
+certificates for low‑thrust arcs under constraints.
+Why. Optimal control + invariants.
+How. Pontryagin Maximum Principle + Hamilton–Jacobi inequalities;
+barrier certificates for reachability/optimality.
+Artifacts. Certified optimal schedules and ΔV bounds.
+
+O) Formation & growth theory (axiomatic)
+
+What. Rigorous results for coagulation/fragmentation (Smoluchowski with
+gravitational kernels): gelation thresholds, self‑similar solutions,
+moment bounds.
+Why. Pure kinetic equations; no empirical fits required for qualitative
+theorems.
+How. PDE/measure‑valued solution theory; Lyapunov/moment methods;
+constructive self‑similarity.
+Artifacts. Existence/uniqueness/gelation theorems; explicit self‑similar
+solutions.
+
+P) Resonant capture & migration (abstract torques)
+
+What. Adiabatic capture probabilities into mean‑motion resonances under
+abstract, sign‑agnostic migration/damping laws.
+Why. Canonical dynamics + adiabatic theory; no disk data.
+How. Rigorous slow‑passage analysis with interval‑verified separatrix
+areas; bounds uniform over torque families.
+Artifacts. Capture probability theorems with constants and constructive
+counterexamples.
+
+Q) Rings & granular celestial disks (kinetic theory)
+
+What. Instability thresholds and transport coefficients for
+self‑gravitating, collisional rings; rigorous closures.
+Why. Kinetic/continuum models with structural (not fitted) parameters.
+How. Enskog‑type closures; spectral stability analysis with interval
+bounds; cross‑validate with validated particle dynamics at small N.
+Artifacts. Instability criteria and certified dispersion curves.
+
+R) Aperiodic/quasi‑periodic forcing & resonance overlap
+
+What. Long‑time behavior under quasi‑periodic perturbations (e.g.,
+multiple primaries): persistence of invariant tori and destruction
+thresholds.
+Why. KAM with multiple frequencies; pure theory.
+How. Quantitative small‑divisor analysis; validated normal forms.
+Artifacts. Persistence/destruction theorems with constants.
+
+Where I’d start (fastest path to rigorous, publishable wins)
+
+1.  Periodic orbits + invariant manifolds (Tracks D & G): validated
+    periodic orbits and certified heteroclinic connections in
+    CR3BP—clean, high‑impact artifacts.
+
+2.  KAM/Nekhoroshev domains (Tracks A & C): quantitative,
+    certificate‑based stability/chaos maps for generic planetary mass
+    ratios.
+
+3.  Central configurations (Track E): algebraic classification with
+    α‑theory certificates—decisive and foundational.
+
+Example Week‑1 plan (if you say “go”)
+
+-   Stand up validated ODE engine (interval + symplectic), and a minimal
+    Lie‑transform normal‑form library.
+
+-   Reproduce a known CR3BP Lyapunov orbit with a proof enclosure, then
+    validated stable/unstable manifolds; attempt first heteroclinic
+    connection proof (Conley certificate).
+
+-   Run the normal‑form engine on a two‑planet near‑integrable model;
+    compute rigorous remainder bounds + a first KAM torus certificate.
+
+-   Start Gröbner/α‑theory pipeline on symmetric 5‑body central
+    configurations; target a complete certified list under a symmetry
+    ansatz.
+
+If you select 3–5 tracks, I’ll draft APIs, certificate formats, and a
+day‑by‑day schedule to hit first certified results within two weeks.

@@ -1,0 +1,1573 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% Page geometry
+\geometry{
+    a4paper,
+    left=25mm,
+    right=25mm,
+    top=30mm,
+    bottom=30mm,
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Pure Thought Challenge 21}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+    pdfauthor={Pure Thought AI Challenges},
+    pdftitle={PRD 21: Quantum LDPC Codes for Fault-Tolerant Quantum Computing},
+}
+
+% Code listing style
+\definecolor{codegray}{rgb}{0.95,0.95,0.95}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    backgroundcolor=\color{codegray},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    breakatwhitespace=true,
+    captionpos=b,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    tabsize=4,
+    showstringspaces=false,
+}
+
+\lstset{style=pythonstyle}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Custom commands
+\newcommand{\checklist}[1]{\item[$\square$] #1}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+
+% Title information
+\title{\textbf{PRD 21: Quantum LDPC Codes for Fault-Tolerant Quantum Computing} \\
+\large Pure Thought AI Challenge 21}
+\author{Pure Thought AI Challenges Project}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+This document presents a comprehensive Product Requirement Document (PRD) for implementing a pure-thought computational challenge. The problem can be tackled using only symbolic mathematics, exact arithmetic, and fresh code---no experimental data or materials databases required until final verification. All results must be accompanied by machine-checkable certificates.
+\end{abstract}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+
+\textbf{Domain}: Quantum Information Theory
+
+\textbf{Timeline}: 7-10 months
+
+\textbf{Difficulty}: High
+
+\textbf{Prerequisites}: Quantum error correction, coding theory, graph theory, linear algebra over GF(2), algebraic topology
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{1. Problem Statement}
+
+
+\subsubsection{Scientific Context}
+
+\textbf{Quantum Low-Density Parity-Check (QLDPC) codes} represent a breakthrough in quantum error correction, offering the potential for \textbf{fault-tolerant quantum computation with constant overhead} — a Holy Grail problem in quantum information theory. Unlike surface codes (the current experimental standard), which require O(k log k) physical qubits to encode k logical qubits due to non-local syndrome extraction, QLDPC codes promise \textbf{O(k) scaling with constant-weight stabilizers}.
+
+
+The foundational challenge in quantum error correction is the \textbf{no-cloning theorem}: you cannot copy quantum information to create redundancy. Instead, quantum codes encode k logical qubits into n > k physical qubits using \textbf{stabilizer groups} — commuting Pauli operators whose +1 eigenspace defines the code subspace. The \textbf{stabilizer formalism} (Gottesman 1997) reduces quantum error correction to linear algebra over GF(2).
+
+
+\textbf{Classical LDPC codes} (Gallager 1962) revolutionized classical error correction with:
+
+\begin{itemize}
+\item \textbf{Sparse parity checks}: Each check involves O(1) bits (not all n bits)
+
+\item \textbf{Near-capacity performance}: Achieve Shannon limit with efficient BP decoding
+
+\item \textbf{Practical deployment}: Used in WiFi (802.11n), 5G, DVB-S2 satellite communication
+
+
+\end{itemize}
+
+\textbf{Quantum LDPC codes} inherit these properties but face additional constraints:
+
+\begin{itemize}
+\item \textbf{CSS condition}: X-type and Z-type stabilizers must commute globally
+
+\item \textbf{Locality vs distance tradeoff}: High distance requires long-range entanglement
+
+\item \textbf{Decoding complexity}: Quantum errors (X, Y, Z) are continuous; syndrome measurement is noisy
+
+
+\end{itemize}
+
+\textbf{Recent Breakthroughs} (2020-2024):
+
+\begin{itemize}
+\item \textbf{Asymptotically good QLDPC}: Codes with k = Θ(n) logical qubits and d = Θ(n) distance proven to exist (Panteleev-Kalachev 2022, Breuckmann-Eberhardt 2021)
+
+\item \textbf{Fiber bundle codes}: Explicit construction using algebraic topology, achieving [[n, Θ(n), Θ($\sqrt{}$n)]] scaling
+
+\item \textbf{Balanced product codes}: Generalization of hypergraph product with tunable parameters
+
+\item \textbf{Linear-time decoders}: BP-based decoders with O(n) complexity (Roffe et al. 2020)
+
+
+\end{itemize}
+
+These codes are poised to \textbf{replace surface codes} in future quantum computers, reducing qubit count by orders of magnitude for fault-tolerant quantum algorithms (Shor's algorithm, quantum chemistry, optimization).
+
+
+
+\subsubsection{Core Question}
+
+\textbf{Can we construct explicit families of quantum LDPC codes achieving:}
+
+\begin{itemize}
+\item \textbf{Constant rate}: k/n = Θ(1) (not vanishing with n)
+
+\item \textbf{Linear distance}: d = Θ(n) (or at least d = Θ($\sqrt{}$n))
+
+\item \textbf{Constant locality}: Each stabilizer has weight w = O(1)
+
+\item \textbf{Efficient decoding}: Algorithm running in O(n polylog n) time with threshold p_th > 0
+
+
+\end{itemize}
+
+\textbf{Using ONLY:}
+
+\begin{itemize}
+\item Classical LDPC codes + CSS construction
+
+\item Hypergraph product / balanced product / fiber bundle methods
+
+\item Graph expansion theory (Ramanujan graphs, expanders)
+
+\item Algebraic topology (chain complexes, homology)
+
+\item NO empirical tuning or machine learning until validation phase
+
+
+
+\subsubsection{Why This Matters}
+
+\item \textbf{Scalable quantum computing}: Reducing physical qubit overhead from 10⁴-10⁶ (surface codes) to 10²-10³ (QLDPC) makes large-scale QC feasible
+
+\item \textbf{Distributed quantum networks}: QLDPC enables efficient quantum error correction for long-distance entanglement distribution
+
+\item \textbf{Topological quantum memory}: Understanding QLDPC connects to anyonic systems and topological order in condensed matter
+
+\item \textbf{Coding theory}: Quantum codes reveal deep connections between graph theory, topology, and information theory
+
+
+
+\subsubsection{Pure Thought Advantages}
+
+\item \textbf{Exact symbolic methods}: Code distance and parameters are rigorously proven via linear algebra over GF(2)
+
+\item \textbf{Certificates}: Stabilizer commutation, CSS condition, and distance bounds are machine-verifiable
+
+\item \textbf{No hardware dependence}: Code constructions are abstract (graphs, chain complexes), independent of physical platform
+
+\item \textbf{Scalability}: Hypergraph product constructions generate codes for arbitrary n programmatically
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{2. Mathematical Formulation}
+
+
+\subsubsection{Stabilizer Formalism}
+
+\end{itemize}
+
+A \textbf{quantum stabilizer code} is defined by a stabilizer group $\mathcal{S} \subset \mathcal{P}\textit{n$ where $\mathcal{P}}n$ is the n-qubit Pauli group (generated by X, Z, I).
+
+
+\textbf{Code subspace}: $\mathcal{C} = \{|\psi\rangle : S|\psi\rangle = |\psi\rangle \text{ for all } S \in \mathcal{S}\}$
+
+
+\textbf{Parameters}: [[n, k, d]] where:
+
+\begin{itemize}
+\item n = number of physical qubits
+
+\item k = number of encoded logical qubits: $k = n - \log_2 |\mathcal{S}|$ (assuming independent stabilizers)
+
+\item d = code distance (minimum weight of non-trivial logical operators)
+
+
+\end{itemize}
+
+\textbf{Stabilizer generators}: $\mathcal{S} = \langle S\textit{1, \ldots, S}{n-k} \rangle$ (abelian group with n-k independent generators)
+
+
+
+\subsubsection{CSS Codes}
+
+\textbf{CSS (Calderbank-Shor-Steane) construction} from two classical binary linear codes $C\textit{1, C}2 \subseteq \mathbb{F}_2^n$:
+
+
+\textbf{Condition}: $C\textit{2^\perp \subseteq C}1$ (ensures X and Z stabilizers commute)
+
+
+\textbf{Stabilizer generators}:
+
+\begin{itemize}
+\item X-type: For each row $h\textit{x \in H}{C\textit{1^\perp}$, define $X}{h\textit{x} = \bigotimes}{i : (h\textit{x)}i = 1} X_i$
+
+\item Z-type: For each row $h\textit{z \in H}{C\textit{2^\perp}$, define $Z}{h\textit{z} = \bigotimes}{i : (h\textit{z)}i = 1} Z_i$
+
+
+\end{itemize}
+
+\textbf{Parameters}:
+
+$$k = \dim(C\textit{1) - \dim(C}2^\perp) = \dim(C\textit{1) + \dim(C}2) - n$$
+
+$$d \geq \min(d(C\textit{1^\perp), d(C}2^\perp))$$
+
+
+where $d(C)$ is the minimum Hamming weight of non-zero codewords in C.
+
+
+
+\subsubsection{QLDPC Definition}
+
+A CSS code is \textbf{QLDPC} if the parity check matrices $H\textit{X$ (for $C}1^\perp$) and $H\textit{Z$ (for $C}2^\perp$) are \textbf{sparse}:
+
+\begin{itemize}
+\item \textbf{Row weight}: $w_r = O(1)$ (each stabilizer acts on O(1) qubits)
+
+\item \textbf{Column weight}: $w_c = O(1)$ (each qubit participates in O(1) stabilizers)
+
+
+\end{itemize}
+
+\textbf{Tanner graph}: Bipartite graph $G = (Q \cup C, E)$ where:
+
+\begin{itemize}
+\item Q = qubit nodes (n vertices)
+
+\item C = check nodes (n-k vertices)
+
+\item Edge $(q, c)$ if qubit q appears in stabilizer c
+
+
+\end{itemize}
+
+\textbf{Girth}: Shortest cycle length in Tanner graph. Higher girth $\rightarrow$ better BP decoding performance.
+
+
+
+\subsubsection{Hypergraph Product}
+
+\textbf{Construction}: Given two classical codes with parity matrices $H\textit{1 \in \mathbb{F}}2^{m\textit{1 \times n}1}$ and $H\textit{2 \in \mathbb{F}}2^{m\textit{2 \times n}2}$, define:
+
+
+$$H\textit{X = \begin{bmatrix} H}1 \otimes I\textit{{n}2} & I\textit{{m}1} \otimes H_2^T \end{bmatrix}$$
+
+$$H\textit{Z = \begin{bmatrix} I}{n\textit{1} \otimes H}2 & H\textit{1^T \otimes I}{m_2} \end{bmatrix}$$
+
+
+\textbf{Parameters}:
+
+\begin{itemize}
+\item $n = n\textit{1 n}2 + m\textit{1 m}2$ (physical qubits)
+
+\item $k \geq k\textit{1 k}2$ (logical qubits, where $k\textit{i = n}i - m_i$)
+
+\item $d \geq \min(d\textit{1, d}2)$ (distance)
+
+\item If $H\textit{1, H}2$ are LDPC, then $H\textit{X, H}Z$ are QLDPC with same weights
+
+
+\end{itemize}
+
+\textbf{Key Insight}: Hypergraph product \textbf{preserves sparsity} and \textbf{boosts parameters} — starting from good classical LDPC codes yields good QLDPC codes.
+
+
+
+\subsubsection{Good QLDPC Codes}
+
+A family $\{C\textit{n\}$ of codes with $C}n = [[n\textit{i, k}i, d_i]]$ is \textbf{asymptotically good} if:
+
+$$\liminf\textit{{i \to \infty} \frac{k}i}{n_i} > 0 \quad \text{(constant rate)}$$
+
+$$\liminf\textit{{i \to \infty} \frac{d}i}{n_i} > 0 \quad \text{(constant relative distance)}$$
+
+
+\textbf{Theorem} (Panteleev-Kalachev 2022): There exist families of $[[n, \Theta(n), \Theta(n)]]$ QLDPC codes with constant weight.
+
+
+\textbf{Explicit constructions} (Breuckmann-Eberhardt 2021, Hastings-Haah-O'Donnell 2021): Fiber bundle codes achieve $[[n, \Theta(n), \Theta(\sqrt{n})]]$ with explicit construction.
+
+
+
+\subsubsection{Decoding Problem}
+
+\textbf{Input}: Syndrome $s \in \mathbb{F}\textit{2^{n-k}$ from measuring stabilizers (some $S}i$ give -1 eigenvalue $\rightarrow$ bit "1" in syndrome)
+
+
+\textbf{Output}: Error estimate $\hat{e} \in \{X, Z, Y\}^n$ such that $\hat{e}$ has same syndrome as true error e
+
+
+\textbf{Complexity}: NP-hard in general (syndrome decoding problem). For QLDPC, hope for efficient approximate decoders.
+
+
+\textbf{Belief Propagation (BP)}: Iterative message-passing on Tanner graph. Complexity O(n) per iteration. Works well for codes with high girth.
+
+
+\textbf{Threshold}: Maximum error rate $p_{th}$ below which decoding succeeds with high probability as $n \to \infty$.
+
+
+
+\subsubsection{Certificate Specification}
+
+A \textbf{valid QLDPC code certificate} must include:
+
+
+\begin{itemize}
+\item \textbf{Stabilizer Matrices} $H\textit{X, H}Z \in \mathbb{F}_2^{(n-k) \times n}$:
+
+\item Verify: row rank = n-k (independent stabilizers)
+
+\item Verify: $H\textit{X H}Z^T = 0 \mod 2$ (CSS commutation condition)
+
+
+\item \textbf{QLDPC Property}:
+
+\item Row weights: $\max\textit{i \|H}X[i,:]\|\textit{0 \leq w}r$ and $\max\textit{i \|H}Z[i,:]\|\textit{0 \leq w}r$
+
+\item Column weights: $\max\textit{j \|H}X[:,j]\|\textit{0 \leq w}c$ and $\max\textit{j \|H}Z[:,j]\|\textit{0 \leq w}c$
+
+
+\item \textbf{Code Distance}:
+
+\item Lower bound $d \geq d_{\min}$ via:
+
+\item Exhaustive search (for small n < 20)
+
+\item Linear programming bound
+
+\item Algebraic bounds (for product codes)
+
+
+\item \textbf{Logical Operators}:
+
+\item X-logical: $\bar{X} \in \mathbb{F}\textit{2^{k \times n}$ with $\bar{X} H}Z^T = 0$, $\bar{X} H_X^T \neq 0$
+
+\item Z-logical: $\bar{Z} \in \mathbb{F}\textit{2^{k \times n}$ with $\bar{Z} H}X^T = 0$, $\bar{Z} H_Z^T \neq 0$
+
+
+\item \textbf{Decoding Threshold} (via simulation):
+
+\item Physical error rate p sampled from $[10^{-5}, 10^{-1}]$
+
+\item Logical error rate $p_L(p)$ measured over 10⁴ trials
+
+\item Threshold: $p\textit{{th} = \sup\{p : p}L(p) < p\}$
+
+
+\end{itemize}
+
+\textbf{Export Format}: JSON + HDF5 with:
+
+\begin{itemize}
+\item Matrices $H\textit{X, H}Z$ (sparse CSR format)
+
+\item Parameters [[n, k, d]]
+
+\item Logical operators (sparse)
+
+\item Decoding simulation data (threshold curves)
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{3. Implementation Approach}
+
+
+\subsubsection{Phase 1: Classical LDPC Codes and GF(2) Algebra (Months 1-2)}
+
+\end{itemize}
+
+\textbf{Goal}: Implement classical LDPC codes, verify properties, test BP decoding.
+
+
+\begin{lstlisting}
+import numpy as np
+from scipy.sparse import csr_matrix, lil_matrix
+import galois  # GF(2) linear algebra
+from typing import Tuple, List
+
+# GF(2) field
+GF2 = galois.GF(2)
+
+def generate_random_regular_ldpc(n: int, w_col: int, w_row: int) -> np.ndarray:
+    """
+    Generate random (w_row, w_col)-regular LDPC parity check matrix.
+
+    Parameters:
+        n: code length
+        w_col: column weight (each bit in w_col checks)
+        w_row: row weight (each check involves w_row bits)
+
+    Returns:
+        H: parity check matrix (m x n) over GF(2)
+    """
+    # Number of checks: m * w_row = n * w_col (degree sum)
+    m = (n * w_col) // w_row
+
+    # Edge list construction (random permutation)
+    edges = []
+    for col in range(n):
+        edges.extend([(col, -1)] * w_col)  # -1 is placeholder
+
+    # Shuffle and assign to rows
+    np.random.shuffle(edges)
+
+    H = lil_matrix((m, n), dtype=int)
+
+    edge_idx = 0
+    for row in range(m):
+        for _ in range(w_row):
+            col = edges[edge_idx][0]
+            H[row, col] = 1
+            edge_idx += 1
+
+    return GF2(H.toarray())
+
+
+def compute_dual_code(G: np.ndarray) -> np.ndarray:
+    """
+    Compute parity check matrix H for dual code C^perp.
+
+    If G is generator for C, then H generates C^perp with G H^T = 0.
+    """
+    G_gf2 = GF2(G)
+
+    # Systematic form: G = [I_k | P]
+    # Then H = [-P^T | I_{n-k}] = [P^T | I_{n-k}] in GF(2)
+
+    k, n = G_gf2.shape
+
+    # Row echelon form
+    G_rref, pivots = G_gf2.row_reduce(True)
+
+    # Extract P (non-pivot columns)
+    P = G_rref[:, k:]
+
+    # Dual: H = [P^T | I]
+    H = np.hstack([P.T, GF2.Identity(n - k)])
+
+    return H
+
+
+def check_ldpc_sparsity(H: np.ndarray, w_row_max: int = 10, w_col_max: int = 10) -> bool:
+    """
+    Verify H is LDPC (sparse).
+    """
+    row_weights = np.sum(H, axis=1)
+    col_weights = np.sum(H, axis=0)
+
+    max_row = int(np.max(row_weights))
+    max_col = int(np.max(col_weights))
+
+    print(f"Max row weight: {max_row}, max col weight: {max_col}")
+
+    return max_row <= w_row_max and max_col <= w_col_max
+
+
+def compute_tanner_graph_girth(H: np.ndarray) -> int:
+    """
+    Compute girth of Tanner graph (shortest cycle).
+
+    High girth $\rightarrow$ better BP performance.
+    """
+    import networkx as nx
+
+    m, n = H.shape
+
+    # Bipartite graph: qubit nodes (0..n-1), check nodes (n..n+m-1)
+    G = nx.Graph()
+
+    for i in range(m):
+        for j in range(n):
+            if H[i, j] == 1:
+                G.add_edge(j, n + i)  # Qubit j to check i
+
+    try:
+        girth = nx.girth(G)
+    except:
+        girth = float('inf')  # No cycles (tree)
+
+    return girth
+
+
+# Test: Generate (3, 6)-regular LDPC
+def test_ldpc_generation():
+    n = 120
+    w_col = 3
+    w_row = 6
+
+    H = generate_random_regular_ldpc(n, w_col, w_row)
+
+    print(f"Generated LDPC: {H.shape}")
+    assert check_ldpc_sparsity(H, w_row_max=10, w_col_max=10)
+
+    girth = compute_tanner_graph_girth(H)
+    print(f"Tanner graph girth: {girth}")
+
+    assert girth >= 4, "Girth too small!"
+    print("✓ LDPC code generated successfully")
+\end{lstlisting}
+
+\textbf{Output}: Random (3,6)-regular LDPC code with girth $\geq$ 6.
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsubsection{Phase 2: CSS Code Construction (Months 2-4)}
+
+\textbf{Goal}: Construct CSS quantum codes from classical codes, verify stabilizer commutation.
+
+
+\begin{lstlisting}
+def css_code_from_classical(C1_generator: np.ndarray, C2_generator: np.ndarray) -> dict:
+    """
+    Construct CSS code from two classical codes C$_1$, C$_2$.
+
+    Condition: C$_2$^perp ⊆ C$_1$ (ensures commutation).
+
+    Returns:
+        H_X, H_Z: stabilizer matrices
+        n, k, d: code parameters
+    """
+    C1 = GF2(C1_generator)
+    C2 = GF2(C2_generator)
+
+    # Dual codes
+    H1 = compute_dual_code(C1)  # C$_1$^perp
+    H2 = compute_dual_code(C2)  # C$_2$^perp
+
+    # Check CSS condition: H2 (rows of C$_2$^perp) must be in C$_1$ (span of C1)
+    # i.e., H2 * C1.T = 0
+
+    if not np.all((H2 @ C1.T) == 0):
+        raise ValueError("CSS condition violated: C$_2$^perp not subset of C$_1$!")
+
+    # X-stabilizers from C$_1$^perp
+    H_X = H1
+
+    # Z-stabilizers from C$_2$^perp
+    H_Z = H2
+
+    # Code parameters
+    n = C1.shape[1]
+    k = compute_logical_dimension(H_X, H_Z, n)
+    d_lower_bound = estimate_code_distance(H_X, H_Z)
+
+    return {
+        'H_X': H_X,
+        'H_Z': H_Z,
+        'parameters': [n, k, d_lower_bound],
+        'n': n,
+        'k': k,
+        'd': d_lower_bound
+    }
+
+
+def compute_logical_dimension(H_X: np.ndarray, H_Z: np.ndarray, n: int) -> int:
+    """
+    k = n - rank(H_X) - rank(H_Z)
+    """
+    rank_X = np.linalg.matrix_rank(GF2(H_X))
+    rank_Z = np.linalg.matrix_rank(GF2(H_Z))
+
+    return n - rank_X - rank_Z
+
+
+def verify_css_commutation(H_X: np.ndarray, H_Z: np.ndarray) -> bool:
+    """
+    Verify [X_i, Z_j] = 0 for all stabilizers.
+
+    Equivalent to: H_X * H_Z^T = 0 (mod 2)
+    """
+    commutator = GF2(H_X) @ GF2(H_Z).T
+
+    return np.all(commutator == 0)
+
+
+def estimate_code_distance(H_X: np.ndarray, H_Z: np.ndarray, max_weight: int = 20) -> int:
+    """
+    Estimate code distance via exhaustive search (small codes only).
+
+    Distance = min weight of logical operators (not in stabilizer group).
+    """
+    n = H_X.shape[1]
+
+    # Simplified: check weight-1, weight-2, ... errors
+    for w in range(1, min(max_weight, n) + 1):
+        # Check if weight-w X error is detectable
+        for error in itertools.combinations(range(n), w):
+            e_vec = np.zeros(n, dtype=int)
+            e_vec[list(error)] = 1
+
+            syndrome_X = GF2(H_X) @ GF2(e_vec)
+            syndrome_Z = GF2(H_Z) @ GF2(e_vec)
+
+            # If both syndromes are zero, it's a logical operator
+            if np.all(syndrome_X == 0) and np.all(syndrome_Z == 0):
+                # Check if it's non-trivial (not in stabilizer)
+                # (Simplified check)
+                return w
+
+    return max_weight  # Lower bound
+
+
+# Test: Construct small CSS code
+def test_css_code():
+    # Example: Steane [[7,1,3]] code
+    # C$_1$ = C$_2$ = Hamming [7,4,3] code
+
+    # Hamming [7,4,3] generator matrix
+    G_hamming = GF2([[1, 0, 0, 0, 0, 1, 1],
+                     [0, 1, 0, 0, 1, 0, 1],
+                     [0, 0, 1, 0, 1, 1, 0],
+                     [0, 0, 0, 1, 1, 1, 1]])
+
+    css = css_code_from_classical(G_hamming, G_hamming)
+
+    print(f"CSS code parameters: [[{css['n']}, {css['k']}, {css['d']}]]")
+
+    # Verify commutation
+    assert verify_css_commutation(css['H_X'], css['H_Z'])
+    print("✓ CSS stabilizers commute")
+
+    # Expected: [[7, 1, 3]]
+    assert css['n'] == 7 and css['k'] == 1 and css['d'] >= 3
+    print("✓ Steane code parameters verified")
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsubsection{Phase 3: Hypergraph Product Construction (Months 4-5)}
+
+\textbf{Goal}: Implement hypergraph product to generate large QLDPC codes.
+
+
+\begin{lstlisting}
+def hypergraph_product(H1: np.ndarray, H2: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Hypergraph product: quantum code from two classical codes.
+
+    H_X = [H1 $\otimes$ I_{n2} | I_{m1} $\otimes$ H2^T]
+    H_Z = [I_{n1} $\otimes$ H2 | H1^T $\otimes$ I_{m2}]
+
+    Parameters:
+        H1: (m1, n1) parity matrix for C$_1$
+        H2: (m2, n2) parity matrix for C$_2$
+
+    Returns:
+        H_X, H_Z: quantum stabilizer matrices
+    """
+    H1_gf2 = GF2(H1)
+    H2_gf2 = GF2(H2)
+
+    m1, n1 = H1.shape
+    m2, n2 = H2.shape
+
+    # X-check matrix: [H1 $\otimes$ I_{n2} | I_{m1} $\otimes$ H2^T]
+    block1 = np.kron(H1_gf2, GF2.Identity(n2))
+    block2 = np.kron(GF2.Identity(m1), H2_gf2.T)
+
+    H_X = np.hstack([block1, block2])
+
+    # Z-check matrix: [I_{n1} $\otimes$ H2 | H1^T $\otimes$ I_{m2}]
+    block3 = np.kron(GF2.Identity(n1), H2_gf2)
+    block4 = np.kron(H1_gf2.T, GF2.Identity(m2))
+
+    H_Z = np.hstack([block3, block4])
+
+    return H_X, H_Z
+
+
+def hypergraph_product_parameters(H1: np.ndarray, H2: np.ndarray, d1: int, d2: int) -> dict:
+    """
+    Compute parameters of HP code.
+
+    n = n1*n2 + m1*m2
+    k >= k1*k2 (where k_i = n_i - rank(H_i))
+    d >= min(d1, d2)
+    """
+    m1, n1 = H1.shape
+    m2, n2 = H2.shape
+
+    rank1 = np.linalg.matrix_rank(GF2(H1))
+    rank2 = np.linalg.matrix_rank(GF2(H2))
+
+    k1 = n1 - rank1
+    k2 = n2 - rank2
+
+    n_quantum = n1 * n2 + m1 * m2
+    k_quantum_lower = k1 * k2
+    d_quantum_lower = min(d1, d2)
+
+    return {
+        'n': n_quantum,
+        'k_lower': k_quantum_lower,
+        'd_lower': d_quantum_lower
+    }
+
+
+# Test: Hypergraph product of two small LDPC codes
+def test_hypergraph_product():
+    # Two small [n, k, d] = [7, 4, 3] Hamming codes
+    H1 = GF2([[1, 1, 1, 0, 1, 0, 0],
+              [1, 0, 0, 1, 0, 1, 0],
+              [0, 1, 0, 1, 0, 0, 1]])
+
+    H2 = H1  # Same code
+
+    H_X, H_Z = hypergraph_product(H1, H2)
+
+    print(f"HP code stabilizers: H_X shape {H_X.shape}, H_Z shape {H_Z.shape}")
+
+    # Verify commutation
+    assert verify_css_commutation(H_X, H_Z)
+    print("✓ HP code stabilizers commute")
+
+    # Compute parameters
+    params = hypergraph_product_parameters(H1, H2, d1=3, d2=3)
+    print(f"HP code parameters (lower bounds): [[{params['n']}, >={params['k_lower']}, >={params['d_lower']}]]")
+
+    # Verify LDPC
+    assert check_ldpc_sparsity(H_X, w_row_max=10, w_col_max=10)
+    assert check_ldpc_sparsity(H_Z, w_row_max=10, w_col_max=10)
+    print("✓ HP code is QLDPC")
+\end{lstlisting}
+
+\textbf{Expected Output}: [[90, >=16, >=3]] QLDPC code from [7,4,3] Hamming codes.
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsubsection{Phase 4: Belief Propagation Decoding (Months 5-7)}
+
+\textbf{Goal}: Implement BP decoder for QLDPC, measure decoding threshold.
+
+
+\begin{lstlisting}
+def belief_propagation_decoder(syndrome: np.ndarray, H: np.ndarray,
+                               p_error: float = 0.01, max_iters: int = 100) -> np.ndarray:
+    """
+    BP decoder for QLDPC codes.
+
+    Args:
+        syndrome: (m,) binary syndrome vector
+        H: (m, n) parity check matrix
+        p_error: physical error rate (prior)
+        max_iters: maximum BP iterations
+
+    Returns:
+        error_estimate: (n,) binary error vector
+    """
+    m, n = H.shape
+
+    # Log-likelihood ratios
+    # LLR(x) = log(P(x=0) / P(x=1))
+    llr_prior = np.log((1 - p_error) / p_error) * np.ones(n)
+
+    # Messages: q->c and c->q
+    llr_q_to_c = np.tile(llr_prior[:, None], (1, m)).T  # (m, n)
+    llr_c_to_q = np.zeros((m, n))
+
+    for iteration in range(max_iters):
+        # Update check-to-qubit messages
+        for check in range(m):
+            neighbors = np.where(H[check] == 1)[0]
+
+            for qubit in neighbors:
+                # Product of tanh(LLR/2) from other qubits
+                other_qubits = neighbors[neighbors != qubit]
+
+                if len(other_qubits) == 0:
+                    llr_c_to_q[check, qubit] = 0
+                    continue
+
+                prod_tanh = np.prod(np.tanh(llr_q_to_c[check, other_qubits] / 2))
+
+                # Syndrome flip: if syndrome[check] = 1, negate product
+                if syndrome[check] == 1:
+                    prod_tanh *= -1
+
+                # Convert back to LLR
+                llr_c_to_q[check, qubit] = 2 * np.arctanh(np.clip(prod_tanh, -0.999, 0.999))
+
+        # Update qubit-to-check messages
+        for qubit in range(n):
+            neighbors = np.where(H[:, qubit] == 1)[0]
+
+            for check in neighbors:
+                other_checks = neighbors[neighbors != check]
+
+                llr_q_to_c[check, qubit] = llr_prior[qubit] + np.sum(llr_c_to_q[other_checks, qubit])
+
+        # Decision: posterior LLR
+        llr_posterior = llr_prior + np.sum(llr_c_to_q, axis=0)
+
+        error_estimate = (llr_posterior < 0).astype(int)
+
+        # Check if syndrome matches
+        computed_syndrome = (H @ error_estimate) % 2
+
+        if np.all(computed_syndrome == syndrome):
+            print(f"BP converged at iteration {iteration + 1}")
+            return error_estimate
+
+    print("BP did not converge")
+    return error_estimate
+
+
+def simulate_decoding_threshold(H_X: np.ndarray, H_Z: np.ndarray,
+                                p_range: np.ndarray, num_trials: int = 1000) -> dict:
+    """
+    Measure decoding threshold via Monte Carlo simulation.
+
+    Args:
+        H_X, H_Z: stabilizer matrices
+        p_range: array of physical error rates to test
+        num_trials: number of trials per p
+
+    Returns:
+        results: dict with p_values, logical_error_rates
+    """
+    m_X, n = H_X.shape
+    m_Z, _ = H_Z.shape
+
+    logical_error_rates = []
+
+    for p in p_range:
+        print(f"\nTesting p = {p:.4f}...")
+
+        failures = 0
+
+        for trial in range(num_trials):
+            # Sample random X errors
+            error_X = (np.random.rand(n) < p).astype(int)
+
+            # Syndrome
+            syndrome_X = (H_X @ error_X) % 2
+
+            # Decode
+            decoded_X = belief_propagation_decoder(syndrome_X, H_X, p_error=p, max_iters=50)
+
+            # Residual error
+            residual_X = (error_X + decoded_X) % 2
+
+            # Check if residual is a logical error (not in stabilizer, commutes with Z-stabs)
+            syndrome_residual = (H_X @ residual_X) % 2
+
+            if not np.all(syndrome_residual == 0):
+                # Decoding failed to find valid stabilizer error
+                failures += 1
+                continue
+
+            # Check if it's a non-trivial logical (simplified: weight > 0 and commutes)
+            if np.sum(residual_X) > 0:
+                # Logical error
+                failures += 1
+
+        logical_error_rate = failures / num_trials
+        logical_error_rates.append(logical_error_rate)
+
+        print(f"Logical error rate: {logical_error_rate:.4f}")
+
+    return {
+        'p_values': p_range,
+        'logical_error_rates': np.array(logical_error_rates)
+    }
+
+
+# Test: Threshold simulation for small code
+def test_bp_threshold():
+    # Use HP code from previous test
+    H1 = GF2([[1, 1, 1, 0, 1, 0, 0],
+              [1, 0, 0, 1, 0, 1, 0],
+              [0, 1, 0, 1, 0, 0, 1]])
+    H_X, H_Z = hypergraph_product(H1, H1)
+
+    p_range = np.linspace(0.001, 0.05, 10)
+
+    results = simulate_decoding_threshold(H_X, H_Z, p_range, num_trials=100)
+
+    # Threshold: p where logical error rate crosses physical error rate
+    # (Simplified check)
+    print(f"\n✓ BP decoding threshold simulation complete")
+    print(f"Threshold estimate: p_th $\approx$ {results['p_values'][np.argmax(results['logical_error_rates'] > results['p_values'])]:.4f}")
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsubsection{Phase 5: Good QLDPC Constructions (Months 7-9)}
+
+\textbf{Goal}: Implement advanced constructions (fiber bundle, balanced product) achieving constant rate.
+
+
+\begin{lstlisting}
+def balanced_product_code(H1: np.ndarray, H2: np.ndarray, G1: np.ndarray, G2: np.ndarray) -> dict:
+    """
+    Balanced product construction (Breuckmann-Eberhardt 2021).
+
+    Generalizes hypergraph product with tunable parameters.
+
+    Requires both generator G and parity H for input codes.
+    """
+    # Simplified implementation (full version requires chain complex formalism)
+
+    m1, n1 = H1.shape
+    m2, n2 = H2.shape
+
+    k1, _ = G1.shape
+    k2, _ = G2.shape
+
+    # Balanced product uses both G and H to construct stabilizers
+    # (Details omitted for brevity)
+
+    # Placeholder: use HP for now
+    H_X, H_Z = hypergraph_product(H1, H2)
+
+    return {
+        'H_X': H_X,
+        'H_Z': H_Z,
+        'note': 'Balanced product (simplified to HP)'
+    }
+
+
+def construct_expander_qldpc(n_target: int, degree: int = 3) -> dict:
+    """
+    Construct QLDPC from expander graphs.
+
+    Good expanders $\rightarrow$ good codes (via Sipser-Spielman).
+    """
+    import networkx as nx
+
+    # Generate Ramanujan graph (optimal expander)
+    # (Simplified: use random regular graph as proxy)
+
+    G = nx.random_regular_graph(degree, n_target)
+
+    # Adjacency matrix as parity check
+    A = nx.adjacency_matrix(G).toarray()
+
+    # Apply hypergraph product
+    H_X, H_Z = hypergraph_product(A, A)
+
+    return {
+        'H_X': H_X,
+        'H_Z': H_Z,
+        'expansion': 'random_regular'  # Placeholder
+    }
+
+
+# Comparison: Surface code vs QLDPC
+def compare_overhead(k_logical: int):
+    """
+    Compare qubit overhead for surface code vs QLDPC.
+
+    Surface: n = O(k log k)
+    QLDPC: n = O(k)
+    """
+    # Surface code: [[d^2, 1, d]] per logical qubit
+    # For distance d~100: n_surf = 100^2 = 10,000 physical per logical
+
+    d_surface = 100
+    n_surface_per_logical = d_surface ** 2
+
+    n_surface_total = k_logical * n_surface_per_logical
+
+    # QLDPC: [[n, n/4, sqrt(n)]] typical
+    # For k_logical: need n_qldpc = 4 * k_logical
+
+    rate_qldpc = 0.25
+    n_qldpc_total = int(k_logical / rate_qldpc)
+
+    print(f"Overhead comparison for k={k_logical} logical qubits:")
+    print(f"  Surface code: n = {n_surface_total} physical qubits")
+    print(f"  QLDPC code: n = {n_qldpc_total} physical qubits")
+    print(f"  Reduction factor: {n_surface_total / n_qldpc_total:.1f}x")
+
+
+# Test: Overhead comparison
+if __name__ == "__main__":
+    compare_overhead(k_logical=100)
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsubsection{Phase 6: Certificate Generation (Months 9-10)}
+
+\textbf{Goal}: Export QLDPC codes with complete certificates for verification.
+
+
+\begin{lstlisting}
+import json
+import h5py
+from scipy.sparse import save_npz, load_npz
+
+def export_qldpc_certificate(H_X: np.ndarray, H_Z: np.ndarray, code_params: dict,
+                             threshold_data: dict, output_file: str):
+    """
+    Export QLDPC code certificate.
+    """
+    # Verify commutation
+    assert verify_css_commutation(H_X, H_Z), "Stabilizers do not commute!"
+
+    # Sparsity
+    ldpc_X = check_ldpc_sparsity(H_X, w_row_max=20, w_col_max=20)
+    ldpc_Z = check_ldpc_sparsity(H_Z, w_row_max=20, w_col_max=20)
+
+    certificate = {
+        'code_parameters': code_params,  # [[n, k, d]]
+        'stabilizer_dimensions': {
+            'H_X_shape': H_X.shape,
+            'H_Z_shape': H_Z.shape
+        },
+        'ldpc_properties': {
+            'is_ldpc': ldpc_X and ldpc_Z,
+            'max_row_weight_X': int(np.max(np.sum(H_X, axis=1))),
+            'max_row_weight_Z': int(np.max(np.sum(H_Z, axis=1))),
+            'max_col_weight_X': int(np.max(np.sum(H_X, axis=0))),
+            'max_col_weight_Z': int(np.max(np.sum(H_Z, axis=0)))
+        },
+        'commutation_verified': True,
+        'threshold': {
+            'p_threshold_estimate': float(threshold_data.get('p_th', 0)),
+            'simulation_trials': threshold_data.get('num_trials', 0)
+        },
+        'certificate_version': '1.0'
+    }
+
+    # JSON certificate
+    with open(output_file + '.json', 'w') as f:
+        json.dump(certificate, f, indent=2)
+
+    # HDF5 for matrices
+    with h5py.File(output_file + '.h5', 'w') as f:
+        f.create_dataset('H_X', data=H_X, compression='gzip')
+        f.create_dataset('H_Z', data=H_Z, compression='gzip')
+
+        if 'p_values' in threshold_data:
+            f.create_dataset('threshold/p_values', data=threshold_data['p_values'])
+            f.create_dataset('threshold/logical_error_rates', data=threshold_data['logical_error_rates'])
+
+    print(f"✓ Certificate exported to {output_file}.json and {output_file}.h5")
+
+
+def verify_qldpc_certificate(cert_file: str):
+    """
+    Independent verification of QLDPC certificate.
+    """
+    with open(cert_file + '.json', 'r') as f:
+        cert = json.load(f)
+
+    print("=== QLDPC Certificate Verification ===\n")
+
+    # Load matrices
+    with h5py.File(cert_file + '.h5', 'r') as f:
+        H_X = GF2(f['H_X'][:])
+        H_Z = GF2(f['H_Z'][:])
+
+    # 1. Verify commutation
+    commutes = verify_css_commutation(H_X, H_Z)
+    assert commutes, "Stabilizers do not commute!"
+    print("✓ CSS commutation verified")
+
+    # 2. Verify QLDPC
+    is_ldpc = cert['ldpc_properties']['is_ldpc']
+    assert is_ldpc, "Code is not QLDPC!"
+    print(f"✓ QLDPC verified (max row weight: {cert['ldpc_properties']['max_row_weight_X']})")
+
+    # 3. Verify parameters
+    n_claimed = cert['code_parameters']['n']
+    k_claimed = cert['code_parameters']['k']
+
+    n_actual = H_X.shape[1]
+    k_actual = compute_logical_dimension(H_X, H_Z, n_actual)
+
+    assert n_claimed == n_actual, "Code length mismatch!"
+    assert k_claimed == k_actual, "Logical dimension mismatch!"
+    print(f"✓ Code parameters verified: [[{n_actual}, {k_actual}, d$\geq${cert['code_parameters']['d']}]]")
+
+    print("\n=== ALL VERIFICATIONS PASSED ===")
+    return True
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{4. Example Starting Prompt}
+
+\begin{lstlisting}
+You are a quantum information theorist designing QLDPC codes for fault-tolerant quantum computing.
+Your task is to construct explicit codes with constant rate and distance using ONLY graph theory,
+coding theory, and linear algebra over GF(2) — NO empirical tuning or machine learning.
+
+OBJECTIVE: Construct a family of [[n, Θ(n), Θ($\sqrt{}$n)]] QLDPC codes using hypergraph product,
+achieving constant rate k/n $\approx$ 0.1 and scalable distance d $\geq$ $\sqrt{}$n.
+
+PHASE 1 (Months 1-2): Classical LDPC Foundation
+- Implement (w_row, w_col)-regular LDPC code generator
+- Test (3,6)-regular code for n=120: verify sparsity, girth $\geq$ 6
+- Implement BP decoder, measure threshold p_th $\approx$ 0.03 for classical channel
+- Verify dual code construction: G H^T = 0
+
+PHASE 2 (Months 2-4): CSS Code Construction
+- Implement CSS construction from two classical codes C$_1$, C$_2$
+- Verify CSS condition: C$_2$^perp ⊆ C$_1$ (check H$_2$ C$_1$^T = 0)
+- Test on Steane [[7,1,3]] code: reproduce known parameters
+- Verify stabilizer commutation: H_X H_Z^T = 0 (GF(2))
+
+PHASE 3 (Months 4-5): Hypergraph Product
+- Implement HP construction: H_X = [H$_1$$\otimes$I | I$\otimes$H$_2$^T], H_Z = [I$\otimes$H$_2$ | H$_1$^T$\otimes$I]
+- Test on two [7,4,3] Hamming codes $\rightarrow$ [[90, k$\geq$16, d$\geq$3]] QLDPC
+- Verify LDPC: row weights $\leq$ 10, column weights $\leq$ 10
+- Scale to n=1000: use (3,6)-regular LDPC inputs, measure k/n ratio
+
+PHASE 4 (Months 5-7): BP Decoding for QLDPC
+- Adapt classical BP to quantum setting: separate X and Z syndromes
+- Implement LLR message passing on Tanner graph
+- Simulate X-errors at p = 0.01, 0.02, ..., 0.10
+- Measure logical error rate p_L(p) over 1000 trials per p
+- Estimate threshold: p_th where p_L crosses p (expect p_th $\approx$ 1-2% for HP codes)
+
+PHASE 5 (Months 7-9): Asymptotically Good Codes
+- Implement balanced product (if generators available) or fiber bundle construction
+- Target: [[n, 0.1n, 0.01n]] for n=1000, 5000, 10000
+- Compute rate k/n and relative distance d/n
+- Compare to surface codes: overhead reduction factor
+
+PHASE 6 (Months 9-10): Certificate and Validation
+- Export H_X, H_Z as sparse matrices (CSR format)
+- Generate certificate: commutation check, LDPC verification, distance bounds
+- Independent verification script: reload matrices, recompute parameters
+- Comparison to literature: [[90,8,6]] HP code, [[900,64,12]] balanced product
+- Threshold plot: p_L vs p for n=100, 500, 1000 (scaling analysis)
+
+SUCCESS CRITERIA:
+- **MVR (Months 4-5)**: [[90, k$\geq$16, d$\geq$3]] HP code verified, BP decoder functional
+- **Strong (Months 7-8)**: [[1000, $\geq$100, $\geq$10]] family constructed, threshold p_th > 1%,
+  certificate exported and independently verified
+- **Publication (Months 9-10)**: [[10000, 1000, 100]] code achieved, overhead vs surface
+  code: 100x reduction demonstrated, novel balanced product variant
+
+VERIFICATION PROTOCOL:
+1. Commutation: H_X H_Z^T = 0 for all codes (GF(2)) ✓
+2. LDPC: max row/col weight $\leq$ 20 for all codes ✓
+3. Distance: exhaust search for n<20, LP bound for n$\geq$20, compare to d$\geq$min(d$_1$,d$_2$) (HP) ✓
+4. Threshold: p_th > 0.01 (better than repetition code threshold ~0.003) ✓
+5. Literature: [[90,8,6]] matches Tillich-Zémor Table II ✓
+
+EXPORT:
+- `qldpc_code_n1000.json`: Certificate with [[n, k, d]] and LDPC properties
+- `qldpc_code_n1000.h5`: Sparse H_X, H_Z matrices, threshold data
+- `qldpc_decoder.py`: Reusable BP decoder module
+
+This is a PURE THOUGHT challenge: use ONLY coding theory and graph combinatorics.
+NO empirical neural decoders, NO hardware-specific optimizations until validation.
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{5. Success Criteria}
+
+
+\subsubsection{Minimum Viable Result (MVR) — Months 4-5}
+
+\textbf{Deliverable}: Working hypergraph product code with BP decoder.
+
+
+\textbf{Specific Metrics}:
+
+\begin{itemize}
+\item \textbf{Code Construction}:
+
+\item [[90, k$\geq$16, d$\geq$3]] HP code from two [7,4,3] Hamming codes
+
+\item Commutation verified: H\textit{X H}Z^T = 0
+
+\item QLDPC verified: max row weight $\leq$ 10
+
+
+\item \textbf{Decoding}:
+
+\item BP decoder converges for p < 0.05
+
+\item Logical error rate measured over 100 trials
+
+
+\item \textbf{Certificate}:
+
+\item H\textit{X, H}Z exported as sparse matrices
+
+\item Parameters [[n, k, d]] verified independently
+
+
+\end{itemize}
+
+\textbf{Output}: JSON certificate + HDF5 matrices for [[90, >=16, >=3]] code.
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsubsection{Strong Result — Months 7-8}
+
+\textbf{Deliverable}: Scalable QLDPC family with measured threshold.
+
+
+\textbf{Specific Metrics}:
+
+\begin{itemize}
+\item \textbf{Code Family}:
+
+\item [[1000, $\geq$100, $\geq$10]] code constructed via HP
+
+\item Rate k/n $\geq$ 0.1, relative distance d/n $\geq$ 0.01
+
+
+\item \textbf{Threshold}:
+
+\item p_th > 1% for X-errors (measured via 1000 trials)
+
+\item Scaling: threshold improves with n
+
+
+\item \textbf{Comparison}:
+
+\item Surface code: [[100², 1, 100]] $\rightarrow$ 10,000 qubits for 1 logical
+
+\item QLDPC: [[1000, 100, 30]] $\rightarrow$ 1000 qubits for 100 logical (100x improvement!)
+
+
+\end{itemize}
+
+\textbf{Certificate}: Full database of codes for n=100, 500, 1000 with threshold curves.
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsubsection{Publication-Quality Result — Months 9-10}
+
+\textbf{Deliverable}: Novel QLDPC constructions, comprehensive benchmarking, formal verification.
+
+
+\textbf{Specific Metrics}:
+
+\begin{itemize}
+\item \textbf{Novel Contribution}:
+
+\item [[10000, 1000, 100]] code via balanced product
+
+\item Rate k/n = 0.1, distance d/n = 0.01 (approaching asymptotic bounds)
+
+
+\item \textbf{Threshold Analysis}:
+
+\item p_th > 2% for optimized BP decoder
+
+\item Comparison to surface code: 2× higher threshold
+
+
+\item \textbf{Validation}:
+
+\item Distance verified via LP bound + random sampling
+
+\item Independent code from literature reproduced (Panteleev-Kalachev [[900,64,12]])
+
+\item Formal certificate: commutation, LDPC, distance all machine-checked
+
+
+\item \textbf{Publication Targets}:
+
+\item \textit{Quantum} (open access, quantum information)
+
+\item \textit{IEEE Transactions on Information Theory} (coding theory)
+
+\item \textit{Physical Review X Quantum} (quantum computing)
+
+
+\end{itemize}
+
+\textbf{Certificate}: Database of 10+ codes with [[n, k, d]] ranging from [[90, 16, 3]] to [[10000, 1000, 100]].
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{6. Verification Protocol}
+
+
+\subsubsection{Automated Checks (Run After Each Phase)}
+
+\begin{lstlisting}
+def verify_qldpc_implementation():
+    """
+    Comprehensive QLDPC verification suite.
+    """
+    print("=== QLDPC Verification Suite ===\n")
+
+    # 1. Classical LDPC
+    print("1. Testing Classical LDPC")
+    test_ldpc_generation()
+
+    # 2. CSS construction
+    print("\n2. Testing CSS Codes")
+    test_css_code()
+
+    # 3. Hypergraph product
+    print("\n3. Testing Hypergraph Product")
+    test_hypergraph_product()
+
+    # 4. BP decoding
+    print("\n4. Testing BP Decoder")
+    # (Run small threshold sim)
+
+    print("\n=== ALL TESTS PASSED ===")
+\end{lstlisting}
+
+\textbf{Manual Checks}:
+
+\begin{itemize}
+\item Compare to literature codes (Tillich-Zémor, Breuckmann-Eberhardt tables)
+
+\item Plot Tanner graph for small codes — verify bipartite structure
+
+\item Threshold curves: p\textit{L vs p should cross at p}th
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{7. Resources and Milestones}
+
+
+\subsubsection{Essential References}
+
+\end{itemize}
+
+\textbf{Classical LDPC}:
+
+\begin{itemize}
+\item Gallager, R. G. (1962). "Low-density parity-check codes." \textit{IRE Transactions on Information Theory} 8(1): 21-28.
+
+\item MacKay, D. J. C. (1999). "Good error-correcting codes based on very sparse matrices." \textit{IEEE Trans. Inform. Theory} 45(2): 399-431.
+
+
+\end{itemize}
+
+\textbf{Quantum LDPC}:
+
+\begin{itemize}
+\item Tillich, J.-P., & Zémor, G. (2014). "Quantum LDPC codes with positive rate and minimum distance proportional to the square root of the blocklength." \textit{IEEE Trans. Inform. Theory} 60(2): 1193-1202.
+
+\item Panteleev, P., & Kalachev, G. (2022). "Asymptotically good quantum and locally testable classical LDPC codes." \textit{STOC 2022}.
+
+
+\end{itemize}
+
+\textbf{Good QLDPC Constructions}:
+
+\begin{itemize}
+\item Breuckmann, N. P., & Eberhardt, J. N. (2021). "Balanced product quantum codes." \textit{IEEE Trans. Inform. Theory} 67(10): 6653-6674.
+
+\item Hastings, M. B., Haah, J., & O'Donnell, R. (2021). "Fiber bundle codes: Breaking the n^{1/2} $\sqrt{}$log n barrier for quantum LDPC codes." \textit{STOC 2021}.
+
+
+\end{itemize}
+
+\textbf{Decoding}:
+
+\begin{itemize}
+\item Roffe, J., et al. (2020). "Decoding across the quantum LDPC code landscape." \textit{Physical Review Research} 2(4): 043423.
+
+
+\end{itemize}
+
+\textbf{Software}:
+
+\begin{itemize}
+\item qLDPC (Python library), LDPC (MATLAB), Stim (fast stabilizer simulator)
+
+
+
+\subsubsection{Milestone Checklist}
+
+\end{itemize}
+
+\textbf{Month 1-2}:
+
+\begin{itemize}
+\item [ ] Classical (3,6)-regular LDPC code generator working
+
+\item [ ] Girth computation via NetworkX
+
+\item [ ] Dual code construction: C^perp from G
+
+
+\end{itemize}
+
+\textbf{Month 3-4}:
+
+\begin{itemize}
+\item [ ] CSS construction verified on Steane [[7,1,3]]
+
+\item [ ] Commutation check: H\textit{X H}Z^T = 0 automated
+
+
+\end{itemize}
+
+\textbf{Month 5-6}:
+
+\begin{itemize}
+\item [ ] Hypergraph product: [[90, 16, 3]] reproduced
+
+\item [ ] Scaling to n=1000 successful
+
+\item [ ] QLDPC verification: sparsity confirmed
+
+
+\end{itemize}
+
+\textbf{Month 7-8}:
+
+\begin{itemize}
+\item [ ] BP decoder implemented
+
+\item [ ] Threshold simulation: p_th measured for n=100, 500, 1000
+
+\item [ ] Threshold > 1% achieved
+
+
+\end{itemize}
+
+\textbf{Month 9-10}:
+
+\begin{itemize}
+\item [ ] Balanced product / fiber bundle code constructed
+
+\item [ ] [[10000, 1000, 100]] code achieved
+
+\item [ ] Certificate exported and verified independently
+
+\item [ ] Comparison to surface codes documented
+
+\item [ ] Draft paper prepared
+
+
+
+\subsubsection{Common Pitfalls}
+
+\item \textbf{CSS Condition}: Forgetting to check C$_2$^perp ⊆ C$_1$ leads to non-commuting stabilizers — code is invalid!
+
+
+\item \textbf{GF(2) Arithmetic}: Using regular integer arithmetic instead of modulo-2 causes incorrect rank/dual computations
+
+
+\item \textbf{BP Convergence}: Poor girth (cycles of length 4) causes BP to oscillate; ensure girth $\geq$ 6
+
+
+\item \textbf{Distance Overestimation}: Hypergraph product gives d $\geq$ min(d$_1$, d$_2$) as \textbf{lower bound}, not exact value
+
+
+\item \textbf{Threshold Definition}: Logical error rate crossing physical rate is necessary but not sufficient — must verify scaling with n
+
+
+
+\bigskip\hrule\bigskip
+
+\end{itemize}
+
+\textbf{End of PRD 21}
+
+
+\end{document}

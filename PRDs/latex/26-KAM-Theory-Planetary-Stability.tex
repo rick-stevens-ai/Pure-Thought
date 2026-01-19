@@ -1,0 +1,1202 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% Page geometry
+\geometry{
+    a4paper,
+    left=25mm,
+    right=25mm,
+    top=30mm,
+    bottom=30mm,
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Pure Thought Challenge 26}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+    pdfauthor={Pure Thought AI Challenges},
+    pdftitle={PRD 26: KAM Theory and Planetary Stability},
+}
+
+% Code listing style
+\definecolor{codegray}{rgb}{0.95,0.95,0.95}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    backgroundcolor=\color{codegray},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    breakatwhitespace=true,
+    captionpos=b,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    tabsize=4,
+    showstringspaces=false,
+}
+
+\lstset{style=pythonstyle}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Custom commands
+\newcommand{\checklist}[1]{\item[$\square$] #1}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+
+% Title information
+\title{\textbf{PRD 26: KAM Theory and Planetary Stability} \\
+\large Pure Thought AI Challenge 26}
+\author{Pure Thought AI Challenges Project}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+This document presents a comprehensive Product Requirement Document (PRD) for implementing a pure-thought computational challenge. The problem can be tackled using only symbolic mathematics, exact arithmetic, and fresh code---no experimental data or materials databases required until final verification. All results must be accompanied by machine-checkable certificates.
+\end{abstract}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+
+\textbf{Domain}: Celestial Mechanics & Dynamical Systems
+
+\textbf{Timeline}: 6-9 months
+
+\textbf{Difficulty}: High
+
+\textbf{Prerequisites}: Hamiltonian mechanics, perturbation theory, measure theory, symplectic geometry
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{1. Problem Statement}
+
+
+\subsubsection{Scientific Context}
+
+\textbf{KAM (Kolmogorov-Arnold-Moser) theory} is one of the deepest results in dynamical systems, providing a rigorous mathematical explanation for the long-term stability of planetary orbits. The classical problem dates to Newton: given N gravitating bodies with small perturbations (planet-planet interactions), do orbits remain stable forever, or do planets eventually escape or collide?
+
+
+The breakthrough came in three stages:
+
+\begin{itemize}
+\item \textbf{Kolmogorov (1954)}: Announced that "most" invariant tori of integrable systems survive small perturbations
+
+\item \textbf{Arnold (1963)}: Proved the theorem for analytic Hamiltonians
+
+\item \textbf{Moser (1962)}: Extended to smooth (C^k) systems with weaker differentiability
+
+
+\end{itemize}
+
+\textbf{KAM Theorem (simplified)}: Consider a nearly-integrable Hamiltonian H = H₀(I) + εH₁(I,θ) where H₀ is integrable and ε is small. If:
+
+\begin{itemize}
+\item Frequencies ω(I) = ∂H₀/∂I satisfy \textbf{Diophantine conditions} (non-resonant)
+
+\item H₁ is sufficiently smooth
+
+
+\end{itemize}
+
+Then for ε < ε₀, there exists a \textbf{Cantor set} of invariant tori (measure → full as ε → 0) on which motion is \textbf{quasi-periodic} with frequencies ω(I).
+
+
+
+\subsubsection{Core Question}
+
+\textbf{Can we numerically verify KAM conditions for realistic planetary systems and certify their long-term stability?}
+
+
+Key challenges:
+
+\begin{itemize}
+\item \textbf{Action-angle transformation}: Convert Keplerian orbits to (I,θ) coordinates
+
+\item \textbf{Diophantine verification}: Check |k·ω| ≥ α/|k|^τ for infinitely many k
+
+\item \textbf{KAM iteration}: Iteratively eliminate resonant terms via canonical transformations
+
+\item \textbf{Measure estimates}: Compute fraction of phase space with surviving tori
+
+\item \textbf{Solar system application}: Analyze real planetary data (Jupiter, Saturn, etc.)
+
+
+
+\subsubsection{Why This Matters}
+
+\item \textbf{Planetary stability}: Rigorous proof that solar system is stable over Gyr timescales
+
+\item \textbf{Accelerator physics}: Stability of particle beams in synchrotrons
+
+\item \textbf{Plasma confinement}: Magnetic field line structure in tokamaks
+
+\item \textbf{General dynamical systems}: Paradigm for persistence of structure under perturbations
+
+\item \textbf{Chaos theory}: Boundary between regular (KAM tori) and chaotic (Arnold diffusion) motion
+
+
+
+\subsubsection{Pure Thought Advantages}
+
+\end{itemize}
+
+KAM theory is \textbf{ideal for pure thought investigation}:
+
+\begin{itemize}
+\item ✅ Based on \textbf{symbolic perturbation theory} (action-angle variables)
+
+\item ✅ Diophantine conditions \textbf{verifiable algorithmically} (continued fractions)
+
+\item ✅ KAM iteration \textbf{computable via computer algebra} (Lie series)
+
+\item ✅ All results \textbf{certified via interval arithmetic} (rigorous error bounds)
+
+\item ❌ NO numerical orbit integration until verification phase
+
+\item ❌ NO empirical stability estimates
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{2. Mathematical Formulation}
+
+
+\subsubsection{Integrable Systems and Invariant Tori}
+
+\end{itemize}
+
+\textbf{Integrable Hamiltonian}: H₀(I) depends only on action variables I = (I₁,...,Iₙ) ∈ ℝⁿ.
+
+
+Hamilton's equations:
+
+\begin{lstlisting}
+dI/dt = -∂H₀/∂θ = 0    (actions constant)
+dθ/dt = ∂H₀/∂I = ω(I)  (angles evolve linearly)
+\end{lstlisting}
+
+\textbf{Invariant tori}: Phase space (I,θ) ∈ ℝⁿ × 𝕋ⁿ foliated into n-tori {I = const}, each with quasi-periodic motion.
+
+
+\textbf{Frequencies}: ω(I) = ∂H₀/∂I = (ω₁(I),...,ωₙ(I))
+
+
+\textbf{Example (Kepler problem)}: H₀ = -μ/(2I) → ω = μ²/I³ (single frequency, 1D torus = circle).
+
+
+
+\subsubsection{Perturbation and Resonances}
+
+\textbf{Perturbed Hamiltonian}: H = H₀(I) + εH₁(I,θ) where ε ≪ 1.
+
+
+\textbf{Fourier expansion}:
+
+\begin{lstlisting}
+H₁(I,θ) = Σₖ H₁ₖ(I) e^{ik·θ}
+\end{lstlisting}
+
+\textbf{Resonance}: Frequency vector ω(I) is \textbf{resonant} if k·ω(I) ≈ 0 for some k ∈ ℤⁿ \ {0}.
+
+
+\textbf{Small divisors problem}: Perturbation series for quasi-periodic solutions involves denominators k·ω, which vanish at resonances → series diverges.
+
+
+\textbf{KAM insight}: Avoid resonances by restricting to \textbf{Diophantine frequencies}.
+
+
+
+\subsubsection{Diophantine Conditions}
+
+\textbf{Definition}: Frequency vector ω ∈ ℝⁿ is \textbf{Diophantine} with parameters (α, τ) if:
+
+
+|k·ω| ≥ α/|k|^τ  for all k ∈ ℤⁿ \ {0}
+
+
+where |k| = |k₁| + ... + |kₙ|.
+
+
+\textbf{Interpretation}: Frequencies are "sufficiently irrational"—they avoid rational resonances by a margin that decays slower than polynomially.
+
+
+\textbf{Measure}: Diophantine frequencies have full measure (Lebesgue) in ℝⁿ for τ > n-1.
+
+
+\textbf{Example (golden ratio)}: ω = ((√5-1)/2, 1) satisfies Diophantine conditions with τ = 2.
+
+
+
+\subsubsection{KAM Theorem (Precise Statement)}
+
+\textbf{Theorem (Arnold 1963)}: Let H = H₀(I) + εH₁(I,θ) be a real-analytic Hamiltonian on ℝⁿ × 𝕋ⁿ. Assume:
+
+
+\begin{itemize}
+\item \textbf{Non-degeneracy}: det(∂²H₀/∂I²) ≠ 0 (frequencies change with actions)
+
+\item \textbf{Diophantine}: ω(I₀) = ∂H₀/∂I|_{I₀} satisfies |k·ω| ≥ α/|k|^τ for τ = n+1
+
+\item \textbf{Smallness}: ε < ε₀ (depends on α, τ, analyticity radius)
+
+
+\end{itemize}
+
+Then there exists a \textbf{Cantor set} K ⊂ ℝⁿ of actions with measure |K| → |ℝⁿ| as ε → 0, such that for I ∈ K:
+
+\begin{itemize}
+\item The invariant torus T_I = {(I,θ) : θ ∈ 𝕋ⁿ} survives the perturbation
+
+\item Motion on T_I is quasi-periodic with frequencies ω(I)
+
+
+\end{itemize}
+
+\textbf{Certificate}: To certify stability, verify:
+
+\begin{itemize}
+\item Diophantine condition for initial frequencies
+
+\item Non-degeneracy: Hessian det ≠ 0
+
+\item Perturbation ε below threshold ε₀ (computed via KAM estimates)
+
+
+
+\subsubsection{Certificates}
+
+\end{itemize}
+
+All results must come with \textbf{machine-checkable certificates}:
+
+
+\begin{itemize}
+\item \textbf{Diophantine certificate}: Interval arithmetic proof that |k·ω| ≥ α/|k|^τ for |k| ≤ K_max
+
+\item \textbf{Non-degeneracy certificate}: Hessian eigenvalues bounded away from zero
+
+\item \textbf{KAM convergence certificate}: Iterative scheme converges with certified error bounds
+
+\item \textbf{Measure certificate}: Lower bound on volume of surviving tori
+
+
+\end{itemize}
+
+\textbf{Export format}: JSON with exact algebraic numbers:
+
+\begin{lstlisting}
+{
+  "system": "Jupiter-Saturn",
+  "frequencies": {"omega1": "2.831e-4", "omega2": "1.152e-4"},
+  "diophantine_alpha": 0.001,
+  "diophantine_tau": 3,
+  "epsilon": 0.001,
+  "kam_converged": true,
+  "stable_tori_measure": 0.95,
+  "certified": true
+}
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{3. Implementation Approach}
+
+
+\subsubsection{Phase 1 (Months 1-2): Action-Angle Variables}
+
+\textbf{Goal}: Convert Keplerian elements to action-angle coordinates.
+
+
+\begin{lstlisting}
+import numpy as np
+import sympy as sp
+from mpmath import mp
+mp.dps = 100
+
+def kepler_to_action_angle(a: float, e: float, i: float,
+                           mu: float = 1.0) -> tuple:
+    """
+    Convert Keplerian orbital elements to Delaunay action-angle variables.
+
+    Args:
+        a: semi-major axis
+        e: eccentricity
+        i: inclination
+        mu: gravitational parameter (G*M_sun)
+
+    Returns:
+        (actions, angles, frequencies)
+        Actions: (L, G, H) where
+          L = sqrt(μa)  (mean longitude action)
+          G = L*sqrt(1-e²)  (angular momentum)
+          H = G*cos(i)  (vertical angular momentum)
+    """
+    # Delaunay actions
+    L = np.sqrt(mu * a)
+    G = L * np.sqrt(1 - e**2)
+    H = G * np.cos(i)
+
+    actions = np.array([L, G, H])
+
+    # Conjugate angles: (l, g, h) where
+    # l = mean anomaly
+    # g = argument of perihelion
+    # h = longitude of ascending node
+
+    # Frequencies ω = ∂H₀/∂I
+    # For Kepler: H₀ = -μ²/(2L²)
+    omega_L = mu**2 / L**3  # Mean motion n = sqrt(μ/a³)
+    omega_G = 0  # Axisymmetric
+    omega_H = 0  # No precession in unperturbed Kepler
+
+    frequencies = np.array([omega_L, omega_G, omega_H])
+
+    return actions, frequencies
+
+
+def action_angle_to_cartesian(actions: np.ndarray,
+                              angles: np.ndarray,
+                              mu: float = 1.0) -> tuple:
+    """
+    Convert action-angle variables back to Cartesian positions and velocities.
+
+    Inverse of kepler_to_action_angle.
+    """
+    L, G, H = actions
+    l, g, h = angles
+
+    # Reconstruct Keplerian elements
+    a = L**2 / mu
+    e = np.sqrt(1 - (G/L)**2)
+    i = np.arccos(H/G)
+
+    # Convert to Cartesian (standard formulas)
+    # ... (omitted for brevity)
+
+    return position, velocity
+
+
+def compute_action_angle_transformation_jacobian(actions: np.ndarray) -> np.ndarray:
+    """
+    Compute Jacobian ∂(q,p)/∂(θ,I) of action-angle to Cartesian transformation.
+
+    Used for verifying symplecticity: J^T Ω J = Ω where Ω = [[0, I], [-I, 0]].
+    """
+    L, G, H = actions
+
+    # Symbolic computation
+    L_sym, G_sym, H_sym = sp.symbols('L G H', positive=True)
+    l_sym, g_sym, h_sym = sp.symbols('l g h', real=True)
+
+    # ... (compute transformation symbolically, then differentiate)
+
+    jacobian = sp.Matrix([[...]])  # 6x6 matrix
+
+    # Evaluate numerically
+    J_numeric = np.array(jacobian.subs({L_sym: L, G_sym: G, H_sym: H}).evalf())
+
+    return J_numeric
+\end{lstlisting}
+
+\textbf{Validation}: Verify transformation is canonical (symplectic) by checking J^T Ω J = Ω.
+
+
+
+\subsubsection{Phase 2 (Months 2-4): Diophantine Conditions}
+
+\textbf{Goal}: Verify frequency vectors satisfy Diophantine inequality.
+
+
+\begin{lstlisting}
+from mpmath import mp, mpf
+from fractions import Fraction
+
+def check_diophantine_condition(omega: np.ndarray,
+                                alpha: float = 0.001,
+                                tau: float = 3.0,
+                                k_max: int = 100) -> dict:
+    """
+    Verify Diophantine condition |k·ω| ≥ α/|k|^τ for all k with |k| ≤ k_max.
+
+    Returns:
+        Certificate with worst-case k vector and margin.
+    """
+    n = len(omega)
+    worst_margin = float('inf')
+    worst_k = None
+
+    for k in generate_integer_lattice(n, k_max):
+        if np.all(k == 0):
+            continue
+
+        k_norm = np.sum(np.abs(k))
+        k_dot_omega = abs(np.dot(k, omega))
+
+        threshold = alpha / (k_norm ** tau)
+
+        if k_dot_omega < threshold:
+            return {
+                'is_diophantine': False,
+                'resonant_k': k.tolist(),
+                'violation': k_dot_omega / threshold
+            }
+
+        margin = k_dot_omega / threshold
+        if margin < worst_margin:
+            worst_margin = margin
+            worst_k = k
+
+    return {
+        'is_diophantine': True,
+        'worst_k': worst_k.tolist(),
+        'safety_margin': worst_margin,
+        'alpha': alpha,
+        'tau': tau,
+        'k_max': k_max
+    }
+
+
+def generate_integer_lattice(n: int, k_max: int) -> list:
+    """Generate all integer vectors k ∈ ℤⁿ with |k| ≤ k_max."""
+    from itertools import product
+    vectors = []
+
+    for k in product(range(-k_max, k_max+1), repeat=n):
+        if sum(abs(ki) for ki in k) <= k_max:
+            vectors.append(np.array(k))
+
+    return vectors
+
+
+def estimate_diophantine_alpha(omega: np.ndarray,
+                               tau: float = 3.0,
+                               k_max: int = 1000) -> float:
+    """
+    Estimate optimal α for given ω.
+
+    Find largest α such that Diophantine condition holds for all |k| ≤ k_max.
+    """
+    min_ratio = float('inf')
+
+    for k in generate_integer_lattice(len(omega), k_max):
+        if np.all(k == 0):
+            continue
+
+        k_norm = np.sum(np.abs(k))
+        k_dot_omega = abs(np.dot(k, omega))
+
+        ratio = k_dot_omega * (k_norm ** tau)
+        if ratio < min_ratio:
+            min_ratio = ratio
+
+    alpha_optimal = min_ratio
+
+    return alpha_optimal
+
+
+def brjuno_function(omega: np.ndarray) -> float:
+    """
+    Compute Brjuno function B(ω) measuring how close ω is to resonances.
+
+    B(ω) = Σₙ log(qₙ₊₁) / qₙ
+
+    where qₙ are denominators in continued fraction expansion.
+
+    KAM theorem requires B(ω) < ∞ (weaker than Diophantine).
+    """
+    # Compute continued fraction for ω₁/ω₂ (2D case)
+    omega_ratio = omega[0] / omega[1]
+
+    continued_fraction = compute_continued_fraction(omega_ratio, max_terms=50)
+
+    # Compute Brjuno sum
+    denominators = continued_fraction_denominators(continued_fraction)
+
+    brjuno_sum = 0
+    for n in range(len(denominators) - 1):
+        q_n = denominators[n]
+        q_n1 = denominators[n+1]
+
+        brjuno_sum += np.log(q_n1) / q_n
+
+    return brjuno_sum
+\end{lstlisting}
+
+\textbf{Validation}: Test on known Diophantine frequencies (golden ratio, etc.).
+
+
+
+\subsubsection{Phase 3 (Months 4-6): KAM Iteration}
+
+\textbf{Goal}: Implement KAM iterative scheme to construct invariant tori.
+
+
+\begin{lstlisting}
+def kam_iteration(H0_freq: callable,
+                 H1_fourier: dict,
+                 epsilon: float,
+                 max_iterations: int = 20,
+                 tolerance: float = 1e-12) -> dict:
+    """
+    KAM iterative procedure to eliminate non-resonant terms.
+
+    Algorithm (Kolmogorov):
+    1. Start with H = H₀ + εH₁
+    2. Find generating function S solving homological equation {S, H₀} = H₁^{non-res}
+    3. Apply canonical transformation via Lie series
+    4. New Hamiltonian H' = H₀' + ε²H₁' + O(ε³)
+    5. Repeat until convergence
+
+    Args:
+        H0_freq: Function I → ω(I) giving frequencies
+        H1_fourier: Dictionary {k: H₁ₖ(I)} of Fourier coefficients
+        epsilon: Perturbation parameter
+        max_iterations: Maximum KAM steps
+        tolerance: Convergence threshold
+
+    Returns:
+        Certificate with final Hamiltonian and error estimates
+    """
+    # Initial data
+    I0 = np.array([1.0, 0.9, 0.8])  # Reference action
+    omega = H0_freq(I0)
+
+    # Check Diophantine
+    dioph_check = check_diophantine_condition(omega)
+    if not dioph_check['is_diophantine']:
+        return {
+            'converged': False,
+            'reason': 'resonance',
+            'resonant_k': dioph_check['resonant_k']
+        }
+
+    # KAM iteration
+    H1_current = H1_fourier.copy()
+    epsilon_current = epsilon
+
+    for iteration in range(max_iterations):
+        # Solve homological equation: ik·ω Sₖ = H₁ₖ
+        S_fourier = {}
+
+        for k, H1_k in H1_current.items():
+            k_dot_omega = np.dot(k, omega)
+
+            if abs(k_dot_omega) > 1e-10:  # Non-resonant
+                S_fourier[k] = H1_k / (1j * k_dot_omega)
+
+        # Compute new H₁' via Lie series: H₁' = H₁ + {S, H₁} + ...
+        H1_new = compute_poisson_bracket_fourier(S_fourier, H1_current, omega)
+
+        # Estimate size of new perturbation
+        H1_norm = sum(abs(H1_k) for H1_k in H1_new.values())
+
+        print(f"Iteration {iteration}: ||H₁'|| = {H1_norm:.3e}, ε² = {epsilon_current**2:.3e}")
+
+        if H1_norm < tolerance:
+            return {
+                'converged': True,
+                'iterations': iteration,
+                'final_perturbation_norm': H1_norm,
+                'epsilon_effective': epsilon_current
+            }
+
+        # Update for next iteration
+        H1_current = H1_new
+        epsilon_current = epsilon_current ** 2  # Quadratic convergence
+
+    return {
+        'converged': False,
+        'reason': 'max_iterations_reached',
+        'final_perturbation_norm': H1_norm
+    }
+
+
+def compute_poisson_bracket_fourier(S_fourier: dict,
+                                   H1_fourier: dict,
+                                   omega: np.ndarray) -> dict:
+    """
+    Compute {S, H₁} in Fourier space.
+
+    {S, H₁} = i Σₖ₁,ₖ₂ (k₁·ω) Sₖ₁ H₁,ₖ₂ e^{i(k₁+k₂)·θ}
+    """
+    result = {}
+
+    for k1, S_k1 in S_fourier.items():
+        for k2, H1_k2 in H1_fourier.items():
+            k_sum = tuple(np.array(k1) + np.array(k2))
+
+            k1_dot_omega = np.dot(k1, omega)
+
+            term = 1j * k1_dot_omega * S_k1 * H1_k2
+
+            if k_sum in result:
+                result[k_sum] += term
+            else:
+                result[k_sum] = term
+
+    return result
+\end{lstlisting}
+
+\textbf{Validation}: Test on pendulum (analytically solvable) and verify convergence.
+
+
+
+\subsubsection{Phase 4 (Months 6-8): Solar System Application}
+
+\textbf{Goal}: Apply KAM theory to analyze real planetary system stability.
+
+
+\begin{lstlisting}
+def solar_system_kam_stability() -> dict:
+    """
+    Analyze KAM stability for the solar system.
+
+    Focus on outer planets: Jupiter, Saturn, Uranus, Neptune.
+    """
+    # Planetary data (semi-major axis in AU, eccentricity, inclination)
+    planets = {
+        'Jupiter': (5.20, 0.048, 1.31),
+        'Saturn': (9.54, 0.054, 2.49),
+        'Uranus': (19.19, 0.047, 0.77),
+        'Neptune': (30.07, 0.009, 1.77)
+    }
+
+    # Convert to action-angle
+    actions = {}
+    frequencies = {}
+
+    for name, (a, e, i) in planets.items():
+        I, omega = kepler_to_action_angle(a, e, np.deg2rad(i))
+        actions[name] = I
+        frequencies[name] = omega
+
+    # Extract mean motions (first component of frequency vector)
+    n_jupiter = frequencies['Jupiter'][0]
+    n_saturn = frequencies['Saturn'][0]
+
+    # Famous 5:2 resonance (near miss)
+    resonance_ratio = n_jupiter / n_saturn
+    print(f"Jupiter/Saturn frequency ratio: {resonance_ratio:.4f} (ideal 5:2 = {5/2})")
+
+    # Check Diophantine for combined system
+    omega_combined = np.array([frequencies[p][0] for p in planets.keys()])
+
+    dioph_cert = check_diophantine_condition(omega_combined, alpha=1e-4, tau=4, k_max=20)
+
+    # Estimate perturbation strength
+    epsilon = 0.001  # m_Jupiter / m_Sun ~ 10^{-3}
+
+    # Apply KAM iteration (simplified—would need full perturbation Hamiltonian)
+    # kam_result = kam_iteration(H0_freq, H1_fourier, epsilon)
+
+    return {
+        'planets': list(planets.keys()),
+        'frequencies': {name: omega[0] for name, omega in frequencies.items()},
+        'diophantine_check': dioph_cert,
+        'perturbation_epsilon': epsilon,
+        'conclusion': 'STABLE' if dioph_cert['is_diophantine'] else 'RESONANT'
+    }
+
+
+def find_resonances_in_solar_system(planets: dict,
+                                   max_order: int = 10) -> list:
+    """
+    Find all low-order mean-motion resonances k₁n₁ + k₂n₂ ≈ 0.
+
+    Famous examples:
+    - Jupiter-Saturn: 5:2 (5n_J - 2n_S ≈ 0)
+    - Neptune-Pluto: 3:2
+    """
+    resonances = []
+
+    planet_names = list(planets.keys())
+
+    for i, name1 in enumerate(planet_names):
+        for name2 in planet_names[i+1:]:
+            n1 = planets[name1]['mean_motion']
+            n2 = planets[name2]['mean_motion']
+
+            # Search for k1, k2 such that |k1*n1 + k2*n2| < tolerance
+            for k1 in range(-max_order, max_order+1):
+                for k2 in range(-max_order, max_order+1):
+                    if k1 == 0 and k2 == 0:
+                        continue
+
+                    resonance_value = abs(k1 * n1 + k2 * n2)
+
+                    if resonance_value < 1e-5:  # Near resonance
+                        resonances.append({
+                            'planets': (name1, name2),
+                            'order': (k1, k2),
+                            'mismatch': resonance_value
+                        })
+
+    return resonances
+\end{lstlisting}
+
+\textbf{Validation}: Reproduce Laskar (1989) stability estimates for Jupiter-Saturn system.
+
+
+
+\subsubsection{Phase 5 (Months 8-9): Measure Estimates and Certificates}
+
+\textbf{Goal}: Compute volume of phase space occupied by KAM tori.
+
+
+\begin{lstlisting}
+from dataclasses import dataclass, asdict
+import json
+
+@dataclass
+class KAMCertificate:
+    """Complete KAM stability certificate."""
+
+    # System identification
+    system_name: str
+    n_bodies: int
+    perturbation_epsilon: float
+
+    # Frequency data
+    frequencies: dict
+    is_diophantine: bool
+    diophantine_alpha: float
+    diophantine_tau: float
+
+    # KAM iteration
+    kam_converged: bool
+    kam_iterations: int
+    final_perturbation_norm: float
+
+    # Measure estimates
+    surviving_tori_fraction: float  # Fraction of phase space with stable tori
+
+    # Stability conclusion
+    is_stable: bool
+    stability_timescale_years: float
+
+    # Metadata
+    computation_date: str
+    precision_digits: int
+
+    def export_json(self, filename: str):
+        """Export certificate to JSON."""
+        with open(filename, 'w') as f:
+            json.dump(asdict(self), f, indent=2)
+
+    def verify(self) -> bool:
+        """Self-check certificate validity."""
+        checks = [
+            self.n_bodies > 0,
+            self.perturbation_epsilon > 0,
+            self.diophantine_alpha > 0,
+            0 <= self.surviving_tori_fraction <= 1,
+            self.stability_timescale_years > 0
+        ]
+        return all(checks)
+
+
+def generate_kam_certificate_solar_system() -> KAMCertificate:
+    """
+    Generate complete KAM certificate for solar system.
+    """
+    stability_analysis = solar_system_kam_stability()
+
+    cert = KAMCertificate(
+        system_name='Solar System (Jupiter-Neptune)',
+        n_bodies=4,
+        perturbation_epsilon=0.001,
+        frequencies={name: freq for name, freq in stability_analysis['frequencies'].items()},
+        is_diophantine=stability_analysis['diophantine_check']['is_diophantine'],
+        diophantine_alpha=stability_analysis['diophantine_check']['alpha'],
+        diophantine_tau=stability_analysis['diophantine_check']['tau'],
+        kam_converged=True,  # Would come from KAM iteration
+        kam_iterations=15,
+        final_perturbation_norm=1e-12,
+        surviving_tori_fraction=0.95,  # Estimate from KAM measure theory
+        is_stable=True,
+        stability_timescale_years=5e9,  # Age of solar system
+        computation_date='2026-01-17',
+        precision_digits=100
+    )
+
+    return cert
+\end{lstlisting}
+
+\textbf{Validation}: Export certificates, verify all self-checks pass.
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{4. Example Starting Prompt}
+
+\textbf{Prompt for AI System}:
+
+
+You are tasked with applying KAM theory to verify planetary stability. Your goals:
+
+
+\begin{itemize}
+\item \textbf{Action-Angle Transformation (Months 1-2)}:
+
+\item Convert Keplerian elements (a, e, i) to Delaunay actions (L, G, H)
+
+\item Compute frequencies ω = ∂H₀/∂I
+
+\item Verify transformation is canonical (symplectic)
+
+
+\item \textbf{Diophantine Verification (Months 2-4)}:
+
+\item Check |k·ω| ≥ α/|k|^τ for all |k| ≤ 100
+
+\item Estimate optimal α for Jupiter-Saturn system
+
+\item Compute Brjuno function B(ω)
+
+
+\item \textbf{KAM Iteration (Months 4-6)}:
+
+\item Implement homological equation solver
+
+\item Apply Lie series canonical transformations
+
+\item Verify convergence to O(ε²) perturbation
+
+
+\item \textbf{Solar System Application (Months 6-8)}:
+
+\item Analyze Jupiter, Saturn, Uranus, Neptune
+
+\item Find all resonances with order ≤ 10
+
+\item Estimate perturbation ε ~ 10^{-3}
+
+
+\item \textbf{Certificate Generation (Months 8-9)}:
+
+\item Create KAMCertificate with all parameters
+
+\item Export to JSON with interval arithmetic bounds
+
+\item Verify stability timescale > age of solar system
+
+
+\end{itemize}
+
+\textbf{Success Criteria}:
+
+\begin{itemize}
+\item MVR (2-4 months): Action-angle for 2-body, Diophantine checks
+
+\item Strong (6-8 months): KAM iteration converges, Jupiter-Saturn analysis complete
+
+\item Publication (9 months): Full solar system certificate, measure estimates
+
+
+\end{itemize}
+
+\textbf{References}:
+
+\begin{itemize}
+\item Arnold (1963): Proof of KAM theorem
+
+\item Laskar (1989): Numerical chaos in solar system
+
+\item Celletti & Chierchia (2007): KAM stability for realistic models
+
+
+\end{itemize}
+
+Begin by implementing action-angle transformation for Jupiter orbit.
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{5. Success Criteria}
+
+
+\subsubsection{Minimum Viable Result (Months 1-4)}
+
+\textbf{Core Achievements}:
+
+\begin{itemize}
+\item ✅ Action-angle transformation for Kepler problem
+
+\item ✅ Diophantine verification for 2D frequency vectors
+
+\item ✅ Basic KAM iteration (3-5 steps) for toy Hamiltonian
+
+\item ✅ Certificate generation framework
+
+
+\end{itemize}
+
+\textbf{Validation}:
+
+\begin{itemize}
+\item Canonical transformation verified (Jacobian check)
+
+\item Diophantine condition tested on golden ratio
+
+\item KAM iteration reduces perturbation by factor 100
+
+
+\end{itemize}
+
+\textbf{Deliverables}:
+
+\begin{itemize}
+\item Python module \texttt{kam_theory.py}
+
+\item Jupyter notebook: Jupiter-Saturn resonance analysis
+
+\item JSON certificate for simple 2-body system
+
+
+
+\subsubsection{Strong Result (Months 4-8)}
+
+\end{itemize}
+
+\textbf{Extended Capabilities}:
+
+\begin{itemize}
+\item ✅ Full KAM iteration with 10+ steps
+
+\item ✅ Solar system stability analysis (Jupiter-Neptune)
+
+\item ✅ Resonance finding algorithm
+
+\item ✅ Measure estimates: fraction of surviving tori
+
+\item ✅ Comparison to Laskar (1989) results
+
+
+\end{itemize}
+
+\textbf{Publications Benchmark}:
+
+\begin{itemize}
+\item Reproduce Laskar stability timescales
+
+\item Match Diophantine parameters to within 10%
+
+
+\end{itemize}
+
+\textbf{Deliverables}:
+
+\begin{itemize}
+\item Database of certificates for 10+ planetary configurations
+
+\item Resonance map (frequency space plot)
+
+\item Stability report: timescales vs perturbation strength
+
+
+
+\subsubsection{Publication-Quality Result (Months 8-9)}
+
+\end{itemize}
+
+\textbf{Novel Contributions}:
+
+\begin{itemize}
+\item ✅ Rigorous error bounds on KAM iteration
+
+\item ✅ Optimal Diophantine parameters for solar system
+
+\item ✅ Extension to 3-body resonances (secular dynamics)
+
+\item ✅ Formal verification: Coq/Lean proofs of key lemmas
+
+\item ✅ Interactive visualization: invariant tori in phase space
+
+
+\end{itemize}
+
+\textbf{Beyond Literature}:
+
+\begin{itemize}
+\item Improve KAM convergence rates
+
+\item Discover new stability islands in phase space
+
+\item Apply to exoplanetary systems
+
+
+\end{itemize}
+
+\textbf{Deliverables}:
+
+\begin{itemize}
+\item Arxiv preprint: "Certified KAM Stability for the Solar System"
+
+\item GitHub repository with all code and certificates
+
+\item Web tool: check KAM stability for arbitrary planetary systems
+
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{6. Verification Protocol}
+
+\begin{lstlisting}
+def verify_kam_certificate(cert: KAMCertificate) -> dict:
+    """
+    Automated verification of KAM certificate.
+    """
+    results = {}
+
+    # Check 1: Diophantine condition
+    omega_array = np.array(list(cert.frequencies.values()))
+    dioph_recheck = check_diophantine_condition(omega_array, cert.diophantine_alpha, cert.diophantine_tau)
+    results['diophantine_verified'] = dioph_recheck['is_diophantine']
+
+    # Check 2: KAM convergence
+    results['kam_converged'] = cert.kam_converged
+
+    # Check 3: Measure estimate
+    results['measure_reasonable'] = (0.5 < cert.surviving_tori_fraction <= 1.0)
+
+    # Check 4: Stability conclusion
+    results['stability_consistent'] = (
+        cert.is_stable == (cert.is_diophantine and cert.kam_converged)
+    )
+
+    # Overall verdict
+    results['all_checks_passed'] = all(
+        v for v in results.values() if isinstance(v, bool)
+    )
+
+    return results
+\end{lstlisting}
+
+
+\bigskip\hrule\bigskip
+
+
+\subsection{7. Resources and Milestones}
+
+
+\subsubsection{Essential References}
+
+\item \textbf{Foundational Papers}:
+
+\item Kolmogorov (1954): "On conservation of conditionally periodic motions"
+
+\item Arnold (1963): "Proof of A.N. Kolmogorov's theorem"
+
+\item Moser (1962): "On invariant curves of area-preserving mappings"
+
+
+\item \textbf{Modern Developments}:
+
+\item Celletti & Chierchia (2007): "KAM stability and celestial mechanics"
+
+\item Laskar (1989): "A numerical experiment on the chaotic behaviour of the Solar System"
+
+\item Féjoz (2004): "Démonstration du 'théorème d'Arnold' sur la stabilité du système planétaire"
+
+
+\item \textbf{Textbooks}:
+
+\item Arnold (1989): \textit{Mathematical Methods of Classical Mechanics}
+
+\item Broer & Sevryuk (2007): "KAM theory: quasi-periodicity in dynamical systems"
+
+
+
+\subsubsection{Milestone Checklist}
+
+\item [ ] \textbf{Month 1}: Action-angle transformation implemented
+
+\item [ ] \textbf{Month 2}: Diophantine verifier working for n ≤ 4
+
+\item [ ] \textbf{Month 3}: KAM iteration converges for pendulum
+
+\item [ ] \textbf{Month 4}: Jupiter-Saturn frequencies computed
+
+\item [ ] \textbf{Month 5}: Diophantine verified for solar system
+
+\item [ ] \textbf{Month 6}: KAM iteration for planetary Hamiltonian
+
+\item [ ] \textbf{Month 7}: Resonance map generated
+
+\item [ ] \textbf{Month 8}: Measure estimates computed
+
+\item [ ] \textbf{Month 9}: Full certificate database exported
+
+
+
+\bigskip\hrule\bigskip
+
+\end{itemize}
+
+\textbf{End of PRD 26}
+
+
+\end{document}
