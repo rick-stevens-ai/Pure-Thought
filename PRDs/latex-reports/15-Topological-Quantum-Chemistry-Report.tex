@@ -1,0 +1,1211 @@
+\documentclass[11pt,a4paper]{article}
+
+% ============================================================
+% PACKAGES
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{shapes,arrows,positioning,calc,patterns,decorations.pathmorphing}
+
+% ============================================================
+% CUSTOM COLORS
+% ============================================================
+\definecolor{pursuitblue}{RGB}{0,102,204}
+\definecolor{physicsgreen}{RGB}{34,139,34}
+\definecolor{warningred}{RGB}{204,0,0}
+\definecolor{annotationgray}{RGB}{100,100,100}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{tqcorange}{RGB}{255,140,0}
+
+% ============================================================
+% TCOLORBOX ENVIRONMENTS
+% ============================================================
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{annotation}{
+    colback=annotationgray!5,
+    colframe=annotationgray,
+    fonttitle=\bfseries,
+    title=Annotation,
+    breakable
+}
+
+\newtcolorbox{pursuitbox}{
+    colback=pursuitblue!5,
+    colframe=pursuitblue,
+    fonttitle=\bfseries,
+    title=Pure Thought Pursuit,
+    breakable
+}
+
+\newtcolorbox{warningbox}{
+    colback=warningred!5,
+    colframe=warningred,
+    fonttitle=\bfseries,
+    title=Warning,
+    breakable
+}
+
+\newtcolorbox{physicsbox}{
+    colback=physicsgreen!5,
+    colframe=physicsgreen,
+    fonttitle=\bfseries,
+    title=Physics Insight,
+    breakable
+}
+
+\newtcolorbox{tqcbox}{
+    colback=tqcorange!5,
+    colframe=tqcorange,
+    fonttitle=\bfseries,
+    title=TQC Principle,
+    breakable
+}
+
+\newtcolorbox{theorembox}[1][]{
+    colback=blue!5,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    title=#1,
+    breakable
+}
+
+% ============================================================
+% THEOREM ENVIRONMENTS
+% ============================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+% ============================================================
+% LISTINGS CONFIGURATION
+% ============================================================
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{codebg},
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black}\itshape,
+    stringstyle=\color{red!70!black},
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=5pt,
+    frame=single,
+    framerule=0.5pt,
+    rulecolor=\color{gray!50},
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    tabsize=4,
+    captionpos=b,
+    morekeywords={np,scipy,SpaceGroup,WyckoffPosition,EBR,BandStructure}
+}
+
+% ============================================================
+% CUSTOM COMMANDS
+% ============================================================
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\BZ}{\mathrm{BZ}}
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\bra}[1]{\left\langle#1\right|}
+\newcommand{\braket}[2]{\left\langle#1|#2\right\rangle}
+\newcommand{\EBR}{\mathrm{EBR}}
+\newcommand{\BS}{\mathrm{BS}}
+\newcommand{\AI}{\mathrm{AI}}
+
+% ============================================================
+% DOCUMENT INFO
+% ============================================================
+\title{\textbf{Topological Quantum Chemistry:\\
+Band Structure Classification via Group Theory}\\[1em]
+\large A Pure Thought Approach to Materials Topology}
+
+\author{Pure Thought AI Challenge\\
+\texttt{Problem 15: Condensed Matter Physics}}
+
+\date{\today}
+
+% ============================================================
+% DOCUMENT
+% ============================================================
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report presents a comprehensive theoretical framework for topological quantum chemistry (TQC), a systematic approach to classifying band structures using group theory without numerical calculations. We develop the complete theory from space groups through elementary band representations (EBRs) to topological invariants. The method identifies all topologically nontrivial materials by comparing actual band structures to the space of atomic limits. Key concepts include Wyckoff positions, site-symmetry groups, induced representations, compatibility relations, and symmetry indicators. We implement algorithms for constructing EBRs, checking band connectivity, and computing $\Z_n$ topological indices, with applications to predicting topological insulators and semimetals from crystal structure alone.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Introduction and Motivation}
+% ============================================================
+
+\subsection{The Revolution in Band Theory}
+
+\begin{physicsbox}
+Traditional band theory classifies materials as metals (bands crossing Fermi level) or insulators (gap). Topological quantum chemistry reveals that insulators come in \emph{topologically distinct} varieties---some have protected surface states and quantized responses impossible in trivial insulators.
+\end{physicsbox}
+
+The discovery of topological insulators in 2005-2007 showed that quantum mechanical band structures encode topological information beyond simple gap/no-gap classification. However, identifying topological materials required detailed numerical calculations (DFT, tight-binding) for each candidate.
+
+Topological quantum chemistry, developed by Bradlyn et al.\ (2017), provides a \emph{complete classification} of all possible band structures compatible with a given space group. The key insight: any band structure formed from localized atomic orbitals (the ``atomic limit'') has specific representations at high-symmetry points. Bands that cannot be decomposed this way are topologically nontrivial.
+
+\subsection{The Pure Thought Approach}
+
+\begin{pursuitbox}
+TQC is ideally suited for pure mathematical analysis:
+\begin{enumerate}
+    \item Based entirely on \emph{group theory}---space groups, representations, induced characters
+    \item \emph{No DFT required}---topology determined by symmetry alone
+    \item Predictions \emph{exact}---not numerical approximations
+    \item \emph{Complete database} of all EBRs for all 230 space groups exists
+    \item Certificates are \emph{character tables}---machine-verifiable
+\end{enumerate}
+\end{pursuitbox}
+
+We develop the complete theory from first principles, implementing certified algorithms that predict topological properties from crystal structure alone.
+
+\subsection{Key Questions}
+
+\begin{enumerate}
+    \item Given a space group, what are all possible band structures from atomic orbitals?
+    \item Given a band structure (representations at high-symmetry points), is it topological?
+    \item What are the symmetry-protected boundary modes?
+    \item How do fragile vs.\ stable topology differ?
+\end{enumerate}
+
+% ============================================================
+\section{Mathematical Foundations}
+% ============================================================
+
+\subsection{Space Groups}
+
+\begin{definition}[Space Group]
+A \textbf{space group} $G$ is a discrete group of isometries (rotations, reflections, translations, and their combinations) that leaves a crystal lattice invariant. There are exactly 230 space groups in 3D.
+\end{definition}
+
+Each space group element can be written as $\{R|\mathbf{t}\}$ where $R$ is a point group operation and $\mathbf{t}$ is a translation.
+
+\begin{definition}[Point Group]
+The \textbf{point group} $P$ of a space group is the quotient $P = G/T$ where $T$ is the translation subgroup. The 230 space groups are classified by their 32 crystallographic point groups.
+\end{definition}
+
+\subsection{Wyckoff Positions}
+
+\begin{definition}[Wyckoff Position]
+A \textbf{Wyckoff position} is an orbit of points in the unit cell under the space group action. Each Wyckoff position $\mathbf{q}$ has:
+\begin{itemize}
+    \item A \textbf{multiplicity} (number of equivalent points in unit cell)
+    \item A \textbf{site-symmetry group} $G_{\mathbf{q}} \subset G$ (stabilizer of $\mathbf{q}$)
+    \item A \textbf{Wyckoff letter} (conventional label: $a$, $b$, $c$, \ldots)
+\end{itemize}
+\end{definition}
+
+\begin{example}[Wyckoff Positions in Space Group $Pm\bar{3}m$ (No.\ 221)]
+\begin{itemize}
+    \item $1a$: origin $(0,0,0)$, site symmetry $m\bar{3}m$
+    \item $1b$: body center $(\tfrac{1}{2},\tfrac{1}{2},\tfrac{1}{2})$, site symmetry $m\bar{3}m$
+    \item $3c$: face centers, site symmetry $4/mmm$
+    \item $6d$: edge centers, site symmetry $mmm$
+    \item General position: 48-fold, site symmetry 1
+\end{itemize}
+\end{example}
+
+\subsection{Site-Symmetry Groups and Little Groups}
+
+\begin{definition}[Site-Symmetry Group]
+For a Wyckoff position $\mathbf{q}$, the \textbf{site-symmetry group} is:
+\begin{equation}
+G_{\mathbf{q}} = \{ g \in G : g \cdot \mathbf{q} = \mathbf{q} \}
+\end{equation}
+This is a point group (no translations).
+\end{definition}
+
+\begin{definition}[Little Group]
+For a $\mathbf{k}$-point in the Brillouin zone, the \textbf{little group} is:
+\begin{equation}
+G_{\mathbf{k}} = \{ g \in G : g \cdot \mathbf{k} = \mathbf{k} + \mathbf{G} \}
+\end{equation}
+where $\mathbf{G}$ is a reciprocal lattice vector.
+\end{definition}
+
+\subsection{Representations}
+
+\begin{definition}[Irreducible Representation]
+An \textbf{irreducible representation} (irrep) $\rho$ of a group $G$ is a homomorphism $\rho: G \to GL(V)$ with no proper invariant subspaces.
+\end{definition}
+
+At each high-symmetry point $\mathbf{k}$, bands transform under irreps of the little group $G_{\mathbf{k}}$.
+
+\begin{tqcbox}
+The key data of TQC is how irreps at different $\mathbf{k}$-points are related. Bands must satisfy \textbf{compatibility relations} along high-symmetry lines connecting high-symmetry points.
+\end{tqcbox}
+
+% ============================================================
+\section{Elementary Band Representations}
+% ============================================================
+
+\subsection{Induced Representations}
+
+\begin{definition}[Induced Representation]
+Given a representation $\rho$ of a subgroup $H \subset G$, the \textbf{induced representation} $\rho \uparrow_H^G$ is defined by:
+\begin{equation}
+(\rho \uparrow_H^G)(g) = \bigoplus_{i} \rho(h_i^{-1} g h_j)
+\end{equation}
+where $\{h_i\}$ are coset representatives of $H$ in $G$.
+\end{definition}
+
+\subsection{Band Representation from Atomic Orbitals}
+
+Consider an atom at Wyckoff position $\mathbf{q}$ with orbitals transforming under irrep $\rho$ of the site-symmetry group $G_{\mathbf{q}}$.
+
+\begin{definition}[Band Representation]
+The \textbf{band representation} induced by orbital $\rho$ at Wyckoff position $\mathbf{q}$ is:
+\begin{equation}
+\rho \uparrow_{G_{\mathbf{q}}}^G
+\end{equation}
+This gives the representations of the resulting bands at all $\mathbf{k}$-points.
+\end{definition}
+
+\subsection{Elementary Band Representations (EBRs)}
+
+\begin{definition}[Elementary Band Representation]
+An \textbf{elementary band representation} (EBR) is a band representation induced from a maximal Wyckoff position that cannot be written as a sum of other band representations with smaller support.
+\end{definition}
+
+\begin{theorembox}[EBR Theorem]
+Every band structure that can be adiabatically connected to an atomic limit (localized Wannier functions) is a sum of EBRs:
+\begin{equation}
+\BS = \sum_i n_i \cdot \EBR_i, \quad n_i \in \Z_{\geq 0}
+\end{equation}
+Band structures that \emph{cannot} be written this way are \textbf{topologically nontrivial}.
+\end{theorembox}
+
+\subsection{Constructing EBRs}
+
+\begin{lstlisting}[caption={EBR construction algorithm}]
+from dataclasses import dataclass
+from typing import List, Dict, Tuple
+import numpy as np
+
+@dataclass
+class WyckoffPosition:
+    """Wyckoff position in a space group."""
+    letter: str
+    multiplicity: int
+    coordinates: List[Tuple[float, float, float]]
+    site_symmetry: str
+    site_symmetry_group: 'PointGroup'
+
+@dataclass
+class Irrep:
+    """Irreducible representation."""
+    label: str
+    dimension: int
+    characters: Dict[str, complex]
+
+@dataclass
+class EBR:
+    """Elementary Band Representation."""
+    space_group: int
+    wyckoff: WyckoffPosition
+    orbital_irrep: Irrep
+    band_irreps: Dict[str, List[Irrep]]  # k-point -> irreps
+
+def construct_ebr(space_group: int,
+                  wyckoff_letter: str,
+                  orbital_label: str) -> EBR:
+    """
+    Construct EBR by inducing from Wyckoff position.
+
+    Args:
+        space_group: Space group number (1-230)
+        wyckoff_letter: Wyckoff position label
+        orbital_label: Irrep of site-symmetry group
+
+    Returns:
+        EBR with band irreps at all high-symmetry k-points
+    """
+    # Load space group data
+    sg_data = load_space_group(space_group)
+    wyckoff = sg_data.wyckoff_positions[wyckoff_letter]
+    orbital_irrep = wyckoff.site_symmetry_group.irreps[orbital_label]
+
+    # Get high-symmetry k-points
+    k_points = sg_data.high_symmetry_points
+
+    band_irreps = {}
+    for k_label, k_point in k_points.items():
+        # Get little group at k
+        little_group = sg_data.little_group(k_point)
+
+        # Induce representation
+        induced = induce_representation(
+            orbital_irrep,
+            wyckoff.site_symmetry_group,
+            little_group,
+            wyckoff.coordinates,
+            k_point
+        )
+
+        # Decompose into irreps
+        band_irreps[k_label] = decompose_into_irreps(
+            induced, little_group
+        )
+
+    return EBR(
+        space_group=space_group,
+        wyckoff=wyckoff,
+        orbital_irrep=orbital_irrep,
+        band_irreps=band_irreps
+    )
+\end{lstlisting}
+
+\subsection{Example: EBRs for Diamond Structure}
+
+Diamond has space group $Fd\bar{3}m$ (No.\ 227). Carbon atoms sit at Wyckoff position $8a$ with site symmetry $\bar{4}3m$ (tetrahedral).
+
+\begin{example}[Diamond $sp^3$ Hybridization]
+The $s$ and $p$ orbitals of carbon induce EBRs:
+\begin{itemize}
+    \item $s$-orbital ($A_1$ irrep): induces bands at $\Gamma$ as $\Gamma_1^+ + \Gamma_2^-$
+    \item $p$-orbitals ($T_2$ irrep): induces bands at $\Gamma$ as $\Gamma_{15}^- + \Gamma_{25}^+$
+\end{itemize}
+The valence band structure of diamond is exactly the sum of these EBRs.
+\end{example}
+
+% ============================================================
+\section{Compatibility Relations}
+% ============================================================
+
+\subsection{Band Connectivity}
+
+Bands at different $\mathbf{k}$-points are not independent---they must connect along high-symmetry lines in ways dictated by group theory.
+
+\begin{definition}[Compatibility Relations]
+For a high-symmetry line connecting $\mathbf{k}_1$ and $\mathbf{k}_2$, the \textbf{compatibility relations} specify how irreps at $\mathbf{k}_1$ branch into irreps along the line and connect to irreps at $\mathbf{k}_2$.
+\end{definition}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.5]
+    % Brillouin zone schematic
+    \draw[thick] (0,0) -- (2,0) -- (3,1) -- (1,1) -- cycle;
+    \draw[thick] (0,0) -- (1,1);
+    \draw[thick] (2,0) -- (3,1);
+
+    % High-symmetry points
+    \fill[blue] (0,0) circle (0.08) node[below left] {$\Gamma$};
+    \fill[blue] (2,0) circle (0.08) node[below right] {$X$};
+    \fill[blue] (1,1) circle (0.08) node[above left] {$M$};
+    \fill[blue] (3,1) circle (0.08) node[above right] {$R$};
+
+    % High-symmetry lines
+    \draw[red, thick] (0,0) -- (2,0) node[midway, below] {$\Delta$};
+    \draw[red, thick] (0,0) -- (1,1) node[midway, left] {$\Lambda$};
+    \draw[red, thick] (2,0) -- (3,1) node[midway, right] {$S$};
+\end{tikzpicture}
+\caption{Brillouin zone with high-symmetry points (blue) and lines (red). Compatibility relations constrain how bands connect along the lines.}
+\label{fig:bz}
+\end{figure}
+
+\subsection{Compatibility Matrix}
+
+\begin{lstlisting}[caption={Checking compatibility relations}]
+def check_compatibility(band_structure: Dict[str, List[str]],
+                        space_group: int) -> bool:
+    """
+    Check if band structure satisfies compatibility relations.
+
+    Args:
+        band_structure: Dict mapping k-point label to list of irrep labels
+        space_group: Space group number
+
+    Returns:
+        True if all compatibility relations satisfied
+    """
+    sg_data = load_space_group(space_group)
+
+    for line_label, (k1, k2) in sg_data.high_symmetry_lines.items():
+        # Get compatibility table for this line
+        compat = sg_data.compatibility_relations[line_label]
+
+        # Get irreps at endpoints
+        irreps_k1 = band_structure[k1]
+        irreps_k2 = band_structure[k2]
+
+        # Check that irreps branch correctly
+        for irrep1 in irreps_k1:
+            # What does irrep1 branch to along the line?
+            branches = compat.branch(irrep1)
+
+            # These must connect to something at k2
+            if not all(b in branches_from_k2(irreps_k2, compat)
+                      for b in branches):
+                return False
+
+    return True
+
+
+def compatibility_matrix(space_group: int,
+                         k_path: List[str]) -> np.ndarray:
+    """
+    Build compatibility matrix for k-point path.
+
+    C[i,j] = 1 if irrep i at k1 connects to irrep j at k2.
+    """
+    sg_data = load_space_group(space_group)
+
+    n_irreps_total = sum(
+        len(sg_data.little_group(k).irreps)
+        for k in k_path
+    )
+
+    C = np.zeros((n_irreps_total, n_irreps_total), dtype=int)
+
+    # Fill in connectivity from compatibility relations
+    idx = 0
+    for i, k in enumerate(k_path[:-1]):
+        k_next = k_path[i + 1]
+        line = sg_data.line_between(k, k_next)
+        compat = sg_data.compatibility_relations[line]
+
+        n1 = len(sg_data.little_group(k).irreps)
+        n2 = len(sg_data.little_group(k_next).irreps)
+
+        for a in range(n1):
+            for b in range(n2):
+                if compat.connects(a, b):
+                    C[idx + a, idx + n1 + b] = 1
+
+        idx += n1
+
+    return C
+\end{lstlisting}
+
+% ============================================================
+\section{Symmetry Indicators}
+% ============================================================
+
+\subsection{The Band Structure Vector Space}
+
+\begin{definition}[Band Structure Space]
+The space of all band structures compatible with space group $G$ forms a lattice:
+\begin{equation}
+\BS(G) = \bigoplus_{\mathbf{k}} \Z^{n_{\mathbf{k}}}
+\end{equation}
+where $n_{\mathbf{k}}$ is the number of irreps at $\mathbf{k}$-point $\mathbf{k}$.
+\end{definition}
+
+\begin{definition}[Atomic Insulator Space]
+The space of band structures from atomic limits is:
+\begin{equation}
+\AI(G) = \text{span}_{\Z_{\geq 0}}\{\EBR_i\} \subset \BS(G)
+\end{equation}
+\end{definition}
+
+\subsection{Symmetry Indicator Group}
+
+\begin{theorembox}[Symmetry Indicator]
+The \textbf{symmetry indicator group} is:
+\begin{equation}
+X^{\BS}(G) = \BS(G) / \AI(G)
+\end{equation}
+A band structure with nonzero image in $X^{\BS}$ is topologically nontrivial.
+\end{theorembox}
+
+\begin{physicsbox}
+The symmetry indicator group is always a finite abelian group, typically $\Z_2$, $\Z_4$, $\Z_2 \times \Z_2$, etc. Computing these groups requires only linear algebra over $\Z$.
+\end{physicsbox}
+
+\subsection{Computing Symmetry Indicators}
+
+\begin{lstlisting}[caption={Symmetry indicator computation}]
+def compute_symmetry_indicators(space_group: int) -> Dict:
+    """
+    Compute symmetry indicator group for space group.
+
+    Returns:
+        Dictionary with indicator group structure and formulas
+    """
+    sg_data = load_space_group(space_group)
+
+    # Build EBR matrix: rows = EBRs, cols = (k-point, irrep) pairs
+    ebrs = sg_data.all_ebrs
+    n_ebrs = len(ebrs)
+
+    # Count total (k, irrep) pairs
+    k_irrep_pairs = []
+    for k in sg_data.high_symmetry_points:
+        for irrep in sg_data.little_group(k).irreps:
+            k_irrep_pairs.append((k, irrep))
+
+    n_pairs = len(k_irrep_pairs)
+
+    # Build EBR matrix
+    A = np.zeros((n_ebrs, n_pairs), dtype=int)
+
+    for i, ebr in enumerate(ebrs):
+        for j, (k, irrep) in enumerate(k_irrep_pairs):
+            A[i, j] = count_irrep_in_ebr(ebr, k, irrep)
+
+    # Compute Smith normal form
+    D, U, V = smith_normal_form(A)
+
+    # Symmetry indicator group is cokernel of A
+    # X^BS = Z^n_pairs / Im(A)
+    diagonal = np.diag(D)
+    nonzero = diagonal[diagonal != 0]
+    nontrivial = nonzero[nonzero != 1]
+
+    indicator_group = []
+    for d in nontrivial:
+        indicator_group.append(f"Z_{d}")
+
+    return {
+        'group': ' x '.join(indicator_group) if indicator_group else 'trivial',
+        'factors': list(nontrivial),
+        'ebr_matrix': A,
+        'smith_form': D
+    }
+
+
+def smith_normal_form(A: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Compute Smith normal form: A = U @ D @ V where D is diagonal.
+
+    All matrices have integer entries.
+    """
+    from sympy import Matrix
+
+    M = Matrix(A.tolist())
+    D, U, V = M.smith_normal_decomposition()
+
+    return (
+        np.array(D.tolist(), dtype=int),
+        np.array(U.tolist(), dtype=int),
+        np.array(V.tolist(), dtype=int)
+    )
+\end{lstlisting}
+
+\subsection{Example: Space Group 2 ($P\bar{1}$)}
+
+For space group $P\bar{1}$ (triclinic with inversion), the symmetry indicator group is $\Z_2^4$, corresponding to the four $\Z_2$ invariants from inversion eigenvalues at the eight time-reversal invariant momenta (TRIM).
+
+\begin{equation}
+\nu_0 = \prod_{i=1}^{8} \prod_{n \text{ occ}} \xi_n(\mathbf{k}_i) \mod 2
+\end{equation}
+where $\xi_n(\mathbf{k}_i) = \pm 1$ is the inversion eigenvalue of band $n$ at TRIM $\mathbf{k}_i$.
+
+% ============================================================
+\section{Fragile vs.\ Stable Topology}
+% ============================================================
+
+\subsection{Stable Topological Phases}
+
+\begin{definition}[Stable Topology]
+A band structure has \textbf{stable topology} if it remains topological after adding any trivial bands. Equivalently, it cannot be written as:
+\begin{equation}
+\BS = \sum_i n_i \cdot \EBR_i
+\end{equation}
+even with negative $n_i$ (subtracting EBRs).
+\end{definition}
+
+Stable topological phases have robust surface states protected by the bulk gap.
+
+\subsection{Fragile Topological Phases}
+
+\begin{definition}[Fragile Topology]
+A band structure has \textbf{fragile topology} if:
+\begin{enumerate}
+    \item It is not a sum of EBRs (cannot be written with $n_i \geq 0$)
+    \item But it becomes trivial after adding some EBRs (can be written with some $n_i < 0$)
+\end{enumerate}
+\end{definition}
+
+\begin{tqcbox}
+Fragile topology is more subtle: bands can have nontrivial quantum geometry (Berry phase, quantum metric) but no protected surface states. Adding trivial bands can ``unwind'' the topology.
+\end{tqcbox}
+
+\begin{lstlisting}[caption={Distinguishing stable vs.\ fragile topology}]
+def classify_topology(band_structure: Dict[str, List[str]],
+                      space_group: int) -> str:
+    """
+    Classify band structure as trivial, fragile, or stable.
+
+    Args:
+        band_structure: Irreps at each k-point
+        space_group: Space group number
+
+    Returns:
+        'trivial', 'fragile', or 'stable'
+    """
+    sg_data = load_space_group(space_group)
+    ebrs = sg_data.all_ebrs
+
+    # Convert band structure to vector
+    bs_vector = band_structure_to_vector(band_structure, sg_data)
+
+    # Try to decompose into EBRs with non-negative coefficients
+    A = build_ebr_matrix(ebrs, sg_data)
+    n = solve_nonnegative(A, bs_vector)
+
+    if n is not None:
+        return 'trivial'
+
+    # Try to decompose with any integer coefficients
+    n_int = solve_integer(A, bs_vector)
+
+    if n_int is not None:
+        return 'fragile'
+    else:
+        return 'stable'
+
+
+def solve_nonnegative(A: np.ndarray, b: np.ndarray):
+    """
+    Solve A @ x = b with x >= 0 (integer).
+    Returns x if exists, None otherwise.
+    """
+    from scipy.optimize import linprog
+
+    # Linear programming relaxation
+    result = linprog(
+        c=np.ones(A.shape[1]),  # Minimize sum of coefficients
+        A_eq=A.T,
+        b_eq=b,
+        bounds=(0, None),
+        method='highs'
+    )
+
+    if result.success:
+        # Check if solution is close to integer
+        x = result.x
+        x_int = np.round(x).astype(int)
+        if np.allclose(A.T @ x_int, b):
+            return x_int
+
+    return None
+\end{lstlisting}
+
+% ============================================================
+\section{Tight-Binding Models}
+% ============================================================
+
+\subsection{From Crystal Structure to Hamiltonian}
+
+\begin{lstlisting}[caption={Constructing symmetry-constrained tight-binding model}]
+def construct_tight_binding(space_group: int,
+                            wyckoff_positions: List[Tuple[str, str]],
+                            hopping_range: float = 3.0) -> Dict:
+    """
+    Construct tight-binding Hamiltonian respecting space group symmetry.
+
+    Args:
+        space_group: Space group number
+        wyckoff_positions: List of (Wyckoff letter, orbital type)
+        hopping_range: Maximum hopping distance (Angstroms)
+
+    Returns:
+        Tight-binding model specification
+    """
+    sg_data = load_space_group(space_group)
+
+    # Get all orbital positions in unit cell
+    orbitals = []
+    for wyckoff_letter, orbital_type in wyckoff_positions:
+        wyckoff = sg_data.wyckoff_positions[wyckoff_letter]
+        for coord in wyckoff.coordinates:
+            orbitals.append({
+                'position': coord,
+                'orbital': orbital_type,
+                'site_symmetry': wyckoff.site_symmetry
+            })
+
+    n_orbitals = len(orbitals)
+
+    # Generate allowed hoppings
+    hoppings = []
+    for i, orb_i in enumerate(orbitals):
+        for j, orb_j in enumerate(orbitals):
+            for R in sg_data.lattice_vectors_in_range(hopping_range):
+                distance = np.linalg.norm(
+                    np.array(orb_j['position']) + R -
+                    np.array(orb_i['position'])
+                )
+                if distance < hopping_range and distance > 0.1:
+                    hoppings.append({
+                        'from': i,
+                        'to': j,
+                        'R': tuple(R),
+                        'distance': distance
+                    })
+
+    # Apply symmetry constraints to hopping parameters
+    independent_hoppings = symmetrize_hoppings(hoppings, sg_data)
+
+    return {
+        'orbitals': orbitals,
+        'hoppings': independent_hoppings,
+        'space_group': space_group
+    }
+
+
+def build_bloch_hamiltonian(tb_model: Dict,
+                            k: np.ndarray,
+                            params: Dict[str, float]) -> np.ndarray:
+    """
+    Build Bloch Hamiltonian H(k) for tight-binding model.
+
+    H(k)_{ij} = sum_R t_{ij}(R) * exp(i k . R)
+    """
+    n_orbitals = len(tb_model['orbitals'])
+    H = np.zeros((n_orbitals, n_orbitals), dtype=complex)
+
+    for hop in tb_model['hoppings']:
+        i = hop['from']
+        j = hop['to']
+        R = np.array(hop['R'])
+        t = params.get(hop['param_label'], 0.0)
+
+        phase = np.exp(1j * np.dot(k, R))
+        H[i, j] += t * phase
+        H[j, i] += np.conj(t * phase)
+
+    return H
+\end{lstlisting}
+
+\subsection{Band Structure Computation}
+
+\begin{lstlisting}[caption={Computing band structure along high-symmetry path}]
+def compute_band_structure(tb_model: Dict,
+                           params: Dict[str, float],
+                           k_path: List[Tuple[str, np.ndarray]],
+                           n_points: int = 100) -> Dict:
+    """
+    Compute band structure along k-path.
+
+    Returns:
+        Dictionary with k-points, energies, and irrep labels
+    """
+    sg_data = load_space_group(tb_model['space_group'])
+
+    all_k = []
+    all_energies = []
+    all_irreps = []
+
+    for i, (k_label, k_point) in enumerate(k_path):
+        # Interpolate to next point
+        if i < len(k_path) - 1:
+            k_next = k_path[i + 1][1]
+            k_segment = np.linspace(k_point, k_next, n_points)
+        else:
+            k_segment = [k_point]
+
+        for k in k_segment:
+            H = build_bloch_hamiltonian(tb_model, k, params)
+            energies, eigenvectors = np.linalg.eigh(H)
+
+            all_k.append(k)
+            all_energies.append(energies)
+
+            # At high-symmetry points, compute irrep labels
+            if np.allclose(k, k_point) or \
+               (i < len(k_path)-1 and np.allclose(k, k_next)):
+                little_group = sg_data.little_group(k)
+                irreps = identify_irreps(eigenvectors, little_group, k)
+                all_irreps.append(irreps)
+
+    return {
+        'k_points': np.array(all_k),
+        'energies': np.array(all_energies),
+        'irreps_at_high_sym': all_irreps
+    }
+
+
+def identify_irreps(eigenvectors: np.ndarray,
+                    little_group: 'PointGroup',
+                    k: np.ndarray) -> List[str]:
+    """
+    Identify irrep labels for each band at high-symmetry k-point.
+    """
+    irrep_labels = []
+
+    for i in range(eigenvectors.shape[1]):
+        psi = eigenvectors[:, i]
+
+        # Compute character for each group element
+        characters = {}
+        for g in little_group.elements:
+            # D(g)|psi> = chi(g)|psi> for irrep
+            D_g = little_group.representation_matrix(g, k)
+            chi = np.vdot(psi, D_g @ psi)
+            characters[g] = chi
+
+        # Match to irrep character table
+        best_match = None
+        best_score = 0
+        for irrep in little_group.irreps:
+            score = sum(
+                abs(characters[g] - irrep.characters[g])**2
+                for g in little_group.elements
+            )
+            if best_match is None or score < best_score:
+                best_match = irrep.label
+                best_score = score
+
+        irrep_labels.append(best_match)
+
+    return irrep_labels
+\end{lstlisting}
+
+% ============================================================
+\section{Complete Classification Workflow}
+% ============================================================
+
+\begin{lstlisting}[caption={Complete TQC analysis pipeline}]
+def analyze_material(structure: Dict) -> Dict:
+    """
+    Complete TQC analysis of a material.
+
+    Args:
+        structure: Crystal structure specification
+            - space_group: int
+            - lattice: 3x3 array (lattice vectors)
+            - atoms: List of (element, position) tuples
+
+    Returns:
+        Complete topological classification
+    """
+    space_group = structure['space_group']
+    sg_data = load_space_group(space_group)
+
+    # 1. Identify Wyckoff positions
+    wyckoff_assignments = []
+    for element, position in structure['atoms']:
+        wyckoff = identify_wyckoff(position, sg_data)
+        wyckoff_assignments.append({
+            'element': element,
+            'wyckoff': wyckoff,
+            'position': position
+        })
+
+    # 2. Determine valence orbitals
+    orbitals = []
+    for atom in wyckoff_assignments:
+        orbs = get_valence_orbitals(atom['element'])
+        for orb in orbs:
+            orbitals.append((atom['wyckoff'].letter, orb))
+
+    # 3. Build tight-binding model
+    tb_model = construct_tight_binding(space_group, orbitals)
+
+    # 4. Compute band structure with default parameters
+    default_params = estimate_hopping_parameters(structure)
+    k_path = sg_data.default_k_path()
+    bands = compute_band_structure(tb_model, default_params, k_path)
+
+    # 5. Extract irreps at high-symmetry points
+    band_structure = {}
+    for k_label, irreps in zip(
+        [kp[0] for kp in k_path],
+        bands['irreps_at_high_sym']
+    ):
+        band_structure[k_label] = irreps
+
+    # 6. Check compatibility relations
+    compatible = check_compatibility(band_structure, space_group)
+
+    # 7. Compute symmetry indicators
+    indicators = compute_symmetry_indicators(space_group)
+
+    # 8. Evaluate indicator formulas
+    indicator_values = evaluate_indicators(
+        band_structure, indicators, sg_data
+    )
+
+    # 9. Classify topology
+    topology = classify_topology(band_structure, space_group)
+
+    # 10. Predict surface states (if topological)
+    surface_states = None
+    if topology in ['stable', 'fragile']:
+        surface_states = predict_surface_states(
+            band_structure, space_group
+        )
+
+    return {
+        'space_group': space_group,
+        'wyckoff_assignments': wyckoff_assignments,
+        'band_irreps': band_structure,
+        'compatibility_satisfied': compatible,
+        'symmetry_indicator_group': indicators['group'],
+        'indicator_values': indicator_values,
+        'topology': topology,
+        'surface_states': surface_states
+    }
+\end{lstlisting}
+
+% ============================================================
+\section{Certificate Generation}
+% ============================================================
+
+\begin{lstlisting}[caption={TQC certificate structure}]
+from dataclasses import dataclass, asdict
+import json
+
+@dataclass
+class TQCCertificate:
+    """
+    Complete topological quantum chemistry certificate.
+    """
+    # Material identification
+    material_name: str
+    space_group: int
+    space_group_symbol: str
+
+    # Structure
+    wyckoff_positions: List[Dict]
+    site_symmetries: List[str]
+
+    # Band structure
+    high_symmetry_points: List[str]
+    band_irreps: Dict[str, List[str]]
+    n_occupied_bands: int
+
+    # Compatibility
+    compatibility_satisfied: bool
+
+    # Topology
+    symmetry_indicator_group: str
+    indicator_values: Dict[str, int]
+    topology_type: str  # 'trivial', 'fragile', 'stable'
+
+    # Decomposition
+    ebr_decomposition: Dict[str, int]  # EBR label -> coefficient
+    decomposition_exists: bool
+
+    # Surface states (if topological)
+    predicted_surface_states: List[Dict]
+
+    def export_json(self, path: str) -> None:
+        """Export certificate to JSON."""
+        with open(path, 'w') as f:
+            json.dump(asdict(self), f, indent=2)
+
+    def verify(self) -> bool:
+        """Self-consistency checks."""
+        checks = [
+            self.space_group >= 1 and self.space_group <= 230,
+            len(self.band_irreps) > 0,
+            self.compatibility_satisfied,
+            self.topology_type in ['trivial', 'fragile', 'stable']
+        ]
+
+        # Topology classification consistent with decomposition
+        if self.decomposition_exists:
+            all_nonneg = all(v >= 0 for v in self.ebr_decomposition.values())
+            checks.append(
+                (self.topology_type == 'trivial') == all_nonneg
+            )
+
+        return all(checks)
+\end{lstlisting}
+
+% ============================================================
+\section{Example Applications}
+% ============================================================
+
+\subsection{Bi$_2$Se$_3$: A Topological Insulator}
+
+\begin{example}[Bi$_2$Se$_3$]
+Bismuth selenide crystallizes in space group $R\bar{3}m$ (No.\ 166).
+\begin{itemize}
+    \item Bi at Wyckoff position $6c$, site symmetry $3m$
+    \item Se at Wyckoff positions $6c$ and $3a$
+\end{itemize}
+
+The symmetry indicator group is $\Z_2$, and the indicator formula gives:
+\begin{equation}
+\nu = \prod_{\text{TRIM}} \prod_{n \text{ occ}} \xi_n = -1
+\end{equation}
+indicating a strong topological insulator with surface Dirac cone.
+\end{example}
+
+\subsection{Graphene: Fragile Topology}
+
+\begin{example}[Graphene]
+Graphene has space group $P6/mmm$ (No.\ 191).
+\begin{itemize}
+    \item Carbon at Wyckoff position $2c$, site symmetry $\bar{6}m2$
+\end{itemize}
+
+The $\pi$ bands form a fragile topological phase: they cannot be written as a sum of EBRs with non-negative coefficients, but become trivial upon adding $\sigma$ bands. The fragility is related to the Euler class obstruction.
+\end{example}
+
+% ============================================================
+\section{Success Criteria and Milestones}
+% ============================================================
+
+\subsection{Minimum Viable Result (Months 1-3)}
+
+\begin{itemize}
+    \item EBR database for 5 space groups
+    \item Compatibility relation checker
+    \item Symmetry indicator computation
+    \item Classification of 10 known materials
+\end{itemize}
+
+\subsection{Strong Result (Months 4-6)}
+
+\begin{itemize}
+    \item Complete EBR database for all 230 space groups
+    \item Fragile vs.\ stable distinction algorithm
+    \item Tight-binding model generator
+    \item 100+ materials classified
+\end{itemize}
+
+\subsection{Publication Quality (Months 7-9)}
+
+\begin{itemize}
+    \item Prediction of novel topological materials
+    \item Surface state calculation
+    \item Comparison with DFT results
+    \item Public database release
+\end{itemize}
+
+% ============================================================
+\section{Conclusion}
+% ============================================================
+
+Topological quantum chemistry provides a complete, mathematically rigorous framework for classifying band structures. The key insights are:
+\begin{enumerate}
+    \item Band structures from atomic limits form elementary band representations
+    \item The quotient $\BS/\AI$ gives the symmetry indicator group
+    \item Nonzero indicators signal topology
+    \item Fragile vs.\ stable determined by decomposition coefficients
+\end{enumerate}
+
+This pure-thought approach predicts topological properties from crystal structure alone, without expensive first-principles calculations.
+
+% ============================================================
+% BIBLIOGRAPHY
+% ============================================================
+\begin{thebibliography}{10}
+
+\bibitem{bradlyn2017}
+B.~Bradlyn, L.~Elcoro, J.~Cano, M.~G.~Vergniory, Z.~Wang, C.~Felser, M.~I.~Aroyo, and B.~A.~Bernevig,
+\newblock ``Topological quantum chemistry,''
+\newblock \emph{Nature}, vol.~547, pp.~298--305, 2017.
+
+\bibitem{po2017}
+H.~C. Po, A.~Vishwanath, and H.~Watanabe,
+\newblock ``Symmetry-based indicators of band topology in the 230 space groups,''
+\newblock \emph{Nature Communications}, vol.~8, p.~50, 2017.
+
+\bibitem{vergniory2019}
+M.~G. Vergniory, L.~Elcoro, C.~Felser, N.~Regnault, B.~A.~Bernevig, and Z.~Wang,
+\newblock ``A complete catalogue of high-quality topological materials,''
+\newblock \emph{Nature}, vol.~566, pp.~480--485, 2019.
+
+\bibitem{elcoro2017}
+L.~Elcoro, B.~Bradlyn, Z.~Wang, M.~G.~Vergniory, J.~Cano, C.~Felser, B.~A.~Bernevig, D.~Orobengoa, G.~de~la Flor, and M.~I.~Aroyo,
+\newblock ``Double crystallographic groups and their representations on the Bilbao Crystallographic Server,''
+\newblock \emph{Journal of Applied Crystallography}, vol.~50, pp.~1457--1477, 2017.
+
+\bibitem{cano2018}
+J.~Cano, B.~Bradlyn, Z.~Wang, L.~Elcoro, M.~G.~Vergniory, C.~Felser, M.~I.~Aroyo, and B.~A.~Bernevig,
+\newblock ``Building blocks of topological quantum chemistry: Elementary band representations,''
+\newblock \emph{Physical Review B}, vol.~97, p.~035139, 2018.
+
+\bibitem{song2020}
+Z.~Song, T.~Zhang, Z.~Fang, and C.~Fang,
+\newblock ``Quantitative mappings between symmetry and topology in solids,''
+\newblock \emph{Nature Communications}, vol.~9, p.~3530, 2018.
+
+\bibitem{kruthoff2017}
+J.~Kruthoff, J.~de~Boer, J.~van~Wezel, C.~L.~Kane, and R.-J.~Slager,
+\newblock ``Topological classification of crystalline insulators through band structure combinatorics,''
+\newblock \emph{Physical Review X}, vol.~7, p.~041069, 2017.
+
+\bibitem{aroyo2011}
+M.~I. Aroyo, J.~M.~Perez-Mato, D.~Orobengoa, E.~Tasci, G.~de~la Flor, and A.~Kirov,
+\newblock ``Crystallography online: Bilbao Crystallographic Server,''
+\newblock \emph{Bulgarian Chemical Communications}, vol.~43, pp.~183--197, 2011.
+
+\end{thebibliography}
+
+% ============================================================
+% APPENDIX
+% ============================================================
+\appendix
+
+\section{Space Group Data Format}
+\label{app:format}
+
+\begin{lstlisting}[language={}]
+{
+  "number": 166,
+  "symbol": "R-3m",
+  "point_group": "-3m",
+  "wyckoff_positions": {
+    "3a": {
+      "multiplicity": 3,
+      "coordinates": [[0, 0, 0]],
+      "site_symmetry": "-3m"
+    },
+    "6c": {
+      "multiplicity": 6,
+      "coordinates": [[0, 0, "z"], [0, 0, "-z"]],
+      "site_symmetry": "3m"
+    }
+  },
+  "high_symmetry_points": {
+    "Gamma": [0, 0, 0],
+    "Z": [0.5, 0.5, 0.5],
+    "F": [0.5, 0.5, 0],
+    "L": [0.5, 0, 0]
+  }
+}
+\end{lstlisting}
+
+\section{Symmetry Indicator Formulas}
+\label{app:indicators}
+
+For centrosymmetric space groups with time-reversal, the $\Z_2$ indicators are:
+\begin{align}
+\nu_0 &= \sum_{\text{TRIM}} n_-(\mathbf{k}) \mod 2 \\
+\nu_i &= \sum_{\mathbf{k}: k_i = \pi} n_-(\mathbf{k}) \mod 2
+\end{align}
+where $n_-(\mathbf{k})$ counts bands with negative parity at TRIM $\mathbf{k}$.
+
+\end{document}
