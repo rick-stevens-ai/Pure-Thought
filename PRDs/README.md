@@ -163,9 +163,9 @@ Each PRD defines three success levels:
 
 ## Status
 
-- ✅ **Completed**: 30/30 PRDs
-- 📊 **Total content**: ~13,500 lines of detailed guidance
-- 🎯 **Target completion**: All 30 PRDs with ~600 lines each
+- ✅ **PRDs**: 30/30 markdown specifications complete
+- ✅ **PDF Reports**: 30/30 comprehensive LaTeX reports (958 total pages)
+- 📁 **Repository**: [`latex-reports/`](latex-reports/) contains all PDF and TeX source files
 - 📅 **Last updated**: 2026-01-20
 
 ## Citation
