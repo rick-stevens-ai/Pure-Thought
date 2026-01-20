@@ -66,56 +66,56 @@ Comprehensive LaTeX-rendered technical reports are available for all 30 challeng
 ### Quantum Gravity & Particle Physics
 | # | Report | Pages |
 |---|--------|-------|
-| 01 | [AdS₃ Modular Bootstrap](latex-reports/01-AdS3-Modular-Bootstrap-Report.pdf) | 38 |
-| 02 | [Gravitational Positivity Bounds](latex-reports/02-Gravitational-Positivity-Bounds-Report.pdf) | 32 |
-| 03 | [Celestial CFT Bootstrap](latex-reports/03-Celestial-CFT-Bootstrap-Report.pdf) | 35 |
-| 04 | [Modular-Lightcone Bootstrap](latex-reports/04-Modular-Lightcone-Bootstrap-Report.pdf) | 40 |
-| 05 | [Positive Geometry for Gravity](latex-reports/05-Positive-Geometry-Gravity-Report.pdf) | 36 |
-| 06 | [Non-perturbative S-matrix Bootstrap](latex-reports/06-Nonperturbative-S-matrix-Bootstrap-Report.pdf) | 34 |
-| 07 | [Extremal Higher-D CFTs](latex-reports/07-Extremal-Higher-D-CFTs-Report.pdf) | 30 |
+| 01 | [AdS₃ Modular Bootstrap](latex-reports/01-AdS3-Modular-Bootstrap-Report.pdf) | 18 |
+| 02 | [Gravitational Positivity Bounds](latex-reports/02-Gravitational-Positivity-Bounds-Report.pdf) | 20 |
+| 03 | [Celestial CFT Bootstrap](latex-reports/03-Celestial-CFT-Bootstrap-Report.pdf) | 21 |
+| 04 | [Modular-Lightcone Bootstrap](latex-reports/04-Modular-Lightcone-Bootstrap-Report.pdf) | 22 |
+| 05 | [Positive Geometry for Gravity](latex-reports/05-Positive-Geometry-Gravity-Report.pdf) | 22 |
+| 06 | [Non-perturbative S-matrix Bootstrap](latex-reports/06-Nonperturbative-S-matrix-Bootstrap-Report.pdf) | 37 |
+| 07 | [Extremal Higher-D CFTs](latex-reports/07-Extremal-Higher-D-CFTs-Report.pdf) | 35 |
 | 08 | [Swampland via Modularity](latex-reports/08-Swampland-Modularity-Report.pdf) | 33 |
 
 ### Materials Science
 | # | Report | Pages |
 |---|--------|-------|
-| 09 | [Topological Band Theory](latex-reports/09-Topological-Band-Theory-Report.pdf) | 42 |
-| 10 | [Flat Chern Bands](latex-reports/10-Flat-Chern-Bands-Report.pdf) | 38 |
-| 11 | [Photonic Topological Crystals](latex-reports/11-Photonic-Topological-Crystals-Report.pdf) | 35 |
+| 09 | [Topological Band Theory](latex-reports/09-Topological-Band-Theory-Report.pdf) | 41 |
+| 10 | [Flat Chern Bands](latex-reports/10-Flat-Chern-Bands-Report.pdf) | 36 |
+| 11 | [Photonic Topological Crystals](latex-reports/11-Photonic-Topological-Crystals-Report.pdf) | 30 |
 | 12 | [Topological Mechanical Metamaterials](latex-reports/12-Topological-Mechanical-Metamaterials-Report.pdf) | 30 |
-| 13 | [Higher-Order Topological Insulators](latex-reports/13-Higher-Order-Topological-Insulators-Report.pdf) | 40 |
-| 14 | [Topological Semimetals](latex-reports/14-Topological-Semimetals-Weyl-Dirac-Report.pdf) | 28 |
+| 13 | [Higher-Order Topological Insulators](latex-reports/13-Higher-Order-Topological-Insulators-Report.pdf) | 33 |
+| 14 | [Topological Semimetals](latex-reports/14-Topological-Semimetals-Weyl-Dirac-Report.pdf) | 33 |
 | 15 | [Topological Quantum Chemistry](latex-reports/15-Topological-Quantum-Chemistry-Report.pdf) | 24 |
 
 ### Chemistry
 | # | Report | Pages |
 |---|--------|-------|
-| 16 | [N-Representability and 2-RDM](latex-reports/16-N-Representability-2RDM-Report.pdf) | 26 |
+| 16 | [N-Representability and 2-RDM](latex-reports/16-N-Representability-2RDM-Report.pdf) | 19 |
 | 17 | [Isomer Enumeration](latex-reports/17-Isomer-Enumeration-Report.pdf) | 44 |
 | 18 | [Optimal Transport for Molecules](latex-reports/18-Optimal-Transport-Chemistry-Report.pdf) | 38 |
-| 19 | [Chemical Reaction Networks](latex-reports/19-Chemical-Reaction-Networks-Report.pdf) | 36 |
+| 19 | [Chemical Reaction Networks](latex-reports/19-Chemical-Reaction-Networks-Report.pdf) | 37 |
 | 20 | [Ab Initio Path Integrals](latex-reports/20-Ab-Initio-Path-Integrals-Report.pdf) | 20 |
 
 ### Quantum Information
 | # | Report | Pages |
 |---|--------|-------|
-| 21 | [Quantum LDPC Codes](latex-reports/21-Quantum-LDPC-Codes-Report.pdf) | 26 |
-| 22 | [Bell Inequalities](latex-reports/22-Bell-Inequalities-Report.pdf) | 32 |
+| 21 | [Quantum LDPC Codes](latex-reports/21-Quantum-LDPC-Codes-Report.pdf) | 19 |
+| 22 | [Bell Inequalities](latex-reports/22-Bell-Inequalities-Report.pdf) | 34 |
 | 23 | [Entanglement Measures](latex-reports/23-Entanglement-Measures-Witnesses-Report.pdf) | 38 |
 | 24 | [Topological QEC](latex-reports/24-Topological-Quantum-Error-Correction-Report.pdf) | 38 |
-| 25 | [Quantum Algorithms](latex-reports/25-Quantum-Algorithms-Complexity-Report.pdf) | 40 |
+| 25 | [Quantum Algorithms](latex-reports/25-Quantum-Algorithms-Complexity-Report.pdf) | 41 |
 
 ### Celestial Mechanics
 | # | Report | Pages |
 |---|--------|-------|
-| 26 | [KAM Theory](latex-reports/26-KAM-Theory-Planetary-Stability-Report.pdf) | 36 |
+| 26 | [KAM Theory](latex-reports/26-KAM-Theory-Planetary-Stability-Report.pdf) | 46 |
 | 27 | [N-Body Central Configurations](latex-reports/27-N-Body-Central-Configurations-Report.pdf) | 20 |
-| 28 | [Nekhoroshev Stability](latex-reports/28-Nekhoroshev-Stability-Report.pdf) | 34 |
+| 28 | [Nekhoroshev Stability](latex-reports/28-Nekhoroshev-Stability-Report.pdf) | 38 |
 
 ### Biology & Origin of Life
 | # | Report | Pages |
 |---|--------|-------|
 | 29 | [Chemical Networks & Origins](latex-reports/29-Chemical-Reaction-Networks-Origins-Report.pdf) | 23 |
-| 30 | [Genotype-Phenotype Mapping](latex-reports/30-Genotype-Phenotype-Mapping-Report.pdf) | 48 |
+| 30 | [Genotype-Phenotype Mapping](latex-reports/30-Genotype-Phenotype-Mapping-Report.pdf) | 50 |
 
 ## Usage
 
@@ -175,7 +175,7 @@ If you use these PRDs in your research or projects, please cite:
 ```
 Pure Thought AI Challenges: 30 Fundamental Problems in Mathematical Physics,
 Materials Science, Chemistry, Quantum Information, Planetary Dynamics, and Biology.
-https://github.com/[your-repo]/pure-thought-challenges (2026)
+https://github.com/rick-stevens-ai/Pure-Thought (2026)
 ```
 
 ## Contributing
