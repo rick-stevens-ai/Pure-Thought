@@ -20,16 +20,11 @@ Each challenge represents a significant open problem in physics, materials scien
 ```
 Pure-Thought/
 ├── PRDs/                           # Product Requirement Documents
-│   ├── 01-30-*.md                 # 30 comprehensive PRDs (markdown)
-│   ├── README.md                  # PRD documentation
-│   ├── GENERATION-STATUS.md       # Completion tracking
-│   ├── convert_to_latex.py        # LaTeX conversion script
-│   └── latex/                     # LaTeX versions
-│       ├── *.tex                  # LaTeX source files
-│       ├── pdfs/                  # Compiled PDFs (10 MB total)
-│       ├── compile_all.sh         # Batch compilation
-│       ├── Makefile              # Make targets
-│       └── README.md              # LaTeX documentation
+│   ├── 01-*.md through 30-*.md    # 30 comprehensive PRDs (markdown)
+│   ├── README.md                  # PRD documentation with PDF links
+│   └── latex-reports/             # LaTeX versions
+│       ├── *-Report.tex           # LaTeX source files (30 reports)
+│       └── *-Report.pdf           # Compiled PDFs (~17 MB total)
 └── README.md                      # This file
 ```
 
@@ -79,7 +74,7 @@ Pure-Thought/
 
 ## 📖 PRD Format
 
-Each PRD (~600-1300 lines) includes:
+Each PRD includes:
 
 1. **Problem Statement** - Scientific context and core question
 2. **Mathematical Formulation** - Precise problem definition with certificates
@@ -100,23 +95,14 @@ ls *.md
 
 ### View PDFs
 
-All PRDs are available as professionally formatted PDFs:
+All 30 PRDs are available as professionally formatted PDF reports with detailed mathematical derivations, TikZ diagrams, and extensive bibliographies:
 
 ```bash
-cd PRDs/latex/pdfs
-open 01-AdS3-Modular-Bootstrap.pdf
+cd PRDs/latex-reports
+open 01-AdS3-Modular-Bootstrap-Report.pdf
 ```
 
-### Compile LaTeX (Optional)
-
-If you want to regenerate PDFs from source:
-
-```bash
-cd PRDs/latex
-./compile_all.sh
-```
-
-Requires: LaTeX distribution (TeX Live, MiKTeX, or MacTeX)
+See [`PRDs/README.md`](PRDs/README.md) for a complete table with all report links and page counts (958 total pages).
 
 ## 💻 Code Requirements
 
@@ -149,11 +135,10 @@ Each PRD defines three levels:
 
 ## 📊 Project Status
 
-- ✅ **PRDs**: 30/30 complete (~13,500 lines total)
-- ✅ **Average length**: ~600 lines per PRD (comprehensive detail)
-- ✅ **LaTeX versions**: All 30 PRDs converted
-- ✅ **PDFs**: All 30 compiled (10 MB total)
-- 📅 **Last updated**: 2026-01-19
+- ✅ **PRDs**: 30/30 complete (markdown specifications)
+- ✅ **PDF Reports**: 30/30 comprehensive LaTeX reports (958 total pages)
+- ✅ **LaTeX Source**: All 30 .tex files included
+- 📅 **Last updated**: 2026-01-20
 
 ## 🤖 For AI Systems
 
@@ -200,9 +185,8 @@ All PRDs are released under MIT License for maximum reusability in both academic
 
 ## 🔗 Links
 
-- **Documentation**: See `PRDs/README.md`
-- **LaTeX Source**: See `PRDs/latex/README.md`
-- **Generation Status**: See `PRDs/GENERATION-STATUS.md`
+- **PRD Documentation**: See [`PRDs/README.md`](PRDs/README.md)
+- **PDF Reports**: See [`PRDs/latex-reports/`](PRDs/latex-reports/)
 
 ## ✨ Highlights
 
@@ -215,14 +199,13 @@ All PRDs are released under MIT License for maximum reusability in both academic
 ### Comprehensive Coverage
 - 📐 30 fundamental problems
 - 🌍 6 major scientific domains
-- 📄 ~13,500 lines of detailed guidance
-- 📚 600-1300 lines per challenge
+- 📄 958 pages of detailed PDF reports
+- 📚 Comprehensive LaTeX source included
 
 ### Production Ready
-- 📖 Complete LaTeX documentation
-- 📄 All PDFs compiled and ready
-- 🔧 Automated compilation tools
-- ✅ Fully tested and verified
+- 📖 Complete PDF documentation
+- 📄 All 30 reports compiled and ready
+- ✅ TikZ diagrams and bibliographies included
 
 ---
 
