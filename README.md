@@ -21,10 +21,11 @@ Each challenge represents a significant open problem in physics, materials scien
 Pure-Thought/
 ├── PRDs/                           # Product Requirement Documents
 │   ├── 01-*.md through 30-*.md    # 30 comprehensive PRDs (markdown)
-│   ├── README.md                  # PRD documentation with PDF links
-│   └── latex-reports/             # LaTeX versions
-│       ├── *-Report.tex           # LaTeX source files (30 reports)
-│       └── *-Report.pdf           # Compiled PDFs (~17 MB total)
+│   └── README.md                  # PRD documentation
+├── latex-reports/                  # Comprehensive PDF reports
+│   ├── *-Report.tex               # LaTeX source files (30 reports)
+│   └── *-Report.pdf               # Compiled PDFs (~17 MB total)
+├── NOTES/                          # Drafts and utility scripts
 └── README.md                      # This file
 ```
 
@@ -98,7 +99,7 @@ ls *.md
 All 30 PRDs are available as professionally formatted PDF reports with detailed mathematical derivations, TikZ diagrams, and extensive bibliographies:
 
 ```bash
-cd PRDs/latex-reports
+cd latex-reports
 open 01-AdS3-Modular-Bootstrap-Report.pdf
 ```
 
@@ -186,7 +187,7 @@ All PRDs are released under MIT License for maximum reusability in both academic
 ## 🔗 Links
 
 - **PRD Documentation**: See [`PRDs/README.md`](PRDs/README.md)
-- **PDF Reports**: See [`PRDs/latex-reports/`](PRDs/latex-reports/)
+- **PDF Reports**: See [`latex-reports/`](latex-reports/)
 
 ## ✨ Highlights
 
