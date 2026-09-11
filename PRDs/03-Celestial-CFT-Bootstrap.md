@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/03-Celestial-CFT-Bootstrap.md) · [Original description](../archive/original-PRDs/03-Celestial-CFT-Bootstrap.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Instead of describing a collision by particle energies and momenta, imagine recording the directions in which particles enter or leave on a sphere surrounding the experiment. Celestial methods reorganize scattering data into quantities associated with that sphere. The ambition is a new language for gravity. Before using that language to discover new theories, this problem checks that it faithfully preserves familiar facts about a simple graviton collision.
+
+### Key terms
+
+- **Celestial sphere** — The sphere of directions seen from a point, used here to label asymptotic particle directions rather than a physical shell.
+
+- **Graviton** — The hypothetical quantum excitation of the gravitational field used in perturbative quantum-gravity calculations.
+
+- **Helicity** — The component of a particle’s spin along its direction of motion.
+
+- **Mellin transform** — A mathematical transformation that reorganizes dependence on energy into dependence on scaling behavior.
+
+- **Conformal weight Δ** — A label describing scaling behavior in the celestial description; it can be complex.
+
+- **Distribution** — A generalized function, such as a delta function, understood through integration against test functions rather than ordinary pointwise values.
+
+- **Crossing** — The relationship between different scattering processes obtained by reinterpreting an incoming particle as an outgoing antiparticle, with appropriate continuation.
+
+- **Soft limit** — The limit in which one particle’s energy approaches zero; a soft theorem controls the resulting leading behavior.
+
+- **Regulator** — A temporary modification that makes a singular expression well defined, accompanied by a rule for removing or interpreting it.
+
+### Why this matters
+
+A successful reformulation could expose symmetries or constraints that are difficult to see in ordinary scattering variables. That would give theorists another way to investigate gravity. But a change of mathematical language is useful only if singularities, conservation laws and limiting cases survive the translation correctly.
+
+### What progress would mean
+
+A verified example would supply a dependable foundation for later celestial calculations. It would establish that specific identities translate correctly, rather than establish a complete two-dimensional theory of the universe.
+
 ## Core question
 
 Can a regulated celestial transform of a specified four-graviton tree amplitude reproduce Lorentz covariance, crossing, and the leading conformally soft residue in one consistent convention?

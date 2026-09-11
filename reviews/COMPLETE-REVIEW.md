@@ -1,6 +1,6 @@
 # Complete revised problems and detailed critiques
 
-2026-09-11. This reading copy combines all 30 revised canonical problems, their critiques, and 12 supplemental topics. [Review overview](REVIEW.md) · [Catalog](../PRDs/README.md) · [Evidence standard](EVIDENCE-STANDARD.md) · [Synthesis crosswalk](SYNTHESIS-CROSSWALK.md)
+2026-09-11. This reading copy combines all 30 revised canonical problems, their critiques, and 12 supplemental topics. Every problem includes an everyday explanation, key-term definitions, motivation and a scoped account of what progress would mean. [Review overview](REVIEW.md) · [Catalog](../PRDs/README.md) · [Evidence standard](EVIDENCE-STANDARD.md) · [Synthesis crosswalk](SYNTHESIS-CROSSWALK.md)
 
 ## Contents
 
@@ -35,7 +35,6 @@
 - [29. Autocatalytic sets: maximality, irreducibility and dynamical viability](#problem-29)
 - [30. An exact finite genotype–phenotype map and its mutation graph](#problem-30)
 
-
 ---
 
 <a id="problem-01"></a>
@@ -43,6 +42,38 @@
 # 01. Extremal holomorphic CFT partition functions: certified necessary tests
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/01-AdS3-Modular-Bootstrap.md) · [Original description](../archive/original-PRDs/01-AdS3-Modular-Bootstrap.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Imagine trying to identify a musical instrument from a list of the notes it can produce. Some lists are impossible because the notes do not fit the instrument’s mathematical rules. Others pass those checks, but that still does not tell us how to build the instrument. Here the “instrument” is a quantum theory and the “notes” are its allowed states. We ask whether exceptionally sparse lists of states obey the consistency rules. Such sparse theories are candidates for describing a simplified universe containing gravity with no additional matter.
+
+### Key terms
+
+- **Conformal field theory (CFT)** — A quantum theory whose laws respect transformations that preserve angles, including changes of scale; it describes systems with no preferred length scale.
+
+- **AdS₃** — A three-dimensional spacetime with a particular negative curvature, used as a mathematically tractable setting for gravity.
+
+- **Holomorphic** — Depending on one complex coordinate rather than both it and its complex conjugate; this is a special restriction on the theories studied here.
+
+- **Central charge c** — A number characterizing aspects of a CFT’s symmetry and number of degrees of freedom. Here c=24k, with k a positive integer.
+
+- **Partition function** — A generating function that packages the theory’s state energies or scaling weights and the number of states at each level.
+
+- **Primary and descendant** — A primary is a basic type of excitation; descendants are related excitations generated from it by symmetry.
+
+- **Extremal spectrum** — A spectrum with the largest prescribed initial gap before additional primary excitations, under this particular ansatz.
+
+- **Modular invariance** — The requirement that different equivalent descriptions of a torus give the same partition function.
+
+### Why this matters
+
+Quantum gravity is hard partly because we do not know which mathematically plausible theories are internally consistent. These tests can eliminate candidates without experiments or a complete construction. They also connect gravity to the arithmetic of modular functions: counting quantum states becomes a problem about exact number sequences.
+
+### What progress would mean
+
+A useful first result is a trustworthy table of candidates and any exact reason for rejecting one. Passing the table’s tests would identify a candidate worth further study; constructing the full theory would remain a much stronger achievement.
 
 ## Core question
 
@@ -125,6 +156,40 @@ Baseline: exact k=1,…,4 tables with explicitly finite coverage. Strong: one ad
 # 02. Conditional positivity bounds for a specified gravitational amplitude
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/02-Gravitational-Positivity-Bounds.md) · [Original description](../archive/original-PRDs/02-Gravitational-Positivity-Bounds.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+A low-energy theory is like a map drawn at a coarse scale: it describes what we can resolve while summarizing finer details in a few adjustable numbers. Not every choice of those numbers can come from a consistent microscopic world. This problem asks whether basic rules about probabilities, cause and effect, and scattering restrict one such number when gravity is present. Gravity’s long reach makes the usual argument harder, so part of the task is making the assumptions precise.
+
+### Key terms
+
+- **Effective field theory (EFT)** — An approximate description valid over a stated range of energies, with unresolved physics represented by additional terms.
+
+- **Wilson coefficient** — The number multiplying one of those additional terms; it measures the strength of a correction to the simpler theory.
+
+- **Scalar particle** — A particle with zero intrinsic spin, chosen here to simplify the scattering calculation.
+
+- **Scattering amplitude** — A quantum quantity used to calculate probabilities for incoming particles to emerge in particular outgoing states.
+
+- **Positivity bound** — An inequality on theory parameters derived from a quantity that must be nonnegative under specified assumptions.
+
+- **Infrared (IR) and ultraviolet (UV)** — The low-energy or long-distance regime, and the high-energy or short-distance regime, respectively.
+
+- **Pole and subtraction** — A pole is a singular term in a mathematical expression; a subtraction removes a specified contribution so the remaining quantity can be analyzed.
+
+- **Dispersion relation** — A mathematical relation connecting an amplitude’s behavior in different energy regions.
+
+- **Regge assumption** — An assumption about how scattering behaves at very high energy with momentum transfer held fixed.
+
+### Why this matters
+
+These bounds can tell us that an apparently sensible low-energy model cannot fit particular assumptions about its underlying physics. That is valuable when direct access to microscopic gravity is unavailable. A reliable bound also prevents researchers from interpreting an artifact of a singular calculation as a physical restriction.
+
+### What progress would mean
+
+The first success would be one defensible inequality with its assumptions attached. It would narrow the parameter space of candidate theories, without claiming that every surviving theory has a complete microscopic realization.
 
 ## Core question
 
@@ -210,6 +275,40 @@ Baseline: one correct sum rule and its gravity-free limit. Strong: a numerically
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/03-Celestial-CFT-Bootstrap.md) · [Original description](../archive/original-PRDs/03-Celestial-CFT-Bootstrap.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Instead of describing a collision by particle energies and momenta, imagine recording the directions in which particles enter or leave on a sphere surrounding the experiment. Celestial methods reorganize scattering data into quantities associated with that sphere. The ambition is a new language for gravity. Before using that language to discover new theories, this problem checks that it faithfully preserves familiar facts about a simple graviton collision.
+
+### Key terms
+
+- **Celestial sphere** — The sphere of directions seen from a point, used here to label asymptotic particle directions rather than a physical shell.
+
+- **Graviton** — The hypothetical quantum excitation of the gravitational field used in perturbative quantum-gravity calculations.
+
+- **Helicity** — The component of a particle’s spin along its direction of motion.
+
+- **Mellin transform** — A mathematical transformation that reorganizes dependence on energy into dependence on scaling behavior.
+
+- **Conformal weight Δ** — A label describing scaling behavior in the celestial description; it can be complex.
+
+- **Distribution** — A generalized function, such as a delta function, understood through integration against test functions rather than ordinary pointwise values.
+
+- **Crossing** — The relationship between different scattering processes obtained by reinterpreting an incoming particle as an outgoing antiparticle, with appropriate continuation.
+
+- **Soft limit** — The limit in which one particle’s energy approaches zero; a soft theorem controls the resulting leading behavior.
+
+- **Regulator** — A temporary modification that makes a singular expression well defined, accompanied by a rule for removing or interpreting it.
+
+### Why this matters
+
+A successful reformulation could expose symmetries or constraints that are difficult to see in ordinary scattering variables. That would give theorists another way to investigate gravity. But a change of mathematical language is useful only if singularities, conservation laws and limiting cases survive the translation correctly.
+
+### What progress would mean
+
+A verified example would supply a dependable foundation for later celestial calculations. It would establish that specific identities translate correctly, rather than establish a complete two-dimensional theory of the universe.
+
 ## Core question
 
 Can a regulated celestial transform of a specified four-graviton tree amplitude reproduce Lorentz covariance, crossing, and the leading conformally soft residue in one consistent convention?
@@ -292,6 +391,42 @@ Baseline: one four-point transform with explicit support and checked leading sof
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/04-Modular-Lightcone-Bootstrap.md) · [Original description](../archive/original-PRDs/04-Modular-Lightcone-Bootstrap.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A quantum correlation can be calculated by grouping the participating excitations in different ways, and all valid groupings must agree. That agreement can force some excitations to exist and restrict their properties. This problem studies the pattern at large spin, where useful approximations become available. The central challenge is to say not only what the leading approximation predicts, but also how large its error could be.
+
+### Key terms
+
+- **Correlation function** — A quantity describing how field measurements at different spacetime points are related.
+
+- **Four-point function** — A correlation involving four field insertions; it can be reorganized into different pairings.
+
+- **Bootstrap** — A method that constrains a theory by requiring its own consistency rules to agree, rather than starting from a complete microscopic model.
+
+- **Scaling dimension Δ** — A measure of how a field or excitation changes when all lengths are rescaled.
+
+- **Spin ℓ** — A label describing how an excitation transforms under rotations.
+
+- **Lightcone limit** — A limit in which two spacetime points approach a separation that light could traverse; it organizes which contributions dominate the correlation function.
+
+- **Twist** — The combination Δ−ℓ, useful for ordering contributions near a lightlike separation.
+
+- **Operator product expansion (OPE)** — A rule expressing the effect of nearby field insertions as a sum of other operators with specified coefficients.
+
+- **Double-twist family** — A sequence of large-spin operators whose dimensions approach a characteristic pattern related to two external operators.
+
+- **Remainder bound** — A guaranteed limit on the terms omitted from an approximation.
+
+### Why this matters
+
+Consistency can reveal features shared by many strongly interacting theories, even when their detailed dynamics cannot be solved. Large-spin patterns are also useful in theories proposed to describe gravity through a lower-dimensional boundary. Controlled errors turn suggestive asymptotic patterns into statements that can actually constrain a finite calculation.
+
+### What progress would mean
+
+The baseline would reproduce an established large-spin pattern with unambiguous conventions. A stronger result would show how far that pattern can deviate at specified spins, making later comparisons and exclusions more trustworthy.
+
 ## Core question
 
 For one scalar four-point function in a unitary CFT with d>2, what controlled bounds on large-spin double-twist data follow from specified low-twist exchanges?
@@ -371,6 +506,40 @@ Baseline: reproduce an established leading large-spin result with conventions ch
 # 05. Positive-geometry tests for a fixed gravity integrand
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/05-Positive-Geometry-Gravity.md) · [Original description](../archive/original-PRDs/05-Positive-Geometry-Gravity.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Particle-collision formulas often contain many terms whose cancellations hide a simpler structure. In some theories, a geometric shape organizes the answer: its boundaries encode the ways a collision can split into simpler events. This problem asks whether a tightly specified class of shapes can do the same for one gravity calculation. It treats geometry as a possible explanation for the structure of a formula, not as a literal picture of spacetime.
+
+### Key terms
+
+- **Integrand** — The mathematical expression to be integrated to obtain a quantity such as a scattering amplitude.
+
+- **Loop** — A feature of a quantum correction involving internal momenta that must be integrated over; one loop is the first such level here.
+
+- **Supergravity** — A theory combining gravity with supersymmetry, a proposed relation between types of particles; N=8 specifies the chosen four-dimensional model.
+
+- **Positive geometry** — A region with mathematical boundary properties that determine a special differential form.
+
+- **Canonical form** — That distinguished differential form, whose singularities and boundary residues obey precise recursive rules.
+
+- **Residue** — The coefficient describing the leading contribution of a simple pole; here it encodes boundary information.
+
+- **Factorization** — The way a scattering process separates into simpler processes near certain physical singularities.
+
+- **Ansatz** — A deliberately restricted class of candidate expressions or geometric constructions searched for a solution.
+
+- **Pole at infinity** — A singularity revealed when a coordinate is taken to infinity, which must be included in a global comparison.
+
+### Why this matters
+
+A geometric organization could explain cancellations and suggest more efficient calculations or new identities in quantum gravity. Even a carefully limited impossibility theorem is informative: it tells us which geometric proposals are too restrictive and where a different idea is needed.
+
+### What progress would mean
+
+Success would mean either a verified shape-to-form correspondence or a proof that the declared candidate class cannot work. Failure to find a shape would not rule out every possible geometric description of gravity.
 
 ## Core question
 
@@ -452,6 +621,40 @@ Baseline: exact target and pole/residue audit. Strong: one verified representati
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/06-Nonperturbative-S-matrix-Bootstrap.md) · [Original description](../archive/original-PRDs/06-Nonperturbative-S-matrix-Bootstrap.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Suppose we do not know a theory’s microscopic machinery, but do know that collision probabilities must be sensible and different descriptions of the same process must agree. Can those rules alone rule out a proposed interaction strength? This problem searches the space of scattering possibilities rather than choosing one detailed microscopic theory. Because gravity acts over long distances and allows very low-energy radiation, defining the scattering question correctly is itself part of the work.
+
+### Key terms
+
+- **S-matrix** — The object relating incoming quantum states to outgoing states in a scattering experiment.
+
+- **Partial wave** — A contribution to scattering organized by angular momentum, which makes some probability constraints easier to state.
+
+- **Unitarity** — Conservation of total probability; an allowed scattering process cannot produce a total probability greater than one.
+
+- **Elastic scattering** — Scattering that stays within the chosen particle channel without producing additional particles or excitations.
+
+- **Crossing symmetry** — Relations between amplitudes for processes with differently assigned incoming and outgoing particles.
+
+- **Infrared prescription** — A stated way to handle low-energy radiation and long-distance singularities.
+
+- **Outer relaxation** — A larger, easier-to-test set containing all valid possibilities under the assumptions. Excluding a point from it can exclude the original possibility.
+
+- **Inner ansatz** — A selected subset of candidate amplitudes; failing to find a solution there need not exclude other amplitudes.
+
+- **Dual certificate** — An independently checkable mathematical witness establishing a bound or inconsistency.
+
+### Why this matters
+
+The method could identify restrictions shared by many possible microscopic theories. That is useful when no single theory is established. Its reliability depends on not mistaking a limitation of the search formula, grid or cutoff for a limitation imposed by physics.
+
+### What progress would mean
+
+A certified exclusion would eliminate a parameter choice under the stated scattering assumptions. The gravity-free reference case first checks the machinery; adding a defensible treatment of gravity would be the important next step.
+
 ## Core question
 
 Can one certify an exclusion for a low-energy scalar-scattering parameter using a crossing-symmetric partial-wave relaxation whose infrared and truncation assumptions are explicit?
@@ -531,6 +734,40 @@ Baseline: certified finite nongravitational relaxation. Strong: justify an IR tr
 # 07. Stress-tensor bootstrap: a sector-specific gap bound in three dimensions
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/07-Extremal-CFTs-Stress-Tensor.md) · [Original description](../archive/original-PRDs/07-Extremal-CFTs-Stress-Tensor.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Energy and momentum must be accounted for consistently in a quantum theory. The stress tensor is the mathematical object that tracks them. By examining how four stress-tensor insertions relate to one another, we can test whether a proposed theory is missing an excitation it ought to contain. The question here is how large a particular gap in the spectrum can be before the consistency rules contradict each other.
+
+### Key terms
+
+- **Stress tensor T** — The field that describes the local flow and distribution of energy and momentum.
+
+- **Conformal field theory** — A quantum theory with symmetry under angle-preserving transformations, including rescaling lengths.
+
+- **Central-charge parameter C_T** — The normalization of the stress tensor’s two-point correlation, used to characterize the theory in a fixed convention.
+
+- **TTT data** — Coefficients describing a three-stress-tensor correlation; they contain information beyond C_T.
+
+- **Scalar sector** — The set of exchanged operators with zero spin, chosen as the focus of the gap question.
+
+- **Parity-even** — Unchanged in sign under the specified spatial-reflection transformation.
+
+- **Spectral gap** — Here, the threshold in scaling dimension before the first nonidentity operator in the selected sector appears, not necessarily a material’s energy gap.
+
+- **Tensor structure** — One of the distinct ways the directional indices of spinning fields can enter a correlation function.
+
+- **Positive semidefinite matrix** — A matrix whose quadratic form is nonnegative for every vector; it expresses the needed positivity for multiple coupled tensor structures.
+
+### Why this matters
+
+The stress tensor is present in a broad class of local theories, so restrictions derived from it can have wide reach. Such restrictions help map which strongly interacting quantum theories are possible. They can also constrain proposed boundary descriptions of gravity, where the stress tensor has a special role.
+
+### What progress would mean
+
+A verified gap bound would show that a theory with the declared inputs must contain a certain kind of excitation below a threshold. It would not determine the entire spectrum or prove that a gravity theory is unique.
 
 ## Core question
 
@@ -614,6 +851,40 @@ Baseline: reproduce one finite benchmark and publish the assumptions. Strong: tu
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/08-Swampland-Modularity-Symmetries.md) · [Original description](../archive/original-PRDs/08-Swampland-Modularity-Symmetries.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A proposed quantum theory comes with mathematical rules for combining excitations and transforming its descriptions. These rules should fit together like the pieces of a puzzle. This problem builds exact checks for that fit and then asks a second question: can a chosen global symmetry be made into a gauge symmetry? A theory can be consistent even when this second operation is obstructed, so the two verdicts must remain separate.
+
+### Key terms
+
+- **Rational CFT** — A conformal field theory with finitely many basic representation types relative to a specified chiral algebra.
+
+- **Character** — A generating function counting states within one representation of that algebra.
+
+- **Modular S and T matrices** — Matrices describing how the characters change under two basic transformations of the torus.
+
+- **Fusion rules** — Rules specifying which excitation types can occur when two types are combined.
+
+- **Global symmetry** — A transformation applied consistently throughout a system that leaves its laws unchanged.
+
+- **Gauging** — Promoting an appropriate symmetry to a local redundancy and adding the corresponding gauge structure.
+
+- **Anomaly** — An obstruction to implementing a classical symmetry or a proposed gauging consistently in the quantum setting; an ’t Hooft anomaly can exist in a valid theory.
+
+- **Cocycle** — Algebraic data satisfying a compatibility identity, used here to encode an anomaly.
+
+- **Bulk and boundary** — The interior gravitational theory and its lower-dimensional boundary description; symmetries can have different interpretations in the two.
+
+### Why this matters
+
+Exact consistency checks can detect false candidate data before researchers invest in a full construction. They also clarify which symmetries can be gauged and which require additional structure, such as anomaly cancellation or inflow from another system. This is useful both for studying quantum field theories and for interpreting holographic gravity proposals.
+
+### What progress would mean
+
+The first contribution would be a dependable checker with known passing and failing examples. A failure would identify a particular algebraic inconsistency or gauging obstruction, rather than issuing an unsupported verdict about all of quantum gravity.
+
 ## Core question
 
 For supplied rational-CFT modular data and a specified finite internal symmetry, which algebraic consistency tests can be certified, and which failures obstruct a proposed gauging?
@@ -693,6 +964,40 @@ Baseline: exact modular-data checker on Ising and one second supplied model. Str
 # 09. Certified Chern phases in a bounded tight-binding family
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/09-Topological-Band-Theory.md) · [Original description](../archive/original-PRDs/09-Topological-Band-Theory.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Two solids can both resist ordinary electrical conduction in their interiors yet differ in how their quantum states fit together. In a topological phase, that global organization cannot be smoothly changed without passing through a gap closing or leaving the assumptions that protect it. Here we build simple lattice models and prove which parameter ranges belong to which phase. The task is closer to drawing an exact map of a model than predicting a particular material.
+
+### Key terms
+
+- **Hamiltonian H** — The mathematical operator specifying a quantum system’s energy and dynamics.
+
+- **Tight-binding model** — A lattice model in which particles occupy localized orbitals and move between them through specified hopping terms.
+
+- **Orbital** — One of the local quantum states included at a lattice site or within a unit cell.
+
+- **Band** — A range of allowed energies labeled by crystal momentum in a periodic system.
+
+- **Band gap** — An energy separation between the selected occupied bands and the next bands.
+
+- **Brillouin zone** — The space of distinct crystal momenta for a periodic lattice.
+
+- **Chern number** — An integer measuring a global twist in the selected quantum states across a two-dimensional Brillouin zone.
+
+- **Occupied projector** — An operator selecting the band states being treated as occupied.
+
+- **Phase diagram** — A map showing which kind of behavior occurs for each model-parameter range.
+
+### Why this matters
+
+Topological models explain why some properties depend on global structure rather than microscopic details. A certified phase map provides reliable examples for theory and simulation, and it helps identify which ingredients a proposed design actually needs. Proving a gap everywhere is important because a small missed gap closing can invalidate a computed topological label.
+
+### What progress would mean
+
+A useful result would give explicit models, guaranteed parameter ranges and checked Chern numbers. These could guide later physical designs, while leaving material stability, fabrication and experimental behavior to additional work.
 
 ## Core question
 
@@ -776,6 +1081,40 @@ Baseline: complete phase diagram for H_m away from transition values. Strong: a 
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/10-Flat-Chern-Bands.md) · [Original description](../archive/original-PRDs/10-Flat-Chern-Bands.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+In an ordinary energy band, particles can have quite different energies depending on how they move. A nearly flat band reduces those energy differences, potentially making interactions between particles more influential. We want that band to also have a nontrivial topological structure. The problem asks how well these goals can be combined when particles are allowed to hop only a limited distance and the model has a limited number of orbitals.
+
+### Key terms
+
+- **Flat band** — A band whose energy is constant across momentum space; a nearly flat band has a small but nonzero variation.
+
+- **Bandwidth W** — The difference between the largest and smallest energy in the selected band.
+
+- **Gap Δ** — The minimum energy separation between that band and other bands.
+
+- **Flatness ratio W/Δ** — A way to compare bandwidth to isolation from other bands; smaller values mean a flatter, well-separated band.
+
+- **Hopping range** — The greatest lattice distance over which the model allows direct hopping.
+
+- **Chern band** — A band with a nonzero Chern number, indicating nontrivial global topology.
+
+- **Berry curvature** — A local measure of how quantum states twist as momentum changes; its integral determines the Chern number in the stated convention.
+
+- **Quantum metric** — A measure of how distinguishable nearby momentum-dependent quantum states are.
+
+- **Spectral flattening** — A mathematical change to band energies that preserves the chosen states but generally changes the spatial range of hopping.
+
+### Why this matters
+
+Flat topological bands are useful settings for studying collective quantum behavior driven by interactions. But there are tradeoffs: restricting the model’s spatial range changes which flatness properties are possible. Quantifying those tradeoffs can show whether a proposed improvement is attainable or requires a more complicated model.
+
+### What progress would mean
+
+Progress would provide certified examples and limits within a defined design family. Favorable single-particle geometry would make a model interesting to investigate further; it would not by itself prove an interacting fractional topological phase.
+
 ## Core question
 
 For fixed orbital count, hopping range, and gap normalization, how small can a Chern band’s bandwidth and geometric nonuniformity be, with certified bounds?
@@ -855,6 +1194,40 @@ Baseline: one certified near-flat Chern model and a correct locality audit. Stro
 # 11. Certified topological bands in an idealized Maxwell medium
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/11-Photonic-Topological-Crystals.md) · [Original description](../archive/original-PRDs/11-Photonic-Topological-Crystals.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+A repeating optical structure changes which light waves can travel through it. With suitable nonreciprocal response, it may also support light that travels along an interface in a preferred direction. This problem asks whether a precisely defined ideal electromagnetic medium really has the required band structure and topology. It separates a mathematically guaranteed wave effect from the later task of finding a material that realizes the assumed response.
+
+### Key terms
+
+- **Maxwell equations** — The equations governing classical electric and magnetic fields.
+
+- **Periodic medium** — A medium whose properties repeat from cell to cell.
+
+- **Permittivity ε and permeability μ** — Quantities describing how a medium responds to electric and magnetic fields; they can be direction-dependent tensors.
+
+- **Nonreciprocity** — Response that breaks the usual interchange symmetry between source and receiver; here it provides the required time-reversal-breaking mechanism.
+
+- **Photonic band** — An allowed family of electromagnetic wave frequencies across crystal momenta.
+
+- **Transverse constraint** — The condition selecting physical wave fields consistent with the relevant divergence equation.
+
+- **Chern number** — An integer characterizing the topology of an isolated group of wave bands.
+
+- **Interface mode** — A wave concentrated near the boundary between two media.
+
+- **Lossless and nondispersive** — Idealizations in which energy is not absorbed and the constitutive response is taken independent of frequency.
+
+### Why this matters
+
+Controlling where and in which direction waves travel is a basic aim of optical engineering. Topology offers one mechanism for robust interface behavior under appropriate conditions. A certified Maxwell calculation would also expose whether an apparent effect is caused by numerical artifacts or by assumptions a real material cannot satisfy.
+
+### What progress would mean
+
+The first meaningful achievement would be a validated ideal medium with a proved gap and topological index. It could inform later waveguide designs, but performance in a lossy, frequency-dependent device would require a separate physical model.
 
 ## Core question
 
@@ -938,6 +1311,40 @@ Baseline: validated reciprocal eigenproblem. Strong: one certified ideal nonreci
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/12-Topological-Mechanical-Metamaterials.md) · [Original description](../archive/original-PRDs/12-Topological-Mechanical-Metamaterials.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A framework of bars or springs can be rigid in one place and easy to deform in another. Sometimes a carefully arranged repeating framework has soft motions concentrated at its boundary. The question is whether we can predict and prove those motions from the exact geometry, rather than simply observing them in a simulation. Counting connections helps, but the direction of each connection matters too.
+
+### Key terms
+
+- **Frame** — A network of sites joined by bars or springs, used as an ideal mechanical model.
+
+- **Degree of freedom** — An independently variable coordinate of the system’s motion.
+
+- **Isostatic or Maxwell frame** — A frame balanced between degrees of freedom and constraints in the relevant counting sense; details of zero modes and self stress still matter.
+
+- **Zero mode** — An infinitesimal displacement requiring no restoring energy in the linearized model.
+
+- **State of self stress** — A pattern of internal bond tensions that balances forces without external loads.
+
+- **Compatibility matrix C** — The linear map from small site displacements to bond extensions.
+
+- **Stiffness matrix K** — The operator relating displacements to restoring forces in the linear approximation.
+
+- **Winding number** — An integer counting how a complex quantity winds around zero along a closed path; here it helps characterize the periodic frame.
+
+- **Termination** — The precise way a periodic structure is cut to make a boundary.
+
+### Why this matters
+
+Geometry-controlled softness could help explain and design structures with directional compliance, boundary motion or localized mechanical response. The scientific value is understanding which behaviors follow from a robust index and which are accidental features of one geometry. That distinction matters before translating an ideal spring model into a physical structure.
+
+### What progress would mean
+
+A useful result would give a frame, an exact count of its allowed soft motions and a proof of where they concentrate. Material failure, nonlinear deformation and manufacturing tolerance would remain additional engineering questions.
+
 ## Core question
 
 For a geometrically specified isostatic frame and boundary termination, can the zero-mode count and localization be proved from its compatibility matrix?
@@ -1020,6 +1427,40 @@ Baseline: exact Maxwell–Calladine counts on finite frames. Strong: one periodi
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/13-Higher-Order-Topological-Insulators.md) · [Original description](../archive/original-PRDs/13-Higher-Order-Topological-Insulators.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A topological material can have interesting boundary behavior even when its broad edges do not conduct. In certain models, charge accumulates in a quantized way near corners instead. This problem asks how to establish that behavior carefully: what property belongs to the bulk, what depends on the way the sample is cut, and what extra symmetry is needed to place a corner state at exactly zero energy?
+
+### Key terms
+
+- **Higher-order topology** — Topology associated with lower-dimensional boundaries, such as corners of a two-dimensional sample or hinges of a three-dimensional sample.
+
+- **Quadrupole** — A pattern of electric charge organization beyond total charge and ordinary dipole polarization; the selected model supports a quantized version under particular assumptions.
+
+- **Bulk** — The interior of a system, far from boundaries.
+
+- **Wilson loop** — A matrix describing how a chosen set of quantum states changes when transported around a closed path in momentum space.
+
+- **Wannier sector** — A selected group of Wilson-loop eigenstates, separated from the others by a gap in that loop’s spectrum.
+
+- **Nested polarization** — A polarization calculated within such a Wannier sector, using a second transport calculation.
+
+- **Corner excess charge** — Charge near a corner measured relative to a specified background, after accounting for other contributions.
+
+- **Chiral symmetry** — An additional spectral symmetry that can relate positive and negative energies; it can matter for pinning special states to zero.
+
+- **Termination** — The actual boundary cut and local boundary structure of the sample.
+
+### Why this matters
+
+This problem broadens our understanding of how a material’s interior organizes behavior at its boundaries. It also corrects a common interpretive shortcut: a quantized corner charge and a zero-energy corner state are not the same observation. Reliable distinctions are needed before such features can be used as design principles.
+
+### What progress would mean
+
+Progress would produce a model with verified gaps, a well-defined bulk invariant and a carefully measured boundary consequence. It would establish a controlled example, rather than guarantee protected corner states for every sample shape or boundary.
+
 ## Core question
 
 For a fixed quadrupole-insulator family, can one certify the bulk and Wannier gaps, a quantized nested polarization, and the corresponding boundary charge under a specified termination?
@@ -1099,6 +1540,40 @@ Baseline: reproduce one quadrupole benchmark with valid Wilson-loop construction
 # 14. Certified Weyl nodes and slice topology in a lattice model
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/14-Topological-Semimetals-Weyl-Dirac.md) · [Original description](../archive/original-PRDs/14-Topological-Semimetals-Weyl-Dirac.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Energy bands in a three-dimensional crystal can meet at isolated points instead of remaining separated everywhere. Near certain crossings, the equations resemble those of a Weyl particle. Each crossing carries a handedness-like topological label. This problem asks whether we can find every such crossing in one lattice model, prove their labels, and connect them to the behavior of two-dimensional momentum slices.
+
+### Key terms
+
+- **Semimetal** — A system in which the occupied and unoccupied electronic states are not separated by a full insulating gap; the selected model has isolated band crossings.
+
+- **Weyl node** — A simple crossing of two bands with a characteristic linear structure and nonzero topological charge.
+
+- **Chirality** — The signed handedness of a simple Weyl crossing, defined here from its velocity matrix.
+
+- **Velocity matrix** — The derivatives describing how the Hamiltonian changes in each momentum direction near a node.
+
+- **Berry flux** — The integrated Berry curvature through a closed surface around a crossing.
+
+- **Momentum slice** — A two-dimensional section of the three-dimensional Brillouin zone, obtained by holding one momentum coordinate fixed.
+
+- **Fermi arc** — An open surface-state contour whose relation to bulk nodes depends on the chosen surface and energy.
+
+- **Root isolation** — A mathematical procedure proving that a small region contains a solution, often uniquely.
+
+- **Completeness** — A proof that no additional nodes have been missed anywhere in the claimed domain.
+
+### Why this matters
+
+Weyl nodes connect a local band crossing to a global topological constraint. They help explain unusual electronic structures and surface states, and provide controlled settings for studying the relation between particle-like excitations and lattice physics. Missing even a pair of nodes can change the interpretation of a phase diagram.
+
+### What progress would mean
+
+A certified catalog would establish all crossings and slice invariants of the selected model. It would give a reliable starting point for surface and response calculations, without pretending that bulk nodes uniquely determine every surface arc.
 
 ## Core question
 
@@ -1180,6 +1655,40 @@ Baseline: complete benchmark node and slice audit. Strong: certified parameter-d
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/15-Topological-Quantum-Chemistry.md) · [Original description](../archive/original-PRDs/15-Topological-Quantum-Chemistry.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Symmetry can act like a fingerprint for quantum bands: it provides a compact set of labels that can sometimes reveal nontrivial topology. But different objects can share a fingerprint. This problem asks exactly what can be inferred from symmetry labels, how to compute that inference reliably, and when the correct answer is that more information about the quantum states is needed.
+
+### Key terms
+
+- **Crystal symmetry** — A translation, rotation, reflection or related operation preserving the lattice structure and the stated physical setting.
+
+- **Representation** — Matrices describing how quantum states transform under a symmetry.
+
+- **Irreducible representation (irrep)** — A basic representation that cannot be decomposed into smaller independent representations of the same group.
+
+- **Compatibility relations** — Rules requiring symmetry labels at different momenta to fit into continuous bands.
+
+- **Atomic band representation** — Band data generated from suitably localized, symmetry-compatible orbitals.
+
+- **Wannier function** — A localized real-space representation of band states; the existence of an appropriate symmetry-respecting basis is central to atomicity.
+
+- **Symmetry indicator** — An algebraic label detecting certain obstructions to atomic band data, but not every possible topological distinction.
+
+- **Smith normal form** — An exact integer-matrix decomposition used to calculate the quotient of symmetry-data lattices.
+
+- **Fragile topology** — An obstruction that can disappear when suitable trivial bands are added, under the chosen definition.
+
+### Why this matters
+
+Symmetry labels are often much simpler to work with than the full wavefunctions across momentum space. Knowing what those labels do and do not prove can make topological diagnosis more efficient and prevent false declarations that a system is ordinary. The distinction is essential for turning a classification table into a trustworthy scientific tool.
+
+### What progress would mean
+
+A useful result would be an exact indicator calculation for one symmetry setting, together with examples showing its reach and blind spots. Stronger conclusions about a particular Hamiltonian would use additional information, such as Berry phases or a Wannier construction.
+
 ## Core question
 
 For one fixed symmetry setting, can compatibility relations and atomic band representations be generated exactly, and what topology can their quotient actually detect?
@@ -1259,6 +1768,40 @@ Baseline: exact quotient and decompositions for one setting. Strong: connect the
 # 16. Certified energy brackets from reduced-density-matrix relaxations
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/16-N-Representability-2RDM.md) · [Original description](../archive/original-PRDs/16-N-Representability-2RDM.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Describing every possible configuration of many electrons becomes overwhelmingly expensive as the system grows. Yet the energy of a system with one- and two-particle interactions depends only on certain one-electron and two-electron summaries. The challenge is that not every plausible summary can come from a real many-electron state. We use necessary consistency tests to calculate a guaranteed lower energy limit and an actual trial state to obtain an upper limit.
+
+### Key terms
+
+- **Fermion** — A particle, such as an electron, whose quantum states obey antisymmetry under exchange.
+
+- **Reduced density matrix (RDM)** — A summary of selected particles’ quantum statistics obtained from a larger system’s state.
+
+- **2-RDM** — The two-particle reduced density matrix, sufficient with the appropriate one-particle data to compute the chosen two-body Hamiltonian’s energy.
+
+- **N-representability** — The requirement that the reduced data arise from some valid state of N fermions.
+
+- **P, Q and G conditions** — Positivity tests involving particle pairs, hole pairs and particle–hole combinations; they are necessary representability conditions.
+
+- **Hole** — An unoccupied orbital state, treated as an absence of a particle relative to the finite orbital description.
+
+- **Semidefinite program (SDP)** — An optimization problem with linear conditions and positive-semidefinite matrix constraints.
+
+- **Ground-state energy** — The lowest allowed energy of the chosen quantum system.
+
+- **Energy bracket** — A pair of verified lower and upper numbers containing the true ground-state energy.
+
+### Why this matters
+
+Reliable energy calculations underpin the theoretical study of bonding and interacting electrons. A bracket tells us how much uncertainty remains, rather than merely reporting a convincing decimal number. The approach may extract useful information without storing a complete many-electron wavefunction, although general representability remains computationally difficult.
+
+### What progress would mean
+
+Progress would mean tighter verified brackets at an affordable cost for a specified finite model. That would show how much the extra constraints help; extending the conclusion to an actual molecule would also require controlling orbital-basis and Hamiltonian errors.
 
 ## Core question
 
@@ -1340,6 +1883,40 @@ Baseline: valid L,U brackets for small fixed models. Strong: quantify improvemen
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/17-Isomer-Enumeration-Molecular-Graphs.md) · [Original description](../archive/original-PRDs/17-Isomer-Enumeration-Molecular-Graphs.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A molecular formula tells us how many atoms of each kind are present, but not how they are connected. The same counts can describe different structures: butane and isobutane are a familiar example. This problem asks for every distinct connection pattern allowed by an explicit set of bonding rules, with a proof that none was counted twice and none was missed.
+
+### Key terms
+
+- **Molecular formula** — A count of atoms by element, such as C₄H₁₀.
+
+- **Constitutional isomer** — A structure with the same molecular formula as another but a different pattern of atom connections.
+
+- **Molecular graph** — A mathematical representation with atoms as vertices and bonds as edges carrying bond-order labels.
+
+- **Valence grammar** — The exact bonding rules permitted in this enumeration; it deliberately defines a restricted chemical model.
+
+- **Bond order** — The bond label distinguishing single, double and triple bonds in this graph model.
+
+- **Graph isomorphism** — A relabeling of atoms that preserves element types and bonds, showing two drawings represent the same graph.
+
+- **Canonical labeling** — A consistent representative label for a graph, used to identify duplicates.
+
+- **Stereoisomer** — A distinction in spatial arrangement not captured merely by the basic connection graph.
+
+- **Completeness certificate** — Evidence that the enumeration covers every object in the specified graph class.
+
+### Why this matters
+
+Complete enumeration turns an intuitive picture of “possible structures” into a checkable mathematical set. Such sets are useful for testing structure-generation methods and exploring how bonding constraints shape chemical possibilities. The guarantee is especially valuable when a search is used to support a claim that no alternative structure exists.
+
+### What progress would mean
+
+Success would supply exact graph counts and explicit structures under the chosen rules. A graph’s presence in the list would not imply that the corresponding molecule is stable, easily synthesized or realizable in a particular three-dimensional shape.
+
 ## Core question
 
 For a fixed formula and explicit valence grammar, can every connected constitutional graph be generated exactly once, with a checkable completeness argument?
@@ -1419,6 +1996,40 @@ Baseline: complete small-formula catalog with independent counts. Strong: comple
 # 18. Certified optimal-transport bounds for strictly correlated electrons
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/18-Optimal-Transport-Chemistry.md) · [Original description](../archive/original-PRDs/18-Optimal-Transport-Chemistry.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Electrons repel one another, but a prescribed electron density also constrains where they spend their time. Imagine arranging their joint positions so they avoid one another as effectively as possible while preserving that average density. This problem makes that arrangement question precise and seeks reliable upper and lower bounds on its repulsion energy. It represents a limiting strong-correlation model, not the full energy of ordinary electrons.
+
+### Key terms
+
+- **Electron density ρ** — The average spatial distribution of electrons, integrating to their total number N.
+
+- **Coulomb cost** — The repulsion contribution between charged particles, proportional here to the inverse of their separation.
+
+- **Optimal transport** — Optimization over ways of distributing or coupling quantities while satisfying prescribed distribution constraints.
+
+- **Marginal distribution** — The distribution of one variable after the other variables in a joint distribution are ignored.
+
+- **Coupling Γ** — A joint distribution of all electron positions consistent with the prescribed individual marginals.
+
+- **Multi-marginal transport** — Transport optimization with more than two prescribed marginals.
+
+- **Strictly correlated electrons (SCE)** — A limiting model in which electron positions are organized to minimize interaction energy at fixed density.
+
+- **Dual potential** — An auxiliary function providing a certified lower bound when it satisfies the required inequality everywhere.
+
+- **Discretization error** — The difference introduced by replacing a continuous spatial problem with a finite representation.
+
+### Why this matters
+
+Strongly correlated electrons are difficult to approximate because their motions are strongly linked. This limiting problem gives a mathematically structured reference for studying that linkage and for developing density-functional ideas. Verified bounds help distinguish a true property of the continuum model from an artifact of a spatial grid or optimization tolerance.
+
+### What progress would mean
+
+A useful result would enclose the SCE interaction energy for a declared density. It could inform further electronic-structure theory, while leaving kinetic energy, finite-correlation effects and actual molecular reaction paths to additional modeling.
 
 ## Core question
 
@@ -1502,6 +2113,40 @@ Baseline: certified two-marginal discrete bounds. Strong: one continuum enclosur
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/19-Chemical-Reaction-Networks.md) · [Original description](../archive/original-PRDs/19-Chemical-Reaction-Networks.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A list of chemical reactions can settle into different long-term concentration patterns. Some networks have one resting state; others can behave like a switch, with two stable states separated by an unstable one. This problem asks whether we can find every positive equilibrium of a small, explicitly specified network and prove which are locally stable. It also distinguishes never reaching zero at a finite time from genuinely avoiding extinction in the long run.
+
+### Key terms
+
+- **Reaction network** — A set of chemical species and rules converting specified combinations of reactants into products.
+
+- **Mass-action kinetics** — Rate laws in which each reaction rate is proportional to powers of its reactant concentrations, multiplied by a rate constant.
+
+- **Stoichiometry matrix S** — A table describing how each reaction changes the amount of each species.
+
+- **Conservation law** — A combination of species amounts that remains constant under the network’s reactions.
+
+- **Compatibility class** — The concentration states accessible under the same conserved quantities and stoichiometric constraints.
+
+- **Equilibrium or steady state** — A concentration pattern where the net rate of change is zero.
+
+- **Local stability** — The tendency of states starting sufficiently near an equilibrium to remain nearby, with asymptotic stability also implying return toward it.
+
+- **Multistationarity and multistability** — Having multiple equilibria, and having multiple stable equilibria, respectively.
+
+- **Persistence** — A long-time condition preventing each initially present species from approaching zero along the trajectory.
+
+### Why this matters
+
+Stable switches and coexistence are important organizing ideas in chemistry and biological regulation. An exact small-network analysis can establish whether a proposed mechanism even supports those behaviors. It also makes numerical simulation more interpretable: a trajectory can miss another equilibrium or appear stable simply because it has not been followed long enough.
+
+### What progress would mean
+
+Progress would give complete equilibrium information for the stated network, rates and conserved totals. A theorem covering many rate choices would be stronger; identifying a switch in a model would not by itself establish its role in a living system.
+
 ## Core question
 
 For a finite mass-action network with specified rates and conservation totals, can all positive equilibria in one compatibility class be isolated and their local stability certified?
@@ -1581,6 +2226,40 @@ Baseline: exact structural facts and complete small fixed-parameter root enumera
 # 20. Path-integral thermodynamics with a transparent error budget
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/20-Ab-Initio-Path-Integrals.md) · [Original description](../archive/original-PRDs/20-Ab-Initio-Path-Integrals.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+At small scales, particles cannot always be treated as tiny classical balls sitting at definite positions. Their quantum spreading affects thermal averages, especially for light particles. Path-integral methods replace part of this quantum calculation with a sampling problem involving an artificial ring of linked copies of a particle. This challenge checks that the sampling produces the right equilibrium quantities and that each source of error is reported separately.
+
+### Key terms
+
+- **Thermodynamics** — The study of quantities such as energy and temperature describing equilibrium behavior.
+
+- **Path integral** — A formulation of quantum mechanics involving a sum over possible paths; here it is used in imaginary time for equilibrium properties.
+
+- **Imaginary time** — A mathematical reformulation of time used to connect quantum calculations with thermal statistics, not a physical clock reading.
+
+- **Ring polymer and beads** — The artificial closed chain and its particle copies used to approximate the imaginary-time path integral.
+
+- **PIMD** — Path-integral molecular dynamics, a method using auxiliary dynamics to sample the ring-polymer equilibrium distribution.
+
+- **Estimator** — A formula calculated from sampled configurations to estimate a desired physical average.
+
+- **Discretization bias** — Systematic error caused here by using a finite number of beads or a finite integration step.
+
+- **Sampling uncertainty** — Uncertainty from using only a finite sample of configurations.
+
+- **Born–Oppenheimer surface** — An approximate potential energy for nuclear motion obtained by treating electronic behavior separately.
+
+### Why this matters
+
+Quantum thermal effects matter for understanding how light particles behave in molecules and materials. But an accurate-looking simulation can combine several hidden errors: too few beads, incomplete sampling, time-step effects and an approximate potential. A transparent error budget makes the calculation useful as a scientific measurement of the model rather than just a plausible plot.
+
+### What progress would mean
+
+The initial result would reproduce known oscillator averages and then handle one controlled anharmonic case. It would validate equilibrium predictions; it would not automatically give exact real-time reaction rates or remove approximations in an electronic-structure model.
 
 ## Core question
 
@@ -1664,6 +2343,42 @@ Baseline: oscillator thermodynamics within predeclared statistical and bias tole
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/21-Quantum-LDPC-Codes.md) · [Original description](../archive/original-PRDs/21-Quantum-LDPC-Codes.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Quantum information is fragile, but simply copying an unknown quantum state is not allowed. An error-correcting code instead stores information jointly across many physical qubits so that selected measurements reveal errors without directly reading the encoded information. This problem builds sparse-check codes and verifies how much information they store, how many errors their structure can withstand, and how a chosen recovery algorithm performs.
+
+### Key terms
+
+- **Qubit** — A quantum information unit whose state can involve superpositions of two basis states.
+
+- **Physical and logical qubits** — The individual qubits used by the device, and the protected information units encoded across them.
+
+- **Quantum error-correcting code** — A structured encoding that permits detection and correction of specified errors.
+
+- **LDPC** — Low-density parity-check: a code family with checks involving bounded numbers of qubits and each qubit participating in bounded numbers of checks.
+
+- **CSS code** — A code built from compatible binary checks for two types of quantum error, named after Calderbank, Shor and Steane.
+
+- **Stabilizer** — An operator that leaves every valid encoded state unchanged; measuring checks can reveal violations.
+
+- **Syndrome** — The collection of check outcomes indicating what kind of error may have occurred.
+
+- **Code distance d** — The smallest number of qubits on which an undetectable nontrivial logical operation can act.
+
+- **Decoder** — An algorithm that uses a syndrome to choose a recovery operation.
+
+- **Hypergraph product** — A construction combining two classical parity-check matrices into a quantum code.
+
+### Why this matters
+
+Useful quantum computation requires reliable logical information despite noisy components. Sparse checks offer a route to distributing error correction efficiently, but code parameters and decoder behavior must be demonstrated rather than assumed. Exact small examples are valuable for detecting mistakes that large simulations can conceal.
+
+### What progress would mean
+
+Success would provide verified code parameters and decoder results under a stated error model. It would help compare constructions fairly, while leaving hardware connectivity, noisy measurements and the full cost of fault-tolerant computation as separate requirements.
+
 ## Core question
 
 For a specified CSS construction, can code dimension and distance bounds be verified independently, and can decoder performance be measured under one explicit noise model?
@@ -1745,6 +2460,42 @@ Baseline: exact small product code and certified distance bracket. Strong: sever
 # 22. Bell inequalities with certified local and quantum value brackets
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/22-Bell-Inequalities-Nonlocality.md) · [Original description](../archive/original-PRDs/22-Bell-Inequalities-Nonlocality.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Two distant experimenters choose measurements and compare their outcomes. If the outcomes were produced only by shared classical instructions, their correlations would obey particular inequalities. Quantum systems can exceed some of those limits. This problem calculates both the classical ceiling and a reliable quantum range for a specified test, so that the size of the difference is established mathematically.
+
+### Key terms
+
+- **Bell scenario** — A specification of the parties, their measurement choices and the possible outcomes.
+
+- **Local hidden-variable model** — A model in which outcomes depend on local choices and shared classical information, with measurement-choice independence among the assumptions.
+
+- **Bell inequality** — A linear restriction satisfied by the correlations of such local models.
+
+- **CHSH** — The simplest standard two-party test with two binary measurement choices per party.
+
+- **Quantum strategy** — A specified shared quantum state and local measurements producing correlations.
+
+- **POVM** — A set of positive operators summing to the identity that describes a general quantum measurement.
+
+- **Tsirelson bound** — A quantum upper limit on a Bell expression, with 2√2 the familiar CHSH value in its standard normalization.
+
+- **NPA hierarchy** — A sequence of matrix-positivity tests providing outer bounds on quantum correlations.
+
+- **Commuting-operator model** — A framework in which different parties’ measurements commute; its general correlation set differs from the finite-dimensional tensor-product setting.
+
+- **Facet** — A full boundary face of the appropriate dimension of the classical correlation polytope.
+
+### Why this matters
+
+Bell inequalities make the difference between classical local explanations and quantum correlations precise. They also underlie ways to certify quantum behavior from observed input-output relationships. Reliable quantum bounds are essential: a numerical optimization value without a valid upper certificate or achieving strategy may misstate what quantum theory permits.
+
+### What progress would mean
+
+A complete small test would include an exact classical maximum, an explicit quantum strategy and a matching or enclosing upper bound. Applications to randomness or cryptography would need additional statistical and security assumptions beyond this mathematical benchmark.
 
 ## Core question
 
@@ -1830,6 +2581,42 @@ Baseline: exact CHSH lower and upper certificates. Strong: a preselected additio
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/23-Entanglement-Measures-Witnesses.md) · [Original description](../archive/original-PRDs/23-Entanglement-Measures-Witnesses.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Two quantum systems can be related in ways that no mixture of independent local states can reproduce. That is entanglement. Given a mathematical description of a joint state, this problem asks for evidence that it is entangled, evidence that it is separable, or an honest statement that the available tests cannot decide. It also asks how to quantify one particular aspect of entanglement without mixing different measures together.
+
+### Key terms
+
+- **Bipartite system** — A quantum system divided into two identified parts, such as two qubits held by different parties.
+
+- **Density matrix ρ** — An operator describing a quantum state, including statistical mixtures.
+
+- **Separable state** — A mixture of product states of the two parts; correlations in such a decomposition can arise from shared classical information.
+
+- **Entangled state** — A state that has no separable decomposition across the chosen division.
+
+- **Entanglement witness** — An observable nonnegative on every separable state but negative on the state being tested.
+
+- **Partial transpose** — A matrix operation transposing the indices of just one subsystem, useful for testing entanglement.
+
+- **PPT** — Positive partial transpose: a necessary separability condition that is sufficient only in certain small dimensions.
+
+- **Negativity** — A quantity measuring the negative part of the partial-transpose spectrum; zero does not generally imply separability.
+
+- **DPS hierarchy** — Tests based on whether the state can be extended to larger symmetric states; failure can certify entanglement.
+
+- **Concurrence** — A particular entanglement measure with a useful explicit formula for two-qubit states.
+
+### Why this matters
+
+Entanglement is an important resource in many quantum-information protocols, but claiming it from an inconclusive test can invalidate a proposed demonstration. Conversely, explicit witnesses show exactly what establishes its presence. Quantitative bounds are useful because different states may possess very different strengths or kinds of quantum correlations.
+
+### What progress would mean
+
+The deliverable would make its verdict inspectable: a witness, a decomposition, or unresolved status. That would provide a reliable component for analyzing quantum states, rather than promise a universally easy entanglement test.
+
 ## Core question
 
 For a finite bipartite density matrix, can one produce a checked entanglement witness or a separable decomposition, and bound a specifically chosen entanglement measure?
@@ -1909,6 +2696,42 @@ Baseline: checked two-qubit decisions and measure values. Strong: a validated DP
 # 24. Topological code verification and noise-specific decoder evaluation
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/24-Topological-Quantum-Error-Correction.md) · [Original description](../archive/original-PRDs/24-Topological-Quantum-Error-Correction.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Imagine storing information in loops spread across a lattice so that a small local disturbance usually cannot change the stored value. A topological quantum code uses a quantum version of this idea. Local measurements reveal the endpoints of error patterns, and a decoder tries to join those endpoints correctly. The subtlety is that two repairs can have the same endpoints yet differ by a loop that changes the logical information.
+
+### Key terms
+
+- **Toric code** — A quantum error-correcting code on a lattice with periodic boundaries, topologically equivalent to a torus.
+
+- **Surface code** — A related geometric code with carefully chosen open boundaries.
+
+- **Logical operator** — An operation changing the encoded information while remaining consistent with the code’s checks.
+
+- **Noncontractible loop** — A loop winding around the torus that cannot be shrunk to a point within it.
+
+- **Homology** — A mathematical way of distinguishing cycles modulo boundaries; here it identifies whether a closed error pattern acts logically.
+
+- **Syndrome** — Check outcomes locating the boundary of an error chain.
+
+- **Recovery** — An operation chosen to cancel the error; matching the syndrome is necessary but does not ensure logical success.
+
+- **Minimum-weight matching** — A graph optimization method used in certain decoders to pair defects efficiently.
+
+- **Logical failure probability** — The probability that error and recovery together change encoded information.
+
+- **Threshold** — An asymptotic noise boundary for successful suppression of logical errors in a specified code-and-decoder family.
+
+### Why this matters
+
+Geometric codes connect an intuitive picture of local errors to precise algebraic guarantees. They are important models for protecting quantum information using structured measurements. Understanding logical failure, rather than only syndrome cancellation, is essential for assessing whether increasing the code size actually improves reliability.
+
+### What progress would mean
+
+A useful result would prove the code’s parameters and measure a fixed decoder under a declared noise model. An estimated threshold would remain specific to that model and decoder, not a universal device error tolerance.
 
 ## Core question
 
@@ -1990,6 +2813,42 @@ Baseline: exact construction and distance proof with a tested decoder. Strong: r
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/25-Quantum-Algorithms-Complexity.md) · [Original description](../archive/original-PRDs/25-Quantum-Algorithms-Complexity.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A claim that a quantum computer is faster is incomplete until we specify what information it receives, what answer it must return, and which operations we count. Here the problem is deliberately simple: find one marked item in a list when the only way to learn about an item is to query it. We compare a quantum search procedure with a proof of how many queries any procedure of the chosen kind must use.
+
+### Key terms
+
+- **Oracle** — A precisely defined black-box operation providing access to input information; it is a mathematical access model, not a prediction device.
+
+- **Query** — One use of the oracle, counted separately from other computation.
+
+- **Promise problem** — A problem whose inputs are guaranteed to satisfy a stated restriction, here exactly one marked item.
+
+- **Grover search** — A quantum algorithm that amplifies the probability of observing a marked item using repeated oracle and interference operations.
+
+- **Amplitude** — A quantum coefficient whose squared magnitude contributes to an outcome probability.
+
+- **Query complexity** — The number of oracle uses required to solve a problem with the specified success probability.
+
+- **Upper and lower complexity bounds** — An algorithm showing that a cost suffices, and a proof that no allowed algorithm can beat a stated cost.
+
+- **BPP and BQP** — Classes of problems efficiently solvable with bounded error by classical randomized and quantum computation, respectively.
+
+- **Oracle separation** — A proof that two classes differ when both have access to a particular oracle; it does not by itself separate the ordinary classes.
+
+- **Gate complexity** — The number of elementary circuit operations, a different resource from oracle queries.
+
+### Why this matters
+
+This is a clean setting in which a quantum advantage can be proved rather than inferred from a small simulation. It also teaches how to assess broader speedup claims fairly. Input preparation, precision and output requirements can dominate a real application even when a query bound looks attractive.
+
+### What progress would mean
+
+Success would combine a working small implementation with an all-size argument matching upper and lower query bounds. That establishes an advantage in this access model, not a blanket claim that quantum computers speed up every search task.
+
 ## Core question
 
 For unstructured search with a specified promise, can an implementation and an analytic lower bound establish a matched quantum query complexity?
@@ -2070,6 +2929,42 @@ Baseline: Grover construction and matched query bound. Strong: one second promis
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/26-KAM-Theory-Planetary-Stability.md) · [Original description](../archive/original-PRDs/26-KAM-Theory-Planetary-Stability.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A weakly disturbed mechanical system can sometimes keep moving in an orderly pattern forever, even though the motion never exactly repeats. KAM theory explains how certain such motions survive a perturbation. This problem starts with a proposed orderly motion and checks, with rigorous error bounds, whether a true one must exist nearby. The goal is a guarantee about a specified mathematical orbit family, not a prediction that every nearby trajectory is stable.
+
+### Key terms
+
+- **Hamiltonian** — An energy function that generates the system’s equations of motion.
+
+- **Integrable system** — A system with enough conserved structure to describe its motion using constant actions and evolving angles in the setting considered here.
+
+- **Action–angle variables** — Coordinates in which the actions label the motion and the angles describe its cyclic phases.
+
+- **Invariant torus** — A torus-shaped set in phase space that trajectories starting on it never leave; it need not be a physical doughnut in ordinary space.
+
+- **Quasiperiodic motion** — Motion combining incommensurate frequencies, so it remains organized without repeating exactly.
+
+- **KAM theory** — Kolmogorov–Arnold–Moser theory, describing persistence of suitable quasiperiodic motions under sufficiently small perturbations.
+
+- **Diophantine condition** — An arithmetic bound keeping integer combinations of the frequencies from becoming too close to zero.
+
+- **A posteriori theorem** — A theorem that uses a computed approximate solution and its error to establish a nearby exact solution.
+
+- **Residual** — The amount by which the approximate solution fails to satisfy the exact equation.
+
+- **Interval arithmetic** — Computation with enclosing intervals, using controlled rounding to bound numerical errors.
+
+### Why this matters
+
+Long-term stability is difficult to infer from a finite trajectory simulation. A theorem can instead prove that a particular organized motion exists despite perturbations. This offers a foundation for studying stability mechanisms in celestial and other Hamiltonian systems, provided the model and theorem assumptions are appropriate.
+
+### What progress would mean
+
+A certificate for a nonzero perturbation would convert an approximate torus into an existence result. Applying the method to planetary observations would additionally require reduction of the planetary model and a careful treatment of measured initial-condition uncertainty.
+
 ## Core question
 
 For an explicitly specified analytic near-integrable Hamiltonian and an approximate torus, can every hypothesis of a quantitative KAM theorem be verified?
@@ -2149,6 +3044,42 @@ Baseline: unperturbed certificate and complete arithmetic/theorem setup. Strong:
 # 27. Central configurations in a bounded, symmetry-reduced N-body problem
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/27-N-Body-Central-Configurations.md) · [Original description](../archive/original-PRDs/27-N-Body-Central-Configurations.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Most collections of gravitating bodies change their overall shape as they move. Certain special arrangements can rotate or expand and contract while keeping the same shape. These are central configurations. This problem asks for every such arrangement in a carefully limited case, with a proof that the list is complete and a separate analysis of what small disturbances do to the associated rotating motion.
+
+### Key terms
+
+- **N-body problem** — The problem of describing the motion of N mutually gravitating bodies.
+
+- **Central configuration** — An arrangement in which each body’s gravitational acceleration is proportional to its position relative to the center of mass, with one common proportionality factor.
+
+- **Homographic motion** — Motion preserving the arrangement’s shape while its size and orientation may change.
+
+- **Relative equilibrium** — A motion that is stationary in an appropriate rotating reference frame.
+
+- **Center of mass** — The mass-weighted average position, used here to remove overall translation.
+
+- **Normalization** — A fixed choice of scale, such as setting the moment of inertia to one, so scaled copies are not counted separately.
+
+- **Symmetry quotient** — The convention for treating configurations related by rotations, reflections or specified relabelings as equivalent.
+
+- **Collision-free** — Having strictly positive separation between every pair of bodies.
+
+- **Coriolis term** — A velocity-dependent term arising in a rotating frame, essential to the stability calculation.
+
+- **Spectral stability** — A statement about eigenvalues of the linearized dynamics; it is weaker than a full nonlinear stability proof.
+
+### Why this matters
+
+Central configurations are organizing structures in gravitational dynamics and provide exact reference cases amid otherwise complicated motion. A complete small catalog can test numerical methods and reveal how mass choices and symmetry affect possible motions. The problem also links gravity to exact algebraic root finding.
+
+### What progress would mean
+
+Progress would establish a complete list under a stated mass choice and symmetry convention. It would not classify every periodic orbit: a choreography such as the figure-eight changes shape and belongs to a different question.
 
 ## Core question
 
@@ -2232,6 +3163,42 @@ Baseline: complete certified three-body catalog. Strong: complete enumeration in
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/28-Nekhoroshev-Stability-Theory.md) · [Original description](../archive/original-PRDs/28-Nekhoroshev-Stability-Theory.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A system need not move on a perfectly orderly orbit to remain near its initial state for a very long time. Small disturbances can produce only a slow drift in certain quantities. This problem asks for an explicit guarantee: how far can those quantities change, and for how long is that bound valid? It focuses on a finite time horizon rather than proving that a special motion persists forever.
+
+### Key terms
+
+- **Near-integrable Hamiltonian** — An energy function consisting of a well-understood integrable part plus a small perturbation.
+
+- **Action** — A coordinate that is constant in the integrable reference system and may drift when a perturbation is added.
+
+- **Confinement bound** — A guaranteed maximum change of the specified actions over a stated time interval.
+
+- **Normal form** — A transformed expression of the equations separating manageable terms from a remainder.
+
+- **Canonical transformation** — A change of variables preserving the Hamiltonian structure of the dynamics.
+
+- **Remainder** — Terms not absorbed into the simplified normal form; bounding their size helps bound drift.
+
+- **Resonance** — An integer relation among frequencies that can change how perturbations affect the motion.
+
+- **Nekhoroshev theorem** — A theorem giving very long action-confinement times for small perturbations under specified regularity and nondegeneracy assumptions.
+
+- **Quasi-convexity** — A particular curvature condition on the integrable energy function used by some such theorems.
+
+- **Dimensional time** — A time expressed in declared physical or model units, rather than an unexplained numerical factor.
+
+### Why this matters
+
+Finite-time guarantees answer a question that simulations alone cannot settle beyond their run length. They also distinguish a valid stability argument from an impressive-looking exponential formula with missing constants or units. Understanding slow drift is relevant to the mathematical study of planetary and other nearly integrable systems.
+
+### What progress would mean
+
+A useful first result could be a modest but fully justified confinement time. Improving that time with controlled remainders would be real progress; asserting billions of years would require an appropriate physical model and every conversion and bound needed to support it.
+
 ## Core question
 
 For a specified analytic Hamiltonian and action domain, what rigorously computable action excursion and confinement time follow from a certified normal form or quantitative Nekhoroshev theorem?
@@ -2312,6 +3279,42 @@ Baseline: one explicit finite-time confinement certificate. Strong: optimized tr
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/29-Chemical-Reaction-Networks-Origins.md) · [Original description](../archive/original-PRDs/29-Chemical-Reaction-Networks-Origins.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Could a collection of reactions collectively help produce the substances that make those same reactions happen? Autocatalytic-set theory turns part of that question into a precise network test. Starting from an externally supplied food set, we ask which reactions can be supported by products of the network and which smaller subsets already have that property. This describes a structural prerequisite for self-sustaining chemistry, not a complete definition of life.
+
+### Key terms
+
+- **Catalyst** — A substance participating in a reaction mechanism that increases its rate while being regenerated overall; it does not change the equilibrium free-energy difference.
+
+- **Autocatalysis** — Production that directly or collectively helps enable more production of the relevant system.
+
+- **Food set** — The species assumed to be available from outside the network.
+
+- **Closure** — All species producible from the food set using the selected reaction rules; standard RAF closure temporarily ignores catalysis.
+
+- **RAF** — A reflexively autocatalytic and food-generated reaction set: its reactants are reachable from food and each reaction has a catalyst available within the closure.
+
+- **Maximal RAF** — The largest RAF contained in the supplied network, when a RAF exists.
+
+- **Irreducible RAF** — A RAF containing no smaller nonempty RAF subset.
+
+- **Minimum-cardinality RAF** — A RAF with the fewest reactions among all RAFs in the specified network; this is stronger than irreducibility.
+
+- **Chemostat** — An idealized externally maintained concentration or chemical reservoir.
+
+- **Dynamical viability** — The additional question of whether specified reaction rates and conditions support sustained activity or growth.
+
+### Why this matters
+
+Collectively supported chemistry is relevant to thinking about how organized reaction systems can arise and persist. Exact minimality results help distinguish essential reactions from dispensable ones in a model. Just as importantly, separating structural closure from energy supply and kinetics prevents a network diagram from being mistaken for proof of a viable replicating system.
+
+### What progress would mean
+
+Success would identify supported reaction sets and prove the stated kind of minimality. Demonstrating sustained growth, heredity or evolution would require extra chemical and dynamical assumptions beyond the RAF certificate.
+
 ## Core question
 
 For a finite catalytic reaction system, can its maximal RAF and smallest RAF subsets be certified, while keeping structural autocatalysis distinct from sustained growth?
@@ -2391,6 +3394,42 @@ Baseline: checked maxRAF/RAF witnesses. Strong: complete minimum-cardinality res
 # 30. An exact finite genotype–phenotype map and its mutation graph
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/30-Genotype-Phenotype-Mapping.md) · [Original description](../archive/original-PRDs/30-Genotype-Phenotype-Mapping.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Different sequences of genetic letters can produce the same modeled structure. That creates paths through sequence space along which mutations leave the chosen outcome unchanged. This problem constructs a small RNA-inspired map exactly and asks how those paths connect, how often one mutation changes the outcome, and which new structures are nearby. The aim is to study a controlled model of robustness and variation.
+
+### Key terms
+
+- **Genotype** — The input sequence, here a string over the four RNA letters A, C, G and U.
+
+- **Phenotype** — The selected output of the model, here a secondary-structure pattern rather than an organism’s full observable traits.
+
+- **Secondary structure** — A pattern of paired positions along an RNA sequence, with the allowed pairings and restrictions stated explicitly.
+
+- **Nussinov-style model** — A combinatorial folding model maximizing the number of allowed pairs, not a full free-energy calculation.
+
+- **Tie-breaking rule** — A deterministic rule choosing one output when several structures achieve the same score.
+
+- **Hamming graph** — A graph whose vertices are sequences and whose edges join sequences differing at exactly one position.
+
+- **Neutral component** — A connected group of sequences with the same modeled phenotype.
+
+- **Mutational robustness** — The fraction of a genotype’s one-letter changes that preserve its phenotype under the chosen map.
+
+- **Evolvability** — Here, a specified count of different phenotypes accessible by mutation, not a complete measure of biological adaptability.
+
+- **Fitness** — A separately defined measure of reproductive success or a model score; it is not determined automatically by the folding map.
+
+### Why this matters
+
+The structure of a genotype–phenotype map helps explain how variation can accumulate without immediately changing a selected outcome, and how new outcomes become accessible. Exact small maps provide benchmarks for sampling methods and expose how conclusions depend on folding rules and tie choices.
+
+### What progress would mean
+
+A complete short-sequence graph would establish precise robustness and connectivity facts for the model. Those facts could motivate biological hypotheses, but would not by themselves predict RNA function, population evolution or a universal transition at some sequence length.
 
 ## Core question
 
@@ -2474,6 +3513,40 @@ Baseline: complete exact maps through L=8. Strong: increase L within measured re
 
 **Source:** synthesis challenge 11; [original synthesis](../NOTES/30-Most-Compelling-Pure-Thought-AI-Challenges.md). This topic is distinct from, or adds a distinct objective to, the canonical PRD catalog. [Crosswalk](../reviews/SYNTHESIS-CROSSWALK.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+An ion inside a crystal can respond differently to a magnetic field pointing in different directions. Its neighboring atoms shape the electron’s available states, while the electron’s spin interacts with its orbital motion. This problem asks whether a small, explicitly specified quantum model can establish those directional differences with reliable numerical bounds.
+
+### Key terms
+
+- **Ion** — An atom or group of atoms carrying net electric charge.
+
+- **Crystal field** — The influence of surrounding charges on an ion’s electronic energy levels.
+
+- **Spin** — An electron’s intrinsic quantum angular momentum.
+
+- **Orbital angular momentum** — Quantum angular momentum associated with spatial electronic motion.
+
+- **Spin–orbit coupling** — An interaction linking spin and orbital angular momentum.
+
+- **Hamiltonian** — The operator specifying the model’s energies and quantum evolution.
+
+- **Kramers doublet** — A pair of equal-energy states protected by time-reversal symmetry in this half-integer-spin setting at zero magnetic field.
+
+- **g tensor** — A matrix describing the directional magnetic response of the selected effective doublet.
+
+- **Excitation gap** — The energy separation from the chosen low-energy states to the next states.
+
+### Why this matters
+
+Directional magnetic response is a basic ingredient in understanding magnetic materials and controlling spin states. A finite ion model lets us separate the roles of local geometry and spin–orbit coupling before tackling interactions among many ions.
+
+### What progress would mean
+
+Progress would mean certified response ranges and excitation gaps over the specified parameter region, with clear limits on when the effective doublet description applies. This would establish a local mechanism; predicting a bulk magnet would require additional interactions and material information.
+
 ## Revised core question
 
 For a fixed d-shell occupancy and point-group representation, which anisotropy values are possible in a bounded crystal-field/spin–orbit Hamiltonian family?
@@ -2493,13 +3566,45 @@ Baseline: exact symmetry-allowed Hamiltonian basis and one doublet g tensor. Str
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
-
-
 ---
 
 # S02. Bandgap optimization in a bounded wave-operator family
 
 **Source:** synthesis challenge 12; [original synthesis](../NOTES/30-Most-Compelling-Pure-Thought-AI-Challenges.md). This topic is distinct from, or adds a distinct objective to, the canonical PRD catalog. [Crosswalk](../reviews/SYNTHESIS-CROSSWALK.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Some repeating structures prevent waves in certain frequency ranges from traveling through their interior. The challenge is to choose a structure that makes this forbidden range as large as possible within stated material and geometric limits. A gap must survive every propagation direction, including directions missed by a convenient plotting path.
+
+### Key terms
+
+- **Wave operator** — The mathematical rule governing the waves in the chosen physical model.
+
+- **Periodic medium** — A material pattern repeated through space.
+
+- **Unit cell** — One repeating piece of that pattern.
+
+- **Bloch wave** — A wave adapted to a periodic medium, labeled by a wave vector.
+
+- **Brillouin zone** — The set of inequivalent wave vectors needed to describe a periodic medium.
+
+- **Band** — A family of allowed wave frequencies or corresponding operator eigenvalues.
+
+- **Complete bandgap** — A frequency interval containing no bulk wave modes for any wave vector in the specified model.
+
+- **Contrast** — The permitted ratio or variation between material coefficients.
+
+- **Global optimum** — The best value across the entire declared design family, rather than just nearby designs.
+
+### Why this matters
+
+Controlling which waves propagate supports ideas for sound isolation, vibration management and optical filtering. The same mathematical challenge arises across these applications: a promising numerical design needs reliable evidence that its gap exists everywhere and that any optimality claim covers the stated design space.
+
+### What progress would mean
+
+A successful result would certify a nonzero gap, bound the best achievable objective, or establish an optimum within the bounded family. A scalar-wave benchmark would test the method; applying it to electromagnetic devices requires the appropriate Maxwell model and physical constraints.
 
 ## Revised core question
 
@@ -2520,13 +3625,45 @@ Baseline: one certified complete gap for a supplied geometry. Strong: bound the 
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
-
-
 ---
 
 # S03. Effective conductivity bounds for two-phase composites
 
 **Source:** synthesis challenge 13; [original synthesis](../NOTES/30-Most-Compelling-Pure-Thought-AI-Challenges.md). This topic is distinct from, or adds a distinct objective to, the canonical PRD catalog. [Crosswalk](../reviews/SYNTHESIS-CROSSWALK.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Mix two materials that conduct heat or electricity differently. The overall conductivity depends on how the materials are arranged, not just how much of each is present. This problem asks for reliable upper and lower bounds on the conductivity of a specified repeating arrangement, and a careful distinction between its performance and limits that apply to every arrangement.
+
+### Key terms
+
+- **Conductivity** — A coefficient relating a driving gradient to the resulting current or heat flux in the selected linear model.
+
+- **Two-phase composite** — A material made from two constituent material types.
+
+- **Volume fraction** — The fraction of space occupied by one constituent.
+
+- **Effective conductivity** — The large-scale response obtained after averaging the microscopic structure.
+
+- **Conductivity tensor** — A matrix allowing that response to depend on direction.
+
+- **Potential** — A scalar field, such as electric potential, whose gradient drives transport.
+
+- **Flux** — The local flow of the transported quantity per unit area.
+
+- **Divergence-free flux** — A steady flow with no internal accumulation or sources.
+
+- **Variational bound** — An inequality obtained by optimizing or testing an energy principle.
+
+### Why this matters
+
+Composite design seeks useful bulk properties from available ingredients. Bounds reveal whether a proposed arrangement performs well, whether a computation is accurate, and how much improvement remains possible. Simple layered structures also provide exact reference cases for checking more complicated methods.
+
+### What progress would mean
+
+Progress would produce a certified interval for a chosen directional response and clarify which bounds are geometry-specific or universal. The result would concern the stated positive, linear conductivities; nonlinear effects, interfaces and manufacturing constraints would need separate treatment.
 
 ## Revised core question
 
@@ -2547,13 +3684,45 @@ Baseline: verify arithmetic and harmonic directional bounds with layered composi
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
-
-
 ---
 
 # S04. Finite-volume certification of a disordered topological index
 
 **Source:** synthesis challenge 15; [original synthesis](../NOTES/30-Most-Compelling-Pure-Thought-AI-Challenges.md). This topic is distinct from, or adds a distinct objective to, the canonical PRD catalog. [Crosswalk](../reviews/SYNTHESIS-CROSSWALK.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+A perfectly repeating lattice is convenient for calculating topological properties, but disorder breaks that repetition. This problem asks when a calculation on a finite, disordered patch can prove a topological property of the corresponding infinite system. The key issue is whether the patch is large enough and the model controlled enough for its answer to be trustworthy.
+
+### Key terms
+
+- **Hamiltonian** — The operator describing the lattice system’s energies and couplings.
+
+- **Disorder** — Spatial variation in parameters that need not repeat periodically.
+
+- **Locality** — A restriction on how far or how strongly sites can interact.
+
+- **Fermi energy** — The reference energy separating occupied and unoccupied states in the specified zero-temperature filling model.
+
+- **Spectral gap** — An open energy interval with no spectrum of the bulk Hamiltonian.
+
+- **Topological index** — A discrete quantity that distinguishes phases and stays fixed under allowed gap-preserving changes.
+
+- **Finite volume** — A bounded patch of a larger or infinite lattice.
+
+- **Spectral localizer** — A matrix combining Hamiltonian and position information to compute an index under stated conditions.
+
+- **Mobility gap** — A regime characterized by localization rather than necessarily an empty spectral interval; it requires different hypotheses.
+
+### Why this matters
+
+Topological behavior is interesting partly because it can survive certain imperfections. Establishing that robustness requires methods that work without a perfect crystal and distinguish a finite-sample observation from a bulk conclusion. A rigorous bridge between the two makes numerical evidence more informative.
+
+### What progress would mean
+
+Progress would give checkable size, gap and locality conditions under which a finite calculation equals the bulk index. It would not automatically establish robustness to every disorder strength, a mobility-gap theorem, or the transport response of an experimental device.
 
 ## Revised core question
 
@@ -2574,13 +3743,47 @@ Baseline: recover a clean model’s known index with a validated finite-to-bulk 
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
-
-
 ---
 
 # S05. Finite-basis density functionals and exact convex constraints
 
 **Source:** synthesis challenge 17; [original synthesis](../NOTES/30-Most-Compelling-Pure-Thought-AI-Challenges.md). This topic is distinct from, or adds a distinct objective to, the canonical PRD catalog. [Crosswalk](../reviews/SYNTHESIS-CROSSWALK.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+A many-electron state contains vastly more information than the average number of electrons at each site. Can we still describe the minimum energy using only those average occupancies? This problem studies that question in a finite lattice, where the exact relationship can be defined and bounded without pretending that a convenient approximate formula is exact.
+
+### Key terms
+
+- **Density** — Here, the expected electron occupancy at each lattice site.
+
+- **Density functional** — A rule assigning an energy contribution to a full density profile.
+
+- **Finite basis** — A fixed finite collection of states or orbitals used to define the model.
+
+- **Ensemble** — A statistical mixture of allowed quantum states.
+
+- **Constrained search** — Minimization over all states with a prescribed density.
+
+- **Kinetic energy** — The energy associated with electron motion or hopping in the model.
+
+- **Interaction energy** — The energy arising from interactions between electrons.
+
+- **Convexity** — The property that mixing two density profiles cannot raise the functional above the corresponding mixture of functional values.
+
+- **Duality** — An equivalent optimization viewpoint using external potentials to constrain energy values.
+
+- **Exchange–correlation energy** — A remainder defined only after specifying the noninteracting kinetic and Hartree reference contributions.
+
+### Why this matters
+
+Density-based methods reduce a difficult many-electron description to a much smaller set of variables. Exact finite examples reveal which constraints an approximation should respect and provide benchmarks for evaluating proposed energy formulas.
+
+### What progress would mean
+
+A useful result would bracket the functional on the declared density domain and verify its convex and dual structure. It would give a controlled model benchmark, with a separate argument needed before extending conclusions to continuum chemistry or real materials.
 
 ## Revised core question
 
@@ -2601,13 +3804,45 @@ Baseline: exact functional values and dual brackets on a two-site model. Strong:
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
-
-
 ---
 
 # S06. Inverse pair-potential design over an explicit competitor class
 
 **Source:** synthesis challenge 20; [original synthesis](../NOTES/30-Most-Compelling-Pure-Thought-AI-Challenges.md). This topic is distinct from, or adds a distinct objective to, the canonical PRD catalog. [Crosswalk](../reviews/SYNTHESIS-CROSSWALK.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Instead of asking which arrangement particles prefer under known forces, turn the question around: which interaction would favor an arrangement we want? Here, candidate pair interactions are tuned so that a target repeating structure has lower energy than an explicitly listed set of alternatives across a range of densities.
+
+### Key terms
+
+- **Pair potential** — A function giving the interaction energy of two particles as a function of their separation.
+
+- **Inverse design** — Choosing model parameters to produce a desired outcome.
+
+- **Target lattice** — The repeating particle arrangement the design aims to favor.
+
+- **Competitor class** — The precise collection of alternative arrangements against which the target is compared.
+
+- **Number density** — The number of particles per unit volume or area.
+
+- **Energy per particle** — Total interaction energy normalized by the number of particles in the periodic limit.
+
+- **Lattice sum** — A sum of interactions over particles in a repeating structure.
+
+- **Tail bound** — A guaranteed bound on contributions omitted when truncating an infinite sum.
+
+- **Ground state** — A lowest-energy configuration within a stated admissible class.
+
+### Why this matters
+
+Interaction design is a way to explore self-assembly: simple local rules may favor organized structures. Reliable comparisons expose whether apparent success comes from a useful mechanism or from overlooking a competing arrangement or a long-range contribution.
+
+### What progress would mean
+
+Progress would prove the target’s energy advantage, or identify a defeating competitor, within the declared family and density interval. Beating that family alone does not establish the ground state among every possible configuration or show that particles will assemble into it at finite temperature.
 
 ## Revised core question
 
@@ -2628,13 +3863,45 @@ Baseline: exact or interval-verified ordering for a finite competitor list. Stro
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
-
-
 ---
 
 # S07. Finite-size criteria for parent-Hamiltonian spectral gaps
 
 **Source:** synthesis challenge 23; [original synthesis](../NOTES/30-Most-Compelling-Pure-Thought-AI-Challenges.md). This topic is distinct from, or adds a distinct objective to, the canonical PRD catalog. [Crosswalk](../reviews/SYNTHESIS-CROSSWALK.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+A small quantum chain can have a clear energy separation above its lowest state while that separation shrinks away as the chain grows. This problem asks when an exact calculation on a short segment can rule out that collapse for an entire specified family of longer chains. A theorem connecting local and global behavior is the essential step.
+
+### Key terms
+
+- **Quantum chain** — A one-dimensional sequence of interacting quantum degrees of freedom.
+
+- **Matrix product state** — A structured representation of a many-body state using products of small matrices.
+
+- **Parent Hamiltonian** — A Hamiltonian constructed so that a specified state belongs to its ground-state space.
+
+- **Ground-state space** — The collection of states attaining the minimum energy.
+
+- **Frustration-free** — Having ground states that simultaneously minimize every local interaction term.
+
+- **Spectral gap** — The energy separation above the entire ground-state space.
+
+- **Uniform gap** — A positive lower bound on that gap that does not vanish as chain length increases.
+
+- **Thermodynamic limit** — The limit of arbitrarily large systems.
+
+- **Finite-size criterion** — A theorem translating a suitable local calculation into a conclusion for larger systems.
+
+### Why this matters
+
+The gap helps distinguish low-energy behavior and enters rigorous statements about correlations and stability under suitable conditions. Proving a uniform gap turns a finite numerical observation into a statement about a many-body family, which is often the scientifically relevant object.
+
+### What progress would mean
+
+Progress would verify all assumptions of a chosen finite-size theorem and obtain a positive size-independent lower bound. Failing its threshold would leave the question unresolved rather than prove gaplessness. The result would apply to the specified family, not solve the general spectral-gap problem.
 
 ## Revised core question
 
@@ -2663,6 +3930,40 @@ Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessfu
 
 **Source:** synthesis challenge 24; [original synthesis](../NOTES/30-Most-Compelling-Pure-Thought-AI-Challenges.md). This topic is distinct from, or adds a distinct objective to, the canonical PRD catalog. [Crosswalk](../reviews/SYNTHESIS-CROSSWALK.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+In some two-dimensional quantum phases, collective excitations behave neither like ordinary bosons nor fermions. Their possible combinations and exchanges restrict how the phase can end at an edge. This problem asks which proposed ways of absorbing these excitations at a boundary are mathematically consistent and can describe an edge with a nonzero energy gap.
+
+### Key terms
+
+- **Topological order** — A type of quantum organization characterized by nonlocal structure and, here, anyon excitation data.
+
+- **Anyon** — A two-dimensional excitation with exchange or braiding behavior beyond ordinary bosonic and fermionic possibilities.
+
+- **Fusion** — The possible outcomes when excitations are combined.
+
+- **Braiding** — The transformation associated with moving excitations around one another.
+
+- **Topological twist** — The phase associated with a full rotation of an anyon.
+
+- **F and R data** — Numbers or matrices specifying how fusion regrouping and exchanges act in chosen conventions.
+
+- **Condensate** — A collection of excitations treated as absorbable into the boundary vacuum, together with consistent combination rules.
+
+- **Lagrangian algebra** — The mathematical structure expressing a sufficiently complete compatible condensate for the boundary considered here.
+
+- **Gapped boundary** — An edge whose excitations retain a positive energy threshold in the appropriate large-system limit.
+
+### Why this matters
+
+Boundaries determine how a topological phase interfaces with its surroundings and which excitations can disappear or remain distinguishable there. Understanding these options supports the theory of topological phases and the organization of quantum information in such systems.
+
+### What progress would mean
+
+Progress would verify a boundary candidate using complete consistency data, or reject it for a precise algebraic reason. Matching a list of fusion outcomes alone is insufficient. Turning the algebraic result into a particular microscopic boundary Hamiltonian is an additional construction.
+
 ## Revised core question
 
 For one fully specified two-dimensional topological order, can candidate condensates and their gapped boundaries be verified from exact categorical data?
@@ -2689,6 +3990,40 @@ Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessfu
 # S09. Stoquasticity under a bounded class of basis changes
 
 **Source:** synthesis challenge 25; [original synthesis](../NOTES/30-Most-Compelling-Pure-Thought-AI-Challenges.md). This topic is distinct from, or adds a distinct objective to, the canonical PRD catalog. [Crosswalk](../reviews/SYNTHESIS-CROSSWALK.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Quantum calculations can involve large positive and negative contributions that almost cancel, making some sampling methods inefficient. Sometimes a change in the mathematical basis removes troublesome signs. This problem asks whether that is possible within a finite, explicitly allowed set of local basis changes, so that both success and failure can be checked completely.
+
+### Key terms
+
+- **Basis** — The reference states used to write a quantum operator as a matrix.
+
+- **Hamiltonian** — The matrix describing the system’s energy and couplings.
+
+- **Off-diagonal entry** — A matrix element linking two different basis states.
+
+- **Stoquastic** — Having real, nonpositive off-diagonal Hamiltonian entries in the specified basis.
+
+- **Sign problem** — A sampling difficulty caused by signed or complex weights and cancellation in a chosen representation.
+
+- **Pauli operator** — One of the standard single-qubit matrices used to express spin interactions.
+
+- **Clifford transformation** — A basis transformation that maps Pauli operators to Pauli operators under conjugation.
+
+- **Product transformation** — A change of basis applied independently to the individual qubits.
+
+- **Satisfiability certificate** — A checkable assignment meeting encoded constraints, or an appropriate proof that none exists.
+
+### Why this matters
+
+Knowing when signs can be removed helps separate difficulties caused by representation from those that survive a proposed remedy. A bounded search also creates small, exact benchmarks for algorithms intended to find useful basis changes.
+
+### What progress would mean
+
+A successful result would supply and verify a transformation, or exclude every transformation in the allowed finite class. The complete Hamiltonian must be checked because contributions can cancel. Stoquasticity alone does not guarantee fast sampling, and failure for product Clifford changes does not exclude all possible bases.
 
 ## Revised core question
 
@@ -2717,6 +4052,40 @@ Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessfu
 
 **Source:** synthesis challenge 27; [original synthesis](../NOTES/30-Most-Compelling-Pure-Thought-AI-Challenges.md). This topic is distinct from, or adds a distinct objective to, the canonical PRD catalog. [Crosswalk](../reviews/SYNTHESIS-CROSSWALK.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A simulated three-body trajectory may nearly return to where it started, but a small numerical error can disguise whether an exactly repeating orbit exists. This problem converts a promising numerical trajectory into a proof that a nearby periodic solution exists and stays away from collisions, then examines how small disturbances behave over one cycle.
+
+### Key terms
+
+- **Three-body problem** — The motion of three mutually gravitating bodies in the specified Newtonian model.
+
+- **Restricted model** — A version in which one body has negligible mass and does not affect the other two.
+
+- **Periodic orbit** — A trajectory that returns to the same state after a fixed positive time.
+
+- **Shooting method** — Adjusting an initial state until its evolved state satisfies the return conditions.
+
+- **Phase condition** — A rule fixing the arbitrary starting point along a periodic trajectory.
+
+- **Validated integration** — Numerical evolution with guaranteed enclosures for errors.
+
+- **Collision exclusion** — A proved positive lower bound on relevant body separations along the orbit.
+
+- **Floquet multiplier** — An eigenvalue describing linear perturbation growth or rotation after one orbit.
+
+- **Neutral direction** — A direction with constrained or trivial linear behavior arising from symmetries or conservation laws.
+
+### Why this matters
+
+Periodic orbits are organizing reference motions in gravitational dynamics. Certifying their existence gives subsequent studies of nearby motion a dependable starting point and separates exact solutions from visual patterns in a simulation.
+
+### What progress would mean
+
+Progress would enclose an orbit and its period, exclude collisions, and classify the reduced linear stability when the bounds permit. Linear stability would not alone prove nonlinear or indefinite stability, and a periodic-orbit proof would not establish connecting trajectories between different orbits.
+
 ## Revised core question
 
 Can a numerically proposed periodic orbit be enclosed by a validated shooting proof and classified by its reduced Floquet spectrum?
@@ -2736,13 +4105,47 @@ Baseline: certify one supplied orbit and its period. Strong: validated continuat
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
-
-
 ---
 
 # S11. Minimal reaction implementations of a specified computational behavior
 
 **Source:** synthesis challenge 29; [original synthesis](../NOTES/30-Most-Compelling-Pure-Thought-AI-Challenges.md). This topic is distinct from, or adds a distinct objective to, the canonical PRD catalog. [Crosswalk](../reviews/SYNTHESIS-CROSSWALK.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+A reaction network can encode inputs as molecular amounts and produce an output through its reactions. But calling a network a computer is ambiguous unless we specify what counts as the input, the answer and an acceptable error. This problem asks for the smallest network that implements one precisely defined behavior within a bounded set of permitted reactions.
+
+### Key terms
+
+- **Reaction network** — A set of chemical species and rules for converting reactants into products.
+
+- **Reaction grammar** — The restrictions defining which species and reaction forms are allowed.
+
+- **Encoding** — The mapping from abstract inputs to initial molecular states or concentrations.
+
+- **Boolean function** — A rule mapping a finite collection of binary inputs to a binary output.
+
+- **Deterministic semantics** — A model in which concentrations follow fixed evolution equations.
+
+- **Stochastic semantics** — A model in which individual reaction events occur randomly.
+
+- **Readout** — The rule and time for translating the chemical state into an output.
+
+- **Error bound** — A limit on deviation from the required output, or on the probability of an incorrect answer.
+
+- **Cost model** — The explicit quantity being minimized, such as reaction or species count.
+
+- **Universality** — The ability to implement arbitrary computations under a stated encoding and resource scheme.
+
+### Why this matters
+
+Chemical computation explores how local reactions can perform information processing, including ideas relevant to molecular sensing and control. Precise semantics make proposed constructions comparable and prevent hidden resources or flexible readout choices from creating misleading claims of simplicity.
+
+### What progress would mean
+
+Progress would provide a verified implementation and, if claimed, prove minimality within the bounded grammar and cost model. Implementing a finite truth table would establish that task only; computational universality requires a construction for arbitrary programs and an explicit account of resources.
 
 ## Revised core question
 
@@ -2763,13 +4166,47 @@ Baseline: one certified reaction implementation with explicit semantics. Strong:
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
-
-
 ---
 
 # S12. Capacity of a specified finite noisy genotype–phenotype channel
 
 **Source:** synthesis challenge 30; [original synthesis](../NOTES/30-Most-Compelling-Pure-Thought-AI-Challenges.md). This topic is distinct from, or adds a distinct objective to, the canonical PRD catalog. [Crosswalk](../reviews/SYNTHESIS-CROSSWALK.md)
+
+## Plain-language guide
+
+### The problem in everyday terms
+
+Suppose the same genetic sequence can produce different modeled outcomes because of noise. How reliably can an observer infer the chosen sequence from the outcome? This problem treats the relationship as an explicitly given communication channel and asks for certified bounds on the greatest information it can transmit under any stated input-cost limit.
+
+### Key terms
+
+- **Genotype** — An input genetic sequence or label in the finite model.
+
+- **Phenotype** — An output trait or state as defined by the model.
+
+- **Channel law** — The conditional probability of each output given each input.
+
+- **Noise** — Variation in the output for a fixed input, as encoded by that channel law.
+
+- **Input distribution** — The probabilities assigned to selecting the possible genotypes.
+
+- **Mutual information** — A measure of how much observing the output reduces uncertainty about the input.
+
+- **Shannon capacity** — The largest mutual information over the allowed input distributions for this channel.
+
+- **Bit** — The information unit obtained when logarithms use base two.
+
+- **Cost constraint** — A bound on average input cost, such as a prescribed sequence-dependent resource measure.
+
+- **Relative entropy** — A measure of discrepancy between probability distributions, also called Kullback–Leibler divergence.
+
+### Why this matters
+
+An explicit channel separates the number of possible outputs from their reliability and distinguishability. Capacity bounds give a rigorous way to compare modeled noise mechanisms or resource constraints, and to check whether a numerical optimization has found the best input distribution.
+
+### What progress would mean
+
+Progress would bracket capacity with a feasible input distribution and a valid upper certificate. For a deterministic unconstrained channel, the number of reachable outputs supplies a simple benchmark. The answer describes the specified probabilities and costs; it is not an intrinsic information value of a genome or a measure of evolutionary fitness.
 
 ## Revised core question
 
@@ -2788,8 +4225,6 @@ Mutual information is a property of a joint distribution, not a map alone. The o
 Baseline: binary symmetric-channel capacity and deterministic-map capacity reproduced. Strong: a certified bracket for a finite GP channel and a cost-constrained extension with a valid dual. Check rows sum to one, handle zero probabilities explicitly, and report unresolved numerical gaps.
 
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
-
-
 
 
 ---

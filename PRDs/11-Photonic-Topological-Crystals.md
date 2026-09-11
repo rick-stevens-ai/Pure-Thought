@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/11-Photonic-Topological-Crystals.md) · [Original description](../archive/original-PRDs/11-Photonic-Topological-Crystals.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A repeating optical structure changes which light waves can travel through it. With suitable nonreciprocal response, it may also support light that travels along an interface in a preferred direction. This problem asks whether a precisely defined ideal electromagnetic medium really has the required band structure and topology. It separates a mathematically guaranteed wave effect from the later task of finding a material that realizes the assumed response.
+
+### Key terms
+
+- **Maxwell equations** — The equations governing classical electric and magnetic fields.
+
+- **Periodic medium** — A medium whose properties repeat from cell to cell.
+
+- **Permittivity ε and permeability μ** — Quantities describing how a medium responds to electric and magnetic fields; they can be direction-dependent tensors.
+
+- **Nonreciprocity** — Response that breaks the usual interchange symmetry between source and receiver; here it provides the required time-reversal-breaking mechanism.
+
+- **Photonic band** — An allowed family of electromagnetic wave frequencies across crystal momenta.
+
+- **Transverse constraint** — The condition selecting physical wave fields consistent with the relevant divergence equation.
+
+- **Chern number** — An integer characterizing the topology of an isolated group of wave bands.
+
+- **Interface mode** — A wave concentrated near the boundary between two media.
+
+- **Lossless and nondispersive** — Idealizations in which energy is not absorbed and the constitutive response is taken independent of frequency.
+
+### Why this matters
+
+Controlling where and in which direction waves travel is a basic aim of optical engineering. Topology offers one mechanism for robust interface behavior under appropriate conditions. A certified Maxwell calculation would also expose whether an apparent effect is caused by numerical artifacts or by assumptions a real material cannot satisfy.
+
+### What progress would mean
+
+The first meaningful achievement would be a validated ideal medium with a proved gap and topological index. It could inform later waveguide designs, but performance in a lossy, frequency-dependent device would require a separate physical model.
+
 ## Core question
 
 Can a specified lossless periodic electromagnetic model support a rigorously isolated band group with nonzero Chern number, and can its interface modes be validated?

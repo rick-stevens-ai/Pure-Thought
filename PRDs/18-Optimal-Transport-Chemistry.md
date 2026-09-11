@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/18-Optimal-Transport-Chemistry.md) · [Original description](../archive/original-PRDs/18-Optimal-Transport-Chemistry.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Electrons repel one another, but a prescribed electron density also constrains where they spend their time. Imagine arranging their joint positions so they avoid one another as effectively as possible while preserving that average density. This problem makes that arrangement question precise and seeks reliable upper and lower bounds on its repulsion energy. It represents a limiting strong-correlation model, not the full energy of ordinary electrons.
+
+### Key terms
+
+- **Electron density ρ** — The average spatial distribution of electrons, integrating to their total number N.
+
+- **Coulomb cost** — The repulsion contribution between charged particles, proportional here to the inverse of their separation.
+
+- **Optimal transport** — Optimization over ways of distributing or coupling quantities while satisfying prescribed distribution constraints.
+
+- **Marginal distribution** — The distribution of one variable after the other variables in a joint distribution are ignored.
+
+- **Coupling Γ** — A joint distribution of all electron positions consistent with the prescribed individual marginals.
+
+- **Multi-marginal transport** — Transport optimization with more than two prescribed marginals.
+
+- **Strictly correlated electrons (SCE)** — A limiting model in which electron positions are organized to minimize interaction energy at fixed density.
+
+- **Dual potential** — An auxiliary function providing a certified lower bound when it satisfies the required inequality everywhere.
+
+- **Discretization error** — The difference introduced by replacing a continuous spatial problem with a finite representation.
+
+### Why this matters
+
+Strongly correlated electrons are difficult to approximate because their motions are strongly linked. This limiting problem gives a mathematically structured reference for studying that linkage and for developing density-functional ideas. Verified bounds help distinguish a true property of the continuum model from an artifact of a spatial grid or optimization tolerance.
+
+### What progress would mean
+
+A useful result would enclose the SCE interaction energy for a declared density. It could inform further electronic-structure theory, while leaving kinetic energy, finite-correlation effects and actual molecular reaction paths to additional modeling.
+
 ## Core question
 
 For a supplied normalized electron density, can a discretized Coulomb multi-marginal transport problem yield verified bounds, with continuum error separated from optimization error?

@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/13-Higher-Order-Topological-Insulators.md) · [Original description](../archive/original-PRDs/13-Higher-Order-Topological-Insulators.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A topological material can have interesting boundary behavior even when its broad edges do not conduct. In certain models, charge accumulates in a quantized way near corners instead. This problem asks how to establish that behavior carefully: what property belongs to the bulk, what depends on the way the sample is cut, and what extra symmetry is needed to place a corner state at exactly zero energy?
+
+### Key terms
+
+- **Higher-order topology** — Topology associated with lower-dimensional boundaries, such as corners of a two-dimensional sample or hinges of a three-dimensional sample.
+
+- **Quadrupole** — A pattern of electric charge organization beyond total charge and ordinary dipole polarization; the selected model supports a quantized version under particular assumptions.
+
+- **Bulk** — The interior of a system, far from boundaries.
+
+- **Wilson loop** — A matrix describing how a chosen set of quantum states changes when transported around a closed path in momentum space.
+
+- **Wannier sector** — A selected group of Wilson-loop eigenstates, separated from the others by a gap in that loop’s spectrum.
+
+- **Nested polarization** — A polarization calculated within such a Wannier sector, using a second transport calculation.
+
+- **Corner excess charge** — Charge near a corner measured relative to a specified background, after accounting for other contributions.
+
+- **Chiral symmetry** — An additional spectral symmetry that can relate positive and negative energies; it can matter for pinning special states to zero.
+
+- **Termination** — The actual boundary cut and local boundary structure of the sample.
+
+### Why this matters
+
+This problem broadens our understanding of how a material’s interior organizes behavior at its boundaries. It also corrects a common interpretive shortcut: a quantized corner charge and a zero-energy corner state are not the same observation. Reliable distinctions are needed before such features can be used as design principles.
+
+### What progress would mean
+
+Progress would produce a model with verified gaps, a well-defined bulk invariant and a carefully measured boundary consequence. It would establish a controlled example, rather than guarantee protected corner states for every sample shape or boundary.
+
 ## Core question
 
 For a fixed quadrupole-insulator family, can one certify the bulk and Wannier gaps, a quantized nested polarization, and the corresponding boundary charge under a specified termination?

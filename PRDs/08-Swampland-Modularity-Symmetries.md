@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/08-Swampland-Modularity-Symmetries.md) · [Original description](../archive/original-PRDs/08-Swampland-Modularity-Symmetries.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A proposed quantum theory comes with mathematical rules for combining excitations and transforming its descriptions. These rules should fit together like the pieces of a puzzle. This problem builds exact checks for that fit and then asks a second question: can a chosen global symmetry be made into a gauge symmetry? A theory can be consistent even when this second operation is obstructed, so the two verdicts must remain separate.
+
+### Key terms
+
+- **Rational CFT** — A conformal field theory with finitely many basic representation types relative to a specified chiral algebra.
+
+- **Character** — A generating function counting states within one representation of that algebra.
+
+- **Modular S and T matrices** — Matrices describing how the characters change under two basic transformations of the torus.
+
+- **Fusion rules** — Rules specifying which excitation types can occur when two types are combined.
+
+- **Global symmetry** — A transformation applied consistently throughout a system that leaves its laws unchanged.
+
+- **Gauging** — Promoting an appropriate symmetry to a local redundancy and adding the corresponding gauge structure.
+
+- **Anomaly** — An obstruction to implementing a classical symmetry or a proposed gauging consistently in the quantum setting; an ’t Hooft anomaly can exist in a valid theory.
+
+- **Cocycle** — Algebraic data satisfying a compatibility identity, used here to encode an anomaly.
+
+- **Bulk and boundary** — The interior gravitational theory and its lower-dimensional boundary description; symmetries can have different interpretations in the two.
+
+### Why this matters
+
+Exact consistency checks can detect false candidate data before researchers invest in a full construction. They also clarify which symmetries can be gauged and which require additional structure, such as anomaly cancellation or inflow from another system. This is useful both for studying quantum field theories and for interpreting holographic gravity proposals.
+
+### What progress would mean
+
+The first contribution would be a dependable checker with known passing and failing examples. A failure would identify a particular algebraic inconsistency or gauging obstruction, rather than issuing an unsupported verdict about all of quantum gravity.
+
 ## Core question
 
 For supplied rational-CFT modular data and a specified finite internal symmetry, which algebraic consistency tests can be certified, and which failures obstruct a proposed gauging?

@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/14-Topological-Semimetals-Weyl-Dirac.md) · [Original description](../archive/original-PRDs/14-Topological-Semimetals-Weyl-Dirac.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Energy bands in a three-dimensional crystal can meet at isolated points instead of remaining separated everywhere. Near certain crossings, the equations resemble those of a Weyl particle. Each crossing carries a handedness-like topological label. This problem asks whether we can find every such crossing in one lattice model, prove their labels, and connect them to the behavior of two-dimensional momentum slices.
+
+### Key terms
+
+- **Semimetal** — A system in which the occupied and unoccupied electronic states are not separated by a full insulating gap; the selected model has isolated band crossings.
+
+- **Weyl node** — A simple crossing of two bands with a characteristic linear structure and nonzero topological charge.
+
+- **Chirality** — The signed handedness of a simple Weyl crossing, defined here from its velocity matrix.
+
+- **Velocity matrix** — The derivatives describing how the Hamiltonian changes in each momentum direction near a node.
+
+- **Berry flux** — The integrated Berry curvature through a closed surface around a crossing.
+
+- **Momentum slice** — A two-dimensional section of the three-dimensional Brillouin zone, obtained by holding one momentum coordinate fixed.
+
+- **Fermi arc** — An open surface-state contour whose relation to bulk nodes depends on the chosen surface and energy.
+
+- **Root isolation** — A mathematical procedure proving that a small region contains a solution, often uniquely.
+
+- **Completeness** — A proof that no additional nodes have been missed anywhere in the claimed domain.
+
+### Why this matters
+
+Weyl nodes connect a local band crossing to a global topological constraint. They help explain unusual electronic structures and surface states, and provide controlled settings for studying the relation between particle-like excitations and lattice physics. Missing even a pair of nodes can change the interpretation of a phase diagram.
+
+### What progress would mean
+
+A certified catalog would establish all crossings and slice invariants of the selected model. It would give a reliable starting point for surface and response calculations, without pretending that bulk nodes uniquely determine every surface arc.
+
 ## Core question
 
 Can all nodes in a specified two-band three-dimensional Hamiltonian be isolated, assigned chirality, and related to the Chern numbers of gapped momentum slices?

@@ -2,6 +2,42 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/24-Topological-Quantum-Error-Correction.md) · [Original description](../archive/original-PRDs/24-Topological-Quantum-Error-Correction.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Imagine storing information in loops spread across a lattice so that a small local disturbance usually cannot change the stored value. A topological quantum code uses a quantum version of this idea. Local measurements reveal the endpoints of error patterns, and a decoder tries to join those endpoints correctly. The subtlety is that two repairs can have the same endpoints yet differ by a loop that changes the logical information.
+
+### Key terms
+
+- **Toric code** — A quantum error-correcting code on a lattice with periodic boundaries, topologically equivalent to a torus.
+
+- **Surface code** — A related geometric code with carefully chosen open boundaries.
+
+- **Logical operator** — An operation changing the encoded information while remaining consistent with the code’s checks.
+
+- **Noncontractible loop** — A loop winding around the torus that cannot be shrunk to a point within it.
+
+- **Homology** — A mathematical way of distinguishing cycles modulo boundaries; here it identifies whether a closed error pattern acts logically.
+
+- **Syndrome** — Check outcomes locating the boundary of an error chain.
+
+- **Recovery** — An operation chosen to cancel the error; matching the syndrome is necessary but does not ensure logical success.
+
+- **Minimum-weight matching** — A graph optimization method used in certain decoders to pair defects efficiently.
+
+- **Logical failure probability** — The probability that error and recovery together change encoded information.
+
+- **Threshold** — An asymptotic noise boundary for successful suppression of logical errors in a specified code-and-decoder family.
+
+### Why this matters
+
+Geometric codes connect an intuitive picture of local errors to precise algebraic guarantees. They are important models for protecting quantum information using structured measurements. Understanding logical failure, rather than only syndrome cancellation, is essential for assessing whether increasing the code size actually improves reliability.
+
+### What progress would mean
+
+A useful result would prove the code’s parameters and measure a fixed decoder under a declared noise model. An estimated threshold would remain specific to that model and decoder, not a universal device error tolerance.
+
 ## Core question
 
 Can a toric-code family’s algebraic parameters be proved, and can a fixed decoder’s logical failure probability be evaluated under a precisely specified error model?

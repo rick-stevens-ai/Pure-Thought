@@ -2,6 +2,42 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/30-Genotype-Phenotype-Mapping.md) · [Original description](../archive/original-PRDs/30-Genotype-Phenotype-Mapping.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Different sequences of genetic letters can produce the same modeled structure. That creates paths through sequence space along which mutations leave the chosen outcome unchanged. This problem constructs a small RNA-inspired map exactly and asks how those paths connect, how often one mutation changes the outcome, and which new structures are nearby. The aim is to study a controlled model of robustness and variation.
+
+### Key terms
+
+- **Genotype** — The input sequence, here a string over the four RNA letters A, C, G and U.
+
+- **Phenotype** — The selected output of the model, here a secondary-structure pattern rather than an organism’s full observable traits.
+
+- **Secondary structure** — A pattern of paired positions along an RNA sequence, with the allowed pairings and restrictions stated explicitly.
+
+- **Nussinov-style model** — A combinatorial folding model maximizing the number of allowed pairs, not a full free-energy calculation.
+
+- **Tie-breaking rule** — A deterministic rule choosing one output when several structures achieve the same score.
+
+- **Hamming graph** — A graph whose vertices are sequences and whose edges join sequences differing at exactly one position.
+
+- **Neutral component** — A connected group of sequences with the same modeled phenotype.
+
+- **Mutational robustness** — The fraction of a genotype’s one-letter changes that preserve its phenotype under the chosen map.
+
+- **Evolvability** — Here, a specified count of different phenotypes accessible by mutation, not a complete measure of biological adaptability.
+
+- **Fitness** — A separately defined measure of reproductive success or a model score; it is not determined automatically by the folding map.
+
+### Why this matters
+
+The structure of a genotype–phenotype map helps explain how variation can accumulate without immediately changing a selected outcome, and how new outcomes become accessible. Exact small maps provide benchmarks for sampling methods and expose how conclusions depend on folding rules and tie choices.
+
+### What progress would mean
+
+A complete short-sequence graph would establish precise robustness and connectivity facts for the model. Those facts could motivate biological hypotheses, but would not by themselves predict RNA function, population evolution or a universal transition at some sequence length.
+
 ## Core question
 
 For a fully specified combinatorial RNA folding rule on short sequences, what are the exact neutral components, mutation robustness, and accessible phenotype counts?

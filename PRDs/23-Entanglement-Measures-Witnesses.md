@@ -2,6 +2,42 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/23-Entanglement-Measures-Witnesses.md) · [Original description](../archive/original-PRDs/23-Entanglement-Measures-Witnesses.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Two quantum systems can be related in ways that no mixture of independent local states can reproduce. That is entanglement. Given a mathematical description of a joint state, this problem asks for evidence that it is entangled, evidence that it is separable, or an honest statement that the available tests cannot decide. It also asks how to quantify one particular aspect of entanglement without mixing different measures together.
+
+### Key terms
+
+- **Bipartite system** — A quantum system divided into two identified parts, such as two qubits held by different parties.
+
+- **Density matrix ρ** — An operator describing a quantum state, including statistical mixtures.
+
+- **Separable state** — A mixture of product states of the two parts; correlations in such a decomposition can arise from shared classical information.
+
+- **Entangled state** — A state that has no separable decomposition across the chosen division.
+
+- **Entanglement witness** — An observable nonnegative on every separable state but negative on the state being tested.
+
+- **Partial transpose** — A matrix operation transposing the indices of just one subsystem, useful for testing entanglement.
+
+- **PPT** — Positive partial transpose: a necessary separability condition that is sufficient only in certain small dimensions.
+
+- **Negativity** — A quantity measuring the negative part of the partial-transpose spectrum; zero does not generally imply separability.
+
+- **DPS hierarchy** — Tests based on whether the state can be extended to larger symmetric states; failure can certify entanglement.
+
+- **Concurrence** — A particular entanglement measure with a useful explicit formula for two-qubit states.
+
+### Why this matters
+
+Entanglement is an important resource in many quantum-information protocols, but claiming it from an inconclusive test can invalidate a proposed demonstration. Conversely, explicit witnesses show exactly what establishes its presence. Quantitative bounds are useful because different states may possess very different strengths or kinds of quantum correlations.
+
+### What progress would mean
+
+The deliverable would make its verdict inspectable: a witness, a decomposition, or unresolved status. That would provide a reliable component for analyzing quantum states, rather than promise a universally easy entanglement test.
+
 ## Core question
 
 For a finite bipartite density matrix, can one produce a checked entanglement witness or a separable decomposition, and bound a specifically chosen entanglement measure?

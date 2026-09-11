@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/09-Topological-Band-Theory.md) · [Original description](../archive/original-PRDs/09-Topological-Band-Theory.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Two solids can both resist ordinary electrical conduction in their interiors yet differ in how their quantum states fit together. In a topological phase, that global organization cannot be smoothly changed without passing through a gap closing or leaving the assumptions that protect it. Here we build simple lattice models and prove which parameter ranges belong to which phase. The task is closer to drawing an exact map of a model than predicting a particular material.
+
+### Key terms
+
+- **Hamiltonian H** — The mathematical operator specifying a quantum system’s energy and dynamics.
+
+- **Tight-binding model** — A lattice model in which particles occupy localized orbitals and move between them through specified hopping terms.
+
+- **Orbital** — One of the local quantum states included at a lattice site or within a unit cell.
+
+- **Band** — A range of allowed energies labeled by crystal momentum in a periodic system.
+
+- **Band gap** — An energy separation between the selected occupied bands and the next bands.
+
+- **Brillouin zone** — The space of distinct crystal momenta for a periodic lattice.
+
+- **Chern number** — An integer measuring a global twist in the selected quantum states across a two-dimensional Brillouin zone.
+
+- **Occupied projector** — An operator selecting the band states being treated as occupied.
+
+- **Phase diagram** — A map showing which kind of behavior occurs for each model-parameter range.
+
+### Why this matters
+
+Topological models explain why some properties depend on global structure rather than microscopic details. A certified phase map provides reliable examples for theory and simulation, and it helps identify which ingredients a proposed design actually needs. Proving a gap everywhere is important because a small missed gap closing can invalidate a computed topological label.
+
+### What progress would mean
+
+A useful result would give explicit models, guaranteed parameter ranges and checked Chern numbers. These could guide later physical designs, while leaving material stability, fabrication and experimental behavior to additional work.
+
 ## Core question
 
 Within a declared finite-range Hamiltonian family, which parameter regions have a proven band gap and occupied-band Chern number, and what minimality statements follow within that family?

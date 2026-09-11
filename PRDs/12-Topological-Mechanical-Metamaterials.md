@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/12-Topological-Mechanical-Metamaterials.md) · [Original description](../archive/original-PRDs/12-Topological-Mechanical-Metamaterials.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A framework of bars or springs can be rigid in one place and easy to deform in another. Sometimes a carefully arranged repeating framework has soft motions concentrated at its boundary. The question is whether we can predict and prove those motions from the exact geometry, rather than simply observing them in a simulation. Counting connections helps, but the direction of each connection matters too.
+
+### Key terms
+
+- **Frame** — A network of sites joined by bars or springs, used as an ideal mechanical model.
+
+- **Degree of freedom** — An independently variable coordinate of the system’s motion.
+
+- **Isostatic or Maxwell frame** — A frame balanced between degrees of freedom and constraints in the relevant counting sense; details of zero modes and self stress still matter.
+
+- **Zero mode** — An infinitesimal displacement requiring no restoring energy in the linearized model.
+
+- **State of self stress** — A pattern of internal bond tensions that balances forces without external loads.
+
+- **Compatibility matrix C** — The linear map from small site displacements to bond extensions.
+
+- **Stiffness matrix K** — The operator relating displacements to restoring forces in the linear approximation.
+
+- **Winding number** — An integer counting how a complex quantity winds around zero along a closed path; here it helps characterize the periodic frame.
+
+- **Termination** — The precise way a periodic structure is cut to make a boundary.
+
+### Why this matters
+
+Geometry-controlled softness could help explain and design structures with directional compliance, boundary motion or localized mechanical response. The scientific value is understanding which behaviors follow from a robust index and which are accidental features of one geometry. That distinction matters before translating an ideal spring model into a physical structure.
+
+### What progress would mean
+
+A useful result would give a frame, an exact count of its allowed soft motions and a proof of where they concentrate. Material failure, nonlinear deformation and manufacturing tolerance would remain additional engineering questions.
+
 ## Core question
 
 For a geometrically specified isostatic frame and boundary termination, can the zero-mode count and localization be proved from its compatibility matrix?

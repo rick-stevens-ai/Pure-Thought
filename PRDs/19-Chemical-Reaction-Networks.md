@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/19-Chemical-Reaction-Networks.md) · [Original description](../archive/original-PRDs/19-Chemical-Reaction-Networks.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A list of chemical reactions can settle into different long-term concentration patterns. Some networks have one resting state; others can behave like a switch, with two stable states separated by an unstable one. This problem asks whether we can find every positive equilibrium of a small, explicitly specified network and prove which are locally stable. It also distinguishes never reaching zero at a finite time from genuinely avoiding extinction in the long run.
+
+### Key terms
+
+- **Reaction network** — A set of chemical species and rules converting specified combinations of reactants into products.
+
+- **Mass-action kinetics** — Rate laws in which each reaction rate is proportional to powers of its reactant concentrations, multiplied by a rate constant.
+
+- **Stoichiometry matrix S** — A table describing how each reaction changes the amount of each species.
+
+- **Conservation law** — A combination of species amounts that remains constant under the network’s reactions.
+
+- **Compatibility class** — The concentration states accessible under the same conserved quantities and stoichiometric constraints.
+
+- **Equilibrium or steady state** — A concentration pattern where the net rate of change is zero.
+
+- **Local stability** — The tendency of states starting sufficiently near an equilibrium to remain nearby, with asymptotic stability also implying return toward it.
+
+- **Multistationarity and multistability** — Having multiple equilibria, and having multiple stable equilibria, respectively.
+
+- **Persistence** — A long-time condition preventing each initially present species from approaching zero along the trajectory.
+
+### Why this matters
+
+Stable switches and coexistence are important organizing ideas in chemistry and biological regulation. An exact small-network analysis can establish whether a proposed mechanism even supports those behaviors. It also makes numerical simulation more interpretable: a trajectory can miss another equilibrium or appear stable simply because it has not been followed long enough.
+
+### What progress would mean
+
+Progress would give complete equilibrium information for the stated network, rates and conserved totals. A theorem covering many rate choices would be stronger; identifying a switch in a model would not by itself establish its role in a living system.
+
 ## Core question
 
 For a finite mass-action network with specified rates and conservation totals, can all positive equilibria in one compatibility class be isolated and their local stability certified?

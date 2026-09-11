@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/07-Extremal-CFTs-Stress-Tensor.md) · [Original description](../archive/original-PRDs/07-Extremal-CFTs-Stress-Tensor.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Energy and momentum must be accounted for consistently in a quantum theory. The stress tensor is the mathematical object that tracks them. By examining how four stress-tensor insertions relate to one another, we can test whether a proposed theory is missing an excitation it ought to contain. The question here is how large a particular gap in the spectrum can be before the consistency rules contradict each other.
+
+### Key terms
+
+- **Stress tensor T** — The field that describes the local flow and distribution of energy and momentum.
+
+- **Conformal field theory** — A quantum theory with symmetry under angle-preserving transformations, including rescaling lengths.
+
+- **Central-charge parameter C_T** — The normalization of the stress tensor’s two-point correlation, used to characterize the theory in a fixed convention.
+
+- **TTT data** — Coefficients describing a three-stress-tensor correlation; they contain information beyond C_T.
+
+- **Scalar sector** — The set of exchanged operators with zero spin, chosen as the focus of the gap question.
+
+- **Parity-even** — Unchanged in sign under the specified spatial-reflection transformation.
+
+- **Spectral gap** — Here, the threshold in scaling dimension before the first nonidentity operator in the selected sector appears, not necessarily a material’s energy gap.
+
+- **Tensor structure** — One of the distinct ways the directional indices of spinning fields can enter a correlation function.
+
+- **Positive semidefinite matrix** — A matrix whose quadratic form is nonnegative for every vector; it expresses the needed positivity for multiple coupled tensor structures.
+
+### Why this matters
+
+The stress tensor is present in a broad class of local theories, so restrictions derived from it can have wide reach. Such restrictions help map which strongly interacting quantum theories are possible. They can also constrain proposed boundary descriptions of gravity, where the stress tensor has a special role.
+
+### What progress would mean
+
+A verified gap bound would show that a theory with the declared inputs must contain a certain kind of excitation below a threshold. It would not determine the entire spectrum or prove that a gravity theory is unique.
+
 ## Core question
 
 At fixed stress-tensor two- and three-point data, can crossing exclude a proposed gap in the parity-even scalar sector of T×T in a unitary three-dimensional CFT?

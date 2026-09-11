@@ -1,5 +1,7 @@
 # Additional synthesis topics
 
+Every problem includes a **Plain-language guide** with an everyday explanation, key-term definitions, why the problem matters, and what meaningful progress would establish.
+
 These 12 revised descriptions preserve objectives that differ from the canonical PRDs. Each includes a detailed critique, precise target and validation milestones. See the [crosswalk](../reviews/SYNTHESIS-CROSSWALK.md).
 
 - [S01: Crystal-field and spin–orbit anisotropy in a finite ion model](S01.md)

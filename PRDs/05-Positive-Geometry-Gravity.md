@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/05-Positive-Geometry-Gravity.md) · [Original description](../archive/original-PRDs/05-Positive-Geometry-Gravity.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Particle-collision formulas often contain many terms whose cancellations hide a simpler structure. In some theories, a geometric shape organizes the answer: its boundaries encode the ways a collision can split into simpler events. This problem asks whether a tightly specified class of shapes can do the same for one gravity calculation. It treats geometry as a possible explanation for the structure of a formula, not as a literal picture of spacetime.
+
+### Key terms
+
+- **Integrand** — The mathematical expression to be integrated to obtain a quantity such as a scattering amplitude.
+
+- **Loop** — A feature of a quantum correction involving internal momenta that must be integrated over; one loop is the first such level here.
+
+- **Supergravity** — A theory combining gravity with supersymmetry, a proposed relation between types of particles; N=8 specifies the chosen four-dimensional model.
+
+- **Positive geometry** — A region with mathematical boundary properties that determine a special differential form.
+
+- **Canonical form** — That distinguished differential form, whose singularities and boundary residues obey precise recursive rules.
+
+- **Residue** — The coefficient describing the leading contribution of a simple pole; here it encodes boundary information.
+
+- **Factorization** — The way a scattering process separates into simpler processes near certain physical singularities.
+
+- **Ansatz** — A deliberately restricted class of candidate expressions or geometric constructions searched for a solution.
+
+- **Pole at infinity** — A singularity revealed when a coordinate is taken to infinity, which must be included in a global comparison.
+
+### Why this matters
+
+A geometric organization could explain cancellations and suggest more efficient calculations or new identities in quantum gravity. Even a carefully limited impossibility theorem is informative: it tells us which geometric proposals are too restrictive and where a different idea is needed.
+
+### What progress would mean
+
+Success would mean either a verified shape-to-form correspondence or a proof that the declared candidate class cannot work. Failure to find a shape would not rule out every possible geometric description of gravity.
+
 ## Core question
 
 For a specified low-loop supergravity integrand, does a precisely bounded class of candidate positive geometries reproduce its differential form, including every boundary and pole at infinity?

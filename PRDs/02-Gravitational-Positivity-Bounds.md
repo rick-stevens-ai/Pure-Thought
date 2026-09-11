@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/02-Gravitational-Positivity-Bounds.md) · [Original description](../archive/original-PRDs/02-Gravitational-Positivity-Bounds.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A low-energy theory is like a map drawn at a coarse scale: it describes what we can resolve while summarizing finer details in a few adjustable numbers. Not every choice of those numbers can come from a consistent microscopic world. This problem asks whether basic rules about probabilities, cause and effect, and scattering restrict one such number when gravity is present. Gravity’s long reach makes the usual argument harder, so part of the task is making the assumptions precise.
+
+### Key terms
+
+- **Effective field theory (EFT)** — An approximate description valid over a stated range of energies, with unresolved physics represented by additional terms.
+
+- **Wilson coefficient** — The number multiplying one of those additional terms; it measures the strength of a correction to the simpler theory.
+
+- **Scalar particle** — A particle with zero intrinsic spin, chosen here to simplify the scattering calculation.
+
+- **Scattering amplitude** — A quantum quantity used to calculate probabilities for incoming particles to emerge in particular outgoing states.
+
+- **Positivity bound** — An inequality on theory parameters derived from a quantity that must be nonnegative under specified assumptions.
+
+- **Infrared (IR) and ultraviolet (UV)** — The low-energy or long-distance regime, and the high-energy or short-distance regime, respectively.
+
+- **Pole and subtraction** — A pole is a singular term in a mathematical expression; a subtraction removes a specified contribution so the remaining quantity can be analyzed.
+
+- **Dispersion relation** — A mathematical relation connecting an amplitude’s behavior in different energy regions.
+
+- **Regge assumption** — An assumption about how scattering behaves at very high energy with momentum transfer held fixed.
+
+### Why this matters
+
+These bounds can tell us that an apparently sensible low-energy model cannot fit particular assumptions about its underlying physics. That is valuable when direct access to microscopic gravity is unavailable. A reliable bound also prevents researchers from interpreting an artifact of a singular calculation as a physical restriction.
+
+### What progress would mean
+
+The first success would be one defensible inequality with its assumptions attached. It would narrow the parameter space of candidate theories, without claiming that every surviving theory has a complete microscopic realization.
+
 ## Core question
 
 Under a fully stated infrared prescription and high-energy assumption, what certified inequality constrains one selected low-energy coefficient of scalar scattering coupled to gravity?

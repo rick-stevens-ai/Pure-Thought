@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/17-Isomer-Enumeration-Molecular-Graphs.md) · [Original description](../archive/original-PRDs/17-Isomer-Enumeration-Molecular-Graphs.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A molecular formula tells us how many atoms of each kind are present, but not how they are connected. The same counts can describe different structures: butane and isobutane are a familiar example. This problem asks for every distinct connection pattern allowed by an explicit set of bonding rules, with a proof that none was counted twice and none was missed.
+
+### Key terms
+
+- **Molecular formula** — A count of atoms by element, such as C₄H₁₀.
+
+- **Constitutional isomer** — A structure with the same molecular formula as another but a different pattern of atom connections.
+
+- **Molecular graph** — A mathematical representation with atoms as vertices and bonds as edges carrying bond-order labels.
+
+- **Valence grammar** — The exact bonding rules permitted in this enumeration; it deliberately defines a restricted chemical model.
+
+- **Bond order** — The bond label distinguishing single, double and triple bonds in this graph model.
+
+- **Graph isomorphism** — A relabeling of atoms that preserves element types and bonds, showing two drawings represent the same graph.
+
+- **Canonical labeling** — A consistent representative label for a graph, used to identify duplicates.
+
+- **Stereoisomer** — A distinction in spatial arrangement not captured merely by the basic connection graph.
+
+- **Completeness certificate** — Evidence that the enumeration covers every object in the specified graph class.
+
+### Why this matters
+
+Complete enumeration turns an intuitive picture of “possible structures” into a checkable mathematical set. Such sets are useful for testing structure-generation methods and exploring how bonding constraints shape chemical possibilities. The guarantee is especially valuable when a search is used to support a claim that no alternative structure exists.
+
+### What progress would mean
+
+Success would supply exact graph counts and explicit structures under the chosen rules. A graph’s presence in the list would not imply that the corresponding molecule is stable, easily synthesized or realizable in a particular three-dimensional shape.
+
 ## Core question
 
 For a fixed formula and explicit valence grammar, can every connected constitutional graph be generated exactly once, with a checkable completeness argument?

@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/10-Flat-Chern-Bands.md) · [Original description](../archive/original-PRDs/10-Flat-Chern-Bands.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+In an ordinary energy band, particles can have quite different energies depending on how they move. A nearly flat band reduces those energy differences, potentially making interactions between particles more influential. We want that band to also have a nontrivial topological structure. The problem asks how well these goals can be combined when particles are allowed to hop only a limited distance and the model has a limited number of orbitals.
+
+### Key terms
+
+- **Flat band** — A band whose energy is constant across momentum space; a nearly flat band has a small but nonzero variation.
+
+- **Bandwidth W** — The difference between the largest and smallest energy in the selected band.
+
+- **Gap Δ** — The minimum energy separation between that band and other bands.
+
+- **Flatness ratio W/Δ** — A way to compare bandwidth to isolation from other bands; smaller values mean a flatter, well-separated band.
+
+- **Hopping range** — The greatest lattice distance over which the model allows direct hopping.
+
+- **Chern band** — A band with a nonzero Chern number, indicating nontrivial global topology.
+
+- **Berry curvature** — A local measure of how quantum states twist as momentum changes; its integral determines the Chern number in the stated convention.
+
+- **Quantum metric** — A measure of how distinguishable nearby momentum-dependent quantum states are.
+
+- **Spectral flattening** — A mathematical change to band energies that preserves the chosen states but generally changes the spatial range of hopping.
+
+### Why this matters
+
+Flat topological bands are useful settings for studying collective quantum behavior driven by interactions. But there are tradeoffs: restricting the model’s spatial range changes which flatness properties are possible. Quantifying those tradeoffs can show whether a proposed improvement is attainable or requires a more complicated model.
+
+### What progress would mean
+
+Progress would provide certified examples and limits within a defined design family. Favorable single-particle geometry would make a model interesting to investigate further; it would not by itself prove an interacting fractional topological phase.
+
 ## Core question
 
 For fixed orbital count, hopping range, and gap normalization, how small can a Chern band’s bandwidth and geometric nonuniformity be, with certified bounds?

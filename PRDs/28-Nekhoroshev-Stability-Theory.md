@@ -2,6 +2,42 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/28-Nekhoroshev-Stability-Theory.md) · [Original description](../archive/original-PRDs/28-Nekhoroshev-Stability-Theory.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A system need not move on a perfectly orderly orbit to remain near its initial state for a very long time. Small disturbances can produce only a slow drift in certain quantities. This problem asks for an explicit guarantee: how far can those quantities change, and for how long is that bound valid? It focuses on a finite time horizon rather than proving that a special motion persists forever.
+
+### Key terms
+
+- **Near-integrable Hamiltonian** — An energy function consisting of a well-understood integrable part plus a small perturbation.
+
+- **Action** — A coordinate that is constant in the integrable reference system and may drift when a perturbation is added.
+
+- **Confinement bound** — A guaranteed maximum change of the specified actions over a stated time interval.
+
+- **Normal form** — A transformed expression of the equations separating manageable terms from a remainder.
+
+- **Canonical transformation** — A change of variables preserving the Hamiltonian structure of the dynamics.
+
+- **Remainder** — Terms not absorbed into the simplified normal form; bounding their size helps bound drift.
+
+- **Resonance** — An integer relation among frequencies that can change how perturbations affect the motion.
+
+- **Nekhoroshev theorem** — A theorem giving very long action-confinement times for small perturbations under specified regularity and nondegeneracy assumptions.
+
+- **Quasi-convexity** — A particular curvature condition on the integrable energy function used by some such theorems.
+
+- **Dimensional time** — A time expressed in declared physical or model units, rather than an unexplained numerical factor.
+
+### Why this matters
+
+Finite-time guarantees answer a question that simulations alone cannot settle beyond their run length. They also distinguish a valid stability argument from an impressive-looking exponential formula with missing constants or units. Understanding slow drift is relevant to the mathematical study of planetary and other nearly integrable systems.
+
+### What progress would mean
+
+A useful first result could be a modest but fully justified confinement time. Improving that time with controlled remainders would be real progress; asserting billions of years would require an appropriate physical model and every conversion and bound needed to support it.
+
 ## Core question
 
 For a specified analytic Hamiltonian and action domain, what rigorously computable action excursion and confinement time follow from a certified normal form or quantitative Nekhoroshev theorem?

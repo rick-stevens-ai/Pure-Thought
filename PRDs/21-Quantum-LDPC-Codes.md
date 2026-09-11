@@ -2,6 +2,42 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/21-Quantum-LDPC-Codes.md) · [Original description](../archive/original-PRDs/21-Quantum-LDPC-Codes.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Quantum information is fragile, but simply copying an unknown quantum state is not allowed. An error-correcting code instead stores information jointly across many physical qubits so that selected measurements reveal errors without directly reading the encoded information. This problem builds sparse-check codes and verifies how much information they store, how many errors their structure can withstand, and how a chosen recovery algorithm performs.
+
+### Key terms
+
+- **Qubit** — A quantum information unit whose state can involve superpositions of two basis states.
+
+- **Physical and logical qubits** — The individual qubits used by the device, and the protected information units encoded across them.
+
+- **Quantum error-correcting code** — A structured encoding that permits detection and correction of specified errors.
+
+- **LDPC** — Low-density parity-check: a code family with checks involving bounded numbers of qubits and each qubit participating in bounded numbers of checks.
+
+- **CSS code** — A code built from compatible binary checks for two types of quantum error, named after Calderbank, Shor and Steane.
+
+- **Stabilizer** — An operator that leaves every valid encoded state unchanged; measuring checks can reveal violations.
+
+- **Syndrome** — The collection of check outcomes indicating what kind of error may have occurred.
+
+- **Code distance d** — The smallest number of qubits on which an undetectable nontrivial logical operation can act.
+
+- **Decoder** — An algorithm that uses a syndrome to choose a recovery operation.
+
+- **Hypergraph product** — A construction combining two classical parity-check matrices into a quantum code.
+
+### Why this matters
+
+Useful quantum computation requires reliable logical information despite noisy components. Sparse checks offer a route to distributing error correction efficiently, but code parameters and decoder behavior must be demonstrated rather than assumed. Exact small examples are valuable for detecting mistakes that large simulations can conceal.
+
+### What progress would mean
+
+Success would provide verified code parameters and decoder results under a stated error model. It would help compare constructions fairly, while leaving hardware connectivity, noisy measurements and the full cost of fault-tolerant computation as separate requirements.
+
 ## Core question
 
 For a specified CSS construction, can code dimension and distance bounds be verified independently, and can decoder performance be measured under one explicit noise model?

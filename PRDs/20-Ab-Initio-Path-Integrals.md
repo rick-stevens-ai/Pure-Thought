@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/20-Ab-Initio-Path-Integrals.md) · [Original description](../archive/original-PRDs/20-Ab-Initio-Path-Integrals.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+At small scales, particles cannot always be treated as tiny classical balls sitting at definite positions. Their quantum spreading affects thermal averages, especially for light particles. Path-integral methods replace part of this quantum calculation with a sampling problem involving an artificial ring of linked copies of a particle. This challenge checks that the sampling produces the right equilibrium quantities and that each source of error is reported separately.
+
+### Key terms
+
+- **Thermodynamics** — The study of quantities such as energy and temperature describing equilibrium behavior.
+
+- **Path integral** — A formulation of quantum mechanics involving a sum over possible paths; here it is used in imaginary time for equilibrium properties.
+
+- **Imaginary time** — A mathematical reformulation of time used to connect quantum calculations with thermal statistics, not a physical clock reading.
+
+- **Ring polymer and beads** — The artificial closed chain and its particle copies used to approximate the imaginary-time path integral.
+
+- **PIMD** — Path-integral molecular dynamics, a method using auxiliary dynamics to sample the ring-polymer equilibrium distribution.
+
+- **Estimator** — A formula calculated from sampled configurations to estimate a desired physical average.
+
+- **Discretization bias** — Systematic error caused here by using a finite number of beads or a finite integration step.
+
+- **Sampling uncertainty** — Uncertainty from using only a finite sample of configurations.
+
+- **Born–Oppenheimer surface** — An approximate potential energy for nuclear motion obtained by treating electronic behavior separately.
+
+### Why this matters
+
+Quantum thermal effects matter for understanding how light particles behave in molecules and materials. But an accurate-looking simulation can combine several hidden errors: too few beads, incomplete sampling, time-step effects and an approximate potential. A transparent error budget makes the calculation useful as a scientific measurement of the model rather than just a plausible plot.
+
+### What progress would mean
+
+The initial result would reproduce known oscillator averages and then handle one controlled anharmonic case. It would validate equilibrium predictions; it would not automatically give exact real-time reaction rates or remove approximations in an electronic-structure model.
+
 ## Core question
 
 For a specified one-dimensional quantum Hamiltonian, can path-integral sampling reproduce equilibrium energy and position moments with separately assessed discretization and statistical errors?

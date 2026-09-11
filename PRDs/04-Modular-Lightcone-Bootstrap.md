@@ -2,6 +2,42 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/04-Modular-Lightcone-Bootstrap.md) · [Original description](../archive/original-PRDs/04-Modular-Lightcone-Bootstrap.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A quantum correlation can be calculated by grouping the participating excitations in different ways, and all valid groupings must agree. That agreement can force some excitations to exist and restrict their properties. This problem studies the pattern at large spin, where useful approximations become available. The central challenge is to say not only what the leading approximation predicts, but also how large its error could be.
+
+### Key terms
+
+- **Correlation function** — A quantity describing how field measurements at different spacetime points are related.
+
+- **Four-point function** — A correlation involving four field insertions; it can be reorganized into different pairings.
+
+- **Bootstrap** — A method that constrains a theory by requiring its own consistency rules to agree, rather than starting from a complete microscopic model.
+
+- **Scaling dimension Δ** — A measure of how a field or excitation changes when all lengths are rescaled.
+
+- **Spin ℓ** — A label describing how an excitation transforms under rotations.
+
+- **Lightcone limit** — A limit in which two spacetime points approach a separation that light could traverse; it organizes which contributions dominate the correlation function.
+
+- **Twist** — The combination Δ−ℓ, useful for ordering contributions near a lightlike separation.
+
+- **Operator product expansion (OPE)** — A rule expressing the effect of nearby field insertions as a sum of other operators with specified coefficients.
+
+- **Double-twist family** — A sequence of large-spin operators whose dimensions approach a characteristic pattern related to two external operators.
+
+- **Remainder bound** — A guaranteed limit on the terms omitted from an approximation.
+
+### Why this matters
+
+Consistency can reveal features shared by many strongly interacting theories, even when their detailed dynamics cannot be solved. Large-spin patterns are also useful in theories proposed to describe gravity through a lower-dimensional boundary. Controlled errors turn suggestive asymptotic patterns into statements that can actually constrain a finite calculation.
+
+### What progress would mean
+
+The baseline would reproduce an established large-spin pattern with unambiguous conventions. A stronger result would show how far that pattern can deviate at specified spins, making later comparisons and exclusions more trustworthy.
+
 ## Core question
 
 For one scalar four-point function in a unitary CFT with d>2, what controlled bounds on large-spin double-twist data follow from specified low-twist exchanges?

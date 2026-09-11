@@ -1,5 +1,7 @@
 # Pure Thought: revised scientific problem specifications
 
+Every problem includes a **Plain-language guide** with an everyday explanation, key-term definitions, why the problem matters, and what meaningful progress would establish.
+
 Thirty research challenges framed as precise mathematical or computational tasks, with detailed critiques of the original descriptions. Revised locally on 2026-09-11 from source commit `f854d4e12b55c1f5b5c2a964b75f2d23496d981e`.
 
 ## Read the revision

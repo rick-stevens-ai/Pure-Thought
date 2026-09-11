@@ -1,5 +1,7 @@
 # Revised problem catalog
 
+Every problem includes a **Plain-language guide** with an everyday explanation, key-term definitions, why the problem matters, and what meaningful progress would establish.
+
 Thirty canonical problem specifications, revised 2026-09-11. Each states a concrete question, assumptions, mathematical target, outputs, validation, and research extension. Two historical duplicate filenames redirect to the canonical 07 and 08 documents.
 
 The [review overview](../reviews/REVIEW.md) explains the main corrections. The [synthesis crosswalk](../reviews/SYNTHESIS-CROSSWALK.md) preserves different topics in the earlier portfolio. The original long reports remain historical and have not been regenerated.

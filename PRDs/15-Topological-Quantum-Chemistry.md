@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/15-Topological-Quantum-Chemistry.md) · [Original description](../archive/original-PRDs/15-Topological-Quantum-Chemistry.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Symmetry can act like a fingerprint for quantum bands: it provides a compact set of labels that can sometimes reveal nontrivial topology. But different objects can share a fingerprint. This problem asks exactly what can be inferred from symmetry labels, how to compute that inference reliably, and when the correct answer is that more information about the quantum states is needed.
+
+### Key terms
+
+- **Crystal symmetry** — A translation, rotation, reflection or related operation preserving the lattice structure and the stated physical setting.
+
+- **Representation** — Matrices describing how quantum states transform under a symmetry.
+
+- **Irreducible representation (irrep)** — A basic representation that cannot be decomposed into smaller independent representations of the same group.
+
+- **Compatibility relations** — Rules requiring symmetry labels at different momenta to fit into continuous bands.
+
+- **Atomic band representation** — Band data generated from suitably localized, symmetry-compatible orbitals.
+
+- **Wannier function** — A localized real-space representation of band states; the existence of an appropriate symmetry-respecting basis is central to atomicity.
+
+- **Symmetry indicator** — An algebraic label detecting certain obstructions to atomic band data, but not every possible topological distinction.
+
+- **Smith normal form** — An exact integer-matrix decomposition used to calculate the quotient of symmetry-data lattices.
+
+- **Fragile topology** — An obstruction that can disappear when suitable trivial bands are added, under the chosen definition.
+
+### Why this matters
+
+Symmetry labels are often much simpler to work with than the full wavefunctions across momentum space. Knowing what those labels do and do not prove can make topological diagnosis more efficient and prevent false declarations that a system is ordinary. The distinction is essential for turning a classification table into a trustworthy scientific tool.
+
+### What progress would mean
+
+A useful result would be an exact indicator calculation for one symmetry setting, together with examples showing its reach and blind spots. Stronger conclusions about a particular Hamiltonian would use additional information, such as Berry phases or a Wannier construction.
+
 ## Core question
 
 For one fixed symmetry setting, can compatibility relations and atomic band representations be generated exactly, and what topology can their quotient actually detect?

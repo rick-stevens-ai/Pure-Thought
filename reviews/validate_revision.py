@@ -18,6 +18,14 @@ for x in c['canonical']:
   assert h in s,(p,h)
  assert (r/'reviews'/x['file']).exists()
  assert (r/'archive/original-PRDs'/x['file']).exists()
+# Every current problem has one complete accessibility guide.
+for group, folder in [('canonical', 'PRDs'), ('supplemental', 'supplemental')]:
+ for x in c[group]:
+  p=r/folder/x['file']; s=p.read_text()
+  for h in ['## Plain-language guide', '### The problem in everyday terms', '### Key terms', '### Why this matters', '### What progress would mean']:
+   assert s.count(h)==1,(p,h)
+  assert s in (r/'reviews/COMPLETE-REVIEW.md').read_text(),p
+assert (r/'reviews/COMPLETE-REVIEW.md').read_text().count('## Plain-language guide')==42
 # Every original PRD byte is preserved.
 for rel,digest in m['original_files'].items():
  if rel.startswith('PRDs/'):

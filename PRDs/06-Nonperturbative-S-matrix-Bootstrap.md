@@ -2,6 +2,40 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/06-Nonperturbative-S-matrix-Bootstrap.md) · [Original description](../archive/original-PRDs/06-Nonperturbative-S-matrix-Bootstrap.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Suppose we do not know a theory’s microscopic machinery, but do know that collision probabilities must be sensible and different descriptions of the same process must agree. Can those rules alone rule out a proposed interaction strength? This problem searches the space of scattering possibilities rather than choosing one detailed microscopic theory. Because gravity acts over long distances and allows very low-energy radiation, defining the scattering question correctly is itself part of the work.
+
+### Key terms
+
+- **S-matrix** — The object relating incoming quantum states to outgoing states in a scattering experiment.
+
+- **Partial wave** — A contribution to scattering organized by angular momentum, which makes some probability constraints easier to state.
+
+- **Unitarity** — Conservation of total probability; an allowed scattering process cannot produce a total probability greater than one.
+
+- **Elastic scattering** — Scattering that stays within the chosen particle channel without producing additional particles or excitations.
+
+- **Crossing symmetry** — Relations between amplitudes for processes with differently assigned incoming and outgoing particles.
+
+- **Infrared prescription** — A stated way to handle low-energy radiation and long-distance singularities.
+
+- **Outer relaxation** — A larger, easier-to-test set containing all valid possibilities under the assumptions. Excluding a point from it can exclude the original possibility.
+
+- **Inner ansatz** — A selected subset of candidate amplitudes; failing to find a solution there need not exclude other amplitudes.
+
+- **Dual certificate** — An independently checkable mathematical witness establishing a bound or inconsistency.
+
+### Why this matters
+
+The method could identify restrictions shared by many possible microscopic theories. That is useful when no single theory is established. Its reliability depends on not mistaking a limitation of the search formula, grid or cutoff for a limitation imposed by physics.
+
+### What progress would mean
+
+A certified exclusion would eliminate a parameter choice under the stated scattering assumptions. The gravity-free reference case first checks the machinery; adding a defensible treatment of gravity would be the important next step.
+
 ## Core question
 
 Can one certify an exclusion for a low-energy scalar-scattering parameter using a crossing-symmetric partial-wave relaxation whose infrared and truncation assumptions are explicit?

@@ -2,6 +2,42 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/25-Quantum-Algorithms-Complexity.md) · [Original description](../archive/original-PRDs/25-Quantum-Algorithms-Complexity.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A claim that a quantum computer is faster is incomplete until we specify what information it receives, what answer it must return, and which operations we count. Here the problem is deliberately simple: find one marked item in a list when the only way to learn about an item is to query it. We compare a quantum search procedure with a proof of how many queries any procedure of the chosen kind must use.
+
+### Key terms
+
+- **Oracle** — A precisely defined black-box operation providing access to input information; it is a mathematical access model, not a prediction device.
+
+- **Query** — One use of the oracle, counted separately from other computation.
+
+- **Promise problem** — A problem whose inputs are guaranteed to satisfy a stated restriction, here exactly one marked item.
+
+- **Grover search** — A quantum algorithm that amplifies the probability of observing a marked item using repeated oracle and interference operations.
+
+- **Amplitude** — A quantum coefficient whose squared magnitude contributes to an outcome probability.
+
+- **Query complexity** — The number of oracle uses required to solve a problem with the specified success probability.
+
+- **Upper and lower complexity bounds** — An algorithm showing that a cost suffices, and a proof that no allowed algorithm can beat a stated cost.
+
+- **BPP and BQP** — Classes of problems efficiently solvable with bounded error by classical randomized and quantum computation, respectively.
+
+- **Oracle separation** — A proof that two classes differ when both have access to a particular oracle; it does not by itself separate the ordinary classes.
+
+- **Gate complexity** — The number of elementary circuit operations, a different resource from oracle queries.
+
+### Why this matters
+
+This is a clean setting in which a quantum advantage can be proved rather than inferred from a small simulation. It also teaches how to assess broader speedup claims fairly. Input preparation, precision and output requirements can dominate a real application even when a query bound looks attractive.
+
+### What progress would mean
+
+Success would combine a working small implementation with an all-size argument matching upper and lower query bounds. That establishes an advantage in this access model, not a blanket claim that quantum computers speed up every search task.
+
 ## Core question
 
 For unstructured search with a specified promise, can an implementation and an analytic lower bound establish a matched quantum query complexity?

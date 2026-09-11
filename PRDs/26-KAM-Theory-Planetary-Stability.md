@@ -2,6 +2,42 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/26-KAM-Theory-Planetary-Stability.md) · [Original description](../archive/original-PRDs/26-KAM-Theory-Planetary-Stability.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+A weakly disturbed mechanical system can sometimes keep moving in an orderly pattern forever, even though the motion never exactly repeats. KAM theory explains how certain such motions survive a perturbation. This problem starts with a proposed orderly motion and checks, with rigorous error bounds, whether a true one must exist nearby. The goal is a guarantee about a specified mathematical orbit family, not a prediction that every nearby trajectory is stable.
+
+### Key terms
+
+- **Hamiltonian** — An energy function that generates the system’s equations of motion.
+
+- **Integrable system** — A system with enough conserved structure to describe its motion using constant actions and evolving angles in the setting considered here.
+
+- **Action–angle variables** — Coordinates in which the actions label the motion and the angles describe its cyclic phases.
+
+- **Invariant torus** — A torus-shaped set in phase space that trajectories starting on it never leave; it need not be a physical doughnut in ordinary space.
+
+- **Quasiperiodic motion** — Motion combining incommensurate frequencies, so it remains organized without repeating exactly.
+
+- **KAM theory** — Kolmogorov–Arnold–Moser theory, describing persistence of suitable quasiperiodic motions under sufficiently small perturbations.
+
+- **Diophantine condition** — An arithmetic bound keeping integer combinations of the frequencies from becoming too close to zero.
+
+- **A posteriori theorem** — A theorem that uses a computed approximate solution and its error to establish a nearby exact solution.
+
+- **Residual** — The amount by which the approximate solution fails to satisfy the exact equation.
+
+- **Interval arithmetic** — Computation with enclosing intervals, using controlled rounding to bound numerical errors.
+
+### Why this matters
+
+Long-term stability is difficult to infer from a finite trajectory simulation. A theorem can instead prove that a particular organized motion exists despite perturbations. This offers a foundation for studying stability mechanisms in celestial and other Hamiltonian systems, provided the model and theorem assumptions are appropriate.
+
+### What progress would mean
+
+A certificate for a nonzero perturbation would convert an approximate torus into an existence result. Applying the method to planetary observations would additionally require reduction of the planetary model and a careful treatment of measured initial-condition uncertainty.
+
 ## Core question
 
 For an explicitly specified analytic near-integrable Hamiltonian and an approximate torus, can every hypothesis of a quantitative KAM theorem be verified?

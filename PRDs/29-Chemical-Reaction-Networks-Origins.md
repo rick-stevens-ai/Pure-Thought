@@ -2,6 +2,42 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/29-Chemical-Reaction-Networks-Origins.md) · [Original description](../archive/original-PRDs/29-Chemical-Reaction-Networks-Origins.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Could a collection of reactions collectively help produce the substances that make those same reactions happen? Autocatalytic-set theory turns part of that question into a precise network test. Starting from an externally supplied food set, we ask which reactions can be supported by products of the network and which smaller subsets already have that property. This describes a structural prerequisite for self-sustaining chemistry, not a complete definition of life.
+
+### Key terms
+
+- **Catalyst** — A substance participating in a reaction mechanism that increases its rate while being regenerated overall; it does not change the equilibrium free-energy difference.
+
+- **Autocatalysis** — Production that directly or collectively helps enable more production of the relevant system.
+
+- **Food set** — The species assumed to be available from outside the network.
+
+- **Closure** — All species producible from the food set using the selected reaction rules; standard RAF closure temporarily ignores catalysis.
+
+- **RAF** — A reflexively autocatalytic and food-generated reaction set: its reactants are reachable from food and each reaction has a catalyst available within the closure.
+
+- **Maximal RAF** — The largest RAF contained in the supplied network, when a RAF exists.
+
+- **Irreducible RAF** — A RAF containing no smaller nonempty RAF subset.
+
+- **Minimum-cardinality RAF** — A RAF with the fewest reactions among all RAFs in the specified network; this is stronger than irreducibility.
+
+- **Chemostat** — An idealized externally maintained concentration or chemical reservoir.
+
+- **Dynamical viability** — The additional question of whether specified reaction rates and conditions support sustained activity or growth.
+
+### Why this matters
+
+Collectively supported chemistry is relevant to thinking about how organized reaction systems can arise and persist. Exact minimality results help distinguish essential reactions from dispensable ones in a model. Just as importantly, separating structural closure from energy supply and kinetics prevents a network diagram from being mistaken for proof of a viable replicating system.
+
+### What progress would mean
+
+Success would identify supported reaction sets and prove the stated kind of minimality. Demonstrating sustained growth, heredity or evolution would require extra chemical and dynamical assumptions beyond the RAF certificate.
+
 ## Core question
 
 For a finite catalytic reaction system, can its maximal RAF and smallest RAF subsets be certified, while keeping structural autocatalysis distinct from sustained growth?

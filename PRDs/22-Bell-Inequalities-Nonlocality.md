@@ -2,6 +2,42 @@
 
 **Revised specification — 2026-09-11.** [Detailed critique](../reviews/22-Bell-Inequalities-Nonlocality.md) · [Original description](../archive/original-PRDs/22-Bell-Inequalities-Nonlocality.md) · [Evidence standard](../reviews/EVIDENCE-STANDARD.md)
 
+## Plain-language guide
+
+### The problem in everyday terms
+
+Two distant experimenters choose measurements and compare their outcomes. If the outcomes were produced only by shared classical instructions, their correlations would obey particular inequalities. Quantum systems can exceed some of those limits. This problem calculates both the classical ceiling and a reliable quantum range for a specified test, so that the size of the difference is established mathematically.
+
+### Key terms
+
+- **Bell scenario** — A specification of the parties, their measurement choices and the possible outcomes.
+
+- **Local hidden-variable model** — A model in which outcomes depend on local choices and shared classical information, with measurement-choice independence among the assumptions.
+
+- **Bell inequality** — A linear restriction satisfied by the correlations of such local models.
+
+- **CHSH** — The simplest standard two-party test with two binary measurement choices per party.
+
+- **Quantum strategy** — A specified shared quantum state and local measurements producing correlations.
+
+- **POVM** — A set of positive operators summing to the identity that describes a general quantum measurement.
+
+- **Tsirelson bound** — A quantum upper limit on a Bell expression, with 2√2 the familiar CHSH value in its standard normalization.
+
+- **NPA hierarchy** — A sequence of matrix-positivity tests providing outer bounds on quantum correlations.
+
+- **Commuting-operator model** — A framework in which different parties’ measurements commute; its general correlation set differs from the finite-dimensional tensor-product setting.
+
+- **Facet** — A full boundary face of the appropriate dimension of the classical correlation polytope.
+
+### Why this matters
+
+Bell inequalities make the difference between classical local explanations and quantum correlations precise. They also underlie ways to certify quantum behavior from observed input-output relationships. Reliable quantum bounds are essential: a numerical optimization value without a valid upper certificate or achieving strategy may misstate what quantum theory permits.
+
+### What progress would mean
+
+A complete small test would include an exact classical maximum, an explicit quantum strategy and a matching or enclosing upper bound. Applications to randomness or cryptography would need additional statistical and security assumptions beyond this mathematical benchmark.
+
 ## Core question
 
 For a fixed rational Bell functional in a small bipartite scenario, can its exact local value and a certified quantum lower/upper bracket be produced?
