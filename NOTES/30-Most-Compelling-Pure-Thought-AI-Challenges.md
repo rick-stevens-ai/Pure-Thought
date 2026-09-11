@@ -1,3 +1,5 @@
+> **Historical synthesis — not the revised specification.** Its numbering differs from the PRDs. See the [complete crosswalk](../reviews/SYNTHESIS-CROSSWALK.md), [revised catalog](../PRDs/README.md), and [supplemental revisions](../supplemental/README.md). Original content follows unchanged.
+
 # The 30 Most Compelling Pure Thought AI Challenges
 ## A Synthesis Report
 

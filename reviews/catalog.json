@@ -1,0 +1,270 @@
+{
+  "canonical": [
+    {
+      "n": 1,
+      "title": "Extremal holomorphic CFT partition functions: certified necessary tests",
+      "question": "For c=24k, which extremal holomorphic partition-function candidates pass exact genus-one spectral tests, and can any candidate be excluded by an additional, explicitly stated consistency condition?",
+      "file": "01-AdS3-Modular-Bootstrap.md"
+    },
+    {
+      "n": 2,
+      "title": "Conditional positivity bounds for a specified gravitational amplitude",
+      "question": "Under a fully stated infrared prescription and high-energy assumption, what certified inequality constrains one selected low-energy coefficient of scalar scattering coupled to gravity?",
+      "file": "02-Gravitational-Positivity-Bounds.md"
+    },
+    {
+      "n": 3,
+      "title": "Celestial amplitudes: distributional crossing and soft-limit consistency",
+      "question": "Can a regulated celestial transform of a specified four-graviton tree amplitude reproduce Lorentz covariance, crossing, and the leading conformally soft residue in one consistent convention?",
+      "file": "03-Celestial-CFT-Bootstrap.md"
+    },
+    {
+      "n": 4,
+      "title": "Lightcone bootstrap with controlled large-spin remainders",
+      "question": "For one scalar four-point function in a unitary CFT with d>2, what controlled bounds on large-spin double-twist data follow from specified low-twist exchanges?",
+      "file": "04-Modular-Lightcone-Bootstrap.md"
+    },
+    {
+      "n": 5,
+      "title": "Positive-geometry tests for a fixed gravity integrand",
+      "question": "For a specified low-loop supergravity integrand, does a precisely bounded class of candidate positive geometries reproduce its differential form, including every boundary and pole at infinity?",
+      "file": "05-Positive-Geometry-Gravity.md"
+    },
+    {
+      "n": 6,
+      "title": "S-matrix bootstrap with an explicit gravitational infrared prescription",
+      "question": "Can one certify an exclusion for a low-energy scalar-scattering parameter using a crossing-symmetric partial-wave relaxation whose infrared and truncation assumptions are explicit?",
+      "file": "06-Nonperturbative-S-matrix-Bootstrap.md"
+    },
+    {
+      "n": 7,
+      "title": "Stress-tensor bootstrap: a sector-specific gap bound in three dimensions",
+      "question": "At fixed stress-tensor two- and three-point data, can crossing exclude a proposed gap in the parity-even scalar sector of T×T in a unitary three-dimensional CFT?",
+      "file": "07-Extremal-CFTs-Stress-Tensor.md"
+    },
+    {
+      "n": 8,
+      "title": "Exact modular-data and symmetry-anomaly consistency tests",
+      "question": "For supplied rational-CFT modular data and a specified finite internal symmetry, which algebraic consistency tests can be certified, and which failures obstruct a proposed gauging?",
+      "file": "08-Swampland-Modularity-Symmetries.md"
+    },
+    {
+      "n": 9,
+      "title": "Certified Chern phases in a bounded tight-binding family",
+      "question": "Within a declared finite-range Hamiltonian family, which parameter regions have a proven band gap and occupied-band Chern number, and what minimality statements follow within that family?",
+      "file": "09-Topological-Band-Theory.md"
+    },
+    {
+      "n": 10,
+      "title": "Flatness–locality–geometry tradeoffs for Chern bands",
+      "question": "For fixed orbital count, hopping range, and gap normalization, how small can a Chern band’s bandwidth and geometric nonuniformity be, with certified bounds?",
+      "file": "10-Flat-Chern-Bands.md"
+    },
+    {
+      "n": 11,
+      "title": "Certified topological bands in an idealized Maxwell medium",
+      "question": "Can a specified lossless periodic electromagnetic model support a rigorously isolated band group with nonzero Chern number, and can its interface modes be validated?",
+      "file": "11-Photonic-Topological-Crystals.md"
+    },
+    {
+      "n": 12,
+      "title": "Rigidity and boundary modes of periodic Maxwell frames",
+      "question": "For a geometrically specified isostatic frame and boundary termination, can the zero-mode count and localization be proved from its compatibility matrix?",
+      "file": "12-Topological-Mechanical-Metamaterials.md"
+    },
+    {
+      "n": 13,
+      "title": "Higher-order topology with explicit boundary and symmetry assumptions",
+      "question": "For a fixed quadrupole-insulator family, can one certify the bulk and Wannier gaps, a quantized nested polarization, and the corresponding boundary charge under a specified termination?",
+      "file": "13-Higher-Order-Topological-Insulators.md"
+    },
+    {
+      "n": 14,
+      "title": "Certified Weyl nodes and slice topology in a lattice model",
+      "question": "Can all nodes in a specified two-band three-dimensional Hamiltonian be isolated, assigned chirality, and related to the Chern numbers of gapped momentum slices?",
+      "file": "14-Topological-Semimetals-Weyl-Dirac.md"
+    },
+    {
+      "n": 15,
+      "title": "Symmetry-indicator algebra and the limits of band diagnosis",
+      "question": "For one fixed symmetry setting, can compatibility relations and atomic band representations be generated exactly, and what topology can their quotient actually detect?",
+      "file": "15-Topological-Quantum-Chemistry.md"
+    },
+    {
+      "n": 16,
+      "title": "Certified energy brackets from reduced-density-matrix relaxations",
+      "question": "For a specified finite fermionic Hamiltonian, how tight an independently certified ground-state energy interval can P,Q,G and selected higher-order RDM constraints produce?",
+      "file": "16-N-Representability-2RDM.md"
+    },
+    {
+      "n": 17,
+      "title": "Complete enumeration of a precisely defined molecular-graph class",
+      "question": "For a fixed formula and explicit valence grammar, can every connected constitutional graph be generated exactly once, with a checkable completeness argument?",
+      "file": "17-Isomer-Enumeration-Molecular-Graphs.md"
+    },
+    {
+      "n": 18,
+      "title": "Certified optimal-transport bounds for strictly correlated electrons",
+      "question": "For a supplied normalized electron density, can a discretized Coulomb multi-marginal transport problem yield verified bounds, with continuum error separated from optimization error?",
+      "file": "18-Optimal-Transport-Chemistry.md"
+    },
+    {
+      "n": 19,
+      "title": "Certified equilibria and conditional persistence in mass-action networks",
+      "question": "For a finite mass-action network with specified rates and conservation totals, can all positive equilibria in one compatibility class be isolated and their local stability certified?",
+      "file": "19-Chemical-Reaction-Networks.md"
+    },
+    {
+      "n": 20,
+      "title": "Path-integral thermodynamics with a transparent error budget",
+      "question": "For a specified one-dimensional quantum Hamiltonian, can path-integral sampling reproduce equilibrium energy and position moments with separately assessed discretization and statistical errors?",
+      "file": "20-Ab-Initio-Path-Integrals.md"
+    },
+    {
+      "n": 21,
+      "title": "Quantum LDPC instances with independently certified code parameters",
+      "question": "For a specified CSS construction, can code dimension and distance bounds be verified independently, and can decoder performance be measured under one explicit noise model?",
+      "file": "21-Quantum-LDPC-Codes.md"
+    },
+    {
+      "n": 22,
+      "title": "Bell inequalities with certified local and quantum value brackets",
+      "question": "For a fixed rational Bell functional in a small bipartite scenario, can its exact local value and a certified quantum lower/upper bracket be produced?",
+      "file": "22-Bell-Inequalities-Nonlocality.md"
+    },
+    {
+      "n": 23,
+      "title": "Entanglement certification with explicit inconclusive outcomes",
+      "question": "For a finite bipartite density matrix, can one produce a checked entanglement witness or a separable decomposition, and bound a specifically chosen entanglement measure?",
+      "file": "23-Entanglement-Measures-Witnesses.md"
+    },
+    {
+      "n": 24,
+      "title": "Topological code verification and noise-specific decoder evaluation",
+      "question": "Can a toric-code family’s algebraic parameters be proved, and can a fixed decoder’s logical failure probability be evaluated under a precisely specified error model?",
+      "file": "24-Topological-Quantum-Error-Correction.md"
+    },
+    {
+      "n": 25,
+      "title": "Quantum query complexity with explicit oracle and output models",
+      "question": "For unstructured search with a specified promise, can an implementation and an analytic lower bound establish a matched quantum query complexity?",
+      "file": "25-Quantum-Algorithms-Complexity.md"
+    },
+    {
+      "n": 26,
+      "title": "A posteriori certification of an invariant Hamiltonian torus",
+      "question": "For an explicitly specified analytic near-integrable Hamiltonian and an approximate torus, can every hypothesis of a quantitative KAM theorem be verified?",
+      "file": "26-KAM-Theory-Planetary-Stability.md"
+    },
+    {
+      "n": 27,
+      "title": "Central configurations in a bounded, symmetry-reduced N-body problem",
+      "question": "For fixed positive masses and a declared symmetry quotient, can all collision-free central configurations in the chosen family be certified and their relative-equilibrium linearization analyzed?",
+      "file": "27-N-Body-Central-Configurations.md"
+    },
+    {
+      "n": 28,
+      "title": "Explicit finite-time action confinement from a normal form",
+      "question": "For a specified analytic Hamiltonian and action domain, what rigorously computable action excursion and confinement time follow from a certified normal form or quantitative Nekhoroshev theorem?",
+      "file": "28-Nekhoroshev-Stability-Theory.md"
+    },
+    {
+      "n": 29,
+      "title": "Autocatalytic sets: maximality, irreducibility and dynamical viability",
+      "question": "For a finite catalytic reaction system, can its maximal RAF and smallest RAF subsets be certified, while keeping structural autocatalysis distinct from sustained growth?",
+      "file": "29-Chemical-Reaction-Networks-Origins.md"
+    },
+    {
+      "n": 30,
+      "title": "An exact finite genotype–phenotype map and its mutation graph",
+      "question": "For a fully specified combinatorial RNA folding rule on short sequences, what are the exact neutral components, mutation robustness, and accessible phenotype counts?",
+      "file": "30-Genotype-Phenotype-Mapping.md"
+    }
+  ],
+  "supplemental": [
+    {
+      "id": "S01",
+      "original": 11,
+      "title": "Crystal-field and spin–orbit anisotropy in a finite ion model",
+      "question": "For a fixed d-shell occupancy and point-group representation, which anisotropy values are possible in a bounded crystal-field/spin–orbit Hamiltonian family?",
+      "file": "S01.md"
+    },
+    {
+      "id": "S02",
+      "original": 12,
+      "title": "Bandgap optimization in a bounded wave-operator family",
+      "question": "Within a fixed finite family of periodic media, what lower bound on a complete bandgap and what upper bound on the best possible gap can be certified?",
+      "file": "S02.md"
+    },
+    {
+      "id": "S03",
+      "original": 13,
+      "title": "Effective conductivity bounds for two-phase composites",
+      "question": "For fixed positive phase conductivities and volume fraction, can rigorous effective-conductivity bounds and matching constructions be obtained in a specified microstructure class?",
+      "file": "S03.md"
+    },
+    {
+      "id": "S04",
+      "original": 15,
+      "title": "Finite-volume certification of a disordered topological index",
+      "question": "For a local disordered lattice Hamiltonian with a specified bulk spectral-gap hypothesis, when does a finite-volume index provably equal its infinite-volume counterpart?",
+      "file": "S04.md"
+    },
+    {
+      "id": "S05",
+      "original": 17,
+      "title": "Finite-basis density functionals and exact convex constraints",
+      "question": "For a fixed finite lattice Hamiltonian, can the ensemble constrained-search density functional be bracketed and its convexity/duality verified?",
+      "file": "S05.md"
+    },
+    {
+      "id": "S06",
+      "original": 20,
+      "title": "Inverse pair-potential design over an explicit competitor class",
+      "question": "Can a parameterized pair potential make a target periodic structure an energy minimizer among a precisely specified set of competitors over a density interval?",
+      "file": "S06.md"
+    },
+    {
+      "id": "S07",
+      "original": 23,
+      "title": "Finite-size criteria for parent-Hamiltonian spectral gaps",
+      "question": "For a specified frustration-free one-dimensional parent-Hamiltonian family, can a validated local spectral calculation imply a uniform many-body gap?",
+      "file": "S07.md"
+    },
+    {
+      "id": "S08",
+      "original": 24,
+      "title": "Gapped boundaries from exact anyon data",
+      "question": "For one fully specified two-dimensional topological order, can candidate condensates and their gapped boundaries be verified from exact categorical data?",
+      "file": "S08.md"
+    },
+    {
+      "id": "S09",
+      "original": 25,
+      "title": "Stoquasticity under a bounded class of basis changes",
+      "question": "For a finite rational Pauli Hamiltonian, is there an allowed product Clifford transformation making all off-diagonal entries real and nonpositive?",
+      "file": "S09.md"
+    },
+    {
+      "id": "S10",
+      "original": 27,
+      "title": "Certified periodic orbits of a specified three-body model",
+      "question": "Can a numerically proposed periodic orbit be enclosed by a validated shooting proof and classified by its reduced Floquet spectrum?",
+      "file": "S10.md"
+    },
+    {
+      "id": "S11",
+      "original": 29,
+      "title": "Minimal reaction implementations of a specified computational behavior",
+      "question": "Within a bounded reaction grammar, what is the smallest network implementing a precisely defined input/output behavior with a proved error bound?",
+      "file": "S11.md"
+    },
+    {
+      "id": "S12",
+      "original": 30,
+      "title": "Capacity of a specified finite noisy genotype–phenotype channel",
+      "question": "For a finite conditional phenotype law P(y|g) and optional genotype cost constraint, what certified lower and upper bounds can be placed on Shannon capacity?",
+      "file": "S12.md"
+    }
+  ]
+}
