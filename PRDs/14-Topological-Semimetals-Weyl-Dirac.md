@@ -42,13 +42,13 @@ Can all nodes in a specified two-band three-dimensional Hamiltonian be isolated,
 
 ## Scope and assumptions
 
-Begin with H(k)=sin k_x σ_x+sin k_y σ_y+(2−cos k_x−cos k_y−cos k_z)σ_z, k∈T³, lower band occupied away from nodes. Fix orientation and Pauli-matrix conventions. This exact benchmark has nodes at (0,0,±π/2).
+Begin with $H(k)=\sin k_x\,\sigma_x+\sin k_y\,\sigma_y+(2-\cos k_x-\cos k_y-\cos k_z)\sigma_z$, k∈T³, lower band occupied away from nodes. Fix orientation and Pauli-matrix conventions. This exact benchmark has nodes at (0,0,±π/2).
 
 Subsequent searches must fix orbitals, hopping support, parameter box, and symmetry representation. Dirac points and nodal lines are separate extensions because their protection criteria differ.
 
 ## Mathematical target
 
-For H=d₀I+d·σ, nodes solve d(k)=0. A simple node has invertible velocity matrix V_ij=∂d_i/∂k_j. Define Weyl chirality χ=sgn det V, and explicitly relate this to the lower-band Chern flux under the chosen convention. Prove the complement of all isolating neighborhoods has |d(k)|>0.
+For H=d₀I+d·σ, nodes solve d(k)=0. A simple node has invertible velocity matrix $V_{ij}=\partial d_i/\partial k_j$. Define Weyl chirality χ=sgn det V, and explicitly relate this to the lower-band Chern flux under the chosen convention. Prove the complement of all isolating neighborhoods has |d(k)|>0.
 
 For fixed k_z away from nodes, certify the two-dimensional occupied Chern number. Its jumps track node charge. A slab calculation requires a chosen surface normal and termination; arc details are not determined solely by bulk node positions.
 

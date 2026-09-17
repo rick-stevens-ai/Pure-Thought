@@ -1,0 +1,1074 @@
+\documentclass[11pt,a4paper]{article}
+
+% ============================================================
+% PACKAGES
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{shapes,arrows,positioning,calc,patterns,decorations.pathmorphing}
+
+% ============================================================
+% CUSTOM COLORS
+% ============================================================
+\definecolor{pursuitblue}{RGB}{0,102,204}
+\definecolor{physicsgreen}{RGB}{34,139,34}
+\definecolor{warningred}{RGB}{204,0,0}
+\definecolor{annotationgray}{RGB}{100,100,100}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{celestialgold}{RGB}{218,165,32}
+
+% ============================================================
+% TCOLORBOX ENVIRONMENTS
+% ============================================================
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{annotation}{
+    colback=annotationgray!5,
+    colframe=annotationgray,
+    fonttitle=\bfseries,
+    title=Annotation,
+    breakable
+}
+
+\newtcolorbox{pursuitbox}{
+    colback=pursuitblue!5,
+    colframe=pursuitblue,
+    fonttitle=\bfseries,
+    title=Pure Thought Pursuit,
+    breakable
+}
+
+\newtcolorbox{warningbox}{
+    colback=warningred!5,
+    colframe=warningred,
+    fonttitle=\bfseries,
+    title=Warning,
+    breakable
+}
+
+\newtcolorbox{physicsbox}{
+    colback=physicsgreen!5,
+    colframe=physicsgreen,
+    fonttitle=\bfseries,
+    title=Physics Insight,
+    breakable
+}
+
+\newtcolorbox{celestialbox}{
+    colback=celestialgold!5,
+    colframe=celestialgold!80!black,
+    fonttitle=\bfseries,
+    title=Celestial Mechanics,
+    breakable
+}
+
+\newtcolorbox{theorembox}[1][]{
+    colback=blue!5,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    title=#1,
+    breakable
+}
+
+% ============================================================
+% THEOREM ENVIRONMENTS
+% ============================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+% ============================================================
+% LISTINGS CONFIGURATION
+% ============================================================
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{codebg},
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black}\itshape,
+    stringstyle=\color{red!70!black},
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=5pt,
+    frame=single,
+    framerule=0.5pt,
+    rulecolor=\color{gray!50},
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    tabsize=4,
+    captionpos=b,
+    morekeywords={np,scipy,sympy,fsolve,eigh,groebner}
+}
+
+% ============================================================
+% CUSTOM COMMANDS
+% ============================================================
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\bra}[1]{\left\langle#1\right|}
+
+% ============================================================
+% DOCUMENT INFO
+% ============================================================
+\title{\textbf{N-Body Central Configurations:\\
+From Lagrange Points to Algebraic Geometry}\\[1em]
+\large A Pure Thought Approach to Celestial Mechanics}
+
+\author{Pure Thought AI Challenge\\
+\texttt{Problem 27: Celestial Mechanics}}
+
+\date{\today}
+
+% ============================================================
+% DOCUMENT
+% ============================================================
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report presents a comprehensive theoretical framework for analyzing central configurations in the gravitational N-body problem. We develop the complete theory from Newton's equations through the algebraic formulation to computational enumeration using Gr\"obner bases. Central configurations are special arrangements where gravitational acceleration points toward the center of mass for all bodies, enabling homothetic (shape-preserving) solutions. Key topics include Lagrange points (L1--L5), Euler's collinear solutions, the finiteness conjecture for N $\geq$ 5, stability analysis via Hessian eigenvalues, and symmetry classification. We implement algorithms for finding all central configurations for given masses and certifying their properties using computational algebraic geometry.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Introduction and Motivation}
+% ============================================================
+
+\subsection{The N-Body Problem}
+
+\begin{physicsbox}
+The \textbf{N-body problem}---determining the motion of $N$ point masses interacting via Newtonian gravity---is one of the oldest problems in mathematical physics. While the 2-body problem has exact solutions (Kepler ellipses), $N \geq 3$ is generally non-integrable and exhibits chaotic behavior.
+\end{physicsbox}
+
+Despite intractability of the general problem, special solutions exist where the geometric configuration of bodies is preserved. These \textbf{central configurations} are the key to understanding:
+\begin{itemize}
+    \item \textbf{Lagrange points}: Stable positions for spacecraft (JWST at Sun-Earth L2)
+    \item \textbf{Trojan asteroids}: Jupiter's L4/L5 points host thousands of asteroids
+    \item \textbf{Choreographies}: Remarkable periodic orbits like the figure-eight solution
+    \item \textbf{Collision singularities}: Central configs arise at the moment of total collapse
+\end{itemize}
+
+\subsection{Central Configurations: Definition}
+
+\begin{definition}[Central Configuration]
+Positions $\mathbf{r} = (\mathbf{r}_1, \ldots, \mathbf{r}_N) \in (\R^d)^N$ with masses $(m_1, \ldots, m_N)$ form a \textbf{central configuration} if:
+\begin{equation}
+\nabla_i U = \lambda m_i \mathbf{r}_i \quad \text{for all } i = 1, \ldots, N
+\end{equation}
+where:
+\begin{itemize}
+    \item $U = -\sum_{i < j} \frac{m_i m_j}{|\mathbf{r}_i - \mathbf{r}_j|}$ is the gravitational potential
+    \item $\lambda \in \R$ is a scalar (Lagrange multiplier)
+    \item Center of mass is at origin: $\sum_i m_i \mathbf{r}_i = \mathbf{0}$
+\end{itemize}
+\end{definition}
+
+\begin{celestialbox}
+Physically, in a central configuration, the gravitational acceleration on each body points directly toward the center of mass. This allows the entire configuration to rotate rigidly or expand/contract homothetically while preserving its shape.
+\end{celestialbox}
+
+\subsection{Pure Thought Approach}
+
+\begin{pursuitbox}
+Central configurations are ideally suited for pure mathematical analysis:
+\begin{enumerate}
+    \item Based on \emph{algebraic equations}---polynomial system in positions
+    \item Solutions computable via \emph{Gr\"obner bases} and homotopy continuation
+    \item Finiteness provable using \emph{B\'ezout's theorem}
+    \item Stability from \emph{Hessian eigenvalues}---symbolic computation
+    \item All results \emph{certifiable} via interval arithmetic
+\end{enumerate}
+No numerical integration of trajectories needed---pure algebra and analysis.
+\end{pursuitbox}
+
+% ============================================================
+\section{Mathematical Foundations}
+% ============================================================
+
+\subsection{Newton's Equations}
+
+The equations of motion for $N$ gravitating bodies are:
+\begin{equation}
+m_i \ddot{\mathbf{r}}_i = -\nabla_{\mathbf{r}_i} U = \sum_{j \neq i} \frac{m_i m_j (\mathbf{r}_j - \mathbf{r}_i)}{|\mathbf{r}_i - \mathbf{r}_j|^3}
+\end{equation}
+
+\subsection{Homothetic Solutions}
+
+\begin{definition}[Homothetic Solution]
+A \textbf{homothetic solution} has the form:
+\begin{equation}
+\mathbf{r}(t) = \alpha(t) \mathbf{c}
+\end{equation}
+where $\mathbf{c} = (\mathbf{c}_1, \ldots, \mathbf{c}_N)$ is a fixed shape and $\alpha(t)$ is a scalar function.
+\end{definition}
+
+Substituting into Newton's equations:
+\begin{equation}
+m_i \ddot{\alpha} \mathbf{c}_i = -\frac{1}{\alpha^2} \nabla_{\mathbf{c}_i} U(\mathbf{c})
+\end{equation}
+
+For this to hold with a single scalar $\ddot{\alpha}$, we need:
+\begin{equation}
+\nabla_i U(\mathbf{c}) = \lambda m_i \mathbf{c}_i
+\end{equation}
+which is exactly the central configuration equation.
+
+\subsection{Degrees of Freedom}
+
+For $N$ bodies in $d$ dimensions:
+\begin{itemize}
+    \item Total DOF: $dN$ (positions)
+    \item Center of mass constraint: $-d$
+    \item Scale invariance (rescaling preserves CC): $-1$
+    \item Rotation invariance: $-d(d-1)/2$
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\toprule
+$N$ & $d=2$ (planar) & $d=3$ (spatial) \\
+\midrule
+3 & 2 & 3 \\
+4 & 4 & 6 \\
+5 & 6 & 9 \\
+\bottomrule
+\end{tabular}
+\caption{Degrees of freedom for central configurations after removing symmetries.}
+\end{table}
+
+% ============================================================
+\section{The Three-Body Problem}
+% ============================================================
+
+\subsection{Euler's Collinear Solutions}
+
+\begin{theorem}[Euler, 1767]
+For any three masses $m_1, m_2, m_3$, there exist exactly three collinear central configurations, one for each ordering of masses along the line.
+\end{theorem}
+
+For masses on the $x$-axis with $x_1 < x_2 < x_3$, the configuration is determined by:
+\begin{equation}
+\frac{m_2}{(x_2 - x_1)^2} - \frac{m_3}{(x_3 - x_1)^2} = \lambda x_1
+\end{equation}
+and similar equations for each body.
+
+\begin{lstlisting}[caption={Finding Euler collinear configurations}]
+import numpy as np
+from scipy.optimize import fsolve
+
+def euler_collinear(m1: float, m2: float, m3: float) -> list:
+    """
+    Find all three collinear central configurations.
+
+    Returns:
+        List of (x1, x2, x3, lambda) tuples
+    """
+    solutions = []
+
+    # For each ordering of masses
+    for ordering in [(m1, m2, m3), (m1, m3, m2), (m2, m1, m3)]:
+        ma, mb, mc = ordering
+
+        def equations(x):
+            x1, x2, x3, lam = x
+
+            # Distances
+            r12 = abs(x2 - x1)
+            r13 = abs(x3 - x1)
+            r23 = abs(x3 - x2)
+
+            # Central config equations
+            eq1 = mb * (x2 - x1) / r12**3 + mc * (x3 - x1) / r13**3 - lam * x1
+            eq2 = ma * (x1 - x2) / r12**3 + mc * (x3 - x2) / r23**3 - lam * x2
+            eq3 = ma * (x1 - x3) / r13**3 + mb * (x2 - x3) / r23**3 - lam * x3
+
+            # Center of mass
+            eq4 = ma * x1 + mb * x2 + mc * x3
+
+            return [eq1, eq2, eq3, eq4]
+
+        # Initial guess
+        x0 = [-1.0, 0.0, 1.0, 1.0]
+        sol = fsolve(equations, x0, full_output=True)
+
+        if sol[2] == 1:  # Converged
+            solutions.append(tuple(sol[0]))
+
+    return solutions
+\end{lstlisting}
+
+\subsection{Lagrange's Equilateral Triangle}
+
+\begin{theorem}[Lagrange, 1772]
+For any three masses, the equilateral triangle configuration is a central configuration.
+\end{theorem}
+
+\begin{proof}
+Place masses at vertices of equilateral triangle with side length $a$:
+\begin{align}
+\mathbf{r}_1 &= (0, 0) \\
+\mathbf{r}_2 &= (a, 0) \\
+\mathbf{r}_3 &= (a/2, a\sqrt{3}/2)
+\end{align}
+By symmetry, $\nabla_i U$ points toward the centroid for all $i$, satisfying the CC equation.
+\end{proof}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=2]
+    % Triangle
+    \draw[thick] (0,0) -- (2,0) -- (1,1.732) -- cycle;
+
+    % Masses
+    \fill[blue] (0,0) circle (0.1) node[below left] {$m_1$};
+    \fill[red] (2,0) circle (0.1) node[below right] {$m_2$};
+    \fill[green!60!black] (1,1.732) circle (0.1) node[above] {$m_3$};
+
+    % Centroid
+    \fill[black] (1, 0.577) circle (0.05) node[right] {CM};
+
+    % Force arrows
+    \draw[->, thick, blue] (0,0) -- (0.5, 0.289);
+    \draw[->, thick, red] (2,0) -- (1.5, 0.289);
+    \draw[->, thick, green!60!black] (1,1.732) -- (1, 1.155);
+\end{tikzpicture}
+\caption{Lagrange equilateral triangle configuration. Forces (arrows) point toward center of mass.}
+\label{fig:lagrange-triangle}
+\end{figure}
+
+\subsection{Lagrange Points in the Restricted 3-Body Problem}
+
+\begin{definition}[Circular Restricted 3-Body Problem]
+Two massive bodies ($m_1$, $m_2$) orbit their common center of mass in circles. A test particle ($m_3 \to 0$) moves in their combined gravitational field.
+\end{definition}
+
+\begin{theorem}[Lagrange Points]
+The restricted 3-body problem has exactly five equilibrium points (Lagrange points):
+\begin{itemize}
+    \item \textbf{L1}: Between the two massive bodies
+    \item \textbf{L2}: Beyond the smaller mass (away from larger)
+    \item \textbf{L3}: Beyond the larger mass (opposite side)
+    \item \textbf{L4, L5}: At equilateral triangle vertices with the two masses
+\end{itemize}
+\end{theorem}
+
+\begin{lstlisting}[caption={Computing Lagrange points}]
+def lagrange_points(m1: float, m2: float) -> dict:
+    """
+    Compute all five Lagrange points for circular restricted 3BP.
+
+    Uses rotating frame with masses at fixed positions.
+    """
+    mu = m2 / (m1 + m2)
+
+    # Effective potential in rotating frame
+    def grad_U_eff(x, y):
+        r1 = np.sqrt((x + mu)**2 + y**2)
+        r2 = np.sqrt((x - 1 + mu)**2 + y**2)
+
+        dUdx = x - (1 - mu) * (x + mu) / r1**3 - mu * (x - 1 + mu) / r2**3
+        dUdy = y - (1 - mu) * y / r1**3 - mu * y / r2**3
+
+        return dUdx, dUdy
+
+    # L1: between masses
+    def L1_eq(x):
+        return x - (1-mu)/(x+mu)**2 + mu/(x-1+mu)**2
+    x_L1 = fsolve(L1_eq, 1 - mu - 0.5*mu**(1/3))[0]
+
+    # L2: beyond smaller mass
+    def L2_eq(x):
+        return x - (1-mu)/(x+mu)**2 - mu/(x-1+mu)**2
+    x_L2 = fsolve(L2_eq, 1 - mu + 0.5*mu**(1/3))[0]
+
+    # L3: beyond larger mass
+    def L3_eq(x):
+        return x + (1-mu)/(x+mu)**2 + mu/(x-1+mu)**2
+    x_L3 = fsolve(L3_eq, -1 - mu)[0]
+
+    # L4, L5: equilateral triangles
+    x_L4 = 0.5 - mu
+    y_L4 = np.sqrt(3) / 2
+    x_L5 = 0.5 - mu
+    y_L5 = -np.sqrt(3) / 2
+
+    return {
+        'L1': (x_L1, 0.0),
+        'L2': (x_L2, 0.0),
+        'L3': (x_L3, 0.0),
+        'L4': (x_L4, y_L4),
+        'L5': (x_L5, y_L5),
+        'mu': mu
+    }
+\end{lstlisting}
+
+% ============================================================
+\section{Four-Body Central Configurations}
+% ============================================================
+
+\subsection{Known Families}
+
+For four bodies, central configurations include:
+\begin{enumerate}
+    \item \textbf{Collinear}: Four masses on a line (multiple orderings)
+    \item \textbf{Convex quadrilaterals}: Square (equal masses), kite, trapezoid
+    \item \textbf{Concave}: One mass inside triangle of others
+\end{enumerate}
+
+\begin{theorem}[Hampton-Moeckel, 2006]
+For generic positive masses, there are finitely many planar 4-body central configurations.
+\end{theorem}
+
+\subsection{Finding 4-Body Configurations}
+
+\begin{lstlisting}[caption={4-body central configuration finder}]
+def find_4body_cc(masses: np.ndarray,
+                  n_guesses: int = 100) -> list:
+    """
+    Find planar 4-body central configurations using numerical search.
+
+    Args:
+        masses: Array of 4 masses
+        n_guesses: Number of random initial guesses
+
+    Returns:
+        List of (positions, lambda) tuples
+    """
+    m1, m2, m3, m4 = masses
+
+    def cc_equations(x):
+        """
+        8 equations: 2 per body (x and y components)
+        Plus 2 for center of mass
+        Plus 1 for normalization
+        """
+        # Unpack: positions (8) + lambda (1)
+        r = x[:8].reshape(4, 2)
+        lam = x[8]
+
+        equations = []
+
+        for i in range(4):
+            grad_U = np.zeros(2)
+            for j in range(4):
+                if i != j:
+                    r_ij = r[i] - r[j]
+                    dist = np.linalg.norm(r_ij)
+                    grad_U += masses[j] * r_ij / dist**3
+
+            # CC condition: grad_U = lambda * r_i
+            eq = grad_U - lam * r[i]
+            equations.extend(eq)
+
+        # Center of mass
+        cm = sum(masses[i] * r[i] for i in range(4))
+        equations.extend(cm)
+
+        # Normalization: |r_0| = 1
+        equations.append(np.linalg.norm(r[0]) - 1.0)
+
+        return equations
+
+    solutions = []
+
+    for _ in range(n_guesses):
+        # Random initial guess
+        r0 = np.random.randn(4, 2)
+        r0 -= np.average(r0, axis=0, weights=masses)  # Center
+        x0 = np.concatenate([r0.flatten(), [1.0]])
+
+        try:
+            sol, info, ier, _ = fsolve(cc_equations, x0, full_output=True)
+
+            if ier == 1 and np.max(np.abs(info['fvec'])) < 1e-8:
+                # Check if new solution
+                is_new = True
+                for prev_sol, _ in solutions:
+                    if np.allclose(sol[:8], prev_sol, atol=1e-4):
+                        is_new = False
+                        break
+
+                if is_new:
+                    solutions.append((sol[:8].reshape(4, 2), sol[8]))
+        except:
+            continue
+
+    return solutions
+\end{lstlisting}
+
+% ============================================================
+\section{The Finiteness Conjecture}
+% ============================================================
+
+\subsection{Statement}
+
+\begin{conjecture}[Finiteness Conjecture]
+For generic positive masses $(m_1, \ldots, m_N)$, the number of equivalence classes of planar central configurations is finite.
+\end{conjecture}
+
+\begin{itemize}
+    \item $N = 3$: 4 configurations (3 Euler + 1 Lagrange)---\textbf{proven}
+    \item $N = 4$: Finite---\textbf{proven} (Hampton-Moeckel, 2006)
+    \item $N \geq 5$: \textbf{Open problem}
+\end{itemize}
+
+\subsection{Algebraic Formulation}
+
+The central configuration equations form a polynomial system after clearing denominators:
+\begin{equation}
+\sum_{j \neq i} m_j (\mathbf{r}_i - \mathbf{r}_j) \prod_{k \neq l, (k,l) \neq (i,j)} |\mathbf{r}_k - \mathbf{r}_l|^3 = \lambda m_i \mathbf{r}_i \prod_{k < l} |\mathbf{r}_k - \mathbf{r}_l|^3
+\end{equation}
+
+\begin{theorem}[B\'ezout Bound]
+The number of solutions to a polynomial system is at most the product of the degrees of the individual polynomials (B\'ezout's theorem). For central configurations, this gives an exponential upper bound in $N$.
+\end{theorem}
+
+\subsection{Gr\"obner Basis Approach}
+
+\begin{lstlisting}[caption={Symbolic enumeration via Gr\"obner bases}]
+import sympy as sp
+from sympy.polys.groebnertools import groebner
+
+def enumerate_cc_symbolic(N: int, masses: list) -> list:
+    """
+    Enumerate central configurations using Groebner bases.
+
+    WARNING: Computationally expensive for N >= 4.
+    """
+    # Create symbolic variables
+    coords = []
+    for i in range(N):
+        coords.extend([sp.Symbol(f'x{i}'), sp.Symbol(f'y{i}')])
+    lam = sp.Symbol('lambda')
+
+    # Build polynomial equations
+    equations = []
+
+    for i in range(N):
+        xi, yi = coords[2*i], coords[2*i+1]
+
+        # Compute grad_U_i (with distances squared)
+        grad_x = sp.Integer(0)
+        grad_y = sp.Integer(0)
+
+        for j in range(N):
+            if i == j:
+                continue
+            xj, yj = coords[2*j], coords[2*j+1]
+
+            dx = xi - xj
+            dy = yi - yj
+            r_sq = dx**2 + dy**2
+
+            # grad_U_i += m_j * (r_i - r_j) / r^3
+            # Multiply through by r^3 to get polynomial
+            grad_x += masses[j] * dx * r_sq
+            grad_y += masses[j] * dy * r_sq
+
+        # CC equation: grad_U_i = lambda * m_i * r_i
+        # After clearing denominators
+        eq_x = grad_x - lam * masses[i] * xi
+        eq_y = grad_y - lam * masses[i] * yi
+
+        equations.append(eq_x)
+        equations.append(eq_y)
+
+    # Center of mass
+    cm_x = sum(masses[i] * coords[2*i] for i in range(N))
+    cm_y = sum(masses[i] * coords[2*i+1] for i in range(N))
+    equations.append(cm_x)
+    equations.append(cm_y)
+
+    # Normalization
+    equations.append(coords[0]**2 + coords[1]**2 - 1)
+
+    # Compute Groebner basis
+    print(f"Computing Groebner basis for N={N}...")
+    gb = groebner(equations, coords + [lam], order='lex')
+
+    # Solve
+    solutions = sp.solve(gb, coords + [lam])
+
+    return solutions
+\end{lstlisting}
+
+% ============================================================
+\section{Stability Analysis}
+% ============================================================
+
+\subsection{Linearization}
+
+To analyze stability of a central configuration, we linearize the equations of motion in the rotating frame.
+
+\begin{definition}[Hessian Matrix]
+The \textbf{Hessian} of the augmented potential (including centrifugal term) is:
+\begin{equation}
+H_{ij}^{\alpha\beta} = \frac{\partial^2}{\partial r_i^\alpha \partial r_j^\beta} \left( U + \frac{\lambda}{2} \sum_k m_k |\mathbf{r}_k|^2 \right)
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Stability Criterion]
+A central configuration is \textbf{linearly stable} if all eigenvalues of the Hessian (restricted to non-trivial modes) are non-negative.
+\end{theorem}
+
+\begin{lstlisting}[caption={Stability analysis via Hessian eigenvalues}]
+def stability_analysis(positions: np.ndarray,
+                       masses: np.ndarray,
+                       lambda_cc: float) -> dict:
+    """
+    Analyze linear stability of central configuration.
+
+    Args:
+        positions: (N, d) array of positions
+        masses: (N,) array of masses
+        lambda_cc: Central configuration multiplier
+
+    Returns:
+        Dictionary with eigenvalues and stability classification
+    """
+    N, d = positions.shape
+
+    # Build Hessian
+    H = np.zeros((N * d, N * d))
+
+    for i in range(N):
+        for j in range(N):
+            if i == j:
+                # Diagonal block
+                for k in range(N):
+                    if k == i:
+                        continue
+                    r_ik = positions[i] - positions[k]
+                    dist = np.linalg.norm(r_ik)
+
+                    # d^2 U / dr_i dr_i
+                    I_block = np.eye(d)
+                    outer_block = np.outer(r_ik, r_ik) / dist**2
+
+                    H_block = masses[k] * (I_block / dist**3 -
+                                          3 * outer_block / dist**3)
+
+                    H[i*d:(i+1)*d, i*d:(i+1)*d] -= H_block
+            else:
+                # Off-diagonal block
+                r_ij = positions[i] - positions[j]
+                dist = np.linalg.norm(r_ij)
+
+                I_block = np.eye(d)
+                outer_block = np.outer(r_ij, r_ij) / dist**2
+
+                H_block = masses[j] * (I_block / dist**3 -
+                                      3 * outer_block / dist**3)
+
+                H[i*d:(i+1)*d, j*d:(j+1)*d] = H_block
+
+    # Add centrifugal term: + lambda * I
+    H += lambda_cc * np.eye(N * d)
+
+    # Compute eigenvalues
+    eigenvalues = np.linalg.eigvalsh(H)
+
+    # Count zero modes (translations, rotations)
+    n_zero = d + d * (d - 1) // 2
+
+    # Non-trivial eigenvalues
+    sorted_eigs = np.sort(eigenvalues)
+    nontrivial_eigs = sorted_eigs[n_zero:]
+
+    # Stability: all non-trivial eigenvalues >= 0
+    is_stable = np.all(nontrivial_eigs >= -1e-8)
+    n_unstable = np.sum(nontrivial_eigs < -1e-8)
+
+    return {
+        'eigenvalues': eigenvalues,
+        'nontrivial_eigenvalues': nontrivial_eigs,
+        'is_stable': is_stable,
+        'n_unstable_modes': n_unstable,
+        'stability_type': 'stable' if is_stable else f'unstable ({n_unstable} modes)'
+    }
+\end{lstlisting}
+
+\subsection{Stability of Lagrange Points}
+
+\begin{theorem}[Lagrange Point Stability]
+In the circular restricted 3-body problem:
+\begin{itemize}
+    \item \textbf{L1, L2, L3}: Always unstable (saddle points)
+    \item \textbf{L4, L5}: Stable if $\mu < \mu_{\text{crit}} \approx 0.0385$ (Routh's condition)
+\end{itemize}
+where $\mu = m_2/(m_1 + m_2)$ is the mass ratio.
+\end{theorem}
+
+For the Sun-Jupiter system, $\mu \approx 0.001 \ll \mu_{\text{crit}}$, so L4/L5 are stable---explaining the Trojan asteroids.
+
+% ============================================================
+\section{Symmetry Classification}
+% ============================================================
+
+\subsection{Symmetry Groups}
+
+\begin{definition}[Symmetry of Central Configuration]
+A symmetry of a central configuration is an isometry (rotation, reflection) that maps the configuration to itself (possibly permuting masses of equal value).
+\end{definition}
+
+\begin{lstlisting}[caption={Symmetry group classification}]
+from itertools import permutations
+
+def classify_symmetry(positions: np.ndarray,
+                      masses: np.ndarray,
+                      tolerance: float = 1e-6) -> dict:
+    """
+    Classify symmetry group of central configuration.
+    """
+    N = len(masses)
+    symmetries = []
+
+    # Check rotational symmetries
+    for k in range(1, N):
+        angle = 2 * np.pi * k / N
+        rot = np.array([[np.cos(angle), -np.sin(angle)],
+                        [np.sin(angle), np.cos(angle)]])
+
+        rotated = (rot @ positions.T).T
+
+        # Check if rotated matches original under some permutation
+        for perm in permutations(range(N)):
+            permuted = positions[list(perm)]
+            perm_masses = masses[list(perm)]
+
+            if (np.allclose(rotated, permuted, atol=tolerance) and
+                np.allclose(masses, perm_masses, atol=tolerance)):
+                symmetries.append(('rotation', angle))
+                break
+
+    # Check reflections
+    for angle in np.linspace(0, np.pi, 20):
+        refl = np.array([[np.cos(2*angle), np.sin(2*angle)],
+                         [np.sin(2*angle), -np.cos(2*angle)]])
+
+        reflected = (refl @ positions.T).T
+
+        for perm in permutations(range(N)):
+            permuted = positions[list(perm)]
+            perm_masses = masses[list(perm)]
+
+            if (np.allclose(reflected, permuted, atol=tolerance) and
+                np.allclose(masses, perm_masses, atol=tolerance)):
+                symmetries.append(('reflection', angle))
+                break
+
+    # Determine group type
+    n_rot = sum(1 for s in symmetries if s[0] == 'rotation') + 1
+    n_refl = sum(1 for s in symmetries if s[0] == 'reflection')
+
+    if n_refl > 0 and n_rot > 1:
+        group = f'D{n_rot}'
+    elif n_rot > 1:
+        group = f'C{n_rot}'
+    elif n_refl > 0:
+        group = 'Cs'
+    else:
+        group = 'C1'
+
+    return {
+        'symmetry_group': group,
+        'n_rotations': n_rot,
+        'n_reflections': n_refl,
+        'symmetries': symmetries
+    }
+\end{lstlisting}
+
+% ============================================================
+\section{Certificate Generation}
+% ============================================================
+
+\begin{lstlisting}[caption={Central configuration certificate}]
+from dataclasses import dataclass, asdict
+import json
+
+@dataclass
+class CentralConfigCertificate:
+    """
+    Complete certificate for central configuration.
+    """
+    # System
+    n_bodies: int
+    dimension: int
+    masses: list
+
+    # Configuration
+    positions: list  # Flattened list
+    lambda_value: float
+
+    # Verification
+    max_residual: float
+    is_verified: bool
+
+    # Stability
+    eigenvalues: list
+    is_stable: bool
+    n_unstable_modes: int
+    morse_index: int
+
+    # Symmetry
+    symmetry_group: str
+    n_rotations: int
+    n_reflections: int
+
+    # Classification
+    config_type: str  # 'collinear', 'equilateral', 'convex', 'concave'
+
+    def export_json(self, path: str) -> None:
+        with open(path, 'w') as f:
+            json.dump(asdict(self), f, indent=2)
+
+    def verify(self) -> bool:
+        checks = [
+            self.n_bodies >= 3,
+            len(self.masses) == self.n_bodies,
+            self.max_residual < 1e-6,
+            self.is_verified,
+            len(self.eigenvalues) > 0
+        ]
+        return all(checks)
+
+
+def generate_certificate(positions: np.ndarray,
+                         masses: np.ndarray,
+                         lambda_cc: float) -> CentralConfigCertificate:
+    """
+    Generate complete certificate for central configuration.
+    """
+    N, d = positions.shape
+
+    # Verify CC equations
+    verification = verify_central_config(positions, masses)
+
+    # Stability analysis
+    stability = stability_analysis(positions, masses, lambda_cc)
+
+    # Symmetry
+    symmetry = classify_symmetry(positions, masses)
+
+    # Classify type
+    if is_collinear(positions):
+        config_type = 'collinear'
+    elif is_equilateral(positions) and N == 3:
+        config_type = 'equilateral'
+    elif is_convex(positions):
+        config_type = 'convex'
+    else:
+        config_type = 'concave'
+
+    return CentralConfigCertificate(
+        n_bodies=N,
+        dimension=d,
+        masses=masses.tolist(),
+        positions=positions.flatten().tolist(),
+        lambda_value=lambda_cc,
+        max_residual=verification['max_residual'],
+        is_verified=verification['is_cc'],
+        eigenvalues=stability['eigenvalues'].tolist(),
+        is_stable=stability['is_stable'],
+        n_unstable_modes=stability['n_unstable_modes'],
+        morse_index=np.sum(stability['eigenvalues'] < -1e-8),
+        symmetry_group=symmetry['symmetry_group'],
+        n_rotations=symmetry['n_rotations'],
+        n_reflections=symmetry['n_reflections'],
+        config_type=config_type
+    )
+\end{lstlisting}
+
+% ============================================================
+\section{Applications}
+% ============================================================
+
+\subsection{Space Mission Design}
+
+Lagrange points are used for spacecraft positioning:
+\begin{itemize}
+    \item \textbf{Sun-Earth L1}: SOHO, ACE (solar observation)
+    \item \textbf{Sun-Earth L2}: JWST, Planck, Gaia (cold environment for IR telescopes)
+    \item \textbf{Earth-Moon L4/L5}: Proposed for space stations
+\end{itemize}
+
+\subsection{Figure-Eight Choreography}
+
+\begin{theorem}[Chenciner-Montgomery, 2000]
+Three equal masses can follow a figure-eight shaped curve, with each mass chasing the previous one.
+\end{theorem}
+
+This remarkable solution was discovered numerically by Moore (1993) and proven to exist rigorously using variational methods.
+
+% ============================================================
+\section{Success Criteria and Milestones}
+% ============================================================
+
+\subsection{Minimum Viable Result (Months 1-3)}
+
+\begin{itemize}
+    \item L1--L5 computed for Earth-Moon system
+    \item Euler collinear solutions verified
+    \item Lagrange equilateral triangle certified
+    \item Basic stability analysis
+\end{itemize}
+
+\subsection{Strong Result (Months 4-6)}
+
+\begin{itemize}
+    \item All 4-body configurations for 5+ mass ratios
+    \item Complete stability classification
+    \item Symmetry group identification
+    \item 50+ configurations in database
+\end{itemize}
+
+\subsection{Publication Quality (Months 7-9)}
+
+\begin{itemize}
+    \item 5-body enumeration for special masses
+    \item Gr\"obner basis finiteness proofs
+    \item Interactive visualization
+    \item Public database release
+\end{itemize}
+
+% ============================================================
+\section{Conclusion}
+% ============================================================
+
+Central configurations represent the intersection of celestial mechanics, algebra, and topology. Key insights:
+\begin{enumerate}
+    \item Central configurations enable shape-preserving solutions
+    \item Algebraic methods can enumerate all configurations
+    \item Stability determined by Hessian eigenvalues
+    \item Symmetry constrains the solution space
+\end{enumerate}
+
+The pure-thought approach provides exact results without numerical integration, enabling rigorous classification of these fundamental objects in classical mechanics.
+
+% ============================================================
+% BIBLIOGRAPHY
+% ============================================================
+\begin{thebibliography}{10}
+
+\bibitem{euler1767}
+L.~Euler,
+\newblock ``De motu rectilineo trium corporum se mutuo attrahentium,''
+\newblock \emph{Novi Commentarii Academiae Scientiarum Petropolitanae}, vol.~11, pp.~144--151, 1767.
+
+\bibitem{lagrange1772}
+J.-L. Lagrange,
+\newblock ``Essai sur le probl\`eme des trois corps,''
+\newblock \emph{Prix de l'Acad\'emie Royale des Sciences de Paris}, vol.~9, 1772.
+
+\bibitem{hampton2006}
+M.~Hampton and R.~Moeckel,
+\newblock ``Finiteness of relative equilibria of the four-body problem,''
+\newblock \emph{Inventiones Mathematicae}, vol.~163, pp.~289--312, 2006.
+
+\bibitem{albouy1998}
+A.~Albouy and A.~Chenciner,
+\newblock ``Le probl\`eme des n corps et les distances mutuelles,''
+\newblock \emph{Inventiones Mathematicae}, vol.~131, pp.~151--184, 1998.
+
+\bibitem{chenciner2000}
+A.~Chenciner and R.~Montgomery,
+\newblock ``A remarkable periodic solution of the three-body problem in the case of equal masses,''
+\newblock \emph{Annals of Mathematics}, vol.~152, pp.~881--901, 2000.
+
+\bibitem{moeckel1990}
+R.~Moeckel,
+\newblock ``On central configurations,''
+\newblock \emph{Mathematische Zeitschrift}, vol.~205, pp.~499--517, 1990.
+
+\bibitem{saari2005}
+D.~G. Saari,
+\newblock \emph{Collisions, Rings, and Other Newtonian N-Body Problems}.
+\newblock American Mathematical Society, 2005.
+
+\bibitem{meyer2009}
+K.~Meyer, G.~Hall, and D.~Offin,
+\newblock \emph{Introduction to Hamiltonian Dynamical Systems and the N-Body Problem}.
+\newblock Springer, 2009.
+
+\end{thebibliography}
+
+% ============================================================
+% APPENDIX
+% ============================================================
+\appendix
+
+\section{Verification Functions}
+\label{app:verify}
+
+\begin{lstlisting}[language=Python]
+def verify_central_config(positions: np.ndarray,
+                          masses: np.ndarray,
+                          tolerance: float = 1e-8) -> dict:
+    """
+    Verify that positions form a central configuration.
+    """
+    N = len(masses)
+    grad_U = np.zeros_like(positions)
+
+    for i in range(N):
+        for j in range(N):
+            if i != j:
+                r_ij = positions[i] - positions[j]
+                dist = np.linalg.norm(r_ij)
+                grad_U[i] += masses[j] * r_ij / dist**3
+
+    # Extract lambda from first body
+    i0 = np.argmax(np.linalg.norm(positions, axis=1))
+    lambda_cc = (np.dot(grad_U[i0], positions[i0]) /
+                 np.dot(positions[i0], positions[i0]))
+
+    # Check CC equation for all bodies
+    residuals = []
+    for i in range(N):
+        expected = lambda_cc * positions[i]
+        residual = np.linalg.norm(grad_U[i] - expected)
+        residuals.append(residual)
+
+    max_residual = max(residuals)
+
+    return {
+        'is_cc': max_residual < tolerance,
+        'lambda': lambda_cc,
+        'max_residual': max_residual,
+        'residuals': residuals
+    }
+\end{lstlisting}
+
+\end{document}

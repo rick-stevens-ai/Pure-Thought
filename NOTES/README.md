@@ -1,5 +1,7 @@
-# Historical planning material
+# Revised synthesis and historical planning material
 
-These synthesis reports, draft transcripts and generation scripts describe earlier portfolios. The [crosswalk](../reviews/SYNTHESIS-CROSSWALK.md) maps all 30 synthesis topics to current or supplemental revised descriptions.
+[Thirty synthesis challenges](30-Most-Compelling-Pure-Thought-AI-Challenges.md), [LaTeX](30-Pure-Thought-Challenges-Report.tex) and [PDF](30-Pure-Thought-Challenges-Report.pdf) were regenerated on 2026-09-17 from the reviewed specifications and critiques. They retain synthesis numbering and explicitly map each topic to canonical or supplemental IDs.
 
-The synthesis PDF/TeX and draft DOCX/TXT files have been retained as historical source material. They have not been revised or regenerated. Do not use the historical scripts to overwrite the revised PRDs: they generate older specifications.
+The [crosswalk](../reviews/SYNTHESIS-CROSSWALK.md) explains the two portfolios; the [complete summaries](../COMPLETE-PROBLEM-SUMMARIES.md) contain all 42 current topics. The original synthesis is preserved in [the archive](../archive/original-synthesis/).
+
+Draft DOCX/TXT files and `scripts/` in this directory remain historical. Do not use the old generators to overwrite current specifications. Use `python3 scripts/build_reports.py --pdf` from the repository root instead.

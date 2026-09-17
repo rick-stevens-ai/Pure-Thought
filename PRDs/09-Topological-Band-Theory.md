@@ -42,15 +42,15 @@ Within a declared finite-range Hamiltonian family, which parameter regions have 
 
 ## Scope and assumptions
 
-Begin with the two-band square-lattice model H_m(k)=sin(k_x)σ_x+sin(k_y)σ_y+[m+cos(k_x)+cos(k_y)]σ_z, k∈[−π,π]². Use one occupied band and a fixed orientation. Analyze rational parameter intervals separated from m=−2,0,2.
+Begin with the two-band square-lattice model $H_m(k)=\sin(k_x)\sigma_x+\sin(k_y)\sigma_y+[m+\cos(k_x)+\cos(k_y)]\sigma_z$, k∈[−π,π]². Use one occupied band and a fixed orientation. Analyze rational parameter intervals separated from m=−2,0,2.
 
 For subsequent searches fix dimension, orbitals, filling, hopping support, coefficient domain, and symmetry representation. A rational grid is finite; a continuous coefficient box requires a different completeness argument. “All Hamiltonians for a space group” is not an enumerable specification.
 
 ## Mathematical target
 
-For a general family H(k)=Σ_R t_Re^{ik·R}, impose t_−R=t_R† and the stated symmetry equations. Prove E_{r+1}(k)−E_r(k)≥δ>0 for all k and all parameters claimed. With P the occupied projector, choose
+For a general family $H(k)=\sum_R t_Re^{ik\cdot R}$, impose t_−R=t_R† and the stated symmetry equations. Prove E_{r+1}(k)−E_r(k)≥δ>0 for all k and all parameters claimed. With P the occupied projector, choose
 
-$$C=\frac{1}{2πi}\int_{BZ}\operatorname{Tr}P[∂_xP,∂_yP],d²k.$$
+$$C=\frac{1}{2πi}\int_{BZ}\operatorname{Tr}P[∂_xP,∂_yP]\,d²k.$$
 
 Certify C through an analytic degree/homotopy argument or validated integration with an error enclosure containing a unique integer, including discretization and projector errors.
 

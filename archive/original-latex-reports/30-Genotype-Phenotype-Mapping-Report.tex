@@ -1,0 +1,3086 @@
+%% =============================================================================
+%% GENOTYPE-PHENOTYPE MAPPING AND EVOLUTIONARY LANDSCAPES
+%% Comprehensive Technical Report
+%% =============================================================================
+
+\documentclass[11pt,a4paper]{article}
+
+%% =============================================================================
+%% PACKAGE IMPORTS
+%% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+\geometry{margin=1in}
+
+%% =============================================================================
+%% TCOLORBOX ENVIRONMENT DEFINITIONS
+%% =============================================================================
+\tcbuselibrary{skins,breakable}
+
+% Annotation box (gray) - for side notes and clarifications
+\newtcolorbox{annotation}{
+    colback=gray!10,
+    colframe=gray!50,
+    coltitle=black,
+    title=\textbf{Annotation},
+    fonttitle=\bfseries,
+    breakable,
+    enhanced,
+    boxrule=1pt,
+    left=5pt,
+    right=5pt,
+    top=5pt,
+    bottom=5pt
+}
+
+% Pursuit box (green/yellow) - for key insights and goals
+\newtcolorbox{pursuitbox}{
+    colback=green!5,
+    colframe=green!50!yellow!80,
+    coltitle=black,
+    title=\textbf{Key Pursuit},
+    fonttitle=\bfseries,
+    breakable,
+    enhanced,
+    boxrule=1.5pt,
+    left=5pt,
+    right=5pt,
+    top=5pt,
+    bottom=5pt
+}
+
+% Warning box (red) - for cautions and critical notes
+\newtcolorbox{warningbox}{
+    colback=red!5,
+    colframe=red!70,
+    coltitle=white,
+    title=\textbf{Warning},
+    fonttitle=\bfseries,
+    breakable,
+    enhanced,
+    boxrule=1.5pt,
+    left=5pt,
+    right=5pt,
+    top=5pt,
+    bottom=5pt
+}
+
+% Physics box (purple) - for mathematical and physical derivations
+\newtcolorbox{physicsbox}{
+    colback=purple!5,
+    colframe=purple!70,
+    coltitle=white,
+    title=\textbf{Mathematical Derivation},
+    fonttitle=\bfseries,
+    breakable,
+    enhanced,
+    boxrule=1.5pt,
+    left=5pt,
+    right=5pt,
+    top=5pt,
+    bottom=5pt
+}
+
+%% =============================================================================
+%% LISTINGS CONFIGURATION FOR CODE
+%% =============================================================================
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black}\itshape,
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=5pt,
+    breaklines=true,
+    showstringspaces=false,
+    frame=single,
+    framesep=5pt,
+    backgroundcolor=\color{gray!5},
+    rulecolor=\color{gray!50},
+    tabsize=4,
+    captionpos=b,
+    morekeywords={self,True,False,None,as,with,yield,async,await}
+}
+
+\lstset{style=pythonstyle}
+
+%% =============================================================================
+%% THEOREM ENVIRONMENTS
+%% =============================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+%% =============================================================================
+%% CUSTOM COMMANDS
+%% =============================================================================
+\newcommand{\genotype}{\mathcal{G}}
+\newcommand{\phenotype}{\mathcal{P}}
+\newcommand{\gpmap}{\Phi}
+\newcommand{\neutralnet}{\mathcal{N}}
+\newcommand{\fitness}{\mathcal{F}}
+\newcommand{\alphabet}{\Sigma}
+\newcommand{\seqlength}{L}
+\newcommand{\hamming}{d_H}
+\newcommand{\expect}{\mathbb{E}}
+\newcommand{\prob}{\mathbb{P}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\complexity}{\mathcal{O}}
+
+%% =============================================================================
+%% DOCUMENT METADATA
+%% =============================================================================
+\title{
+    \textbf{Genotype-Phenotype Mapping and Evolutionary Landscapes}\\
+    \large A Comprehensive Technical Analysis
+}
+\author{
+    Pure Thought AI Research Initiative\\
+    \texttt{research@purethought.ai}
+}
+\date{\today}
+
+%% =============================================================================
+%% DOCUMENT BEGIN
+%% =============================================================================
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report provides a comprehensive examination of genotype-phenotype (GP) mapping
+and evolutionary fitness landscapes. We explore the mathematical foundations of GP
+maps, with particular emphasis on RNA secondary structure as a canonical model system.
+The report covers fundamental algorithms including the Nussinov algorithm for maximizing
+base pairs and the Zuker algorithm for minimizing free energy. We analyze neutral
+networks, their percolation properties, and implications for evolutionary dynamics.
+Fitness landscape theory is developed including measures of ruggedness, autocorrelation
+functions, and epistasis coefficients. The NK model framework for tunable ruggedness
+is presented alongside classical population genetics models (Wright-Fisher and Moran).
+We conclude with formal verification protocols and Python implementations for all
+major computational components.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+%% =============================================================================
+%% SECTION 1: INTRODUCTION AND FUNDAMENTALS
+%% =============================================================================
+\section{Introduction to Genotype-Phenotype Mapping}
+
+\subsection{Foundational Concepts}
+
+The relationship between genotype and phenotype lies at the heart of evolutionary
+biology. The \textbf{genotype-phenotype map} (GP map) describes how genetic information
+is translated into observable characteristics.
+
+\begin{definition}[Genotype-Phenotype Map]
+A genotype-phenotype map is a function $\gpmap: \genotype \to \phenotype$ where
+$\genotype = \alphabet^{\seqlength}$ is the genotype space (sequences of length
+$\seqlength$ over alphabet $\alphabet$) and $\phenotype$ is the phenotype space.
+\end{definition}
+
+\begin{pursuitbox}
+The central pursuit in GP mapping research is understanding how the structure of
+the map $\gpmap$ influences evolutionary dynamics, particularly:
+\begin{itemize}
+    \item The accessibility of phenotypes from different genotypes
+    \item The existence and structure of neutral networks
+    \item The relationship between robustness and evolvability
+\end{itemize}
+\end{pursuitbox}
+
+\subsection{Mathematical Formalization}
+
+Let us formalize the key mathematical structures underlying GP mapping.
+
+\begin{physicsbox}
+The genotype space $\genotype = \alphabet^{\seqlength}$ has cardinality:
+\begin{equation}
+    |\genotype| = |\alphabet|^{\seqlength}
+\end{equation}
+For RNA sequences with $\alphabet = \{A, U, G, C\}$ and typical lengths
+$\seqlength \sim 100$, we have:
+\begin{equation}
+    |\genotype| = 4^{100} \approx 10^{60}
+\end{equation}
+This astronomical size makes exhaustive enumeration impossible, necessitating
+statistical approaches and efficient algorithms.
+\end{physicsbox}
+
+\subsubsection{Hamming Distance and Sequence Space}
+
+The natural metric on genotype space is the Hamming distance.
+
+\begin{definition}[Hamming Distance]
+For sequences $s, s' \in \alphabet^{\seqlength}$, the Hamming distance is:
+\begin{equation}
+    \hamming(s, s') = \sum_{i=1}^{\seqlength} \mathbb{1}[s_i \neq s'_i]
+\end{equation}
+where $\mathbb{1}[\cdot]$ is the indicator function.
+\end{definition}
+
+\begin{annotation}
+The Hamming distance counts the number of positions at which two sequences differ.
+It satisfies metric axioms: non-negativity, identity of indiscernibles, symmetry,
+and triangle inequality. The maximum distance between any two sequences is $\seqlength$.
+\end{annotation}
+
+The sequence space forms a \textbf{Hamming graph} where vertices are sequences and
+edges connect sequences at Hamming distance 1.
+
+\begin{theorem}[Connectivity of Hamming Graph]
+The Hamming graph $H(\seqlength, |\alphabet|)$ is connected. Any two sequences
+$s, s' \in \alphabet^{\seqlength}$ can be connected by a path of length at most
+$\seqlength$.
+\end{theorem}
+
+\begin{proof}
+Given sequences $s = (s_1, \ldots, s_{\seqlength})$ and $s' = (s'_1, \ldots, s'_{\seqlength})$,
+construct the path by sequentially changing each position $i$ from $s_i$ to $s'_i$.
+Each step changes exactly one position, so each edge in the path has Hamming distance 1.
+The path length equals $\hamming(s, s')$, which is at most $\seqlength$.
+\end{proof}
+
+\subsection{Properties of GP Maps}
+
+\begin{definition}[Degeneracy]
+A GP map $\gpmap$ exhibits \textbf{degeneracy} when multiple genotypes map to the
+same phenotype:
+\begin{equation}
+    \exists s, s' \in \genotype: s \neq s' \land \gpmap(s) = \gpmap(s')
+\end{equation}
+\end{definition}
+
+\begin{definition}[Phenotype Frequency]
+The frequency of phenotype $\phi \in \phenotype$ is:
+\begin{equation}
+    f(\phi) = \frac{|\gpmap^{-1}(\phi)|}{|\genotype|} = \frac{|\{s \in \genotype : \gpmap(s) = \phi\}|}{|\alphabet|^{\seqlength}}
+\end{equation}
+\end{definition}
+
+\begin{warningbox}
+Phenotype frequencies in real GP maps are highly non-uniform. In RNA folding,
+a small number of ``common'' structures have exponentially more sequences folding
+to them than ``rare'' structures. This bias strongly affects evolutionary search.
+\end{warningbox}
+
+%% =============================================================================
+%% SECTION 2: RNA SECONDARY STRUCTURE AS MODEL GP SYSTEM
+%% =============================================================================
+\section{RNA Secondary Structure as Model GP System}
+
+\subsection{Why RNA?}
+
+RNA secondary structure prediction provides an ideal model GP system because:
+\begin{enumerate}
+    \item The genotype space is well-defined: $\genotype = \{A, U, G, C\}^{\seqlength}$
+    \item The phenotype (secondary structure) is computationally tractable
+    \item The folding map can be computed efficiently via dynamic programming
+    \item It captures essential GP map properties found in more complex systems
+\end{enumerate}
+
+\begin{pursuitbox}
+RNA folding exemplifies the key principle that the GP map creates structure in
+evolutionary search space. Understanding this structure enables predictions about
+evolutionary dynamics that would be impossible from sequence analysis alone.
+\end{pursuitbox}
+
+\subsection{RNA Secondary Structure Formalism}
+
+\begin{definition}[RNA Secondary Structure]
+An RNA secondary structure $S$ on a sequence of length $\seqlength$ is a set of
+base pairs $(i, j)$ with $1 \leq i < j \leq \seqlength$ satisfying:
+\begin{enumerate}
+    \item \textbf{No sharp hairpins}: $j - i \geq 4$ (minimum loop size)
+    \item \textbf{No base triples}: Each position participates in at most one pair
+    \item \textbf{No pseudoknots}: For pairs $(i,j)$ and $(k,l)$ with $i < k$,
+          either $j < k$ or $l < j$ (no crossing pairs)
+\end{enumerate}
+\end{definition}
+
+\begin{physicsbox}
+The number of valid secondary structures grows asymptotically as:
+\begin{equation}
+    N(\seqlength) \sim \frac{1.104366}{\seqlength^{3/2}} \cdot 1.84892^{\seqlength}
+\end{equation}
+This result, derived by Stein and Waterman (1978), shows exponential growth but
+much slower than the $4^{\seqlength}$ growth of sequence space, indicating massive
+degeneracy in the GP map.
+\end{physicsbox}
+
+\subsection{Base Pairing Rules}
+
+Watson-Crick base pairs form between complementary bases:
+\begin{itemize}
+    \item Adenine (A) pairs with Uracil (U)
+    \item Guanine (G) pairs with Cytosine (C)
+    \item G-U ``wobble'' pairs are also allowed in some models
+\end{itemize}
+
+\begin{definition}[Complementarity Function]
+Define the complementarity function $\delta: \alphabet \times \alphabet \to \{0, 1\}$:
+\begin{equation}
+    \delta(a, b) = \begin{cases}
+        1 & \text{if } (a,b) \in \{(A,U), (U,A), (G,C), (C,G)\} \\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+For models including wobble pairs:
+\begin{equation}
+    \delta_{wc+gu}(a, b) = \begin{cases}
+        1 & \text{if } (a,b) \in \{(A,U), (U,A), (G,C), (C,G), (G,U), (U,G)\} \\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+\end{definition}
+
+%% =============================================================================
+%% SECTION 3: NUSSINOV ALGORITHM
+%% =============================================================================
+\section{The Nussinov Algorithm: Maximizing Base Pairs}
+
+\subsection{Problem Formulation}
+
+The Nussinov algorithm (1978) finds the secondary structure with maximum base pairs.
+
+\begin{definition}[Maximum Base Pairing Problem]
+Given an RNA sequence $s = s_1 s_2 \ldots s_{\seqlength}$, find the secondary
+structure $S^*$ that maximizes:
+\begin{equation}
+    S^* = \arg\max_{S \in \mathcal{S}} |S|
+\end{equation}
+where $\mathcal{S}$ is the set of valid secondary structures and $|S|$ is the
+number of base pairs.
+\end{definition}
+
+\subsection{Dynamic Programming Formulation}
+
+\begin{physicsbox}
+Define $M(i, j)$ as the maximum number of base pairs in the subsequence $s_i \ldots s_j$.
+
+\textbf{Base case:}
+\begin{equation}
+    M(i, j) = 0 \quad \text{for } j - i < 4
+\end{equation}
+
+\textbf{Recurrence relation:}
+\begin{equation}
+    M(i, j) = \max \begin{cases}
+        M(i, j-1) & \text{(j unpaired)} \\
+        \max_{i \leq k < j-4} \{M(i, k-1) + M(k+1, j-1) + \delta(s_k, s_j)\} & \text{(j pairs with k)}
+    \end{cases}
+\end{equation}
+
+The optimal solution is $M(1, \seqlength)$.
+\end{physicsbox}
+
+\begin{theorem}[Nussinov Complexity]
+The Nussinov algorithm has time complexity $\complexity(\seqlength^3)$ and space
+complexity $\complexity(\seqlength^2)$.
+\end{theorem}
+
+\begin{proof}
+The DP table has $\complexity(\seqlength^2)$ entries. Each entry requires examining
+$\complexity(\seqlength)$ possible pairing partners. Thus, total time is
+$\complexity(\seqlength^3)$. Space is dominated by storing the $\seqlength \times \seqlength$
+matrix, giving $\complexity(\seqlength^2)$.
+\end{proof}
+
+\subsection{Algorithm Implementation}
+
+\begin{lstlisting}[caption={Nussinov Algorithm for Maximum Base Pairing}]
+import numpy as np
+from typing import List, Tuple, Set
+
+def nussinov_fold(sequence: str, min_loop_size: int = 4) -> Tuple[int, Set[Tuple[int, int]]]:
+    """
+    Compute maximum base pairing using Nussinov algorithm.
+
+    Args:
+        sequence: RNA sequence string (A, U, G, C)
+        min_loop_size: Minimum number of unpaired bases in hairpin loop
+
+    Returns:
+        Tuple of (max_base_pairs, set_of_pairs)
+    """
+    n = len(sequence)
+
+    # Complementarity check
+    def can_pair(a: str, b: str) -> bool:
+        pairs = {('A', 'U'), ('U', 'A'), ('G', 'C'), ('C', 'G')}
+        return (a, b) in pairs
+
+    # Initialize DP table
+    M = np.zeros((n, n), dtype=int)
+
+    # Fill table diagonally
+    for length in range(min_loop_size + 1, n):
+        for i in range(n - length):
+            j = i + length
+
+            # Case 1: j is unpaired
+            M[i, j] = M[i, j - 1]
+
+            # Case 2: j pairs with some k
+            for k in range(i, j - min_loop_size):
+                if can_pair(sequence[k], sequence[j]):
+                    score = 1  # Base pair contribution
+                    if k > i:
+                        score += M[i, k - 1]
+                    if k + 1 < j:
+                        score += M[k + 1, j - 1]
+                    M[i, j] = max(M[i, j], score)
+
+    # Traceback to recover structure
+    def traceback(i: int, j: int) -> Set[Tuple[int, int]]:
+        if j - i < min_loop_size:
+            return set()
+
+        pairs = set()
+
+        # Check if j is unpaired
+        if M[i, j] == M[i, j - 1]:
+            return traceback(i, j - 1)
+
+        # Find pairing partner
+        for k in range(i, j - min_loop_size):
+            if can_pair(sequence[k], sequence[j]):
+                score = 1
+                left_score = M[i, k - 1] if k > i else 0
+                right_score = M[k + 1, j - 1] if k + 1 < j else 0
+
+                if M[i, j] == score + left_score + right_score:
+                    pairs.add((k, j))
+                    if k > i:
+                        pairs.update(traceback(i, k - 1))
+                    if k + 1 < j:
+                        pairs.update(traceback(k + 1, j - 1))
+                    return pairs
+
+        return pairs
+
+    base_pairs = traceback(0, n - 1)
+    return M[0, n - 1], base_pairs
+
+
+def structure_to_dot_bracket(length: int, pairs: Set[Tuple[int, int]]) -> str:
+    """Convert base pair set to dot-bracket notation."""
+    structure = ['.'] * length
+    for i, j in pairs:
+        structure[i] = '('
+        structure[j] = ')'
+    return ''.join(structure)
+
+
+# Example usage
+if __name__ == "__main__":
+    sequence = "GGGAAAUCC"
+    max_pairs, pairs = nussinov_fold(sequence)
+    structure = structure_to_dot_bracket(len(sequence), pairs)
+
+    print(f"Sequence:  {sequence}")
+    print(f"Structure: {structure}")
+    print(f"Max pairs: {max_pairs}")
+    print(f"Pairs: {pairs}")
+\end{lstlisting}
+
+\begin{annotation}
+The Nussinov algorithm provides optimal solutions for the maximum base pairing
+problem but does not account for thermodynamic stability. Real RNA structures
+minimize free energy rather than maximize base pairs, leading to the more
+sophisticated Zuker algorithm.
+\end{annotation}
+
+%% =============================================================================
+%% SECTION 4: ZUKER ALGORITHM
+%% =============================================================================
+\section{The Zuker Algorithm: Minimizing Free Energy}
+
+\subsection{Thermodynamic Model}
+
+The minimum free energy (MFE) approach models RNA folding as a thermodynamic
+process seeking the lowest energy configuration.
+
+\begin{definition}[Free Energy of Secondary Structure]
+The free energy $\Delta G(S)$ of a secondary structure $S$ decomposes into
+contributions from individual loops:
+\begin{equation}
+    \Delta G(S) = \sum_{\ell \in \text{loops}(S)} \Delta G(\ell)
+\end{equation}
+\end{definition}
+
+\begin{physicsbox}
+\textbf{Loop Energy Contributions:}
+
+\textbf{1. Stacking pairs:}
+\begin{equation}
+    \Delta G_{\text{stack}}(i,j; i+1,j-1) = \varepsilon_{\text{stack}}(s_i s_{i+1}, s_{j-1} s_j)
+\end{equation}
+
+\textbf{2. Hairpin loops:}
+\begin{equation}
+    \Delta G_{\text{hairpin}}(i,j) = a + b \cdot n + c \cdot \text{special}
+\end{equation}
+where $n = j - i - 1$ is the loop size.
+
+\textbf{3. Interior loops:}
+\begin{equation}
+    \Delta G_{\text{interior}}(i,j; i',j') = f(n_1, n_2) + \text{mismatch terms}
+\end{equation}
+where $n_1 = i' - i - 1$ and $n_2 = j - j' - 1$.
+
+\textbf{4. Bulge loops:}
+\begin{equation}
+    \Delta G_{\text{bulge}}(n) = a + b \cdot \ln(n)
+\end{equation}
+
+\textbf{5. Multi-branch loops:}
+\begin{equation}
+    \Delta G_{\text{multi}} = a + b \cdot k + c \cdot n
+\end{equation}
+where $k$ is the number of branches and $n$ is the number of unpaired bases.
+\end{physicsbox}
+
+\subsection{Zuker Recursion}
+
+The Zuker algorithm uses multiple interrelated DP tables.
+
+\begin{definition}[Zuker DP Variables]
+\begin{itemize}
+    \item $W(i)$: MFE of subsequence $s_1 \ldots s_i$
+    \item $V(i,j)$: MFE of subsequence $s_i \ldots s_j$ where $(i,j)$ forms a base pair
+    \item $VBI(i,j)$: MFE when $(i,j)$ closes an internal/bulge loop
+    \item $VM(i,j)$: MFE when $(i,j)$ closes a multi-loop
+\end{itemize}
+\end{definition}
+
+\begin{physicsbox}
+\textbf{Zuker Recurrence Relations:}
+
+\textbf{1. External loop:}
+\begin{equation}
+    W(j) = \min \begin{cases}
+        W(j-1) \\
+        \min_{1 \leq i < j} \{W(i-1) + V(i,j)\}
+    \end{cases}
+\end{equation}
+
+\textbf{2. Closed pair:}
+\begin{equation}
+    V(i,j) = \min \begin{cases}
+        E_{\text{hairpin}}(i,j) \\
+        \min_{i<i'<j'<j} \{E_{\text{stack/interior/bulge}}(i,j;i',j') + V(i',j')\} \\
+        VM(i,j)
+    \end{cases}
+\end{equation}
+
+\textbf{3. Multi-loop:}
+\begin{equation}
+    VM(i,j) = \min_{i<k<j} \{VM'(i,k) + VM'(k+1,j)\} + a
+\end{equation}
+where $VM'$ accounts for the multi-loop decomposition.
+\end{physicsbox}
+
+\begin{theorem}[Zuker Complexity]
+The standard Zuker algorithm has time complexity $\complexity(\seqlength^4)$ and
+space complexity $\complexity(\seqlength^2)$. With Lyngsø optimizations for
+internal loops, time reduces to $\complexity(\seqlength^3)$.
+\end{theorem}
+
+\subsection{Implementation}
+
+\begin{lstlisting}[caption={Simplified Zuker Algorithm Implementation}]
+import numpy as np
+from typing import Dict, Tuple, Set
+from dataclasses import dataclass
+
+@dataclass
+class EnergyParameters:
+    """Turner energy parameters (simplified)."""
+    stack: Dict[str, float]  # Stacking energies
+    hairpin_init: float = 4.1  # Hairpin initiation
+    hairpin_slope: float = 1.75  # Per unpaired base
+    interior_init: float = 1.7
+    bulge_init: float = 3.8
+    multi_init: float = 3.4
+    multi_branch: float = 0.4
+    multi_unpaired: float = 0.0
+
+    @staticmethod
+    def default() -> 'EnergyParameters':
+        """Return default Turner-like parameters."""
+        stack = {
+            'AU_AU': -0.9, 'AU_CG': -2.2, 'AU_GC': -2.1, 'AU_GU': -0.6,
+            'AU_UA': -1.1, 'AU_UG': -1.4, 'CG_AU': -2.1, 'CG_CG': -3.3,
+            'CG_GC': -2.4, 'CG_GU': -1.4, 'CG_UA': -2.1, 'CG_UG': -2.1,
+            'GC_AU': -2.4, 'GC_CG': -3.4, 'GC_GC': -3.3, 'GC_GU': -1.5,
+            'GC_UA': -2.2, 'GC_UG': -2.5, 'GU_AU': -1.3, 'GU_CG': -2.5,
+            'GU_GC': -2.1, 'GU_GU': -0.5, 'GU_UA': -0.6, 'GU_UG': 1.3,
+            'UA_AU': -1.3, 'UA_CG': -2.4, 'UA_GC': -2.1, 'UA_GU': -1.0,
+            'UA_UA': -0.9, 'UA_UG': -1.3, 'UG_AU': -1.0, 'UG_CG': -1.5,
+            'UG_GC': -1.4, 'UG_GU': 0.3, 'UG_UA': -0.6, 'UG_UG': -0.5,
+        }
+        return EnergyParameters(stack=stack)
+
+
+def zuker_fold(sequence: str, params: EnergyParameters = None) -> Tuple[float, Set[Tuple[int, int]]]:
+    """
+    Compute minimum free energy structure using Zuker algorithm.
+
+    Args:
+        sequence: RNA sequence string
+        params: Energy parameters (default Turner parameters)
+
+    Returns:
+        Tuple of (MFE in kcal/mol, set of base pairs)
+    """
+    if params is None:
+        params = EnergyParameters.default()
+
+    n = len(sequence)
+    INF = float('inf')
+    MIN_LOOP = 3
+
+    # Base pair check
+    def can_pair(i: int, j: int) -> bool:
+        pairs = {('A', 'U'), ('U', 'A'), ('G', 'C'), ('C', 'G'),
+                 ('G', 'U'), ('U', 'G')}
+        return (sequence[i], sequence[j]) in pairs
+
+    def pair_type(i: int, j: int) -> str:
+        return f"{sequence[i]}{sequence[j]}"
+
+    def stack_energy(i: int, j: int, ip: int, jp: int) -> float:
+        key = f"{pair_type(i,j)}_{pair_type(ip,jp)}"
+        return params.stack.get(key, 0.0)
+
+    def hairpin_energy(i: int, j: int) -> float:
+        size = j - i - 1
+        return params.hairpin_init + params.hairpin_slope * np.log(size + 1)
+
+    def interior_energy(i: int, j: int, ip: int, jp: int) -> float:
+        n1 = ip - i - 1
+        n2 = j - jp - 1
+        size = n1 + n2
+        asym = abs(n1 - n2)
+        return params.interior_init + 0.3 * size + 0.5 * asym
+
+    def bulge_energy(size: int) -> float:
+        return params.bulge_init + 1.75 * np.log(size + 1)
+
+    # Initialize DP tables
+    V = np.full((n, n), INF)
+    W = np.zeros(n)
+
+    # Fill V table
+    for length in range(MIN_LOOP + 2, n):
+        for i in range(n - length):
+            j = i + length
+
+            if not can_pair(i, j):
+                continue
+
+            # Hairpin loop
+            V[i, j] = hairpin_energy(i, j)
+
+            # Stacking / interior / bulge
+            for ip in range(i + 1, j - MIN_LOOP):
+                for jp in range(ip + MIN_LOOP + 1, j):
+                    if not can_pair(ip, jp):
+                        continue
+
+                    n1 = ip - i - 1
+                    n2 = j - jp - 1
+
+                    if n1 == 0 and n2 == 0:
+                        # Stacking
+                        energy = stack_energy(i, j, ip, jp) + V[ip, jp]
+                    elif n1 == 0 or n2 == 0:
+                        # Bulge
+                        energy = bulge_energy(n1 + n2) + V[ip, jp]
+                    else:
+                        # Interior
+                        energy = interior_energy(i, j, ip, jp) + V[ip, jp]
+
+                    V[i, j] = min(V[i, j], energy)
+
+    # Fill W table
+    for j in range(n):
+        W[j] = W[j - 1] if j > 0 else 0
+
+        for i in range(j - MIN_LOOP - 1):
+            if V[i, j] < INF:
+                prev = W[i - 1] if i > 0 else 0
+                W[j] = min(W[j], prev + V[i, j])
+
+    # Traceback
+    def traceback_W(j: int) -> Set[Tuple[int, int]]:
+        if j < 0:
+            return set()
+
+        if j > 0 and abs(W[j] - W[j - 1]) < 1e-6:
+            return traceback_W(j - 1)
+
+        for i in range(j - MIN_LOOP - 1):
+            if V[i, j] < INF:
+                prev = W[i - 1] if i > 0 else 0
+                if abs(W[j] - (prev + V[i, j])) < 1e-6:
+                    pairs = {(i, j)}
+                    pairs.update(traceback_V(i, j))
+                    pairs.update(traceback_W(i - 1))
+                    return pairs
+
+        return set()
+
+    def traceback_V(i: int, j: int) -> Set[Tuple[int, int]]:
+        if V[i, j] >= INF:
+            return set()
+
+        # Check hairpin
+        if abs(V[i, j] - hairpin_energy(i, j)) < 1e-6:
+            return set()
+
+        # Check stacking/interior/bulge
+        for ip in range(i + 1, j - MIN_LOOP):
+            for jp in range(ip + MIN_LOOP + 1, j):
+                if not can_pair(ip, jp) or V[ip, jp] >= INF:
+                    continue
+
+                n1 = ip - i - 1
+                n2 = j - jp - 1
+
+                if n1 == 0 and n2 == 0:
+                    energy = stack_energy(i, j, ip, jp) + V[ip, jp]
+                elif n1 == 0 or n2 == 0:
+                    energy = bulge_energy(n1 + n2) + V[ip, jp]
+                else:
+                    energy = interior_energy(i, j, ip, jp) + V[ip, jp]
+
+                if abs(V[i, j] - energy) < 1e-6:
+                    pairs = {(ip, jp)}
+                    pairs.update(traceback_V(ip, jp))
+                    return pairs
+
+        return set()
+
+    mfe = W[n - 1]
+    pairs = traceback_W(n - 1)
+
+    return mfe, pairs
+\end{lstlisting}
+
+\begin{warningbox}
+The simplified Zuker implementation above omits many details of the full Turner
+energy model, including:
+\begin{itemize}
+    \item Dangling end contributions
+    \item Terminal mismatches
+    \item Special hairpin loop sequences (tetraloops, triloops)
+    \item Coaxial stacking in multi-loops
+\end{itemize}
+For production use, established tools like ViennaRNA or RNAfold should be used.
+\end{warningbox}
+
+%% =============================================================================
+%% SECTION 5: NEUTRAL NETWORKS
+%% =============================================================================
+\section{Neutral Networks}
+
+\subsection{Definition and Properties}
+
+\begin{definition}[Neutral Network]
+The neutral network $\neutralnet(\phi)$ of phenotype $\phi$ is the set of all
+genotypes mapping to that phenotype:
+\begin{equation}
+    \neutralnet(\phi) = \{s \in \genotype : \gpmap(s) = \phi\} = \gpmap^{-1}(\phi)
+\end{equation}
+\end{definition}
+
+\begin{definition}[Neutrality]
+The neutrality $\rho(s)$ of a sequence $s$ is the fraction of single-mutant
+neighbors that share its phenotype:
+\begin{equation}
+    \rho(s) = \frac{|\{s' : \hamming(s, s') = 1 \land \gpmap(s') = \gpmap(s)\}|}{|\{s' : \hamming(s, s') = 1\}|}
+\end{equation}
+The denominator equals $\seqlength(|\alphabet| - 1)$ for sequences over alphabet $\alphabet$.
+\end{definition}
+
+\begin{physicsbox}
+For RNA secondary structure with $\alphabet = 4$ and $\seqlength = 100$:
+\begin{equation}
+    |\{s' : \hamming(s, s') = 1\}| = 100 \times 3 = 300
+\end{equation}
+If a sequence has neutrality $\rho = 0.3$, it has approximately 90 neutral
+neighbors that fold to the same structure.
+\end{physicsbox}
+
+\begin{pursuitbox}
+Neutral networks enable evolutionary search by allowing populations to explore
+genotype space while maintaining phenotypic function. The structure of neutral
+networks - their size, connectivity, and extent - fundamentally shapes evolutionary
+dynamics and the discovery of novel phenotypes.
+\end{pursuitbox}
+
+\subsection{Network Connectivity and Giant Components}
+
+\begin{theorem}[Neutral Network Graph]
+The neutral network $\neutralnet(\phi)$ inherits graph structure from the Hamming
+graph. Two genotypes $s, s' \in \neutralnet(\phi)$ are connected in the neutral
+network graph if and only if $\hamming(s, s') = 1$.
+\end{theorem}
+
+\begin{definition}[Giant Connected Component]
+The giant connected component (GCC) of $\neutralnet(\phi)$ is the largest connected
+subgraph, containing a fraction $\gamma$ of all vertices in $\neutralnet(\phi)$.
+\end{definition}
+
+\begin{physicsbox}
+\textbf{Percolation Theory for Neutral Networks}
+
+Consider a random graph model where each potential edge in the Hamming graph
+exists with probability $p$. The percolation threshold $p_c$ marks the transition
+where a giant component emerges.
+
+For the Hamming graph $H(\seqlength, |\alphabet|)$ with degree
+$k = \seqlength(|\alphabet| - 1)$:
+\begin{equation}
+    p_c \approx \frac{1}{k} = \frac{1}{\seqlength(|\alphabet| - 1)}
+\end{equation}
+
+The neutral network analogy: if the average neutrality $\bar{\rho}$ exceeds $p_c$:
+\begin{equation}
+    \bar{\rho} > \frac{1}{\seqlength(|\alphabet| - 1)}
+\end{equation}
+then the neutral network percolates and contains a GCC spanning much of sequence space.
+\end{physicsbox}
+
+\begin{theorem}[Percolation in RNA Neutral Networks]
+For common RNA secondary structures, neutral networks percolate across sequence
+space. The giant component typically contains $> 99\%$ of sequences in the neutral
+network.
+\end{theorem}
+
+\begin{annotation}
+This remarkable result means that for most biologically relevant RNA structures,
+evolution can reach essentially any neutral sequence from any other through single
+point mutations, never leaving the neutral network. This ``neutral evolution''
+enables exploration without fitness penalty.
+\end{annotation}
+
+\subsection{Neutral Network Statistics}
+
+\begin{lstlisting}[caption={Neutral Network Analysis Implementation}]
+import numpy as np
+from typing import Dict, List, Set, Tuple
+from collections import defaultdict
+import random
+
+def generate_neighbors(sequence: str, alphabet: str = 'AUGC') -> List[str]:
+    """Generate all single-mutation neighbors of a sequence."""
+    neighbors = []
+    for i in range(len(sequence)):
+        for base in alphabet:
+            if base != sequence[i]:
+                neighbor = sequence[:i] + base + sequence[i+1:]
+                neighbors.append(neighbor)
+    return neighbors
+
+
+def compute_neutrality(sequence: str,
+                       fold_function,
+                       alphabet: str = 'AUGC') -> float:
+    """
+    Compute neutrality of a sequence.
+
+    Args:
+        sequence: RNA sequence
+        fold_function: Function mapping sequence to structure
+        alphabet: Nucleotide alphabet
+
+    Returns:
+        Neutrality (fraction of neutral neighbors)
+    """
+    original_structure = fold_function(sequence)
+    neighbors = generate_neighbors(sequence, alphabet)
+
+    neutral_count = sum(
+        1 for neighbor in neighbors
+        if fold_function(neighbor) == original_structure
+    )
+
+    return neutral_count / len(neighbors)
+
+
+def neutral_network_statistics(seed_sequence: str,
+                               fold_function,
+                               max_samples: int = 1000,
+                               alphabet: str = 'AUGC') -> Dict:
+    """
+    Estimate neutral network statistics via random walk sampling.
+
+    Args:
+        seed_sequence: Starting sequence
+        fold_function: Folding function
+        max_samples: Maximum sequences to sample
+        alphabet: Nucleotide alphabet
+
+    Returns:
+        Dictionary of network statistics
+    """
+    target_structure = fold_function(seed_sequence)
+
+    # Sample neutral network via random walk
+    visited = {seed_sequence}
+    current = seed_sequence
+    neutralities = []
+
+    for _ in range(max_samples):
+        # Compute neutrality
+        rho = compute_neutrality(current, fold_function, alphabet)
+        neutralities.append(rho)
+
+        # Random walk step
+        neighbors = generate_neighbors(current, alphabet)
+        neutral_neighbors = [
+            n for n in neighbors
+            if fold_function(n) == target_structure
+        ]
+
+        if neutral_neighbors:
+            current = random.choice(neutral_neighbors)
+            visited.add(current)
+        else:
+            # Stuck - restart from random visited sequence
+            current = random.choice(list(visited))
+
+    # Estimate network extent (max Hamming distance observed)
+    sample_list = list(visited)
+    max_distance = 0
+    for i in range(min(100, len(sample_list))):
+        for j in range(i + 1, min(100, len(sample_list))):
+            dist = hamming_distance(sample_list[i], sample_list[j])
+            max_distance = max(max_distance, dist)
+
+    return {
+        'target_structure': target_structure,
+        'samples_collected': len(visited),
+        'mean_neutrality': np.mean(neutralities),
+        'std_neutrality': np.std(neutralities),
+        'min_neutrality': np.min(neutralities),
+        'max_neutrality': np.max(neutralities),
+        'estimated_extent': max_distance,
+        'sequence_length': len(seed_sequence)
+    }
+
+
+def hamming_distance(s1: str, s2: str) -> int:
+    """Compute Hamming distance between two sequences."""
+    return sum(c1 != c2 for c1, c2 in zip(s1, s2))
+
+
+def estimate_phenotype_frequency(structure: str,
+                                 sequence_length: int,
+                                 inverse_fold_function,
+                                 num_samples: int = 1000) -> float:
+    """
+    Estimate frequency of a phenotype in sequence space.
+
+    Uses inverse folding to sample sequences with given structure,
+    then estimates based on success rate.
+    """
+    successful = 0
+    for _ in range(num_samples):
+        try:
+            seq = inverse_fold_function(structure)
+            if seq is not None:
+                successful += 1
+        except:
+            pass
+
+    # Rough estimate based on inverse fold success rate
+    return successful / num_samples
+\end{lstlisting}
+
+%% =============================================================================
+%% SECTION 6: FITNESS LANDSCAPES
+%% =============================================================================
+\section{Fitness Landscapes}
+
+\subsection{Definition and Visualization}
+
+\begin{definition}[Fitness Landscape]
+A fitness landscape is a function $\fitness: \genotype \to \real$ assigning a
+fitness value to each genotype. Combined with the neighborhood structure from
+Hamming distance, this defines a landscape that evolution navigates.
+\end{definition}
+
+\begin{physicsbox}
+The composite fitness landscape through GP mapping:
+\begin{equation}
+    \fitness: \alphabet^{\seqlength} \xrightarrow{\gpmap} \phenotype \xrightarrow{F_{\phi}} \real
+\end{equation}
+where $F_{\phi}: \phenotype \to \real$ assigns fitness to phenotypes. The
+composite $\fitness = F_{\phi} \circ \gpmap$ defines fitness on genotype space.
+\end{physicsbox}
+
+\subsection{Local Optima and Ruggedness}
+
+\begin{definition}[Local Optimum]
+A genotype $s^*$ is a local optimum if it has higher fitness than all neighbors:
+\begin{equation}
+    \fitness(s^*) \geq \fitness(s') \quad \forall s': \hamming(s^*, s') = 1
+\end{equation}
+A strict local optimum satisfies the inequality strictly.
+\end{definition}
+
+\begin{definition}[Global Optimum]
+A genotype $s^{**}$ is a global optimum if:
+\begin{equation}
+    \fitness(s^{**}) \geq \fitness(s) \quad \forall s \in \genotype
+\end{equation}
+\end{definition}
+
+\begin{definition}[Ruggedness]
+The ruggedness of a fitness landscape quantifies the density and depth of local
+optima. A highly rugged landscape has many local optima, making global optimization
+difficult.
+\end{definition}
+
+\begin{warningbox}
+Rugged fitness landscapes pose fundamental challenges for evolution:
+\begin{itemize}
+    \item Populations may get trapped at suboptimal local peaks
+    \item The number of local optima can grow exponentially with sequence length
+    \item Neutral evolution becomes critical for escaping local optima
+\end{itemize}
+\end{warningbox}
+
+\subsection{Autocorrelation Function}
+
+\begin{definition}[Fitness Autocorrelation]
+The autocorrelation function $r(d)$ measures fitness correlation between sequences
+at Hamming distance $d$:
+\begin{equation}
+    r(d) = \frac{\expect[\fitness(s)\fitness(s')] - \expect[\fitness(s)]^2}{\text{Var}[\fitness(s)]}
+\end{equation}
+where the expectation is over all pairs $(s, s')$ with $\hamming(s, s') = d$.
+\end{definition}
+
+\begin{physicsbox}
+\textbf{Properties of Autocorrelation:}
+\begin{enumerate}
+    \item $r(0) = 1$ (perfect self-correlation)
+    \item $r(d)$ typically decreases with $d$
+    \item For additive landscapes: $r(d) = (1 - 2d/\seqlength)$ (linear decay)
+    \item For random landscapes: $r(d) = 0$ for $d > 0$
+\end{enumerate}
+
+The \textbf{correlation length} $\ell$ characterizes decay:
+\begin{equation}
+    r(d) \approx e^{-d/\ell}
+\end{equation}
+Small $\ell$ indicates high ruggedness; large $\ell$ indicates smoothness.
+\end{physicsbox}
+
+\subsection{Epistasis}
+
+\begin{definition}[Epistasis]
+Epistasis occurs when the fitness effect of a mutation depends on the genetic
+background. For positions $i$ and $j$:
+\begin{equation}
+    \varepsilon_{ij} = \fitness(s_{ij}^{11}) - \fitness(s_{ij}^{10}) - \fitness(s_{ij}^{01}) + \fitness(s_{ij}^{00})
+\end{equation}
+where $s_{ij}^{ab}$ has allele $a$ at position $i$ and allele $b$ at position $j$.
+\end{definition}
+
+\begin{physicsbox}
+\textbf{Types of Epistasis:}
+\begin{itemize}
+    \item $\varepsilon_{ij} = 0$: No epistasis (additive)
+    \item $\varepsilon_{ij} > 0$: Positive (synergistic) epistasis
+    \item $\varepsilon_{ij} < 0$: Negative (antagonistic) epistasis
+    \item Sign epistasis: Mutation beneficial in one background, deleterious in another
+    \item Reciprocal sign epistasis: Both mutations show sign epistasis
+\end{itemize}
+\end{physicsbox}
+
+\begin{theorem}[Epistasis and Local Optima]
+A fitness landscape has local optima if and only if it exhibits reciprocal sign
+epistasis.
+\end{theorem}
+
+\begin{lstlisting}[caption={Fitness Landscape Analysis Functions}]
+import numpy as np
+from typing import Callable, List, Tuple, Dict
+from itertools import product
+
+def compute_autocorrelation(fitness_func: Callable[[str], float],
+                           sequences: List[str],
+                           max_distance: int = None) -> Dict[int, float]:
+    """
+    Compute fitness autocorrelation function.
+
+    Args:
+        fitness_func: Function mapping sequence to fitness
+        sequences: Sample of sequences
+        max_distance: Maximum distance to compute
+
+    Returns:
+        Dictionary mapping distance to correlation
+    """
+    n = len(sequences[0])
+    if max_distance is None:
+        max_distance = n
+
+    # Compute fitness values
+    fitness_values = {seq: fitness_func(seq) for seq in sequences}
+    mean_fitness = np.mean(list(fitness_values.values()))
+    var_fitness = np.var(list(fitness_values.values()))
+
+    if var_fitness == 0:
+        return {d: 1.0 if d == 0 else 0.0 for d in range(max_distance + 1)}
+
+    # Compute correlations by distance
+    correlations = defaultdict(list)
+
+    for i, s1 in enumerate(sequences):
+        for s2 in sequences[i:]:
+            d = hamming_distance(s1, s2)
+            if d <= max_distance:
+                f1, f2 = fitness_values[s1], fitness_values[s2]
+                correlations[d].append((f1 - mean_fitness) * (f2 - mean_fitness))
+
+    return {
+        d: np.mean(vals) / var_fitness if vals else 0.0
+        for d, vals in correlations.items()
+    }
+
+
+def estimate_correlation_length(autocorr: Dict[int, float]) -> float:
+    """
+    Estimate correlation length from autocorrelation function.
+
+    Fits exponential decay r(d) = exp(-d/ell).
+    """
+    distances = sorted(autocorr.keys())
+    correlations = [autocorr[d] for d in distances]
+
+    # Find first non-positive correlation
+    for i, r in enumerate(correlations):
+        if r <= 0 and i > 0:
+            break
+
+    # Fit log-linear model to positive correlations
+    positive_d = [d for d, r in zip(distances[:i], correlations[:i]) if r > 0]
+    positive_r = [r for r in correlations[:i] if r > 0]
+
+    if len(positive_d) < 2:
+        return float('inf')
+
+    log_r = np.log(positive_r)
+    slope, _ = np.polyfit(positive_d, log_r, 1)
+
+    return -1.0 / slope if slope < 0 else float('inf')
+
+
+def compute_epistasis(fitness_func: Callable[[str], float],
+                      sequence: str,
+                      pos_i: int,
+                      pos_j: int,
+                      alphabet: str = 'AUGC') -> float:
+    """
+    Compute pairwise epistasis coefficient.
+
+    Args:
+        fitness_func: Fitness function
+        sequence: Reference sequence
+        pos_i, pos_j: Positions to analyze
+        alphabet: Nucleotide alphabet
+
+    Returns:
+        Epistasis coefficient
+    """
+    # Get alleles at positions
+    allele_i = sequence[pos_i]
+    allele_j = sequence[pos_j]
+
+    # Choose alternative alleles
+    alt_i = [a for a in alphabet if a != allele_i][0]
+    alt_j = [a for a in alphabet if a != allele_j][0]
+
+    def mutate(seq, pos, new_allele):
+        return seq[:pos] + new_allele + seq[pos+1:]
+
+    # Four fitness values
+    f00 = fitness_func(sequence)  # Wild type
+    f10 = fitness_func(mutate(sequence, pos_i, alt_i))  # Mutant at i
+    f01 = fitness_func(mutate(sequence, pos_j, alt_j))  # Mutant at j
+
+    double_mutant = mutate(mutate(sequence, pos_i, alt_i), pos_j, alt_j)
+    f11 = fitness_func(double_mutant)  # Double mutant
+
+    return f11 - f10 - f01 + f00
+
+
+def count_local_optima(fitness_func: Callable[[str], float],
+                       sequences: List[str],
+                       alphabet: str = 'AUGC') -> Tuple[int, List[str]]:
+    """
+    Count local optima in a sample of sequences.
+
+    Returns count and list of local optima.
+    """
+    local_optima = []
+
+    for seq in sequences:
+        fitness = fitness_func(seq)
+        neighbors = generate_neighbors(seq, alphabet)
+
+        is_optimum = all(
+            fitness >= fitness_func(neighbor)
+            for neighbor in neighbors
+        )
+
+        if is_optimum:
+            local_optima.append(seq)
+
+    return len(local_optima), local_optima
+\end{lstlisting}
+
+%% =============================================================================
+%% SECTION 7: NK MODEL
+%% =============================================================================
+\section{The NK Model: Tunable Ruggedness}
+
+\subsection{Model Definition}
+
+The NK model, introduced by Stuart Kauffman (1987), provides a framework for
+generating fitness landscapes with tunable ruggedness.
+
+\begin{definition}[NK Model]
+An NK model is defined by:
+\begin{itemize}
+    \item $N$: Sequence length (number of loci)
+    \item $K$: Epistatic interactions per locus ($0 \leq K \leq N-1$)
+    \item For each locus $i$, a fitness contribution table $f_i$ depending on
+          locus $i$ and $K$ other specified loci
+\end{itemize}
+\end{definition}
+
+\begin{physicsbox}
+\textbf{NK Fitness Function:}
+
+The fitness of sequence $s = (s_1, \ldots, s_N)$ is:
+\begin{equation}
+    \fitness(s) = \frac{1}{N} \sum_{i=1}^{N} f_i(s_i, s_{\pi_i(1)}, \ldots, s_{\pi_i(K)})
+\end{equation}
+where $\pi_i = \{\pi_i(1), \ldots, \pi_i(K)\}$ specifies the $K$ loci that
+epistatically interact with locus $i$.
+
+Each $f_i: \{0,1\}^{K+1} \to [0,1]$ is typically drawn randomly from uniform distribution.
+\end{physicsbox}
+
+\begin{theorem}[NK Model Properties]
+\begin{enumerate}
+    \item When $K = 0$: Landscape is additive (smooth), single global optimum
+    \item When $K = N - 1$: Landscape is maximally rugged (uncorrelated)
+    \item Number of local optima grows with $K$
+    \item Correlation length decreases with $K$
+\end{enumerate}
+\end{theorem}
+
+\subsection{Interaction Structures}
+
+\begin{definition}[Interaction Types]
+\begin{itemize}
+    \item \textbf{Adjacent}: $\pi_i = \{i+1, i+2, \ldots, i+K\} \mod N$
+    \item \textbf{Random}: $\pi_i$ chosen uniformly at random
+    \item \textbf{Block}: Interactions within contiguous blocks
+\end{itemize}
+\end{definition}
+
+\begin{physicsbox}
+\textbf{Expected Number of Local Optima:}
+
+For the random interaction NK model with $K = N - 1$:
+\begin{equation}
+    \expect[\text{local optima}] = \frac{2^N}{N + 1}
+\end{equation}
+
+For general $K$ (asymptotic):
+\begin{equation}
+    \expect[\text{local optima}] \sim \binom{N}{K+1}^{-1} \cdot 2^N \cdot \left(\frac{1}{2}\right)^{N-K-1}
+\end{equation}
+\end{physicsbox}
+
+\subsection{Implementation}
+
+\begin{lstlisting}[caption={NK Model Implementation}]
+import numpy as np
+from typing import List, Dict, Tuple, Optional
+from dataclasses import dataclass
+
+@dataclass
+class NKModel:
+    """NK fitness landscape model."""
+
+    n: int  # Sequence length
+    k: int  # Epistatic interactions
+    fitness_tables: List[np.ndarray]  # Fitness contribution tables
+    interactions: List[List[int]]  # Interaction partners
+
+    @classmethod
+    def random(cls, n: int, k: int,
+               interaction_type: str = 'random',
+               seed: Optional[int] = None) -> 'NKModel':
+        """
+        Create random NK model.
+
+        Args:
+            n: Sequence length
+            k: Epistatic interactions per locus
+            interaction_type: 'random', 'adjacent', or 'block'
+            seed: Random seed
+
+        Returns:
+            NKModel instance
+        """
+        rng = np.random.default_rng(seed)
+
+        # Generate interaction structure
+        interactions = []
+        for i in range(n):
+            if interaction_type == 'adjacent':
+                partners = [(i + j + 1) % n for j in range(k)]
+            elif interaction_type == 'random':
+                others = [j for j in range(n) if j != i]
+                partners = list(rng.choice(others, size=k, replace=False))
+            elif interaction_type == 'block':
+                block_size = k + 1
+                block_start = (i // block_size) * block_size
+                partners = [
+                    (block_start + j) % n
+                    for j in range(block_size)
+                    if (block_start + j) % n != i
+                ][:k]
+            else:
+                raise ValueError(f"Unknown interaction type: {interaction_type}")
+
+            interactions.append(partners)
+
+        # Generate fitness tables
+        fitness_tables = []
+        for i in range(n):
+            # Table has 2^(k+1) entries (locus i plus k partners)
+            table = rng.uniform(0, 1, size=2**(k + 1))
+            fitness_tables.append(table)
+
+        return cls(n, k, fitness_tables, interactions)
+
+    def fitness(self, sequence: np.ndarray) -> float:
+        """Compute fitness of binary sequence."""
+        total = 0.0
+
+        for i in range(self.n):
+            # Get relevant bits
+            bits = [sequence[i]] + [sequence[j] for j in self.interactions[i]]
+
+            # Convert to index
+            index = sum(b * (2 ** j) for j, b in enumerate(bits))
+
+            total += self.fitness_tables[i][int(index)]
+
+        return total / self.n
+
+    def fitness_string(self, sequence: str) -> float:
+        """Compute fitness of string sequence (0s and 1s)."""
+        arr = np.array([int(c) for c in sequence])
+        return self.fitness(arr)
+
+    def random_sequence(self, rng: np.random.Generator = None) -> np.ndarray:
+        """Generate random binary sequence."""
+        if rng is None:
+            rng = np.random.default_rng()
+        return rng.integers(0, 2, size=self.n)
+
+    def neighbors(self, sequence: np.ndarray) -> List[np.ndarray]:
+        """Generate all single-mutation neighbors."""
+        neighbors = []
+        for i in range(self.n):
+            neighbor = sequence.copy()
+            neighbor[i] = 1 - neighbor[i]
+            neighbors.append(neighbor)
+        return neighbors
+
+    def is_local_optimum(self, sequence: np.ndarray) -> bool:
+        """Check if sequence is a local optimum."""
+        current_fitness = self.fitness(sequence)
+        return all(
+            current_fitness >= self.fitness(neighbor)
+            for neighbor in self.neighbors(sequence)
+        )
+
+    def adaptive_walk(self,
+                      start: np.ndarray = None,
+                      rng: np.random.Generator = None) -> Tuple[np.ndarray, float, int]:
+        """
+        Perform adaptive walk to local optimum.
+
+        Returns:
+            (final_sequence, final_fitness, steps)
+        """
+        if rng is None:
+            rng = np.random.default_rng()
+        if start is None:
+            start = self.random_sequence(rng)
+
+        current = start.copy()
+        current_fitness = self.fitness(current)
+        steps = 0
+
+        while True:
+            # Find beneficial mutations
+            beneficial = []
+            for neighbor in self.neighbors(current):
+                neighbor_fitness = self.fitness(neighbor)
+                if neighbor_fitness > current_fitness:
+                    beneficial.append((neighbor, neighbor_fitness))
+
+            if not beneficial:
+                break
+
+            # Choose random beneficial mutation
+            current, current_fitness = beneficial[rng.integers(len(beneficial))]
+            steps += 1
+
+        return current, current_fitness, steps
+
+
+def analyze_nk_landscape(n: int, k: int,
+                         num_walks: int = 100,
+                         seed: int = None) -> Dict:
+    """
+    Analyze NK landscape properties.
+
+    Returns dictionary of landscape statistics.
+    """
+    model = NKModel.random(n, k, seed=seed)
+    rng = np.random.default_rng(seed)
+
+    # Perform adaptive walks
+    final_fitness = []
+    walk_lengths = []
+    local_optima = set()
+
+    for _ in range(num_walks):
+        seq, fit, steps = model.adaptive_walk(rng=rng)
+        final_fitness.append(fit)
+        walk_lengths.append(steps)
+        local_optima.add(tuple(seq))
+
+    # Sample fitness correlations
+    samples = [model.random_sequence(rng) for _ in range(min(500, 2**n))]
+    fitness_values = [model.fitness(s) for s in samples]
+
+    return {
+        'n': n,
+        'k': k,
+        'mean_fitness': np.mean(fitness_values),
+        'std_fitness': np.std(fitness_values),
+        'mean_walk_length': np.mean(walk_lengths),
+        'std_walk_length': np.std(walk_lengths),
+        'mean_optimum_fitness': np.mean(final_fitness),
+        'num_unique_optima': len(local_optima),
+        'num_walks': num_walks
+    }
+\end{lstlisting}
+
+\begin{annotation}
+The NK model bridges the gap between fully additive ($K=0$) and fully random
+($K=N-1$) landscapes. Real biological systems likely have intermediate $K$ values,
+with epistatic interactions structured by physical and functional constraints.
+\end{annotation}
+
+%% =============================================================================
+%% SECTION 8: EVOLUTIONARY DYNAMICS
+%% =============================================================================
+\section{Evolutionary Dynamics Models}
+
+\subsection{Wright-Fisher Model}
+
+\begin{definition}[Wright-Fisher Model]
+The Wright-Fisher model describes evolution in a finite population of size $N$:
+\begin{enumerate}
+    \item Discrete, non-overlapping generations
+    \item Each individual in generation $t+1$ is sampled with replacement from
+          generation $t$ according to fitness-weighted probabilities
+\end{enumerate}
+\end{definition}
+
+\begin{physicsbox}
+\textbf{Selection Probability:}
+
+For individual $i$ with fitness $f_i$, probability of being parent:
+\begin{equation}
+    p_i = \frac{f_i}{\sum_{j=1}^N f_j}
+\end{equation}
+
+\textbf{Transition Probability:}
+
+For allele frequency $x$ changing to $x'$ with $Nx' = k$:
+\begin{equation}
+    P(k | x) = \binom{N}{k} w(x)^k (1 - w(x))^{N-k}
+\end{equation}
+where $w(x)$ incorporates selection:
+\begin{equation}
+    w(x) = \frac{x \cdot W_1}{x \cdot W_1 + (1-x) \cdot W_0}
+\end{equation}
+with $W_1$ and $W_0$ being fitnesses of the two alleles.
+\end{physicsbox}
+
+\subsection{Fixation Probability}
+
+\begin{theorem}[Kimura Fixation Probability]
+For a new mutation with selective advantage $s$ in a population of size $N$:
+\begin{equation}
+    \pi = \frac{1 - e^{-2s}}{1 - e^{-2Ns}}
+\end{equation}
+\end{theorem}
+
+\begin{corollary}
+\begin{itemize}
+    \item Neutral mutation ($s = 0$): $\pi = 1/N$
+    \item Beneficial mutation ($s > 0$, $Ns \gg 1$): $\pi \approx 2s$
+    \item Deleterious mutation ($s < 0$, $N|s| \gg 1$): $\pi \approx 2|s| e^{-2N|s|}$
+\end{itemize}
+\end{corollary}
+
+\subsection{Moran Model}
+
+\begin{definition}[Moran Model]
+The Moran model uses overlapping generations:
+\begin{enumerate}
+    \item At each time step, one individual is chosen to reproduce (proportional
+          to fitness)
+    \item One individual is chosen uniformly at random to die
+    \item The reproducing individual's offspring replaces the dying individual
+\end{enumerate}
+\end{definition}
+
+\begin{physicsbox}
+\textbf{Moran Fixation Probability:}
+
+For initial count $i$ of mutant allele with relative fitness $r$:
+\begin{equation}
+    \pi_i = \frac{1 - r^{-i}}{1 - r^{-N}}
+\end{equation}
+
+For a single new mutant ($i = 1$):
+\begin{equation}
+    \pi_1 = \frac{1 - 1/r}{1 - 1/r^N}
+\end{equation}
+\end{physicsbox}
+
+\begin{theorem}[Moran-Wright-Fisher Equivalence]
+The Moran model with population $N$ is equivalent in fixation probability to a
+Wright-Fisher model with effective population $N_e = N/2$.
+\end{theorem}
+
+\subsection{Implementation}
+
+\begin{lstlisting}[caption={Wright-Fisher and Moran Evolution Simulations}]
+import numpy as np
+from typing import List, Tuple, Callable, Optional
+from dataclasses import dataclass, field
+
+@dataclass
+class EvolutionResult:
+    """Results from evolutionary simulation."""
+    generations: int
+    final_population: List[str]
+    fitness_history: List[float]
+    diversity_history: List[float]
+    fixations: List[Tuple[int, str, str]]  # (gen, old, new)
+
+
+def wright_fisher_evolution(
+    initial_sequence: str,
+    fitness_func: Callable[[str], float],
+    population_size: int = 100,
+    generations: int = 1000,
+    mutation_rate: float = 0.001,
+    alphabet: str = 'AUGC',
+    seed: Optional[int] = None
+) -> EvolutionResult:
+    """
+    Simulate Wright-Fisher evolution.
+
+    Args:
+        initial_sequence: Starting sequence
+        fitness_func: Fitness function
+        population_size: Population size N
+        generations: Number of generations
+        mutation_rate: Per-site mutation rate
+        alphabet: Sequence alphabet
+        seed: Random seed
+
+    Returns:
+        EvolutionResult with simulation data
+    """
+    rng = np.random.default_rng(seed)
+    seq_len = len(initial_sequence)
+
+    # Initialize population
+    population = [initial_sequence] * population_size
+
+    # Tracking
+    fitness_history = []
+    diversity_history = []
+    fixations = []
+
+    def mutate(seq: str) -> str:
+        """Apply mutations to sequence."""
+        result = list(seq)
+        for i in range(len(result)):
+            if rng.random() < mutation_rate:
+                alternatives = [a for a in alphabet if a != result[i]]
+                result[i] = rng.choice(alternatives)
+        return ''.join(result)
+
+    def compute_diversity(pop: List[str]) -> float:
+        """Compute nucleotide diversity."""
+        n = len(pop)
+        if n < 2:
+            return 0.0
+
+        total_diff = 0
+        comparisons = 0
+        for i in range(n):
+            for j in range(i + 1, n):
+                total_diff += hamming_distance(pop[i], pop[j])
+                comparisons += 1
+
+        return total_diff / (comparisons * seq_len) if comparisons > 0 else 0.0
+
+    for gen in range(generations):
+        # Compute fitness
+        fitness_values = np.array([fitness_func(seq) for seq in population])
+
+        # Record statistics
+        fitness_history.append(np.mean(fitness_values))
+        diversity_history.append(compute_diversity(population))
+
+        # Selection: sample with replacement proportional to fitness
+        if fitness_values.sum() > 0:
+            probs = fitness_values / fitness_values.sum()
+        else:
+            probs = np.ones(population_size) / population_size
+
+        parent_indices = rng.choice(
+            population_size,
+            size=population_size,
+            p=probs
+        )
+
+        # Create new generation with mutation
+        new_population = [mutate(population[i]) for i in parent_indices]
+
+        # Detect fixations (simplified)
+        old_consensus = max(set(population), key=population.count)
+        new_consensus = max(set(new_population), key=new_population.count)
+        if old_consensus != new_consensus:
+            fixations.append((gen, old_consensus, new_consensus))
+
+        population = new_population
+
+    return EvolutionResult(
+        generations=generations,
+        final_population=population,
+        fitness_history=fitness_history,
+        diversity_history=diversity_history,
+        fixations=fixations
+    )
+
+
+def moran_evolution(
+    initial_sequence: str,
+    fitness_func: Callable[[str], float],
+    population_size: int = 100,
+    max_events: int = 10000,
+    mutation_rate: float = 0.001,
+    alphabet: str = 'AUGC',
+    seed: Optional[int] = None
+) -> EvolutionResult:
+    """
+    Simulate Moran process evolution.
+
+    Args:
+        initial_sequence: Starting sequence
+        fitness_func: Fitness function
+        population_size: Population size N
+        max_events: Maximum birth-death events
+        mutation_rate: Per-site mutation rate
+        alphabet: Sequence alphabet
+        seed: Random seed
+
+    Returns:
+        EvolutionResult with simulation data
+    """
+    rng = np.random.default_rng(seed)
+    seq_len = len(initial_sequence)
+
+    # Initialize population
+    population = [initial_sequence] * population_size
+
+    # Tracking
+    fitness_history = []
+    diversity_history = []
+    fixations = []
+
+    def mutate(seq: str) -> str:
+        """Apply single mutation to sequence."""
+        if rng.random() > mutation_rate * seq_len:
+            return seq
+
+        result = list(seq)
+        pos = rng.integers(len(result))
+        alternatives = [a for a in alphabet if a != result[pos]]
+        result[pos] = rng.choice(alternatives)
+        return ''.join(result)
+
+    def compute_diversity(pop: List[str]) -> float:
+        """Compute nucleotide diversity."""
+        unique = list(set(pop))
+        if len(unique) < 2:
+            return 0.0
+
+        total_diff = 0
+        for i, s1 in enumerate(unique):
+            for s2 in unique[i+1:]:
+                total_diff += hamming_distance(s1, s2)
+
+        return total_diff / (len(unique) * (len(unique) - 1) / 2 * seq_len)
+
+    for event in range(max_events):
+        # Compute fitness
+        fitness_values = np.array([fitness_func(seq) for seq in population])
+
+        # Record statistics periodically
+        if event % population_size == 0:
+            fitness_history.append(np.mean(fitness_values))
+            diversity_history.append(compute_diversity(population))
+
+        # Birth: choose individual proportional to fitness
+        if fitness_values.sum() > 0:
+            birth_probs = fitness_values / fitness_values.sum()
+        else:
+            birth_probs = np.ones(population_size) / population_size
+
+        parent_idx = rng.choice(population_size, p=birth_probs)
+        offspring = mutate(population[parent_idx])
+
+        # Death: choose uniformly at random
+        death_idx = rng.integers(population_size)
+
+        population[death_idx] = offspring
+
+    generations = max_events // population_size
+
+    return EvolutionResult(
+        generations=generations,
+        final_population=population,
+        fitness_history=fitness_history,
+        diversity_history=diversity_history,
+        fixations=fixations
+    )
+
+
+def fixation_probability_simulation(
+    wild_type: str,
+    mutant: str,
+    fitness_func: Callable[[str], float],
+    population_size: int = 100,
+    num_trials: int = 1000,
+    max_generations: int = 10000,
+    seed: Optional[int] = None
+) -> float:
+    """
+    Estimate fixation probability by simulation.
+
+    Args:
+        wild_type: Wild type sequence
+        mutant: Mutant sequence
+        fitness_func: Fitness function
+        population_size: Population size
+        num_trials: Number of simulation trials
+        max_generations: Max generations per trial
+        seed: Random seed
+
+    Returns:
+        Estimated fixation probability
+    """
+    rng = np.random.default_rng(seed)
+
+    w_fit = fitness_func(wild_type)
+    m_fit = fitness_func(mutant)
+
+    fixations = 0
+
+    for trial in range(num_trials):
+        # Start with one mutant
+        mutant_count = 1
+
+        for gen in range(max_generations):
+            if mutant_count == 0:
+                break
+            if mutant_count == population_size:
+                fixations += 1
+                break
+
+            # Wright-Fisher sampling
+            p_mutant = (mutant_count * m_fit) / (
+                mutant_count * m_fit +
+                (population_size - mutant_count) * w_fit
+            )
+            mutant_count = rng.binomial(population_size, p_mutant)
+
+    return fixations / num_trials
+\end{lstlisting}
+
+%% =============================================================================
+%% SECTION 9: ROBUSTNESS AND EVOLVABILITY
+%% =============================================================================
+\section{Robustness-Evolvability Tradeoff}
+
+\subsection{Definitions}
+
+\begin{definition}[Mutational Robustness]
+The mutational robustness $R(s)$ of genotype $s$ is the probability that a
+random point mutation preserves the phenotype:
+\begin{equation}
+    R(s) = \frac{|\{s' : \hamming(s, s') = 1 \land \gpmap(s') = \gpmap(s)\}|}{\seqlength(|\alphabet| - 1)}
+\end{equation}
+This equals the neutrality $\rho(s)$ defined earlier.
+\end{definition}
+
+\begin{definition}[Evolvability]
+The evolvability $E(s)$ of genotype $s$ measures access to novel phenotypes:
+\begin{equation}
+    E(s) = |\{\phi : \exists s', \hamming(s, s') = 1 \land \gpmap(s') = \phi \land \phi \neq \gpmap(s)\}|
+\end{equation}
+the number of distinct phenotypes accessible via single mutations.
+\end{definition}
+
+\begin{pursuitbox}
+Understanding the relationship between robustness and evolvability is central to
+evolutionary biology:
+\begin{itemize}
+    \item High robustness means mutations don't disrupt function
+    \item High evolvability means mutations can access new functions
+    \item These seem contradictory but can coexist in structured GP maps
+\end{itemize}
+\end{pursuitbox}
+
+\subsection{The Paradox and Resolution}
+
+\begin{theorem}[Robustness-Evolvability in Neutral Networks]
+In GP maps with extended neutral networks:
+\begin{enumerate}
+    \item Neutral evolution allows populations to spread across the neutral network
+    \item Different positions in the network have different phenotypic neighborhoods
+    \item The population's collective evolvability can exceed individual evolvability
+    \item Robustness enables exploration of the neutral network, enhancing evolvability
+\end{enumerate}
+\end{theorem}
+
+\begin{physicsbox}
+\textbf{Population-Level Evolvability:}
+
+For a population $P \subseteq \neutralnet(\phi)$ distributed across the neutral network:
+\begin{equation}
+    E(P) = \left|\bigcup_{s \in P} \{\phi' : \exists s', \hamming(s, s') = 1 \land \gpmap(s') = \phi'\}\right|
+\end{equation}
+
+This collective evolvability satisfies:
+\begin{equation}
+    E(P) \geq \max_{s \in P} E(s)
+\end{equation}
+
+A spread population samples diverse phenotypic neighborhoods, increasing $E(P)$.
+\end{physicsbox}
+
+\begin{warningbox}
+The robustness-evolvability relationship depends critically on:
+\begin{itemize}
+    \item Population size (larger populations explore more)
+    \item Mutation rate (must be sufficient for neutral drift)
+    \item Neutral network structure (extent and connectivity)
+    \item Selective pressure (stabilizing vs. directional selection)
+\end{itemize}
+\end{warningbox}
+
+%% =============================================================================
+%% SECTION 10: CERTIFICATE DATA STRUCTURE
+%% =============================================================================
+\section{Genotype-Phenotype Certificate}
+
+\subsection{Certificate Definition}
+
+\begin{definition}[GenotypePhentotypeCertificate]
+A formal certificate attesting to properties of a GP mapping analysis:
+\begin{equation}
+    \mathcal{C} = (\genotype_{\text{sample}}, \phenotype_{\text{obs}}, \mathcal{M}, \mathcal{V})
+\end{equation}
+where:
+\begin{itemize}
+    \item $\genotype_{\text{sample}}$: Sampled genotypes
+    \item $\phenotype_{\text{obs}}$: Observed phenotypes
+    \item $\mathcal{M}$: Computed metrics (neutrality, epistasis, etc.)
+    \item $\mathcal{V}$: Verification protocols with results
+\end{itemize}
+\end{definition}
+
+\subsection{Implementation}
+
+\begin{lstlisting}[caption={GenotypePhentotypeCertificate Data Structure}]
+from dataclasses import dataclass, field
+from typing import Dict, List, Set, Tuple, Optional, Any
+from datetime import datetime
+import hashlib
+import json
+
+@dataclass
+class FoldingResult:
+    """Result of folding a single sequence."""
+    sequence: str
+    structure: str
+    energy: Optional[float] = None
+    algorithm: str = "nussinov"
+
+    def to_dict(self) -> Dict:
+        return {
+            'sequence': self.sequence,
+            'structure': self.structure,
+            'energy': self.energy,
+            'algorithm': self.algorithm
+        }
+
+
+@dataclass
+class NeutralNetworkMetrics:
+    """Metrics for neutral network analysis."""
+    target_phenotype: str
+    sample_size: int
+    mean_neutrality: float
+    std_neutrality: float
+    estimated_extent: int
+    connectivity_estimate: float
+
+    def to_dict(self) -> Dict:
+        return {
+            'target_phenotype': self.target_phenotype,
+            'sample_size': self.sample_size,
+            'mean_neutrality': self.mean_neutrality,
+            'std_neutrality': self.std_neutrality,
+            'estimated_extent': self.estimated_extent,
+            'connectivity_estimate': self.connectivity_estimate
+        }
+
+
+@dataclass
+class FitnessLandscapeMetrics:
+    """Metrics for fitness landscape analysis."""
+    correlation_length: float
+    num_local_optima_sampled: int
+    mean_optimum_fitness: float
+    mean_epistasis: float
+    ruggedness_score: float
+
+    def to_dict(self) -> Dict:
+        return {
+            'correlation_length': self.correlation_length,
+            'num_local_optima_sampled': self.num_local_optima_sampled,
+            'mean_optimum_fitness': self.mean_optimum_fitness,
+            'mean_epistasis': self.mean_epistasis,
+            'ruggedness_score': self.ruggedness_score
+        }
+
+
+@dataclass
+class EvolutionMetrics:
+    """Metrics from evolutionary simulation."""
+    generations: int
+    population_size: int
+    final_mean_fitness: float
+    final_diversity: float
+    num_fixations: int
+    model_type: str  # "wright_fisher" or "moran"
+
+    def to_dict(self) -> Dict:
+        return {
+            'generations': self.generations,
+            'population_size': self.population_size,
+            'final_mean_fitness': self.final_mean_fitness,
+            'final_diversity': self.final_diversity,
+            'num_fixations': self.num_fixations,
+            'model_type': self.model_type
+        }
+
+
+@dataclass
+class VerificationResult:
+    """Result of a verification protocol."""
+    protocol_name: str
+    passed: bool
+    message: str
+    details: Dict[str, Any] = field(default_factory=dict)
+
+    def to_dict(self) -> Dict:
+        return {
+            'protocol_name': self.protocol_name,
+            'passed': self.passed,
+            'message': self.message,
+            'details': self.details
+        }
+
+
+@dataclass
+class GenotypePhentotypeCertificate:
+    """
+    Formal certificate for GP mapping analysis.
+
+    Contains all results, metrics, and verification outcomes
+    from analyzing a genotype-phenotype system.
+    """
+
+    # Identification
+    certificate_id: str
+    created_at: datetime
+    system_description: str
+
+    # Input data
+    alphabet: str
+    sequence_length: int
+    num_sequences_analyzed: int
+
+    # Folding results
+    folding_algorithm: str
+    folding_results: List[FoldingResult] = field(default_factory=list)
+
+    # Neutral network analysis
+    neutral_network_metrics: Optional[NeutralNetworkMetrics] = None
+
+    # Fitness landscape analysis
+    fitness_landscape_metrics: Optional[FitnessLandscapeMetrics] = None
+
+    # Evolution simulation
+    evolution_metrics: Optional[EvolutionMetrics] = None
+
+    # Verification
+    verifications: List[VerificationResult] = field(default_factory=list)
+
+    # Summary
+    all_verifications_passed: bool = False
+
+    @classmethod
+    def create(cls,
+               system_description: str,
+               alphabet: str = 'AUGC',
+               sequence_length: int = 0) -> 'GenotypePhentotypeCertificate':
+        """Create new certificate with generated ID."""
+        cert_id = hashlib.sha256(
+            f"{system_description}{datetime.now().isoformat()}".encode()
+        ).hexdigest()[:16]
+
+        return cls(
+            certificate_id=cert_id,
+            created_at=datetime.now(),
+            system_description=system_description,
+            alphabet=alphabet,
+            sequence_length=sequence_length,
+            num_sequences_analyzed=0,
+            folding_algorithm="unspecified"
+        )
+
+    def add_folding_result(self, result: FoldingResult) -> None:
+        """Add a folding result to the certificate."""
+        self.folding_results.append(result)
+        self.num_sequences_analyzed = len(self.folding_results)
+
+    def add_verification(self, result: VerificationResult) -> None:
+        """Add verification result and update overall status."""
+        self.verifications.append(result)
+        self.all_verifications_passed = all(
+            v.passed for v in self.verifications
+        )
+
+    def to_dict(self) -> Dict:
+        """Convert certificate to dictionary."""
+        return {
+            'certificate_id': self.certificate_id,
+            'created_at': self.created_at.isoformat(),
+            'system_description': self.system_description,
+            'alphabet': self.alphabet,
+            'sequence_length': self.sequence_length,
+            'num_sequences_analyzed': self.num_sequences_analyzed,
+            'folding_algorithm': self.folding_algorithm,
+            'folding_results': [r.to_dict() for r in self.folding_results],
+            'neutral_network_metrics': (
+                self.neutral_network_metrics.to_dict()
+                if self.neutral_network_metrics else None
+            ),
+            'fitness_landscape_metrics': (
+                self.fitness_landscape_metrics.to_dict()
+                if self.fitness_landscape_metrics else None
+            ),
+            'evolution_metrics': (
+                self.evolution_metrics.to_dict()
+                if self.evolution_metrics else None
+            ),
+            'verifications': [v.to_dict() for v in self.verifications],
+            'all_verifications_passed': self.all_verifications_passed
+        }
+
+    def to_json(self, indent: int = 2) -> str:
+        """Serialize certificate to JSON."""
+        return json.dumps(self.to_dict(), indent=indent)
+
+    @classmethod
+    def from_json(cls, json_str: str) -> 'GenotypePhentotypeCertificate':
+        """Deserialize certificate from JSON."""
+        data = json.loads(json_str)
+
+        cert = cls(
+            certificate_id=data['certificate_id'],
+            created_at=datetime.fromisoformat(data['created_at']),
+            system_description=data['system_description'],
+            alphabet=data['alphabet'],
+            sequence_length=data['sequence_length'],
+            num_sequences_analyzed=data['num_sequences_analyzed'],
+            folding_algorithm=data['folding_algorithm']
+        )
+
+        # Reconstruct nested objects
+        for fr_data in data.get('folding_results', []):
+            cert.folding_results.append(FoldingResult(**fr_data))
+
+        if data.get('neutral_network_metrics'):
+            cert.neutral_network_metrics = NeutralNetworkMetrics(
+                **data['neutral_network_metrics']
+            )
+
+        if data.get('fitness_landscape_metrics'):
+            cert.fitness_landscape_metrics = FitnessLandscapeMetrics(
+                **data['fitness_landscape_metrics']
+            )
+
+        if data.get('evolution_metrics'):
+            cert.evolution_metrics = EvolutionMetrics(
+                **data['evolution_metrics']
+            )
+
+        for v_data in data.get('verifications', []):
+            cert.verifications.append(VerificationResult(**v_data))
+
+        cert.all_verifications_passed = data['all_verifications_passed']
+
+        return cert
+
+    def summary(self) -> str:
+        """Generate human-readable summary."""
+        lines = [
+            f"GP Mapping Certificate: {self.certificate_id}",
+            f"Created: {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}",
+            f"System: {self.system_description}",
+            f"",
+            f"Analysis Summary:",
+            f"  Alphabet: {self.alphabet}",
+            f"  Sequence Length: {self.sequence_length}",
+            f"  Sequences Analyzed: {self.num_sequences_analyzed}",
+            f"  Folding Algorithm: {self.folding_algorithm}",
+        ]
+
+        if self.neutral_network_metrics:
+            nn = self.neutral_network_metrics
+            lines.extend([
+                f"",
+                f"Neutral Network Metrics:",
+                f"  Target Phenotype: {nn.target_phenotype[:30]}...",
+                f"  Mean Neutrality: {nn.mean_neutrality:.4f}",
+                f"  Estimated Extent: {nn.estimated_extent}",
+            ])
+
+        if self.fitness_landscape_metrics:
+            fl = self.fitness_landscape_metrics
+            lines.extend([
+                f"",
+                f"Fitness Landscape Metrics:",
+                f"  Correlation Length: {fl.correlation_length:.4f}",
+                f"  Local Optima Found: {fl.num_local_optima_sampled}",
+                f"  Ruggedness Score: {fl.ruggedness_score:.4f}",
+            ])
+
+        if self.evolution_metrics:
+            ev = self.evolution_metrics
+            lines.extend([
+                f"",
+                f"Evolution Metrics ({ev.model_type}):",
+                f"  Generations: {ev.generations}",
+                f"  Final Mean Fitness: {ev.final_mean_fitness:.4f}",
+                f"  Final Diversity: {ev.final_diversity:.4f}",
+            ])
+
+        lines.extend([
+            f"",
+            f"Verifications: {len(self.verifications)}",
+            f"  All Passed: {self.all_verifications_passed}",
+        ])
+
+        for v in self.verifications:
+            status = "PASS" if v.passed else "FAIL"
+            lines.append(f"  [{status}] {v.protocol_name}: {v.message}")
+
+        return '\n'.join(lines)
+\end{lstlisting}
+
+%% =============================================================================
+%% SECTION 11: VERIFICATION PROTOCOLS
+%% =============================================================================
+\section{Verification Protocols}
+
+\subsection{Protocol Definitions}
+
+\begin{definition}[Verification Protocol]
+A verification protocol $\mathcal{V}$ consists of:
+\begin{enumerate}
+    \item \textbf{Preconditions}: Required inputs and their formats
+    \item \textbf{Test procedure}: Computational steps to verify
+    \item \textbf{Success criteria}: Conditions that must hold for verification to pass
+    \item \textbf{Failure modes}: Expected failure conditions and diagnostics
+\end{enumerate}
+\end{definition}
+
+\subsection{Core Verification Protocols}
+
+\begin{lstlisting}[caption={Verification Protocol Implementations}]
+from typing import Callable, Tuple
+import numpy as np
+
+def verify_folding_consistency(
+    fold_function: Callable[[str], str],
+    sequences: List[str],
+    tolerance: float = 0.0
+) -> VerificationResult:
+    """
+    Verify that folding function is deterministic.
+
+    Protocol: Fold each sequence twice and compare results.
+    Success: All pairs match exactly.
+    """
+    mismatches = []
+
+    for seq in sequences:
+        result1 = fold_function(seq)
+        result2 = fold_function(seq)
+
+        if result1 != result2:
+            mismatches.append({
+                'sequence': seq,
+                'result1': result1,
+                'result2': result2
+            })
+
+    passed = len(mismatches) == 0
+    message = (
+        f"Folding consistent for all {len(sequences)} sequences"
+        if passed else
+        f"Inconsistency detected in {len(mismatches)} sequences"
+    )
+
+    return VerificationResult(
+        protocol_name="folding_consistency",
+        passed=passed,
+        message=message,
+        details={'mismatches': mismatches}
+    )
+
+
+def verify_structure_validity(
+    structures: List[str],
+    min_loop_size: int = 3
+) -> VerificationResult:
+    """
+    Verify that all structures are valid secondary structures.
+
+    Checks:
+    - Balanced parentheses
+    - No pseudoknots
+    - Minimum hairpin loop size
+    """
+    invalid = []
+
+    for structure in structures:
+        issues = []
+
+        # Check balanced parentheses
+        stack = []
+        for i, char in enumerate(structure):
+            if char == '(':
+                stack.append(i)
+            elif char == ')':
+                if not stack:
+                    issues.append(f"Unmatched ')' at position {i}")
+                else:
+                    j = stack.pop()
+                    # Check minimum loop size
+                    if i - j - 1 < min_loop_size:
+                        issues.append(
+                            f"Hairpin too small: positions {j}-{i}"
+                        )
+
+        if stack:
+            issues.append(f"Unmatched '(' at positions {stack}")
+
+        if issues:
+            invalid.append({
+                'structure': structure,
+                'issues': issues
+            })
+
+    passed = len(invalid) == 0
+    message = (
+        f"All {len(structures)} structures valid"
+        if passed else
+        f"{len(invalid)} invalid structures found"
+    )
+
+    return VerificationResult(
+        protocol_name="structure_validity",
+        passed=passed,
+        message=message,
+        details={'invalid': invalid}
+    )
+
+
+def verify_neutrality_bounds(
+    neutralities: List[float],
+    min_bound: float = 0.0,
+    max_bound: float = 1.0
+) -> VerificationResult:
+    """
+    Verify neutrality values are within valid bounds.
+    """
+    violations = [
+        n for n in neutralities
+        if n < min_bound or n > max_bound
+    ]
+
+    passed = len(violations) == 0
+    message = (
+        f"All {len(neutralities)} neutrality values in [{min_bound}, {max_bound}]"
+        if passed else
+        f"{len(violations)} values outside bounds"
+    )
+
+    return VerificationResult(
+        protocol_name="neutrality_bounds",
+        passed=passed,
+        message=message,
+        details={
+            'violations': violations,
+            'mean': np.mean(neutralities),
+            'std': np.std(neutralities)
+        }
+    )
+
+
+def verify_fitness_landscape_properties(
+    model: 'NKModel',
+    num_samples: int = 100
+) -> VerificationResult:
+    """
+    Verify NK model fitness landscape properties.
+
+    Checks:
+    - Fitness values in [0, 1]
+    - Local optima exist
+    - Landscape navigable
+    """
+    rng = np.random.default_rng()
+    issues = []
+
+    # Sample fitness values
+    fitness_values = []
+    for _ in range(num_samples):
+        seq = model.random_sequence(rng)
+        fitness = model.fitness(seq)
+        fitness_values.append(fitness)
+
+        if fitness < 0 or fitness > 1:
+            issues.append(f"Fitness {fitness} outside [0,1]")
+
+    # Verify adaptive walks find optima
+    optima_found = 0
+    for _ in range(10):
+        seq, fitness, steps = model.adaptive_walk(rng=rng)
+        if model.is_local_optimum(seq):
+            optima_found += 1
+
+    if optima_found < 10:
+        issues.append(f"Only {optima_found}/10 walks found local optima")
+
+    passed = len(issues) == 0
+    message = (
+        f"NK landscape (N={model.n}, K={model.k}) properties verified"
+        if passed else
+        f"Issues found: {'; '.join(issues[:3])}"
+    )
+
+    return VerificationResult(
+        protocol_name="fitness_landscape_properties",
+        passed=passed,
+        message=message,
+        details={
+            'mean_fitness': np.mean(fitness_values),
+            'optima_found': optima_found,
+            'issues': issues
+        }
+    )
+
+
+def verify_evolution_conservation(
+    initial_population: List[str],
+    final_population: List[str]
+) -> VerificationResult:
+    """
+    Verify evolution simulation conserved population size.
+    """
+    passed = len(initial_population) == len(final_population)
+    message = (
+        f"Population size conserved: {len(final_population)}"
+        if passed else
+        f"Population size changed: {len(initial_population)} -> {len(final_population)}"
+    )
+
+    return VerificationResult(
+        protocol_name="evolution_conservation",
+        passed=passed,
+        message=message,
+        details={
+            'initial_size': len(initial_population),
+            'final_size': len(final_population)
+        }
+    )
+
+
+def verify_hamming_distance_metric(
+    sequences: List[str]
+) -> VerificationResult:
+    """
+    Verify Hamming distance satisfies metric axioms.
+    """
+    issues = []
+
+    for i, s1 in enumerate(sequences[:20]):  # Sample
+        # Non-negativity and identity
+        if hamming_distance(s1, s1) != 0:
+            issues.append(f"Self-distance non-zero for {s1}")
+
+        for s2 in sequences[i+1:i+10]:
+            d12 = hamming_distance(s1, s2)
+            d21 = hamming_distance(s2, s1)
+
+            # Symmetry
+            if d12 != d21:
+                issues.append(f"Asymmetric: d({s1},{s2})={d12} != d({s2},{s1})={d21}")
+
+            # Triangle inequality (sample)
+            for s3 in sequences[i+10:i+15]:
+                d13 = hamming_distance(s1, s3)
+                d23 = hamming_distance(s2, s3)
+
+                if d12 > d13 + d23:
+                    issues.append(
+                        f"Triangle violated: d12={d12} > d13={d13} + d23={d23}"
+                    )
+
+    passed = len(issues) == 0
+    message = (
+        "Hamming distance metric axioms verified"
+        if passed else
+        f"{len(issues)} metric axiom violations"
+    )
+
+    return VerificationResult(
+        protocol_name="hamming_metric",
+        passed=passed,
+        message=message,
+        details={'violations': issues[:10]}
+    )
+
+
+def run_all_verifications(
+    certificate: GenotypePhentotypeCertificate,
+    fold_function: Callable[[str], str] = None,
+    model: 'NKModel' = None
+) -> GenotypePhentotypeCertificate:
+    """
+    Run all applicable verification protocols.
+    """
+    # Extract sequences
+    sequences = [fr.sequence for fr in certificate.folding_results]
+    structures = [fr.structure for fr in certificate.folding_results]
+
+    if sequences:
+        # Hamming metric verification
+        certificate.add_verification(
+            verify_hamming_distance_metric(sequences)
+        )
+
+    if structures:
+        # Structure validity
+        certificate.add_verification(
+            verify_structure_validity(structures)
+        )
+
+    if fold_function and sequences:
+        # Folding consistency
+        certificate.add_verification(
+            verify_folding_consistency(fold_function, sequences[:50])
+        )
+
+    if model:
+        # Landscape properties
+        certificate.add_verification(
+            verify_fitness_landscape_properties(model)
+        )
+
+    return certificate
+\end{lstlisting}
+
+\subsection{Success Criteria Summary}
+
+\begin{table}[H]
+\centering
+\caption{Verification Protocol Success Criteria}
+\begin{tabular}{lll}
+\toprule
+\textbf{Protocol} & \textbf{Criterion} & \textbf{Tolerance} \\
+\midrule
+Folding Consistency & Same output for same input & Exact \\
+Structure Validity & Valid dot-bracket notation & None \\
+Neutrality Bounds & $0 \leq \rho \leq 1$ & None \\
+Fitness Bounds & $0 \leq F \leq 1$ (NK model) & None \\
+Local Optima & Adaptive walks terminate & 100\% \\
+Hamming Metric & All axioms satisfied & Exact \\
+Population Size & Conserved across generations & Exact \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% =============================================================================
+%% SECTION 12: COMPLETE WORKFLOW EXAMPLE
+%% =============================================================================
+\section{Complete Analysis Workflow}
+
+\subsection{End-to-End Example}
+
+\begin{lstlisting}[caption={Complete GP Mapping Analysis Workflow}]
+#!/usr/bin/env python3
+"""
+Complete Genotype-Phenotype Mapping Analysis Workflow
+
+This script demonstrates the full analysis pipeline:
+1. RNA folding with Nussinov algorithm
+2. Neutral network exploration
+3. Fitness landscape analysis with NK model
+4. Evolutionary simulation
+5. Certificate generation and verification
+"""
+
+import numpy as np
+from typing import List, Dict, Tuple
+import json
+
+# Import all components (assuming they're in a module)
+# from gp_mapping import *
+
+
+def main():
+    """Run complete GP mapping analysis."""
+
+    print("=" * 60)
+    print("GENOTYPE-PHENOTYPE MAPPING ANALYSIS")
+    print("=" * 60)
+
+    # =========================================
+    # 1. RNA FOLDING ANALYSIS
+    # =========================================
+    print("\n1. RNA Folding Analysis")
+    print("-" * 40)
+
+    # Sample sequences
+    test_sequences = [
+        "GGGAAAUCC",
+        "GCGCAAGCGC",
+        "AAAAAAAAAA",
+        "GCAUCGAUGC",
+        "GGGGAAAACCCC"
+    ]
+
+    # Create certificate
+    cert = GenotypePhentotypeCertificate.create(
+        system_description="RNA Secondary Structure GP Map Analysis",
+        alphabet="AUGC",
+        sequence_length=10
+    )
+    cert.folding_algorithm = "nussinov"
+
+    # Fold sequences
+    for seq in test_sequences:
+        max_pairs, pairs = nussinov_fold(seq)
+        structure = structure_to_dot_bracket(len(seq), pairs)
+
+        result = FoldingResult(
+            sequence=seq,
+            structure=structure,
+            energy=None,  # Nussinov doesn't compute energy
+            algorithm="nussinov"
+        )
+        cert.add_folding_result(result)
+
+        print(f"  {seq} -> {structure} ({max_pairs} pairs)")
+
+    # =========================================
+    # 2. NEUTRAL NETWORK ANALYSIS
+    # =========================================
+    print("\n2. Neutral Network Analysis")
+    print("-" * 40)
+
+    # Define folding function wrapper
+    def fold_to_structure(seq: str) -> str:
+        _, pairs = nussinov_fold(seq)
+        return structure_to_dot_bracket(len(seq), pairs)
+
+    # Analyze neutral network from first sequence
+    seed_seq = test_sequences[0]
+    nn_stats = neutral_network_statistics(
+        seed_sequence=seed_seq,
+        fold_function=fold_to_structure,
+        max_samples=200
+    )
+
+    cert.neutral_network_metrics = NeutralNetworkMetrics(
+        target_phenotype=nn_stats['target_structure'],
+        sample_size=nn_stats['samples_collected'],
+        mean_neutrality=nn_stats['mean_neutrality'],
+        std_neutrality=nn_stats['std_neutrality'],
+        estimated_extent=nn_stats['estimated_extent'],
+        connectivity_estimate=0.95  # Placeholder
+    )
+
+    print(f"  Target structure: {nn_stats['target_structure']}")
+    print(f"  Samples collected: {nn_stats['samples_collected']}")
+    print(f"  Mean neutrality: {nn_stats['mean_neutrality']:.4f}")
+    print(f"  Std neutrality: {nn_stats['std_neutrality']:.4f}")
+    print(f"  Estimated extent: {nn_stats['estimated_extent']}")
+
+    # =========================================
+    # 3. NK FITNESS LANDSCAPE ANALYSIS
+    # =========================================
+    print("\n3. NK Model Fitness Landscape")
+    print("-" * 40)
+
+    # Create NK models with different K values
+    for k in [0, 2, 5]:
+        model = NKModel.random(n=20, k=k, seed=42)
+        stats = analyze_nk_landscape(n=20, k=k, num_walks=50, seed=42)
+
+        print(f"  K={k}:")
+        print(f"    Mean fitness: {stats['mean_fitness']:.4f}")
+        print(f"    Walk length: {stats['mean_walk_length']:.1f}")
+        print(f"    Unique optima: {stats['num_unique_optima']}")
+
+    # Use K=2 for certificate
+    model = NKModel.random(n=20, k=2, seed=42)
+    stats = analyze_nk_landscape(n=20, k=2, num_walks=100, seed=42)
+
+    # Compute autocorrelation
+    sample_seqs = [''.join(str(x) for x in model.random_sequence())
+                   for _ in range(100)]
+    autocorr = compute_autocorrelation(
+        model.fitness_string,
+        sample_seqs,
+        max_distance=10
+    )
+    corr_length = estimate_correlation_length(autocorr)
+
+    cert.fitness_landscape_metrics = FitnessLandscapeMetrics(
+        correlation_length=corr_length,
+        num_local_optima_sampled=stats['num_unique_optima'],
+        mean_optimum_fitness=stats['mean_optimum_fitness'],
+        mean_epistasis=0.0,  # Would compute separately
+        ruggedness_score=1.0 / corr_length if corr_length > 0 else 1.0
+    )
+
+    print(f"\n  Correlation length: {corr_length:.4f}")
+
+    # =========================================
+    # 4. EVOLUTIONARY SIMULATION
+    # =========================================
+    print("\n4. Evolutionary Simulation")
+    print("-" * 40)
+
+    # Define fitness function (structure similarity)
+    target_structure = "(((....)))"
+
+    def structure_fitness(seq: str) -> float:
+        """Fitness based on similarity to target structure."""
+        try:
+            _, pairs = nussinov_fold(seq)
+            actual = structure_to_dot_bracket(len(seq), pairs)
+
+            if len(actual) != len(target_structure):
+                return 0.1
+
+            matches = sum(a == t for a, t in zip(actual, target_structure))
+            return matches / len(target_structure)
+        except:
+            return 0.1
+
+    # Run Wright-Fisher evolution
+    initial_seq = "AAAAAAAAAA"
+    wf_result = wright_fisher_evolution(
+        initial_sequence=initial_seq,
+        fitness_func=structure_fitness,
+        population_size=50,
+        generations=100,
+        mutation_rate=0.01,
+        seed=42
+    )
+
+    print(f"  Wright-Fisher Evolution:")
+    print(f"    Initial fitness: {wf_result.fitness_history[0]:.4f}")
+    print(f"    Final fitness: {wf_result.fitness_history[-1]:.4f}")
+    print(f"    Fitness improvement: {wf_result.fitness_history[-1] - wf_result.fitness_history[0]:.4f}")
+
+    cert.evolution_metrics = EvolutionMetrics(
+        generations=wf_result.generations,
+        population_size=50,
+        final_mean_fitness=wf_result.fitness_history[-1],
+        final_diversity=wf_result.diversity_history[-1],
+        num_fixations=len(wf_result.fixations),
+        model_type="wright_fisher"
+    )
+
+    # =========================================
+    # 5. VERIFICATION
+    # =========================================
+    print("\n5. Verification Protocols")
+    print("-" * 40)
+
+    # Run structure validity check
+    structures = [fr.structure for fr in cert.folding_results]
+    v1 = verify_structure_validity(structures)
+    cert.add_verification(v1)
+    print(f"  [{('PASS' if v1.passed else 'FAIL')}] {v1.protocol_name}: {v1.message}")
+
+    # Run folding consistency check
+    v2 = verify_folding_consistency(fold_to_structure, test_sequences)
+    cert.add_verification(v2)
+    print(f"  [{('PASS' if v2.passed else 'FAIL')}] {v2.protocol_name}: {v2.message}")
+
+    # Run Hamming metric check
+    v3 = verify_hamming_distance_metric(test_sequences)
+    cert.add_verification(v3)
+    print(f"  [{('PASS' if v3.passed else 'FAIL')}] {v3.protocol_name}: {v3.message}")
+
+    # Run NK landscape check
+    v4 = verify_fitness_landscape_properties(model)
+    cert.add_verification(v4)
+    print(f"  [{('PASS' if v4.passed else 'FAIL')}] {v4.protocol_name}: {v4.message}")
+
+    # =========================================
+    # 6. CERTIFICATE OUTPUT
+    # =========================================
+    print("\n6. Certificate Summary")
+    print("-" * 40)
+    print(cert.summary())
+
+    # Save certificate
+    cert_json = cert.to_json()
+    print(f"\n  Certificate JSON length: {len(cert_json)} bytes")
+
+    return cert
+
+
+if __name__ == "__main__":
+    certificate = main()
+    print("\n" + "=" * 60)
+    print("ANALYSIS COMPLETE")
+    print("=" * 60)
+\end{lstlisting}
+
+%% =============================================================================
+%% SECTION 13: ADVANCED TOPICS
+%% =============================================================================
+\section{Advanced Topics}
+
+\subsection{Shape Space Covering}
+
+\begin{theorem}[Shape Space Covering]
+For RNA sequences of length $\seqlength$, neutral networks of common structures
+cover shape space such that any phenotype is within a few mutations of any
+sufficiently large neutral network.
+\end{theorem}
+
+\begin{physicsbox}
+\textbf{Covering Radius:}
+
+The covering radius $r_c$ is the minimum radius such that:
+\begin{equation}
+    \bigcup_{s \in \neutralnet(\phi)} B_r(s) \supseteq \genotype \quad \text{for all } r \geq r_c
+\end{equation}
+where $B_r(s) = \{s' : \hamming(s, s') \leq r\}$.
+
+For RNA with $\seqlength \approx 100$, empirically $r_c \approx 15-20$.
+\end{physicsbox}
+
+\subsection{Arrival of the Frequent}
+
+\begin{definition}[Arrival of the Frequent]
+Evolution tends to discover phenotypes with high genotypic frequency:
+\begin{equation}
+    \prob(\text{reach } \phi) \propto f(\phi)^{\alpha}
+\end{equation}
+where $f(\phi)$ is the phenotype frequency and $\alpha > 0$ depends on
+population parameters.
+\end{definition}
+
+\begin{annotation}
+This principle explains why certain structures evolve repeatedly in independent
+lineages (convergent evolution) - they have many genotypes mapping to them,
+making them more likely to be discovered.
+\end{annotation}
+
+\subsection{Mutational Load}
+
+\begin{physicsbox}
+\textbf{Haldane's Principle:}
+
+At mutation-selection balance, the mean fitness reduction (load) is:
+\begin{equation}
+    L = 1 - \bar{w}/w_{\max} \approx \mu \seqlength
+\end{equation}
+where $\mu$ is the per-site mutation rate.
+
+\textbf{Error Threshold:}
+
+For RNA viruses with mutation rate $\mu$:
+\begin{equation}
+    \mu_{\text{crit}} \approx \frac{\ln(s)}{(\seqlength - \seqlength_0)}
+\end{equation}
+where $s$ is the selective advantage and $\seqlength_0$ is the number of
+neutral sites.
+\end{physicsbox}
+
+%% =============================================================================
+%% SECTION 14: CONCLUSION
+%% =============================================================================
+\section{Conclusion}
+
+\subsection{Summary of Key Results}
+
+This report has presented a comprehensive treatment of genotype-phenotype mapping
+and evolutionary fitness landscapes:
+
+\begin{enumerate}
+    \item \textbf{GP Map Fundamentals}: The mapping from genotype space
+          $\alphabet^{\seqlength}$ to phenotype space creates structure that
+          fundamentally shapes evolutionary dynamics.
+
+    \item \textbf{RNA Secondary Structure}: Provides an ideal model system with
+          tractable algorithms (Nussinov, Zuker) enabling detailed study of GP
+          map properties.
+
+    \item \textbf{Neutral Networks}: Extended networks enabling drift across
+          sequence space while maintaining phenotype, resolving the apparent
+          paradox between robustness and evolvability.
+
+    \item \textbf{Fitness Landscapes}: Characterized by ruggedness metrics
+          (autocorrelation, epistasis, local optima density) with the NK model
+          providing tunable complexity.
+
+    \item \textbf{Evolutionary Dynamics}: Wright-Fisher and Moran models capture
+          population-level evolution with mathematically tractable fixation
+          probabilities.
+
+    \item \textbf{Formal Verification}: Certificate-based approach ensures
+          correctness of computational analyses.
+\end{enumerate}
+
+\subsection{Future Directions}
+
+\begin{pursuitbox}
+Key open questions in GP mapping research:
+\begin{itemize}
+    \item How do GP map properties scale with system complexity?
+    \item Can we design GP maps with desired evolutionary properties?
+    \item What role do GP maps play in major evolutionary transitions?
+    \item How can GP map understanding improve directed evolution?
+\end{itemize}
+\end{pursuitbox}
+
+\subsection{Practical Applications}
+
+The theoretical framework developed here has applications in:
+\begin{itemize}
+    \item \textbf{Directed evolution}: Understanding landscape structure guides
+          experimental design
+    \item \textbf{Drug resistance}: Predicting evolutionary escape routes
+    \item \textbf{Synthetic biology}: Designing robust genetic circuits
+    \item \textbf{Machine learning}: Optimization in rugged landscapes
+\end{itemize}
+
+%% =============================================================================
+%% APPENDICES
+%% =============================================================================
+\appendix
+
+\section{Mathematical Notation Reference}
+
+\begin{table}[H]
+\centering
+\caption{Symbol Reference Table}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Type} \\
+\midrule
+$\genotype$ & Genotype space & Set \\
+$\phenotype$ & Phenotype space & Set \\
+$\gpmap$ & GP map function & $\genotype \to \phenotype$ \\
+$\neutralnet(\phi)$ & Neutral network of $\phi$ & Set \\
+$\rho(s)$ & Neutrality of sequence $s$ & $[0,1]$ \\
+$\fitness$ & Fitness function & $\genotype \to \real$ \\
+$\hamming$ & Hamming distance & $\genotype \times \genotype \to \nat$ \\
+$\seqlength$ & Sequence length & $\nat$ \\
+$\alphabet$ & Alphabet & Set \\
+$N$ & Population size & $\nat$ \\
+$K$ & NK model epistasis & $\nat$ \\
+$\mu$ & Mutation rate & $[0,1]$ \\
+$s$ & Selection coefficient & $\real$ \\
+$\pi$ & Fixation probability & $[0,1]$ \\
+$\Delta G$ & Free energy & $\real$ (kcal/mol) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Algorithm Complexity Summary}
+
+\begin{table}[H]
+\centering
+\caption{Algorithm Complexity}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Algorithm} & \textbf{Time} & \textbf{Space} \\
+\midrule
+Nussinov & $\complexity(\seqlength^3)$ & $\complexity(\seqlength^2)$ \\
+Zuker (standard) & $\complexity(\seqlength^4)$ & $\complexity(\seqlength^2)$ \\
+Zuker (optimized) & $\complexity(\seqlength^3)$ & $\complexity(\seqlength^2)$ \\
+NK fitness evaluation & $\complexity(N)$ & $\complexity(N \cdot 2^{K+1})$ \\
+Adaptive walk & $\complexity(N^2 \cdot T)$ & $\complexity(N)$ \\
+Wright-Fisher generation & $\complexity(N)$ & $\complexity(N)$ \\
+Neutral network sampling & $\complexity(M \cdot N \cdot |\alphabet|)$ & $\complexity(M)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Energy Parameters}
+
+\begin{table}[H]
+\centering
+\caption{Sample Turner Energy Parameters (kcal/mol at 37C)}
+\begin{tabular}{lcccc}
+\toprule
+& \textbf{AU} & \textbf{CG} & \textbf{GC} & \textbf{GU} \\
+\midrule
+AU & -0.9 & -2.2 & -2.1 & -0.6 \\
+CG & -2.1 & -3.3 & -2.4 & -1.4 \\
+GC & -2.4 & -3.4 & -3.3 & -1.5 \\
+GU & -1.3 & -2.5 & -2.1 & -0.5 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% =============================================================================
+%% BIBLIOGRAPHY
+%% =============================================================================
+\section*{References}
+
+\begin{enumerate}
+    \item Nussinov, R., et al. (1978). Algorithms for loop matchings.
+          \textit{SIAM Journal on Applied Mathematics}, 35(1), 68-82.
+
+    \item Zuker, M., \& Stiegler, P. (1981). Optimal computer folding of large
+          RNA sequences using thermodynamics and auxiliary information.
+          \textit{Nucleic Acids Research}, 9(1), 133-148.
+
+    \item Kauffman, S. A. (1987). Towards a general theory of adaptive walks on
+          rugged landscapes. \textit{Journal of Theoretical Biology}, 128(1), 11-45.
+
+    \item Schuster, P., et al. (1994). From sequences to shapes and back: a case
+          study in RNA secondary structures. \textit{Proceedings of the Royal
+          Society B}, 255(1344), 279-284.
+
+    \item Wagner, A. (2008). Robustness and evolvability: a paradox resolved.
+          \textit{Proceedings of the Royal Society B}, 275(1630), 91-100.
+
+    \item Kimura, M. (1962). On the probability of fixation of mutant genes in a
+          population. \textit{Genetics}, 47(6), 713-719.
+
+    \item Wright, S. (1932). The roles of mutation, inbreeding, crossbreeding and
+          selection in evolution. \textit{Proceedings of the Sixth International
+          Congress of Genetics}, 1, 356-366.
+
+    \item Moran, P. A. P. (1958). Random processes in genetics.
+          \textit{Mathematical Proceedings of the Cambridge Philosophical Society},
+          54(1), 60-71.
+
+    \item Stadler, P. F. (2002). Fitness landscapes.
+          \textit{Biological Evolution and Statistical Physics}, 183-204.
+
+    \item Dingle, K., et al. (2015). The structure of the genotype-phenotype map
+          strongly constrains the evolution of non-coding RNA.
+          \textit{Interface Focus}, 5(6), 20150053.
+\end{enumerate}
+
+\end{document}

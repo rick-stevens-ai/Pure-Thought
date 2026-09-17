@@ -54,7 +54,7 @@ For H_i of size m_i×n_i define
 
 $$H_X=[H_1\otimes I_{n_2}\mid I_{m_1}\otimes H_2^{\mathsf T}],\quad H_Z=[I_{n_1}\otimes H_2\mid H_1^{\mathsf T}\otimes I_{m_2}].$$
 
-Check H_XH_Zᵀ=0 over F₂, n=n₁n₂+m₁m₂, k=n−rank H_X−rank H_Z. Define d_X=min{|x|:x∈ker H_Z∖row H_X} and d_Z analogously, d=min(d_X,d_Z). A found logical operator upper-bounds distance; ruling out all smaller logical operators lower-bounds it.
+Check $H_XH_Z^{\mathsf T}=0$ over F₂, n=n₁n₂+m₁m₂, $k=n-\operatorname{rank}H_X-\operatorname{rank}H_Z$. Define $d_X=\min\{|x|:x\in\ker H_Z\setminus\operatorname{row}H_X\}$ and d_Z analogously, $d=\min(d_X,d_Z)$. A found logical operator upper-bounds distance; ruling out all smaller logical operators lower-bounds it.
 
 ## Required outputs and proof obligations
 

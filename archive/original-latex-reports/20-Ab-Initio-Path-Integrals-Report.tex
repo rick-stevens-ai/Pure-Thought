@@ -1,0 +1,1041 @@
+\documentclass[11pt,a4paper]{article}
+
+% ============================================================
+% PACKAGES
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{shapes,arrows,positioning,calc,patterns,decorations.pathmorphing}
+
+% ============================================================
+% CUSTOM COLORS
+% ============================================================
+\definecolor{pursuitblue}{RGB}{0,102,204}
+\definecolor{physicsgreen}{RGB}{34,139,34}
+\definecolor{warningred}{RGB}{204,0,0}
+\definecolor{annotationgray}{RGB}{100,100,100}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{pimdpurple}{RGB}{128,0,128}
+
+% ============================================================
+% TCOLORBOX ENVIRONMENTS
+% ============================================================
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{annotation}{
+    colback=annotationgray!5,
+    colframe=annotationgray,
+    fonttitle=\bfseries,
+    title=Annotation,
+    breakable
+}
+
+\newtcolorbox{pursuitbox}{
+    colback=pursuitblue!5,
+    colframe=pursuitblue,
+    fonttitle=\bfseries,
+    title=Pure Thought Pursuit,
+    breakable
+}
+
+\newtcolorbox{warningbox}{
+    colback=warningred!5,
+    colframe=warningred,
+    fonttitle=\bfseries,
+    title=Warning,
+    breakable
+}
+
+\newtcolorbox{physicsbox}{
+    colback=physicsgreen!5,
+    colframe=physicsgreen,
+    fonttitle=\bfseries,
+    title=Physics Insight,
+    breakable
+}
+
+\newtcolorbox{pimdbox}{
+    colback=pimdpurple!5,
+    colframe=pimdpurple,
+    fonttitle=\bfseries,
+    title=PIMD Principle,
+    breakable
+}
+
+\newtcolorbox{theorembox}[1][]{
+    colback=blue!5,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    title=#1,
+    breakable
+}
+
+% ============================================================
+% THEOREM ENVIRONMENTS
+% ============================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+% ============================================================
+% LISTINGS CONFIGURATION
+% ============================================================
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{codebg},
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black}\itshape,
+    stringstyle=\color{red!70!black},
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=5pt,
+    frame=single,
+    framerule=0.5pt,
+    rulecolor=\color{gray!50},
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    tabsize=4,
+    captionpos=b,
+    morekeywords={np,scipy,pyscf,RingPolymer,PIMD,Thermostat}
+}
+
+% ============================================================
+% CUSTOM COMMANDS
+% ============================================================
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\bra}[1]{\left\langle#1\right|}
+\newcommand{\braket}[2]{\left\langle#1|#2\right\rangle}
+\newcommand{\hbar}{\hslash}
+
+% ============================================================
+% DOCUMENT INFO
+% ============================================================
+\title{\textbf{Ab Initio Path Integral Molecular Dynamics:\\
+Nuclear Quantum Effects from First Principles}\\[1em]
+\large A Pure Thought Approach to Quantum Statistical Mechanics}
+
+\author{Pure Thought AI Challenge\\
+\texttt{Problem 20: Computational Chemistry}}
+
+\date{\today}
+
+% ============================================================
+% DOCUMENT
+% ============================================================
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report presents a comprehensive theoretical framework for ab initio path integral molecular dynamics (AI-PIMD), combining Feynman's path integral formulation of quantum mechanics with electronic structure theory. We develop the complete theory from the quantum partition function through the ring polymer isomorphism to practical simulation algorithms. Key topics include Trotter factorization, normal mode transformation, thermostats (PILE, GLE), and estimators for thermodynamic observables. We implement algorithms for computing nuclear quantum effects in molecular systems, including zero-point energy, tunneling, and isotope effects, with interfaces to electronic structure codes (PySCF). Applications to water, hydrogen-bonded systems, and proton transfer reactions are discussed.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Introduction and Motivation}
+% ============================================================
+
+\subsection{Nuclear Quantum Effects}
+
+\begin{physicsbox}
+At room temperature, most nuclei (except hydrogen) behave classically. However, light atoms---especially hydrogen---exhibit significant \emph{nuclear quantum effects} (NQEs):
+\begin{itemize}
+    \item \textbf{Zero-point energy}: Even at $T = 0$, quantum oscillators have energy $\frac{1}{2}\hbar\omega$
+    \item \textbf{Tunneling}: Particles penetrate classically forbidden regions
+    \item \textbf{Delocalization}: Wave functions spread over multiple potential minima
+\end{itemize}
+\end{physicsbox}
+
+Classical molecular dynamics treats nuclei as point particles following Newton's equations. This fails for:
+\begin{itemize}
+    \item Water and ice (H-bond network, anomalous properties)
+    \item Proton transfer reactions (biological enzymes, fuel cells)
+    \item Isotope effects (H/D substitution changes rates by orders of magnitude)
+    \item Low-temperature chemistry (interstellar space, cryogenic reactions)
+\end{itemize}
+
+\subsection{Path Integrals: Quantum $\leftrightarrow$ Classical Mapping}
+
+Feynman's path integral formulation provides an exact mapping of quantum statistical mechanics onto a classical problem:
+\begin{equation}
+Z = \int \mathcal{D}[\mathbf{r}(\tau)] \, e^{-S[\mathbf{r}]/\hbar}
+\end{equation}
+The quantum particle becomes a ``ring polymer'' of classical beads connected by harmonic springs.
+
+\begin{pursuitbox}
+Path integral molecular dynamics is ideally suited for pure mathematical development:
+\begin{enumerate}
+    \item \emph{Exact} quantum statistical mechanics (no approximations beyond Born-Oppenheimer)
+    \item Based on \emph{classical MD algorithms} (forces, thermostats, integrators)
+    \item Electronic structure computed via \emph{standard quantum chemistry} (DFT, HF, MP2)
+    \item Results \emph{systematically improvable} (increase number of beads $P$)
+    \item \emph{Certified} via comparison to exact quantum results for model systems
+\end{enumerate}
+\end{pursuitbox}
+
+% ============================================================
+\section{Mathematical Foundations}
+% ============================================================
+
+\subsection{Quantum Partition Function}
+
+The canonical partition function for $N$ distinguishable particles at temperature $T$ is:
+\begin{equation}
+Z = \text{Tr}[e^{-\beta \hat{H}}] = \int d\mathbf{r} \, \bra{\mathbf{r}} e^{-\beta \hat{H}} \ket{\mathbf{r}}
+\end{equation}
+where $\beta = 1/(k_B T)$ and $\hat{H} = \hat{T} + \hat{V}$ is the Hamiltonian.
+
+\subsection{Trotter Factorization}
+
+The key step is factorizing the Boltzmann operator using:
+\begin{equation}
+e^{-\beta(\hat{T} + \hat{V})} = \lim_{P \to \infty} \left( e^{-\beta\hat{V}/(2P)} e^{-\beta\hat{T}/P} e^{-\beta\hat{V}/(2P)} \right)^P
+\end{equation}
+This is the symmetric Trotter splitting with error $O(1/P^2)$.
+
+\begin{theorembox}[Trotter Error]
+For finite $P$ beads, the Trotter factorization introduces systematic error:
+\begin{equation}
+Z_P = Z \left( 1 + O(\beta^3/P^2) \right)
+\end{equation}
+The error decreases as $P$ increases, with convergence typically achieved for $P \gtrsim \beta\hbar\omega_{\max}$.
+\end{theorembox}
+
+\subsection{Ring Polymer Isomorphism}
+
+Inserting complete sets of position eigenstates between each factor:
+\begin{equation}
+Z_P = \left( \frac{mP}{2\pi\beta\hbar^2} \right)^{NP/2} \int \prod_{s=1}^{P} d\mathbf{r}^{(s)} \, e^{-\beta_P U_P(\{\mathbf{r}^{(s)}\})}
+\end{equation}
+where $\beta_P = \beta/P$ and the effective potential is:
+\begin{equation}
+U_P = \sum_{s=1}^{P} \left[ \frac{m\omega_P^2}{2} |\mathbf{r}^{(s)} - \mathbf{r}^{(s+1)}|^2 + V(\mathbf{r}^{(s)}) \right]
+\end{equation}
+with spring frequency $\omega_P = P/(\beta\hbar)$ and $\mathbf{r}^{(P+1)} \equiv \mathbf{r}^{(1)}$ (ring closure).
+
+\begin{pimdbox}
+Each quantum particle becomes a \textbf{ring polymer} of $P$ classical beads connected by harmonic springs. The spring constant $k = m\omega_P^2$ encodes quantum fluctuations---stiffer springs at lower temperatures.
+\end{pimdbox}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    % Ring polymer
+    \def\n{8}
+    \def\r{1.5}
+
+    \foreach \i in {1,...,\n} {
+        \pgfmathsetmacro{\angle}{90 + (\i-1)*360/\n}
+        \pgfmathsetmacro{\x}{\r*cos(\angle)}
+        \pgfmathsetmacro{\y}{\r*sin(\angle)}
+
+        % Bead
+        \fill[blue] (\x,\y) circle (0.12);
+        \node at (\x*1.25,\y*1.25) {\small $\mathbf{r}^{(\i)}$};
+
+        % Spring to next bead
+        \pgfmathsetmacro{\nextangle}{90 + \i*360/\n}
+        \pgfmathsetmacro{\nextx}{\r*cos(\nextangle)}
+        \pgfmathsetmacro{\nexty}{\r*sin(\nextangle)}
+
+        \draw[thick, decorate, decoration={coil, segment length=3pt, amplitude=2pt}]
+            (\x,\y) -- (\nextx,\nexty);
+    }
+
+    % Center annotation
+    \node at (0,0) {$\omega_P = \frac{P}{\beta\hbar}$};
+
+    % Labels
+    \node[below] at (0,-2.2) {$P$ beads, periodic boundary: $\mathbf{r}^{(P+1)} = \mathbf{r}^{(1)}$};
+\end{tikzpicture}
+\caption{Ring polymer representation of a quantum particle. Each bead experiences the physical potential $V(\mathbf{r}^{(s)})$ plus harmonic coupling to neighbors.}
+\label{fig:ring-polymer}
+\end{figure}
+
+% ============================================================
+\section{Normal Mode Transformation}
+% ============================================================
+
+\subsection{Staging Coordinates}
+
+The ring polymer has stiff spring modes that require small timesteps. The \textbf{normal mode transformation} diagonalizes the spring part.
+
+\begin{definition}[Normal Modes]
+Define transformed coordinates:
+\begin{equation}
+\tilde{\mathbf{r}}_k = \frac{1}{\sqrt{P}} \sum_{s=1}^{P} \mathbf{r}^{(s)} e^{2\pi i k s / P}, \quad k = 0, 1, \ldots, P-1
+\end{equation}
+The inverse transformation is:
+\begin{equation}
+\mathbf{r}^{(s)} = \frac{1}{\sqrt{P}} \sum_{k=0}^{P-1} \tilde{\mathbf{r}}_k e^{-2\pi i k s / P}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Decoupled Spring Potential]
+In normal mode coordinates, the spring potential becomes:
+\begin{equation}
+\sum_{s=1}^{P} \frac{m\omega_P^2}{2} |\mathbf{r}^{(s)} - \mathbf{r}^{(s+1)}|^2 = \sum_{k=0}^{P-1} \frac{m\omega_k^2}{2} |\tilde{\mathbf{r}}_k|^2
+\end{equation}
+where the mode frequencies are:
+\begin{equation}
+\omega_k = 2\omega_P \sin\left(\frac{\pi k}{P}\right)
+\end{equation}
+\end{theorem}
+
+\begin{physicsbox}
+The $k=0$ mode is the \textbf{centroid}---the center of mass of the ring polymer. It has $\omega_0 = 0$ (free particle) and represents the classical position. Higher modes ($k > 0$) are quantum fluctuations with frequencies up to $\omega_{P/2} = 2\omega_P$.
+\end{physicsbox}
+
+\subsection{Implementation}
+
+\begin{lstlisting}[caption={Normal mode transformation}]
+import numpy as np
+from scipy.fft import fft, ifft
+
+class RingPolymer:
+    """
+    Ring polymer representation of quantum particles.
+    """
+
+    def __init__(self, n_atoms: int, n_beads: int,
+                 masses: np.ndarray, beta: float):
+        """
+        Initialize ring polymer.
+
+        Args:
+            n_atoms: Number of atoms
+            n_beads: Number of path integral beads (P)
+            masses: Array of atomic masses (a.u.)
+            beta: Inverse temperature 1/(kT) in atomic units
+        """
+        self.n_atoms = n_atoms
+        self.n_beads = n_beads
+        self.masses = masses
+        self.beta = beta
+
+        # Spring frequency
+        self.omega_P = n_beads / (beta * 1.0)  # hbar = 1 in a.u.
+
+        # Mode frequencies
+        self.omega_k = np.array([
+            2 * self.omega_P * np.sin(np.pi * k / n_beads)
+            for k in range(n_beads)
+        ])
+
+        # Positions: shape (n_beads, n_atoms, 3)
+        self.positions = None
+        # Normal modes: shape (n_beads, n_atoms, 3)
+        self.normal_modes = None
+
+    def to_normal_modes(self) -> np.ndarray:
+        """
+        Transform bead positions to normal mode coordinates.
+        """
+        # FFT along bead axis
+        self.normal_modes = fft(self.positions, axis=0) / np.sqrt(self.n_beads)
+        return self.normal_modes
+
+    def from_normal_modes(self) -> np.ndarray:
+        """
+        Transform normal modes back to bead positions.
+        """
+        self.positions = np.real(
+            ifft(self.normal_modes, axis=0) * np.sqrt(self.n_beads)
+        )
+        return self.positions
+
+    def centroid(self) -> np.ndarray:
+        """
+        Get centroid (k=0 mode) - classical position.
+        """
+        return np.mean(self.positions, axis=0)
+
+    def spring_energy(self) -> float:
+        """
+        Compute harmonic spring potential energy.
+        """
+        energy = 0.0
+        for s in range(self.n_beads):
+            s_next = (s + 1) % self.n_beads
+            dr = self.positions[s] - self.positions[s_next]
+            for i in range(self.n_atoms):
+                energy += 0.5 * self.masses[i] * self.omega_P**2 * np.sum(dr[i]**2)
+        return energy
+
+    def spring_forces(self) -> np.ndarray:
+        """
+        Compute harmonic spring forces on all beads.
+        """
+        forces = np.zeros_like(self.positions)
+
+        for s in range(self.n_beads):
+            s_prev = (s - 1) % self.n_beads
+            s_next = (s + 1) % self.n_beads
+
+            for i in range(self.n_atoms):
+                # Spring force: -k(r_s - r_{s-1}) - k(r_s - r_{s+1})
+                forces[s, i] = self.masses[i] * self.omega_P**2 * (
+                    self.positions[s_prev, i] + self.positions[s_next, i]
+                    - 2 * self.positions[s, i]
+                )
+
+        return forces
+\end{lstlisting}
+
+% ============================================================
+\section{Thermostats for PIMD}
+% ============================================================
+
+\subsection{The Sampling Problem}
+
+PIMD samples the canonical distribution:
+\begin{equation}
+\rho(\{\mathbf{r}^{(s)}\}) \propto e^{-\beta_P U_P(\{\mathbf{r}^{(s)}\})}
+\end{equation}
+This requires a thermostat to maintain constant temperature.
+
+\subsection{PILE Thermostat}
+
+The \textbf{Path Integral Langevin Equation} (PILE) thermostat applies optimal friction to each normal mode.
+
+\begin{definition}[PILE Dynamics]
+For each normal mode $k$:
+\begin{align}
+\dot{\tilde{\mathbf{r}}}_k &= \tilde{\mathbf{p}}_k / m \\
+\dot{\tilde{\mathbf{p}}}_k &= -m\omega_k^2 \tilde{\mathbf{r}}_k + \tilde{\mathbf{F}}_k - \gamma_k \tilde{\mathbf{p}}_k + \sqrt{2\gamma_k m k_B T} \, \boldsymbol{\xi}_k(t)
+\end{align}
+where $\gamma_k$ is mode-dependent friction and $\boldsymbol{\xi}_k(t)$ is white noise.
+\end{definition}
+
+\begin{pimdbox}
+The optimal friction for mode $k$ is $\gamma_k = 2\omega_k$. This ensures critical damping of the stiff spring modes while allowing the centroid to evolve with physical dynamics.
+\end{pimdbox}
+
+\begin{lstlisting}[caption={PILE thermostat implementation}]
+class PILEThermostat:
+    """
+    Path Integral Langevin Equation thermostat.
+    """
+
+    def __init__(self, ring_polymer: RingPolymer, dt: float,
+                 gamma_centroid: float = 1.0):
+        """
+        Initialize PILE thermostat.
+
+        Args:
+            ring_polymer: RingPolymer object
+            dt: Integration timestep
+            gamma_centroid: Friction for centroid mode
+        """
+        self.rp = ring_polymer
+        self.dt = dt
+
+        # Friction coefficients
+        self.gamma = np.zeros(ring_polymer.n_beads)
+        self.gamma[0] = gamma_centroid  # Centroid
+        for k in range(1, ring_polymer.n_beads):
+            # Optimal friction: 2 * omega_k
+            self.gamma[k] = 2 * ring_polymer.omega_k[k]
+
+        # Precompute propagator coefficients
+        self.c1 = np.exp(-self.gamma * dt / 2)
+        self.c2 = np.sqrt(1 - self.c1**2)
+
+    def apply_O_step(self, momenta: np.ndarray,
+                     temperature: float) -> np.ndarray:
+        """
+        Apply Ornstein-Uhlenbeck (thermostat) step.
+
+        p -> c1 * p + c2 * sqrt(m * kT) * xi
+        """
+        # Transform to normal modes
+        p_normal = fft(momenta, axis=0) / np.sqrt(self.rp.n_beads)
+
+        for k in range(self.rp.n_beads):
+            # Target momentum std
+            sigma = np.sqrt(self.rp.masses * temperature)
+
+            # Apply O-U step
+            noise = np.random.randn(*momenta.shape[1:])
+            p_normal[k] = (self.c1[k] * p_normal[k] +
+                          self.c2[k] * sigma * noise)
+
+        # Transform back
+        return np.real(ifft(p_normal, axis=0) * np.sqrt(self.rp.n_beads))
+
+    def step(self, positions: np.ndarray, momenta: np.ndarray,
+             forces: np.ndarray, temperature: float):
+        """
+        Full BAOAB integration step.
+
+        B: half velocity update
+        A: half position update
+        O: thermostat
+        A: half position update
+        B: half velocity update
+        """
+        dt = self.dt
+
+        # B: p += F * dt/2
+        momenta = momenta + forces * dt / 2
+
+        # A: r += p/m * dt/2
+        for i in range(self.rp.n_atoms):
+            positions[:, i, :] += momenta[:, i, :] / self.rp.masses[i] * dt / 2
+
+        # O: thermostat
+        momenta = self.apply_O_step(momenta, temperature)
+
+        # A: r += p/m * dt/2
+        for i in range(self.rp.n_atoms):
+            positions[:, i, :] += momenta[:, i, :] / self.rp.masses[i] * dt / 2
+
+        # Recompute forces at new positions
+        # (Done externally)
+
+        return positions, momenta
+\end{lstlisting}
+
+% ============================================================
+\section{Thermodynamic Estimators}
+% ============================================================
+
+\subsection{Primitive Estimator}
+
+The simplest estimator for energy uses the Trotter formula directly:
+
+\begin{definition}[Primitive Energy Estimator]
+\begin{equation}
+\langle E \rangle_{\text{prim}} = \frac{3NP}{2\beta} - \frac{1}{2} m\omega_P^2 \sum_{s=1}^{P} |\mathbf{r}^{(s)} - \mathbf{r}^{(s+1)}|^2 + \frac{1}{P} \sum_{s=1}^{P} V(\mathbf{r}^{(s)})
+\end{equation}
+\end{definition}
+
+\begin{warningbox}
+The primitive estimator has high variance because the kinetic energy term involves differences of positions from neighboring beads. This variance scales as $\sqrt{P}$, making convergence slow.
+\end{warningbox}
+
+\subsection{Virial Estimator}
+
+The \textbf{virial estimator} has much lower variance:
+
+\begin{definition}[Virial Energy Estimator]
+\begin{equation}
+\langle E \rangle_{\text{vir}} = \frac{3N}{2\beta} + \frac{1}{P} \sum_{s=1}^{P} \left[ V(\mathbf{r}^{(s)}) + \frac{1}{2} (\mathbf{r}^{(s)} - \bar{\mathbf{r}}) \cdot \nabla V(\mathbf{r}^{(s)}) \right]
+\end{equation}
+where $\bar{\mathbf{r}} = \frac{1}{P}\sum_{s=1}^{P} \mathbf{r}^{(s)}$ is the centroid.
+\end{definition}
+
+\begin{lstlisting}[caption={Thermodynamic estimators}]
+def primitive_estimator(ring_polymer: RingPolymer,
+                        potential_energy: float,
+                        temperature: float) -> float:
+    """
+    Compute energy using primitive estimator.
+    """
+    P = ring_polymer.n_beads
+    N = ring_polymer.n_atoms
+    beta = ring_polymer.beta
+
+    # Kinetic part
+    kinetic = 3 * N * P / (2 * beta)
+
+    # Spring part (negative contribution)
+    spring = ring_polymer.spring_energy()
+
+    # Potential (averaged over beads)
+    # potential_energy should be sum over beads
+
+    return kinetic - spring + potential_energy / P
+
+
+def virial_estimator(ring_polymer: RingPolymer,
+                     potential_energies: np.ndarray,
+                     forces: np.ndarray,
+                     temperature: float) -> float:
+    """
+    Compute energy using virial estimator.
+
+    Args:
+        potential_energies: V(r^(s)) for each bead
+        forces: -grad V(r^(s)) for each bead
+    """
+    P = ring_polymer.n_beads
+    N = ring_polymer.n_atoms
+    beta = ring_polymer.beta
+
+    # Classical kinetic term
+    kinetic = 3 * N / (2 * beta)
+
+    # Centroid
+    centroid = ring_polymer.centroid()
+
+    # Virial correction
+    virial = 0.0
+    for s in range(P):
+        dr = ring_polymer.positions[s] - centroid
+        virial += 0.5 * np.sum(dr * (-forces[s]))
+
+    # Average potential
+    avg_potential = np.mean(potential_energies)
+
+    return kinetic + avg_potential + virial / P
+
+
+def compute_heat_capacity(energies: np.ndarray,
+                          temperature: float) -> float:
+    """
+    Compute heat capacity from energy fluctuations.
+
+    C_V = (<E^2> - <E>^2) / (k_B T^2)
+    """
+    kB = 1.0  # Atomic units
+    var_E = np.var(energies)
+    return var_E / (kB * temperature**2)
+\end{lstlisting}
+
+% ============================================================
+\section{Interface to Electronic Structure}
+% ============================================================
+
+\subsection{Ab Initio Forces}
+
+For ab initio PIMD, the potential $V(\mathbf{r})$ comes from electronic structure calculations.
+
+\begin{lstlisting}[caption={PySCF interface for AI-PIMD}]
+from pyscf import gto, scf, grad
+
+class ElectronicStructure:
+    """
+    Interface to electronic structure calculations via PySCF.
+    """
+
+    def __init__(self, atoms: list, basis: str = 'sto-3g',
+                 method: str = 'hf'):
+        """
+        Initialize electronic structure calculator.
+
+        Args:
+            atoms: List of (element, x, y, z) tuples
+            basis: Basis set name
+            method: 'hf', 'dft', 'mp2'
+        """
+        self.atoms = atoms
+        self.basis = basis
+        self.method = method
+
+    def build_mol(self, positions: np.ndarray):
+        """
+        Build PySCF molecule object with given positions.
+        """
+        atom_str = ""
+        for i, (elem, _, _, _) in enumerate(self.atoms):
+            x, y, z = positions[i] * 0.529177  # Convert a.u. to Angstrom
+            atom_str += f"{elem} {x:.8f} {y:.8f} {z:.8f}; "
+
+        mol = gto.Mole()
+        mol.atom = atom_str
+        mol.basis = self.basis
+        mol.build()
+
+        return mol
+
+    def compute_energy_and_forces(self, positions: np.ndarray):
+        """
+        Compute electronic energy and nuclear gradients.
+
+        Args:
+            positions: Nuclear positions (n_atoms, 3) in atomic units
+
+        Returns:
+            energy: Total electronic energy (Hartree)
+            forces: Nuclear forces (n_atoms, 3) in a.u.
+        """
+        mol = self.build_mol(positions)
+
+        if self.method == 'hf':
+            mf = scf.RHF(mol)
+        elif self.method == 'dft':
+            mf = scf.RKS(mol)
+            mf.xc = 'b3lyp'
+        else:
+            raise ValueError(f"Unknown method: {self.method}")
+
+        energy = mf.kernel()
+
+        # Compute gradient
+        g = grad.RHF(mf) if self.method == 'hf' else grad.RKS(mf)
+        gradient = g.kernel()
+
+        # Forces = -gradient
+        forces = -gradient / 0.529177  # Convert to atomic units
+
+        return energy, forces
+
+
+class AIPIMD:
+    """
+    Ab initio path integral molecular dynamics.
+    """
+
+    def __init__(self, atoms: list, n_beads: int, temperature: float,
+                 basis: str = 'sto-3g', method: str = 'hf'):
+        """
+        Initialize AI-PIMD simulation.
+        """
+        self.atoms = atoms
+        self.n_atoms = len(atoms)
+        self.n_beads = n_beads
+        self.temperature = temperature
+        self.beta = 1.0 / (temperature * 3.1668e-6)  # K to a.u.
+
+        # Masses in atomic units
+        mass_table = {'H': 1837.0, 'D': 3671.0, 'O': 29156.0, 'C': 21894.0}
+        self.masses = np.array([mass_table[a[0]] for a in atoms])
+
+        # Ring polymer
+        self.ring_polymer = RingPolymer(
+            self.n_atoms, n_beads, self.masses, self.beta
+        )
+
+        # Electronic structure
+        self.es = ElectronicStructure(atoms, basis, method)
+
+    def compute_all_forces(self):
+        """
+        Compute forces on all beads (parallelizable).
+        """
+        energies = np.zeros(self.n_beads)
+        forces = np.zeros((self.n_beads, self.n_atoms, 3))
+
+        for s in range(self.n_beads):
+            E, F = self.es.compute_energy_and_forces(
+                self.ring_polymer.positions[s]
+            )
+            energies[s] = E
+            forces[s] = F
+
+        # Add spring forces
+        spring_forces = self.ring_polymer.spring_forces()
+        total_forces = forces + spring_forces
+
+        return energies, total_forces
+
+    def run(self, n_steps: int, dt: float):
+        """
+        Run AI-PIMD simulation.
+        """
+        thermostat = PILEThermostat(self.ring_polymer, dt)
+        momenta = self.initialize_momenta()
+
+        trajectory = []
+        energies_traj = []
+
+        for step in range(n_steps):
+            # Compute forces
+            pot_energies, forces = self.compute_all_forces()
+
+            # Thermostat step
+            self.ring_polymer.positions, momenta = thermostat.step(
+                self.ring_polymer.positions, momenta, forces, self.temperature
+            )
+
+            # Compute observables
+            energy = virial_estimator(
+                self.ring_polymer, pot_energies, forces, self.temperature
+            )
+            energies_traj.append(energy)
+
+            # Save trajectory
+            trajectory.append(self.ring_polymer.centroid().copy())
+
+        return np.array(trajectory), np.array(energies_traj)
+\end{lstlisting}
+
+% ============================================================
+\section{Isotope Effects}
+% ============================================================
+
+\subsection{Kinetic Isotope Effects}
+
+\begin{definition}[Kinetic Isotope Effect]
+The \textbf{kinetic isotope effect} (KIE) is the ratio of reaction rates:
+\begin{equation}
+\text{KIE} = \frac{k_H}{k_D}
+\end{equation}
+where $k_H$ and $k_D$ are rates with hydrogen and deuterium, respectively.
+\end{definition}
+
+\begin{physicsbox}
+Large KIEs ($> 2$) indicate significant tunneling contribution. Classical transition state theory predicts KIE $\approx \sqrt{m_D/m_H} \approx 1.4$. Observed KIEs of 10--50 in enzymatic reactions demonstrate quantum effects.
+\end{physicsbox}
+
+\subsection{Computing Isotope Effects}
+
+\begin{lstlisting}[caption={Isotope effect calculation}]
+def compute_equilibrium_isotope_effect(positions: np.ndarray,
+                                       masses_H: np.ndarray,
+                                       masses_D: np.ndarray,
+                                       potential: callable,
+                                       temperature: float,
+                                       n_beads: int = 32) -> float:
+    """
+    Compute equilibrium isotope effect using PIMD.
+
+    EIE = (Q_H / Q_D) * (Q_D^cl / Q_H^cl)
+
+    where Q is partition function and Q^cl is classical limit.
+    """
+    beta = 1.0 / (temperature * 3.1668e-6)
+
+    # Run PIMD for H system
+    rp_H = RingPolymer(len(masses_H), n_beads, masses_H, beta)
+    rp_H.positions = initialize_ring_polymer(positions, n_beads)
+    energies_H = run_pimd_sampling(rp_H, potential, 10000)
+    free_energy_H = -temperature * np.log(np.mean(np.exp(-beta * energies_H)))
+
+    # Run PIMD for D system
+    rp_D = RingPolymer(len(masses_D), n_beads, masses_D, beta)
+    rp_D.positions = initialize_ring_polymer(positions, n_beads)
+    energies_D = run_pimd_sampling(rp_D, potential, 10000)
+    free_energy_D = -temperature * np.log(np.mean(np.exp(-beta * energies_D)))
+
+    # EIE from free energy difference
+    eie = np.exp(-(free_energy_H - free_energy_D) / temperature)
+
+    return eie
+\end{lstlisting}
+
+% ============================================================
+\section{Applications}
+% ============================================================
+
+\subsection{Water and Ice}
+
+Water is the archetypal system where NQEs matter. AI-PIMD predicts:
+\begin{itemize}
+    \item $\sim$10\% weakening of H-bond strength from zero-point motion
+    \item Correct density maximum of liquid water at 4$^\circ$C
+    \item Enhanced proton delocalization in ice
+\end{itemize}
+
+\subsection{Proton Transfer Reactions}
+
+Enzymatic reactions often involve proton transfer:
+\begin{equation}
+\text{A--H} + \text{B} \to \text{A} + \text{H--B}
+\end{equation}
+PIMD captures tunneling through the barrier, essential for accurate rate constants.
+
+% ============================================================
+\section{Certificate Generation}
+% ============================================================
+
+\begin{lstlisting}[caption={AI-PIMD certificate structure}]
+from dataclasses import dataclass, asdict
+import json
+
+@dataclass
+class PIMDCertificate:
+    """
+    Certificate for AI-PIMD simulation.
+    """
+    # System
+    atoms: list
+    n_atoms: int
+    n_beads: int
+    temperature: float
+
+    # Method
+    electronic_structure_method: str
+    basis_set: str
+    timestep: float
+    n_steps: int
+
+    # Convergence
+    bead_convergence_error: float
+    energy_std_error: float
+
+    # Results
+    average_energy: float
+    heat_capacity: float
+    quantum_kinetic_energy: float
+    classical_kinetic_energy: float
+
+    # NQE analysis
+    zpe_correction: float
+    tunneling_contribution: float
+
+    def export_json(self, path: str) -> None:
+        with open(path, 'w') as f:
+            json.dump(asdict(self), f, indent=2)
+
+    def verify(self) -> bool:
+        checks = [
+            self.n_beads >= 4,
+            self.bead_convergence_error < 0.01,  # 1% error
+            self.energy_std_error < 0.001,  # Well sampled
+            self.quantum_kinetic_energy >= self.classical_kinetic_energy
+        ]
+        return all(checks)
+\end{lstlisting}
+
+% ============================================================
+\section{Success Criteria and Milestones}
+% ============================================================
+
+\subsection{Minimum Viable Result (Months 1-3)}
+
+\begin{itemize}
+    \item Ring polymer dynamics for model harmonic oscillator
+    \item PILE thermostat verified against exact results
+    \item Primitive and virial estimators implemented
+\end{itemize}
+
+\subsection{Strong Result (Months 4-6)}
+
+\begin{itemize}
+    \item PySCF interface working
+    \item AI-PIMD for H$_2$O molecule
+    \item Isotope effects computed
+    \item Comparison to experiment
+\end{itemize}
+
+\subsection{Publication Quality (Months 7-9)}
+
+\begin{itemize}
+    \item Larger systems (water dimer, clusters)
+    \item Proton transfer reaction rates
+    \item Tunneling splitting calculations
+    \item Public code release
+\end{itemize}
+
+% ============================================================
+\section{Conclusion}
+% ============================================================
+
+Ab initio path integral molecular dynamics provides an exact treatment of nuclear quantum effects combined with first-principles electronic structure. The key insights are:
+\begin{enumerate}
+    \item Ring polymer isomorphism maps quantum $\to$ classical MD
+    \item Normal mode transformation enables efficient sampling
+    \item Virial estimator provides low-variance energetics
+    \item Isotope effects reveal quantum contributions
+\end{enumerate}
+
+This pure-thought approach requires only classical MD algorithms plus standard quantum chemistry, enabling systematic investigation of nuclear quantum effects in chemistry.
+
+% ============================================================
+% BIBLIOGRAPHY
+% ============================================================
+\begin{thebibliography}{10}
+
+\bibitem{feynman1965}
+R.~P. Feynman and A.~R. Hibbs,
+\newblock \emph{Quantum Mechanics and Path Integrals}.
+\newblock McGraw-Hill, 1965.
+
+\bibitem{chandler1981}
+D.~Chandler and P.~G. Wolynes,
+\newblock ``Exploiting the isomorphism between quantum theory and classical statistical mechanics of polyatomic fluids,''
+\newblock \emph{Journal of Chemical Physics}, vol.~74, pp.~4078--4095, 1981.
+
+\bibitem{parrinello1984}
+M.~Parrinello and A.~Rahman,
+\newblock ``Study of an F center in molten KCl,''
+\newblock \emph{Journal of Chemical Physics}, vol.~80, pp.~860--867, 1984.
+
+\bibitem{tuckerman1993}
+M.~E. Tuckerman, B.~J. Berne, G.~J. Martyna, and M.~L. Klein,
+\newblock ``Efficient molecular dynamics and hybrid Monte Carlo algorithms for path integrals,''
+\newblock \emph{Journal of Chemical Physics}, vol.~99, pp.~2796--2808, 1993.
+
+\bibitem{cao1994}
+J.~Cao and G.~A. Voth,
+\newblock ``The formulation of quantum statistical mechanics based on the Feynman path centroid density,''
+\newblock \emph{Journal of Chemical Physics}, vol.~100, pp.~5093--5105, 1994.
+
+\bibitem{ceriotti2010}
+M.~Ceriotti, M.~Parrinello, T.~E. Markland, and D.~E. Manolopoulos,
+\newblock ``Efficient stochastic thermostatting of path integral molecular dynamics,''
+\newblock \emph{Journal of Chemical Physics}, vol.~133, p.~124104, 2010.
+
+\bibitem{markland2018}
+T.~E. Markland and M.~Ceriotti,
+\newblock ``Nuclear quantum effects enter the mainstream,''
+\newblock \emph{Nature Reviews Chemistry}, vol.~2, p.~0109, 2018.
+
+\bibitem{habershon2013}
+S.~Habershon, D.~E. Manolopoulos, T.~E. Markland, and T.~F. Miller~III,
+\newblock ``Ring-polymer molecular dynamics: Quantum effects in chemical dynamics from classical trajectories in an extended phase space,''
+\newblock \emph{Annual Review of Physical Chemistry}, vol.~64, pp.~387--413, 2013.
+
+\end{thebibliography}
+
+% ============================================================
+% APPENDIX
+% ============================================================
+\appendix
+
+\section{Units and Conversions}
+\label{app:units}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Quantity} & \textbf{Atomic Units} & \textbf{SI Units} \\
+\midrule
+Length & $a_0 = 1$ & $5.29177 \times 10^{-11}$ m \\
+Energy & $E_h = 1$ & $4.35974 \times 10^{-18}$ J \\
+Mass & $m_e = 1$ & $9.10938 \times 10^{-31}$ kg \\
+Time & $\hbar/E_h = 1$ & $2.41888 \times 10^{-17}$ s \\
+Temperature & $E_h/k_B = 1$ & $3.15775 \times 10^5$ K \\
+\bottomrule
+\end{tabular}
+\caption{Atomic unit conversions.}
+\end{table}
+
+\section{Trotter Error Analysis}
+\label{app:trotter}
+
+The symmetric Trotter splitting has error:
+\begin{equation}
+e^{-\beta(\hat{T}+\hat{V})} = \left( e^{-\beta\hat{V}/(2P)} e^{-\beta\hat{T}/P} e^{-\beta\hat{V}/(2P)} \right)^P + O(\beta^3/P^2)
+\end{equation}
+
+For typical molecular systems at 300 K, convergence requires:
+\begin{equation}
+P \gtrsim \frac{\beta\hbar\omega_{\max}}{2\pi} \approx 32 \text{ beads for O--H stretch}
+\end{equation}
+
+\end{document}

@@ -1,0 +1,1109 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[numbers,sort&compress]{natbib}
+
+\geometry{margin=1in}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+\title{\textbf{The 30 Most Compelling Pure Thought AI Challenges}\\
+\large{A Synthesis Report on Axiom-Driven Scientific Discovery}}
+
+\author{Synthesized from Domain Expert Analyses}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report synthesizes analyses across fifteen scientific domains to identify the thirty most compelling challenges that can be tackled using \emph{pure thought and fresh code only}—requiring no external datasets, experiments, or legacy software. Each challenge is grounded in axioms, symmetries, and variational principles, and produces verifiable artifacts: mathematical proofs, certificates, impossibility theorems, or constructive models. These challenges span quantum gravity, materials science, quantum information theory, chemistry, celestial mechanics, and theoretical biology. We outline the mathematical foundations, verification strategies, and expected timelines for each challenge, along with the core computational infrastructure required across all domains.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+The advent of advanced artificial intelligence systems capable of extended reasoning presents a unique opportunity: the systematic exploration of fundamental scientific questions through \emph{pure thought}. Unlike data-driven or experimental approaches, pure thought challenges rely exclusively on:
+
+\begin{itemize}
+    \item \textbf{Axiomatic foundations}: unitarity, causality, crossing symmetry, modular invariance, group theory
+    \item \textbf{Mathematical structures}: convex optimization, algebraic topology, representation theory
+    \item \textbf{Verifiable artifacts}: machine-checkable proofs, infeasibility certificates, constructive counterexamples
+    \item \textbf{Self-written code}: all solvers, verifiers, and proof checkers implemented from first principles
+\end{itemize}
+
+This paradigm eliminates dependence on external datasets, legacy software, or experimental validation, instead producing results whose correctness can be independently verified through mathematical proof.
+
+This report identifies thirty such challenges across six major domains, each selected for:
+\begin{enumerate}
+    \item \textbf{Scientific impact}: addresses foundational open questions
+    \item \textbf{Tractability}: achievable milestones within 3--12 months
+    \item \textbf{Verifiability}: produces certificates checkable by proof assistants (Lean, Isabelle) or exact solvers
+    \item \textbf{Axiom-driven}: requires no empirical data or experimental inputs
+\end{enumerate}
+
+\section{Quantum Gravity and Particle Physics}
+
+The bootstrap program in quantum field theory and quantum gravity exploits consistency conditions—unitarity, crossing symmetry, causality, and modular invariance—to constrain or uniquely determine physical theories without perturbative expansions\cite{Rattazzi2008,Poland2019}.
+
+\subsection{AdS\texorpdfstring{$_3$}{3} ``Pure Gravity'' via the Modular Bootstrap}
+
+\textbf{Challenge:} Determine whether extremal two-dimensional conformal field theories (CFTs) with only Virasoro descendants below the gap exist for large central charge $c = 24k$, corresponding to pure AdS$_3$ gravity duals.
+
+\textbf{Why Compelling:} The existence or rigorous impossibility of such theories would resolve a foundational question in the AdS/CFT correspondence\cite{Maloney2016,Hartman2014}. Extremal CFTs at $c=24$ are related to the Monster group, and their generalization to $c=24k$ remains open.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Implement high-precision modular bootstrap solvers combining linear programming (LP) and semidefinite programming (SDP) with exact rational certificates
+    \item Enforce modular invariance: $\mathcal{Z}(\tau) = \mathcal{Z}(-1/\tau)$, unitarity (positive degeneracies), and integrality constraints
+    \item Search for feasible partition functions with specified spectral gaps
+    \item When infeasible, extract dual certificates proving impossibility for given $(c, \Delta_{\text{gap}})$ pairs
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} SDP dual functionals (exact rational certificates), infeasibility proofs, or explicit extremal spectra
+
+\textbf{Timeline:} 60--90 days to reproduce known constraints (e.g., $k=1$ Monster point); 6--12 months for new results
+
+\subsection{Gravitational Positivity and Causality Bounds}
+
+\textbf{Challenge:} Derive rigorous bounds on higher-derivative operators (e.g., $R^2$, $R^3$ terms) in graviton effective field theories using analyticity, crossing, unitarity, and causality constraints.
+
+\textbf{Why Compelling:} Determines which low-energy effective theories are UV-completable into consistent quantum gravity theories—central to the ``swampland'' program\cite{Vafa2005,Palti2019}. Gravitational causality imposes stringent constraints through shockwave/eikonal scattering\cite{Camanho2016}.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Implement dispersion relations with subtractions compatible with massless graviton poles
+    \item Handle $t$-channel singularities and Regge growth rigorously
+    \item Formulate as convex optimization problems (Sum-of-Squares, SDP)
+    \item Output dual certificates (polynomials or SOS decompositions) proving regions are forbidden/allowed
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Multi-coupling bounds with machine-checkable proofs; dual polynomial certificates
+
+\textbf{Timeline:} 3--9 months
+
+\subsection{Celestial CFT Bootstrap}
+
+\textbf{Challenge:} Carve out the consistent space of celestial CFTs by enforcing $\text{SL}(2,\mathbb{C})$ covariance, crossing symmetry, unitarity, and soft-theorem constraints on celestial correlators for graviton scattering.
+
+\textbf{Why Compelling:} Connects four-dimensional quantum gravity to two-dimensional celestial CFT structure—a new holographic paradigm\cite{Pasterski2017,Raclariu2022}.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Develop Mellin transform pipeline for tree and one-loop amplitudes derived from first principles
+    \item Impose celestial crossing equations, Regge bounds, and soft limits (Weinberg's soft graviton theorem\cite{Weinberg1965}) as SDP inequalities
+    \item Produce extremal functionals certifying or excluding OPE data patterns
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Rigorous ``islands'' or no-go regions for subsectors
+
+\textbf{Timeline:} 6--12 months
+
+\subsection{Modular-Lightcone Bootstrap for Holographic CFTs}
+
+\textbf{Challenge:} For large central charge $c$, sparse-spectrum CFTs (holographic theories), derive sharp bounds on higher-spin gaps and OPE coefficients implied by causality/chaos constraints and crossing symmetry.
+
+\textbf{Why Compelling:} Provides quantitative ``gravitational bootstrap'' constraints\cite{Maldacena2015}—rules out bulk higher-derivative terms that would violate causality or the chaos bound.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Implement Lorentzian inversion formula\cite{Caron-Huot2017} and lightcone expansions
+    \item Certify inequalities via SDP/SoS, producing formal certificates
+    \item Prove that certain bulk operators must be small or vanish to avoid superluminality or averaged null energy condition (ANEC) violations
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Tighter exclusion plots for higher-spin exchanges with dual certificates
+
+\textbf{Timeline:} 6--9 months
+
+\subsection{Positive Geometry for Gravity}
+
+\textbf{Challenge:} Identify or rule out amplituhedron-like positive-geometry structures\cite{Arkani-Hamed2014} for (super)gravity sectors beyond planar $\mathcal{N}=4$ super-Yang--Mills.
+
+\textbf{Why Compelling:} Would reveal hidden mathematical structures in quantum gravity amplitudes or prove fundamental obstructions to such structures existing in gravity theories.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Implement canonical-form solvers for polytopes and Grassmannians
+    \item Use finite-field sampling plus rational reconstruction for loop integrands
+    \item Verify symbol integrability and coproduct consistency
+    \item Search for minimal geometries reproducing graviton integrands from on-shell recursion and unitarity cuts
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} New positive-geometry proposals or no-go theorems for specific helicity/loop sectors
+
+\textbf{Timeline:} 9--12 months
+
+\subsection{Non-perturbative S-matrix Bootstrap with Gravity}
+
+\textbf{Challenge:} Carve out the space of unitary, crossing-symmetric, analytic $2\to 2$ amplitudes obeying gravitational soft theorems and proper high-energy behavior.
+
+\textbf{Why Compelling:} First rigorous non-perturbative constraints on quantum gravity coupled to matter\cite{Paulos2017}.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Build partial-wave and Roy-like equation machinery adapted to massless exchange
+    \item Impose Weinberg soft behavior as hard constraints
+    \item Solve as convex feasibility problem; return dual certificates excluding inconsistent Wilson-coefficient tuples
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Dual certificates; islands and exclusion regions in parameter space
+
+\textbf{Timeline:} 6--12 months
+
+\subsection{Extremal Higher-Dimensional CFTs with Stress Tensor}
+
+\textbf{Challenge:} Determine whether ``nearly extremal'' unitary CFTs exist in $d=3,4$ dimensions with large gaps to higher-spin currents, corresponding to pure Einstein gravity in AdS.
+
+\textbf{Why Compelling:} Connects CFT bootstrap constraints to the existence and uniqueness of pure gravity in AdS\cite{Hellerman2010}.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Mixed-correlator bootstrap including stress tensor $T_{\mu\nu}$
+    \item Use extremal functional method\cite{ElShowk2012} to certify islands or no-go results via dual functionals
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Stronger universal lower bounds on higher-spin gaps
+
+\textbf{Timeline:} 6--12 months
+
+\subsection{Swampland via Modularity and Higher-Form Symmetries}
+
+\textbf{Challenge:} Use modularity, integrality, and higher-form symmetry constraints to produce theorem-level obstructions to quantum-gravity-inconsistent spectra.
+
+\textbf{Why Compelling:} Mathematically rigorous ``no-go'' theorems for theories in the swampland\cite{Vafa2005}—identifies which quantum field theories cannot be UV-completed to gravity.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Couple modular bootstrap to discrete/higher-form anomaly constraints (cobordism approach\cite{McNamara2019})
+    \item Generate infeasibility certificates for partition functions/OPE data subject to symmetry charges
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} ``No such CFT'' results under explicit symmetry assumptions
+
+\textbf{Timeline:} 9--12 months
+
+\section{Materials Science}
+
+Modern materials theory increasingly relies on symmetry principles and topological invariants, enabling predictions from group theory and $K$-theory without materials-specific parameters\cite{Bradlyn2017,Vergniory2019}.
+
+\subsection{Topological Band Theory Without Materials Data}
+
+\textbf{Challenge:} Complete constructive classification of which band topologies are possible for minimal orbital contents and symmetries across all (magnetic) space groups, plus minimal tight-binding models realizing them.
+
+\textbf{Why Compelling:} Foundational atlas mapping symmetry $\to$ achievable topologies with rigorous theorems and no-go results\cite{Po2017}.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Compute elementary band representations (eBRs) for all Wyckoff positions\cite{Cano2018}
+    \item Enumerate minimal tight-binding graphs per space group
+    \item Certify Chern and $\mathbb{Z}_2$ invariants via $K$-theory and Wilson loops
+    \item Prove nodal features enforced by nonsymmorphic symmetries
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Atlas of minimal models with proofs; no-go theorems where impossible
+
+\textbf{Timeline:} 3--6 months (non-magnetic); 6--12 months (magnetic groups)
+
+\subsection{Flat Chern Bands with Provable Geometry}
+
+\textbf{Challenge:} Design compact tight-binding lattices realizing flat bands with target Chern numbers and provably optimal quantum geometry (uniform Berry curvature, optimal Fubini--Study metric bounds).
+
+\textbf{Why Compelling:} Critical for fractional Chern insulator realization\cite{Neupert2011}—provides blueprints with mathematical guarantees for fractionalization.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Enumerate finite-range hopping graphs
+    \item Certify Chern numbers exactly via lattice index theorems
+    \item Prove lower bounds on flatness ratio using Sum-of-Squares (SoS) relaxations
+    \item Generate Wannier obstruction certificates as topological proofs
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Hamiltonians with certificates of Chern number, flatness bounds, and Wannier obstruction
+
+\textbf{Timeline:} 6--9 months
+
+\subsection{RBCE: Relativistic Band and Crystal-Field Engineering}
+
+\textbf{Challenge:} Proof-level classification of single-ion anisotropy and $g$-tensor anisotropy for all $d^n$ configurations across every point group, identifying maximizers of magnetocrystalline anisotropy.
+
+\textbf{Why Compelling:} Enables ``rare-earth-like behavior without rare earths''—critical for permanent magnets and quantum materials\cite{Neilson2019}. Spin-orbit coupling (SOC) in 4$d$/5$d$ systems can mimic lanthanide anisotropy.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Enumerate point-group irreducible representations (irreps)
+    \item Build crystal-field plus SOC Hamiltonians symbolically
+    \item Derive closed-form anisotropy energy expansions
+    \item Prove upper bounds on $K_1$, $K_2$ versus CF/SOC parameters for each symmetry
+    \item Determine necessary/sufficient symmetry conditions for Ising-like single-ion behavior
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Theorem-backed atlas: (site symmetry, $d^n$) $\to$ allowed splitting patterns, max-anisotropy certificates, explicit model Hamiltonians
+
+\textbf{Timeline:} 6--12 months
+
+\subsection{Photonic/Phononic Crystals: Rigorous Bandgap Optimization}
+
+\textbf{Challenge:} Design microstructures (2D/3D) with certified complete bandgaps at lowest possible index contrast, with provable gap-to-midgap maxima under symmetry and fill-fraction constraints.
+
+\textbf{Why Compelling:} Yields fabrication-ready unit cells with airtight mathematical guarantees\cite{Maldovan2004}.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Build verified FEM/plane-wave eigensolvers with interval arithmetic
+    \item Output rigorous lower/upper eigenvalue bounds $\Rightarrow$ certified gap
+    \item Conduct topology optimization under symmetry groups
+    \item Prove optimality via dual (SoS/shape-derivative) certificates or constructive near-optima with \emph{a posteriori} bounds
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Microstructure blueprints plus interval-verified band diagrams and dual certificates
+
+\textbf{Timeline:} 6--9 months
+
+\subsection{Universal Bounds for Effective Properties of Composites}
+
+\textbf{Challenge:} Derive sharp bounds on effective conductivity, permittivity, and elasticity for given phase properties, volume fractions, and symmetries; cross-property bounds linking elastic and thermal responses.
+
+\textbf{Why Compelling:} Goes beyond classical Hashin--Shtrikman bounds\cite{Hashin1963}—fundamental limits no microstructure can beat.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Formulate $G$-closure problems\cite{Milton2002} as SDP moment relaxations
+    \item Produce exact dual certificates giving provable bounds
+    \item Construct microstructures attaining bounds via algorithmic inverse homogenization
+    \item Verify with interval-certified solvers
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} New analytical bounds, constructive microstructures, proof certificates
+
+\textbf{Timeline:} 9--12 months
+
+\subsection{Topological Mechanics: Maxwell Frames and Programmable Metamaterials}
+
+\textbf{Challenge:} Complete classification and constructive design of Maxwell frames with topological polarization (robust boundary modes) and programmable mechanical response.
+
+\textbf{Why Compelling:} Bridges rigidity theory and topological physics\cite{Kane2014}—enables mechanical metamaterials with guaranteed properties.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Enumerate periodic frameworks under space-group constraints
+    \item Compute topological invariants (e.g., winding of $\det R(\mathbf{k})$)
+    \item Use SAT/MILP to enforce isostaticity, target mode counts, forbidden self-stresses
+    \item Certify with DRAT proofs and symbolic checks
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Lattice designs with certified zero-mode counts and topological indices; printable unit cells
+
+\textbf{Timeline:} 6--9 months
+
+\subsection{Real-Space Topological Invariants for Disordered Media}
+
+\textbf{Challenge:} Certified algorithms for Chern/$\mathbb{Z}_2$ indices in aperiodic/disordered systems with finite-volume error bounds.
+
+\textbf{Why Compelling:} Extends topological classification beyond perfect crystals using noncommutative geometry\cite{Bellissard1994,Prodan2017}.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Implement noncommutative Chern numbers, Bott indices, spectral localizers
+    \item Prove \emph{a priori} error bounds versus system size and disorder strength
+    \item Provide interval-verified invariants for generated disordered samples
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Algorithms with proofs; reference models showing certified quantization in finite domains
+
+\textbf{Timeline:} 9--12 months
+
+\section{Chemistry}
+
+Quantum chemistry from first principles uses variational principles and convexity, enabling bounds and constraints without empirical fitting\cite{Lieb1983}.
+
+\subsection{$N$-Representability and 2-RDM Variational Chemistry}
+
+\textbf{Challenge:} Close the gap between necessary and sufficient constraints for two-electron reduced density matrix (2-RDM) feasibility; deliver provably tighter constraint families.
+
+\textbf{Why Compelling:} Direct path to ground-state energies without computing the wavefunction\cite{Mazziotti2012}—foundational for quantum chemistry.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Pure convex geometry: energies are linear in the 2-RDM
+    \item Implement 2-RDM SDP solver with exact rational logging
+    \item Add hierarchies beyond $P$, $Q$, $G$, $T$ constraints via moment/SOS relaxations with symmetry reduction
+    \item Prove constraint validity in classes: pairing Hamiltonians, 1D fermions, Hubbard-like models
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Ground-state lower bounds with SDP dual certificates; infeasibility certificates; Lean-formalized lemmas
+
+\textbf{Timeline:} 6--9 months
+
+\subsection{Non-empirical Density Functional Theory via Convex Analysis}
+
+\textbf{Challenge:} Characterize the cone of exchange-correlation (XC) functionals satisfying all exact constraints (scaling, spin bounds, Lieb--Oxford\cite{Lieb1981}, Lieb convexity); construct extremal functionals.
+
+\textbf{Why Compelling:} DFT from first principles—no empirical fitting, only mathematical constraints.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Encode constraints as convex sets
+    \item Use support-function computations (SDP/SoS) to produce functionals and guaranteed energy bounds
+    \item Build self-interaction-free subclass; prove tightness on canonical test densities
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Certified XC bounds with proofs of constraint satisfaction; analytic forms or numeric oracles
+
+\textbf{Timeline:} 9--12 months
+
+\subsection{Strictly-Correlated Electrons as Multi-Marginal Optimal Transport}
+
+\textbf{Challenge:} Compute and bound the SCE functional $W_{\text{SCE}}[\rho]$ by solving multi-marginal optimal transport with Coulomb cost; derive co-motion function constructions.
+
+\textbf{Why Compelling:} Pure optimal transport formulation of strong-correlation limit\cite{Seidl2007,Gori-Giorgi2010}—mathematically elegant and rigorous.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Sparse/discretized OT with exact certificates (duality gaps $\Rightarrow$ provable bounds)
+    \item Symmetry-adapted decompositions for spherical and crystalline densities
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Certified upper/lower bounds on $W_{\text{SCE}}$ with dual potentials as proof objects
+
+\textbf{Timeline:} 9--12 months
+
+\subsection{Complete Isomer Enumeration with Proofs}
+
+\textbf{Challenge:} Exhaustively enumerate constitutional and stereoisomers up to size $N$ under valence rules, with isomorphism certificates proving completeness.
+
+\textbf{Why Compelling:} Resolves fundamental combinatorial questions in chemical space\cite{Faulon1994}.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Pólya--Redfield enumeration plus canonical labeling
+    \item SAT to enforce stereochemical constraints
+    \item Emit DRAT proofs of completeness and minimality
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Exact counts, canonical SMILES/graphs, proof logs
+
+\textbf{Timeline:} 6--9 months
+
+\subsection{Inverse Statistical Mechanics: Potentials with Provable Ground States}
+
+\textbf{Challenge:} Design pair or few-body potentials that provably stabilize target crystals (diamond, wurtzite, bcc) over ranges of densities and temperatures.
+
+\textbf{Why Compelling:} ``Potentials with proofs''\cite{Torquato2009}—enables rational design of self-assembling materials with mathematical guarantees.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Extend Cohn--Kumar sphere-packing bounds\cite{Cohn2017} to 3D molecular settings
+    \item Compute rigorous energy gaps with interval-verified lattice sums (Ewald summation)
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Closed-form potentials plus proofs of stability; parameter maps with certified gaps
+
+\textbf{Timeline:} 6--12 months
+
+\section{Quantum Information and Many-Body Theory}
+
+Quantum information theory provides operational characterizations of resources (entanglement, magic, coherence) through convex cones and certification hierarchies\cite{Horodecki2009}.
+
+\subsection{LDPC and Hypergraph-Product Quantum Error Correcting Codes}
+
+\textbf{Challenge:} Construct new QECC families with better rate--distance--degree tradeoffs and provable decoding guarantees in adversarial/noise-model-free regimes.
+
+\textbf{Why Compelling:} Critical for scalable quantum computing\cite{Tillich2014,Breuckmann2021}—approaching capacity with practical constraints.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Pure combinatorics and algebraic topology
+    \item LLM-led search over Tanner graphs and topological constructions
+    \item SAT for distance certificates (lower bounds via integer programming)
+    \item Design BP/OSD/ML decoders with provable worst-case bounds
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Code constructions with distance/minimum-weight certificates (SAT/ILP proofs); impossibility theorems for certain parameter triples
+
+\textbf{Timeline:} 90 days to novel instances; 12 months for infinite families with improved asymptotics
+
+\subsection{New Bell Inequalities and Tsirelson-type Bounds}
+
+\textbf{Challenge:} Discover Bell inequalities with maximal quantum--classical gaps; certify with Navascués--Pironio--Acín (NPA) duals\cite{Navascues2008}.
+
+\textbf{Why Compelling:} Fundamental tests of quantum nonlocality with tight bounds—deepens understanding of the quantum--classical boundary.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Noncommutative SDP/SoS for operator inequalities
+    \item Auto-search inequality families
+    \item Produce SDP dual certificates proving optimality of quantum values
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Inequality families with optimal quantum values (SDP duals) and explicit achieving measurements/states
+
+\textbf{Timeline:} 6--9 months
+
+\subsection{Certified Spectral Gaps for Parent Hamiltonians}
+
+\textbf{Challenge:} Generalize Knabe/martingale techniques\cite{Knabe1988} to automate discovery of local gap witnesses for MPS/PEPS parent Hamiltonians.
+
+\textbf{Why Compelling:} Rigorous many-body theory—provable lower bounds on gaps guarantee phases of matter.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Tensor-network engine with interval arithmetic error bars
+    \item Automated gap-witness search producing machine-checked inequalities
+    \item Parent Hamiltonian construction and verification
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Provable lower bounds on gaps for new MPS/PEPS families; Lean/Isabelle lemmas
+
+\textbf{Timeline:} 6--12 months
+
+\subsection{Topological Order and Anyon Condensation with Proofs}
+
+\textbf{Challenge:} Classify gapped boundaries and defects; derive anomaly constraints on 2D/3D topological orders from categorical data.
+
+\textbf{Why Compelling:} Complete mathematical understanding of topological phases\cite{Kitaev2006}—fusion rules, braiding, and anomalies.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Fusion categories and modular tensor category (MTC) data
+    \item Anomaly tests via obstruction cocycles with machine-checked coherence
+    \item Construct exactly-solvable commuting-projector models (e.g., string-net models\cite{Levin2005})
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Fusion/braiding tables with obstruction cocycle certificates; explicit Hamiltonians
+
+\textbf{Timeline:} 9--12 months
+
+\subsection{Sign-Problem (Un)avoidability}
+
+\textbf{Challenge:} Decide stoquasticity under local basis changes; characterize classes where sign-free forms are impossible.
+
+\textbf{Why Compelling:} Resolves fundamental question about quantum Monte Carlo applicability\cite{Troyer2005}—sharp dividing line between tractable and intractable problems.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item SAT/ILP encodings to search for basis transformations making Hamiltonian stoquastic
+    \item Certificates of (non)existence
+    \item Explicit unitaries achieving sign-free form when possible
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Certificates of stoquasticity or impossibility proofs; explicit basis transformations
+
+\textbf{Timeline:} 6--9 months
+
+\section{Planetary Systems and Celestial Mechanics}
+
+Classical celestial mechanics provides ideal testing grounds for computer-assisted proofs of long-time stability and rigorous dynamics\cite{Celletti2010}.
+
+\subsection{KAM/Nekhoroshev Stability Domains for Planetary Systems}
+
+\textbf{Challenge:} Compute quantitative Kolmogorov--Arnold--Moser (KAM) existence and Nekhoroshev stability domains for near-integrable multi-planet Hamiltonians, including post-Newtonian corrections.
+
+\textbf{Why Compelling:} Rigorous long-time stability guarantees for planetary systems\cite{Arnold1963,Nekhoroshev1977}—pure dynamical systems theory with explicit time-scale bounds.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item High-order averaging (Lie transforms, Birkhoff normal forms) with validated numerics
+    \item Bound remainders rigorously; compute Diophantine constants
+    \item Certify invariant tori existence and long-time action confinement
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Formal normal forms plus interval certificates for tori existence and explicit exponential time-scale bounds
+
+\textbf{Timeline:} 9--12 months
+
+\subsection{Periodic Orbits and Invariant Manifolds in $N$-Body Problem}
+
+\textbf{Challenge:} Discover new families of periodic orbits in $N$-body and restricted three-body problems; classify stability via validated Floquet analysis.
+
+\textbf{Why Compelling:} Fundamental objects in celestial mechanics\cite{Chenciner2000}—``choreographies'' and transport structures with machine-verified existence.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Variational solvers with symmetry constraints
+    \item Validated continuation (Krawczyk operator, radii polynomials\cite{Tucker2011}) to enclose true orbits and multipliers
+    \item Conley index and covering relations\cite{Zgliczy'nski2003} for heteroclinic connections
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Libraries of orbits with machine-verified existence/stability; connection proofs with interval error bounds
+
+\textbf{Timeline:} 6--9 months
+
+\subsection{Central Configurations Classification}
+
+\textbf{Challenge:} Certified classification of central configurations for $N=5$--8 under symmetry and mass patterns; prove upper/lower bounds on their counts.
+
+\textbf{Why Compelling:} Classic Smale problem\cite{Smale1998}—polynomial systems amenable to complete algebraic certification.
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Gröbner basis and resultant elimination
+    \item $\alpha$-theory (Smale's $\alpha$-theory\cite{Blum1998}) to certify isolated solutions
+    \item SAT proofs for nonexistence in constrained subcases
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Exhaustive catalogs with proof certificates
+
+\textbf{Timeline:} 6--12 months
+
+\section{Biology and Origin of Life}
+
+Theoretical biology increasingly uses information theory, dynamical systems, and combinatorics to establish fundamental limits\cite{Sartori2014}.
+
+\subsection{Minimal Autocatalytic Cores and Universality}
+
+\textbf{Challenge:} Find provably minimal chemical reaction networks (CRNs) that are autocatalytic or universal (can implement arbitrary computation/self-replication) under mass-action kinetics.
+
+\textbf{Why Compelling:} Foundational for origin-of-life theory\cite{Hordijk2004}—what is the simplest chemistry capable of self-replication?
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item CRNs are finite algebraic objects; properties reduce to graph/semigroup and dynamical criteria
+    \item Compute stoichiometric kernels, siphons/traps, deficiency/endotacticity tests\cite{Feinberg1987}
+    \item Branch-and-bound with isomorphism-free enumeration
+    \item DRAT/SMT certificates of minimality and infeasibility
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Catalog of minimal autocatalytic sets with machine-checkable witnesses; Lean proofs for key lemmas
+
+\textbf{Timeline:} 6--9 months
+
+\subsection{Genotype$\to$Phenotype Channel Capacity Bounds}
+
+\textbf{Challenge:} Derive upper/lower bounds on mutual information between genome of length $L$ and coarse-grained phenotype under biophysically constrained maps.
+
+\textbf{Why Compelling:} Fundamental limits on biological design\cite{Bergstrom2004}—what information can evolution actually encode?
+
+\textbf{Pure Thought Approach:}
+\begin{itemize}
+    \item Model genotype$\to$phenotype as constrained circuits or graph dynamics
+    \item Derive rate--distortion and Fano/Le Cam lower bounds
+    \item Construct achievability codes (explicit mappings) to close gaps
+\end{itemize}
+
+\textbf{Verifiable Artifacts:} Theorems with constructive encoders/decoders and proofs of capacity bounds
+
+\textbf{Timeline:} 9--12 months
+
+\section{Core Infrastructure: The Day-0 Toolchain}
+
+All thirty challenges share common computational and proof infrastructure that should be built once and reused across domains.
+
+\subsection{Autoprover Farm}
+
+\textbf{Purpose:} Multi-agent proof workshop that proposes lemmas, attempts multiple proof styles (induction, contradiction, sum-of-squares, compactness), and interfaces with proof assistants.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Lean 4\cite{deMoura2015} and Isabelle/HOL\cite{Nipkow2002} integration
+    \item Automated theorem discovery and lemma generation
+    \item Proof strategy search (enumeration, refinement, analogy)
+    \item Human-readable proof synthesis from machine certificates
+\end{itemize}
+
+\subsection{Symbolic-Numeric Engine}
+
+\textbf{Purpose:} From-scratch computer algebra system with exact arithmetic and certified numerics.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Exact rational and algebraic number arithmetic
+    \item Gröbner basis computation\cite{Buchberger2006} and resultants
+    \item Interval arithmetic\cite{Moore2009} and Taylor models
+    \item Automatic differentiation
+    \item Self-implemented SDP/LP/QP solvers with dual certificate logging
+    \item Sum-of-Squares (SoS) hierarchy implementation\cite{Lasserre2001}
+\end{itemize}
+
+\subsection{Search with Certificates}
+
+\textbf{Purpose:} Combinatorial search algorithms that produce machine-checkable proof logs.
+
+\textbf{Components:}
+\begin{itemize}
+    \item SAT solvers (CDCL) with DRAT/FRAT proof logging\cite{Heule2017}
+    \item SMT solvers (DPLL(T)) with proof generation
+    \item Branch-and-bound for optimization with cutting-plane proofs
+    \item $A^*$ and constraint propagation over combinatorial spaces
+\end{itemize}
+
+\subsection{Bootstrap and Amplitude Toolbox}
+
+\textbf{Purpose:} Specialized tools for conformal bootstrap and scattering amplitude calculations.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Conformal block computation (recursion relations, differential equations)
+    \item Crossing equation setup and SDP formulation
+    \item Symbol alphabet computation and integrability checks
+    \item Finite-field sampling and rational reconstruction
+    \item IBP (integration-by-parts) reduction algorithms
+    \item On-shell recursion (BCFW\cite{Britto2005}) and generalized unitarity
+\end{itemize}
+
+\subsection{Tensor Network and Coding Theory Lab}
+
+\textbf{Purpose:} Tensor network algorithms and quantum/classical code construction.
+
+\textbf{Components:}
+\begin{itemize}
+    \item MPS/PEPS/MERA contraction algorithms with rigorous error bars
+    \item Variational optimization for ground states
+    \item Parent Hamiltonian construction
+    \item Stabilizer code manipulation and distance computation
+    \item Classical/quantum LDPC code construction
+    \item Decoding algorithm implementation and analysis
+\end{itemize}
+
+\subsection{Proof Back-Ends}
+
+\textbf{Purpose:} Export all results to independently verifiable formats.
+
+\textbf{Formats:}
+\begin{itemize}
+    \item Lean/Isabelle theorem statements and proofs
+    \item DRAT/FRAT unsatisfiability proofs for SAT
+    \item SDP dual certificates (exact rational matrices)
+    \item Interval arithmetic enclosures with guaranteed error bounds
+    \item Gröbner basis ideal membership certificates
+\end{itemize}
+
+\section{Selection Principles and Execution Strategy}
+
+\subsection{Why These 30 Challenges?}
+
+Each challenge was selected based on five criteria:
+
+\begin{enumerate}
+    \item \textbf{Proofs over predictions}: Resolves to theorems, bounds, constructive counterexamples, or certificates—not approximate numerics
+
+    \item \textbf{Axiom-driven}: Relies exclusively on unitarity, causality, crossing, locality, symmetry, convexity (physics); quantum mechanics and variational principles (chemistry); formal axioms (mathematics/computer science)
+
+    \item \textbf{Verifiable search}: Uses massive search guided by reasoning systems, but demands fast verifiers (proof checkers, symbolic algebra, certificate validation)
+
+    \item \textbf{Formalized by default}: Produces both human-readable proofs and machine-checkable artifacts (Lean/Isabelle, DRAT/FRAT, SoS certificates, interval bounds)
+
+    \item \textbf{Tractable with impact}: Achievable milestones within 3--12 months addressing foundational open questions
+\end{enumerate}
+
+\subsection{Execution Pattern}
+
+For each track:
+
+\begin{enumerate}
+    \item \textbf{Toolchain development}: Emit self-contained solver + checker + proof exporter
+
+    \item \textbf{Many-shot strategy generation}: Vary gauges, bases, relaxations, search strategies
+
+    \item \textbf{Parallel search with early certification}: Run multiple proof attempts in parallel; immediately verify candidates
+
+    \item \textbf{Human-readable synthesis}: Once machine certificate exists, synthesize polished exposition
+\end{enumerate}
+
+\subsection{Resource Allocation}
+
+\textbf{Token/compute budget:}
+\begin{itemize}
+    \item 80\% to search and proof attempts
+    \item 20\% to verification and proof polishing
+\end{itemize}
+
+\textbf{Initial focus} (highest-likelihood short-term wins):
+\begin{enumerate}
+    \item AdS$_3$ modular bootstrap (Track 1)
+    \item LDPC quantum codes (Track 21)
+    \item Minimal autocatalytic networks (Track 29)
+    \item RBCE symmetry atlas (Track 11)
+    \item Gravitational positivity bounds (Track 2)
+\end{enumerate}
+
+\subsection{12-Month Roadmap}
+
+\begin{description}
+    \item[Months 1--2:] Stand up core infrastructure
+    \begin{itemize}
+        \item Autoprover Farm with Lean/Isabelle integration
+        \item Symbolic-Numeric Engine with interval arithmetic
+        \item SAT/SMT with proof logging
+        \item SDP/SoS solver with exact certificates
+    \end{itemize}
+
+    \item[Months 3--4:] Validate pipelines
+    \begin{itemize}
+        \item Reproduce cornerstone results in bootstrap, integrals, Ramsey numbers
+        \item Verify certificate formats and proof assistant integration
+    \end{itemize}
+
+    \item[Months 5--8:] Push new bounds
+    \begin{itemize}
+        \item New bootstrap bounds (Tracks 1, 4)
+        \item First novel QECC families (Track 21)
+        \item RBCE anisotropy atlas (Track 11)
+        \item Gravitational causality bounds (Track 2)
+    \end{itemize}
+
+    \item[Months 9--12:] Deliver results
+    \begin{itemize}
+        \item At least 3 ``best-known'' results with machine-checkable proofs
+        \item One structural classification (Track 9 or 11)
+        \item Publication-ready manuscripts with proof repositories
+    \end{itemize}
+\end{description}
+
+\section{Conclusion}
+
+This portfolio of thirty pure thought challenges represents the frontier of what mathematical reasoning, amplified by advanced artificial intelligence, can achieve in fundamental science. Unlike data-driven or experimental approaches, these challenges require:
+
+\begin{itemize}
+    \item \textbf{No external datasets}: all information derives from axioms and first principles
+    \item \textbf{No experiments}: verification is mathematical, not empirical
+    \item \textbf{No legacy software}: all solvers implemented from scratch with proof generation
+\end{itemize}
+
+The results—theorem-level bounds, impossibility certificates, constructive models—are independently verifiable through proof assistants and exact arithmetic, ensuring correctness without trust.
+
+Success across even a subset of these challenges would demonstrate that pure mathematical reasoning, when properly formalized and computationally amplified, can resolve longstanding open questions spanning quantum gravity, materials design, quantum information, chemistry, celestial mechanics, and theoretical biology.
+
+The key innovation is not numerical approximation but \emph{certified reasoning}: every claim accompanied by a machine-checkable proof. This paradigm complements experimental and computational science with a third pillar—\emph{axiomatic science}—where progress is measured not in predictive accuracy but in theorems proven.
+
+\bibliographystyle{plainnat}
+\begin{thebibliography}{99}
+
+\bibitem{Arnold1963}
+V.~I. Arnold,
+\newblock Proof of a theorem of A. N. Kolmogorov on the invariance of quasi-periodic motions under small perturbations,
+\newblock \emph{Russian Mathematical Surveys} \textbf{18}, 9 (1963).
+
+\bibitem{Arkani-Hamed2014}
+N.~Arkani-Hamed, J.~L. Bourjaily, F.~Cachazo, A.~B. Goncharov, A.~Postnikov, and J.~Trnka,
+\newblock \emph{Grassmannian Geometry of Scattering Amplitudes},
+\newblock Cambridge University Press (2016).
+
+\bibitem{Bellissard1994}
+J.~Bellissard, A.~van Elst, and H.~Schulz-Baldes,
+\newblock The noncommutative geometry of the quantum Hall effect,
+\newblock \emph{Journal of Mathematical Physics} \textbf{35}, 5373 (1994).
+
+\bibitem{Bergstrom2004}
+C.~T. Bergstrom and M.~Lachmann,
+\newblock Shannon information and biological fitness,
+\newblock \emph{Proceedings IEEE Information Theory Workshop}, 50--54 (2004).
+
+\bibitem{Blum1998}
+L.~Blum, F.~Cucker, M.~Shub, and S.~Smale,
+\newblock \emph{Complexity and Real Computation},
+\newblock Springer (1998).
+
+\bibitem{Bradlyn2017}
+B.~Bradlyn et al.,
+\newblock Topological quantum chemistry,
+\newblock \emph{Nature} \textbf{547}, 298 (2017).
+
+\bibitem{Breuckmann2021}
+N.~P. Breuckmann and J.~N. Eberhardt,
+\newblock Quantum low-density parity-check codes,
+\newblock \emph{PRX Quantum} \textbf{2}, 040101 (2021).
+
+\bibitem{Britto2005}
+R.~Britto, F.~Cachazo, and B.~Feng,
+\newblock New recursion relations for tree amplitudes of gluons,
+\newblock \emph{Nuclear Physics B} \textbf{715}, 499 (2005).
+
+\bibitem{Buchberger2006}
+B.~Buchberger,
+\newblock Bruno Buchberger's PhD thesis 1965: An algorithm for finding the basis elements of the residue class ring of a zero dimensional polynomial ideal,
+\newblock \emph{Journal of Symbolic Computation} \textbf{41}, 475 (2006).
+
+\bibitem{Camanho2016}
+X.~O. Camanho, J.~D. Edelstein, J.~Maldacena, and A.~Zhiboedov,
+\newblock Causality constraints on corrections to the graviton three-point coupling,
+\newblock \emph{Journal of High Energy Physics} \textbf{2016}, 20 (2016).
+
+\bibitem{Cano2018}
+J.~Cano, B.~Bradlyn, Z.~Wang, L.~Elcoro, M.~G. Vergniory, C.~Felser, M.~I. Aroyo, and B.~A. Bernevig,
+\newblock Building blocks of topological quantum chemistry,
+\newblock \emph{Physical Review B} \textbf{97}, 035139 (2018).
+
+\bibitem{Caron-Huot2017}
+S.~Caron-Huot,
+\newblock Analyticity in spin in conformal theories,
+\newblock \emph{Journal of High Energy Physics} \textbf{2017}, 78 (2017).
+
+\bibitem{Celletti2010}
+A.~Celletti,
+\newblock \emph{Stability and Chaos in Celestial Mechanics},
+\newblock Springer (2010).
+
+\bibitem{Chenciner2000}
+A.~Chenciner and R.~Montgomery,
+\newblock A remarkable periodic solution of the three-body problem in the case of equal masses,
+\newblock \emph{Annals of Mathematics} \textbf{152}, 881 (2000).
+
+\bibitem{Cohn2017}
+H.~Cohn, A.~Kumar, S.~D. Miller, D.~Radchenko, and M.~Viazovska,
+\newblock The sphere packing problem in dimension 24,
+\newblock \emph{Annals of Mathematics} \textbf{185}, 1017 (2017).
+
+\bibitem{deMoura2015}
+L.~de Moura, S.~Kong, J.~Avigad, F.~van Doorn, and J.~von Raumer,
+\newblock The Lean theorem prover,
+\newblock \emph{International Conference on Automated Deduction}, 378--388 (2015).
+
+\bibitem{ElShowk2012}
+S.~El-Showk, M.~F. Paulos, D.~Poland, S.~Rychkov, D.~Simmons-Duffin, and A.~Vichi,
+\newblock Solving the 3D Ising model with the conformal bootstrap,
+\newblock \emph{Physical Review D} \textbf{86}, 025022 (2012).
+
+\bibitem{Faulon1994}
+J.-L. Faulon,
+\newblock On using graph-equivalent classes for the structure elucidation of large molecules,
+\newblock \emph{Journal of Chemical Information and Computer Sciences} \textbf{34}, 1204 (1994).
+
+\bibitem{Feinberg1987}
+M.~Feinberg,
+\newblock Chemical reaction network structure and the stability of complex isothermal reactors—I. The deficiency zero and deficiency one theorems,
+\newblock \emph{Chemical Engineering Science} \textbf{42}, 2229 (1987).
+
+\bibitem{Gori-Giorgi2010}
+P.~Gori-Giorgi, M.~Seidl, and G.~Vignale,
+\newblock Density-functional theory for strongly interacting electrons,
+\newblock \emph{Physical Review Letters} \textbf{103}, 166402 (2009).
+
+\bibitem{Hartman2014}
+T.~Hartman, C.~A. Keller, and B.~Stoica,
+\newblock Universal spectrum of 2d conformal field theory in the large $c$ limit,
+\newblock \emph{Journal of High Energy Physics} \textbf{2014}, 118 (2014).
+
+\bibitem{Hashin1963}
+Z.~Hashin and S.~Shtrikman,
+\newblock A variational approach to the theory of the elastic behaviour of multiphase materials,
+\newblock \emph{Journal of the Mechanics and Physics of Solids} \textbf{11}, 127 (1963).
+
+\bibitem{Hellerman2010}
+S.~Hellerman,
+\newblock A universal inequality for CFT and quantum gravity,
+\newblock \emph{Journal of High Energy Physics} \textbf{2011}, 130 (2011).
+
+\bibitem{Heule2017}
+M.~J.~H. Heule, W.~A. Hunt Jr., and N.~Wetzler,
+\newblock Bridging the gap between easy generation and efficient verification of unsatisfiability proofs,
+\newblock \emph{Software Testing, Verification and Reliability} \textbf{24}, 593 (2014).
+
+\bibitem{Hordijk2004}
+W.~Hordijk, M.~Steel, and S.~Kauffman,
+\newblock The structure of autocatalytic sets: Evolvability, enablement, and emergence,
+\newblock \emph{Acta Biotheoretica} \textbf{60}, 379 (2012).
+
+\bibitem{Horodecki2009}
+R.~Horodecki, P.~Horodecki, M.~Horodecki, and K.~Horodecki,
+\newblock Quantum entanglement,
+\newblock \emph{Reviews of Modern Physics} \textbf{81}, 865 (2009).
+
+\bibitem{Kane2014}
+C.~L. Kane and T.~C. Lubensky,
+\newblock Topological boundary modes in isostatic lattices,
+\newblock \emph{Nature Physics} \textbf{10}, 39 (2014).
+
+\bibitem{Kitaev2006}
+A.~Kitaev,
+\newblock Anyons in an exactly solved model and beyond,
+\newblock \emph{Annals of Physics} \textbf{321}, 2 (2006).
+
+\bibitem{Knabe1988}
+S.~Knabe,
+\newblock Energy gaps and elementary excitations for certain VBS-quantum antiferromagnets,
+\newblock \emph{Journal of Statistical Physics} \textbf{52}, 627 (1988).
+
+\bibitem{Lasserre2001}
+J.~B. Lasserre,
+\newblock Global optimization with polynomials and the problem of moments,
+\newblock \emph{SIAM Journal on Optimization} \textbf{11}, 796 (2001).
+
+\bibitem{Levin2005}
+M.~A. Levin and X.-G. Wen,
+\newblock String-net condensation: A physical mechanism for topological phases,
+\newblock \emph{Physical Review B} \textbf{71}, 045110 (2005).
+
+\bibitem{Lieb1981}
+E.~H. Lieb and S.~Oxford,
+\newblock Improved lower bound on the indirect Coulomb energy,
+\newblock \emph{International Journal of Quantum Chemistry} \textbf{19}, 427 (1981).
+
+\bibitem{Lieb1983}
+E.~H. Lieb,
+\newblock Density functionals for Coulomb systems,
+\newblock \emph{International Journal of Quantum Chemistry} \textbf{24}, 243 (1983).
+
+\bibitem{Maldacena2015}
+J.~Maldacena, S.~H. Shenker, and D.~Stanford,
+\newblock A bound on chaos,
+\newblock \emph{Journal of High Energy Physics} \textbf{2016}, 106 (2016).
+
+\bibitem{Maldovan2004}
+M.~Maldovan and E.~L. Thomas,
+\newblock Diamond-structured photonic crystals,
+\newblock \emph{Nature Materials} \textbf{3}, 593 (2004).
+
+\bibitem{Maloney2016}
+A.~Maloney and E.~Witten,
+\newblock Quantum gravity partition functions in three dimensions,
+\newblock \emph{Journal of High Energy Physics} \textbf{2010}, 29 (2010).
+
+\bibitem{Mazziotti2012}
+D.~A. Mazziotti (ed.),
+\newblock \emph{Reduced-Density-Matrix Mechanics: With Application to Many-Electron Atoms and Molecules},
+\newblock Wiley (2007).
+
+\bibitem{McNamara2019}
+J.~McNamara and C.~Vafa,
+\newblock Cobordism classes and the swampland,
+\newblock arXiv:1909.10355 (2019).
+
+\bibitem{Milton2002}
+G.~W. Milton,
+\newblock \emph{The Theory of Composites},
+\newblock Cambridge University Press (2002).
+
+\bibitem{Moore2009}
+R.~E. Moore, R.~B. Kearfott, and M.~J. Cloud,
+\newblock \emph{Introduction to Interval Analysis},
+\newblock SIAM (2009).
+
+\bibitem{Navascues2008}
+M.~Navascués, S.~Pironio, and A.~Acín,
+\newblock A convergent hierarchy of semidefinite programs characterizing the set of quantum correlations,
+\newblock \emph{New Journal of Physics} \textbf{10}, 073013 (2008).
+
+\bibitem{Neilson2019}
+J.~R. Neilson,
+\newblock Relativistic band and crystal-field engineering for high-performance magnetic materials,
+\newblock \emph{APL Materials} \textbf{9}, 050902 (2021).
+
+\bibitem{Nekhoroshev1977}
+N.~N. Nekhoroshev,
+\newblock An exponential estimate of the time of stability of nearly integrable Hamiltonian systems,
+\newblock \emph{Russian Mathematical Surveys} \textbf{32}, 1 (1977).
+
+\bibitem{Neupert2011}
+T.~Neupert, L.~Santos, C.~Chamon, and C.~Mudry,
+\newblock Fractional quantum Hall states at zero magnetic field,
+\newblock \emph{Physical Review Letters} \textbf{106}, 236804 (2011).
+
+\bibitem{Nipkow2002}
+T.~Nipkow, L.~C. Paulson, and M.~Wenzel,
+\newblock \emph{Isabelle/HOL—A Proof Assistant for Higher-Order Logic},
+\newblock Springer (2002).
+
+\bibitem{Palti2019}
+E.~Palti,
+\newblock The swampland: Introduction and review,
+\newblock \emph{Fortschritte der Physik} \textbf{67}, 1900037 (2019).
+
+\bibitem{Pasterski2017}
+S.~Pasterski, S.-H. Shao, and A.~Strominger,
+\newblock Flat space amplitudes and conformal symmetry of the celestial sphere,
+\newblock \emph{Physical Review D} \textbf{96}, 065026 (2017).
+
+\bibitem{Paulos2017}
+M.~F. Paulos et al.,
+\newblock The S-matrix bootstrap. I. QFT in AdS,
+\newblock \emph{Journal of High Energy Physics} \textbf{2017}, 133 (2017).
+
+\bibitem{Po2017}
+H.~C. Po, A.~Vishwanath, and H.~Watanabe,
+\newblock Symmetry-based indicators of band topology in the 230 space groups,
+\newblock \emph{Nature Communications} \textbf{8}, 50 (2017).
+
+\bibitem{Poland2019}
+D.~Poland, S.~Rychkov, and A.~Vichi,
+\newblock The conformal bootstrap: Theory, numerical techniques, and applications,
+\newblock \emph{Reviews of Modern Physics} \textbf{91}, 015002 (2019).
+
+\bibitem{Prodan2017}
+E.~Prodan and H.~Schulz-Baldes,
+\newblock \emph{Bulk and Boundary Invariants for Complex Topological Insulators},
+\newblock Springer (2016).
+
+\bibitem{Raclariu2022}
+A.-M. Raclariu,
+\newblock Lectures on celestial holography,
+\newblock arXiv:2107.02075 (2021).
+
+\bibitem{Rattazzi2008}
+R.~Rattazzi, V.~S. Rychkov, E.~Tonni, and A.~Vichi,
+\newblock Bounding scalar operator dimensions in 4D CFT,
+\newblock \emph{Journal of High Energy Physics} \textbf{2008}, 031 (2008).
+
+\bibitem{Sartori2014}
+P.~Sartori and S.~Pigolotti,
+\newblock Kinetic versus energetic discrimination in biological copying,
+\newblock \emph{Physical Review Letters} \textbf{110}, 188101 (2013).
+
+\bibitem{Seidl2007}
+M.~Seidl, P.~Gori-Giorgi, and A.~Savin,
+\newblock Strictly correlated electrons in density-functional theory: A general formulation with applications to spherical densities,
+\newblock \emph{Physical Review A} \textbf{75}, 042511 (2007).
+
+\bibitem{Smale1998}
+S.~Smale,
+\newblock Mathematical problems for the next century,
+\newblock \emph{The Mathematical Intelligencer} \textbf{20}, 7 (1998).
+
+\bibitem{Tillich2014}
+J.-P. Tillich and G.~Zémor,
+\newblock Quantum LDPC codes with positive rate and minimum distance proportional to the square root of the blocklength,
+\newblock \emph{IEEE Transactions on Information Theory} \textbf{60}, 1193 (2014).
+
+\bibitem{Torquato2009}
+S.~Torquato and F.~H. Stillinger,
+\newblock Jammed hard-particle packings: From Kepler to Bernal and beyond,
+\newblock \emph{Reviews of Modern Physics} \textbf{82}, 2633 (2010).
+
+\bibitem{Troyer2005}
+M.~Troyer and U.-J. Wiese,
+\newblock Computational complexity and fundamental limitations to fermionic quantum Monte Carlo simulations,
+\newblock \emph{Physical Review Letters} \textbf{94}, 170201 (2005).
+
+\bibitem{Tucker2011}
+W.~Tucker,
+\newblock \emph{Validated Numerics: A Short Introduction to Rigorous Computations},
+\newblock Princeton University Press (2011).
+
+\bibitem{Vafa2005}
+C.~Vafa,
+\newblock The string landscape and the swampland,
+\newblock arXiv:hep-th/0509212 (2005).
+
+\bibitem{Vergniory2019}
+M.~G. Vergniory et al.,
+\newblock A complete catalogue of high-quality topological materials,
+\newblock \emph{Nature} \textbf{566}, 480 (2019).
+
+\bibitem{Weinberg1965}
+S.~Weinberg,
+\newblock Infrared photons and gravitons,
+\newblock \emph{Physical Review} \textbf{140}, B516 (1965).
+
+\bibitem{Zgliczy'nski2003}
+P.~Zgliczy\'{n}ski and M.~Gidea,
+\newblock Covering relations for multidimensional dynamical systems,
+\newblock \emph{Journal of Differential Equations} \textbf{202}, 32 (2004).
+
+\end{thebibliography}
+
+\end{document}

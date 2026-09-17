@@ -48,7 +48,7 @@ Use ensemble N-representability. The task is to certify bounds within a finite o
 
 ## Mathematical target
 
-Set γ_ij=〈a_i†a_j〉 and Γ_ij,kl=〈a_i†a_j†a_l a_k〉. Require Hermiticity, fermionic antisymmetry, Tr γ=N, Σ_ij Γ_ij,ij=N(N−1), and Σ_j Γ_ij,kj=(N−1)γ_ik. Define Q and G using two-hole and particle-hole operator moments and derive their affine forms from anticommutation identities.
+Set $\gamma_{ij}=\langle a_i^\dagger a_j\rangle$ and $\Gamma_{ij,kl}=\langle a_i^\dagger a_j^\dagger a_l a_k\rangle$. Require Hermiticity, fermionic antisymmetry, Tr γ=N, $\sum_{ij}\Gamma_{ij,ij}=N(N-1)$, and $\sum_j\Gamma_{ij,kj}=(N-1)\gamma_{ik}$. Define Q and G using two-hole and particle-hole operator moments and derive their affine forms from anticommutation identities.
 
 Minimizing the linear energy over a necessary-condition outer relaxation gives E_relax≤E₀. A verified dual feasible point gives L≤E_relax; an explicit normalized N-fermion state gives U≥E₀. Report L≤E₀≤U, not an unsupported accuracy estimate from Γ alone.
 

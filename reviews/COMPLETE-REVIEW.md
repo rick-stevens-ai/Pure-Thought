@@ -1,6 +1,6 @@
 # Complete revised problems and detailed critiques
 
-2026-09-11. This reading copy combines all 30 revised canonical problems, their critiques, and 12 supplemental topics. Every problem includes an everyday explanation, key-term definitions, motivation and a scoped account of what progress would mean. [Review overview](REVIEW.md) · [Catalog](../PRDs/README.md) · [Evidence standard](EVIDENCE-STANDARD.md) · [Synthesis crosswalk](SYNTHESIS-CROSSWALK.md)
+Updated 2026-09-17. This reading copy includes all 30 canonical specifications and critiques, 12 supplemental topics, and the displayed mathematical formulations used by the reports. [Overview](REVIEW.md) · [Evidence standard](EVIDENCE-STANDARD.md) · [Complete summaries](../COMPLETE-PROBLEM-SUMMARIES.md)
 
 ## Contents
 
@@ -34,6 +34,19 @@
 - [28. Explicit finite-time action confinement from a normal form](#problem-28)
 - [29. Autocatalytic sets: maximality, irreducibility and dynamical viability](#problem-29)
 - [30. An exact finite genotype–phenotype map and its mutation graph](#problem-30)
+- [S01. Crystal-field and spin–orbit anisotropy in a finite ion model](#problem-s01)
+- [S02. Bandgap optimization in a bounded wave-operator family](#problem-s02)
+- [S03. Effective conductivity bounds for two-phase composites](#problem-s03)
+- [S04. Finite-volume certification of a disordered topological index](#problem-s04)
+- [S05. Finite-basis density functionals and exact convex constraints](#problem-s05)
+- [S06. Inverse pair-potential design over an explicit competitor class](#problem-s06)
+- [S07. Finite-size criteria for parent-Hamiltonian spectral gaps](#problem-s07)
+- [S08. Gapped boundaries from exact anyon data](#problem-s08)
+- [S09. Stoquasticity under a bounded class of basis changes](#problem-s09)
+- [S10. Certified periodic orbits of a specified three-body model](#problem-s10)
+- [S11. Minimal reaction implementations of a specified computational behavior](#problem-s11)
+- [S12. Capacity of a specified finite noisy genotype–phenotype channel](#problem-s12)
+
 
 ---
 
@@ -91,7 +104,7 @@ With q=exp(2πiτ), c>1, use
 
 $$χ_0=q^{-c/24}\prod_{n=2}^{∞}(1-q^n)^{-1},\qquad χ_h=q^{h-(c-1)/24}/η(τ)\quad(h>0).$$
 
-Construct the unique degree-k polynomial in J=j−744 whose expansion agrees with χ₀ through q⁰. Write Zₖ=χ₀+Σ_{h≥k+1}dₕχₕ and extract primary multiplicities exactly through a declared cutoff H, initially H=100. Prove modular invariance from the polynomial representation, not from evaluations at a few τ. A negative or noninteger dₕ excludes the stated candidate; positivity through H is only a finite test.
+Construct the unique degree-k polynomial in J=j−744 whose expansion agrees with χ₀ through q⁰. Write $Z_k=\chi_0+\sum_{h\ge k+1}d_h\chi_h$ and extract primary multiplicities exactly through a declared cutoff H, initially H=100. Prove modular invariance from the polynomial representation, not from evaluations at a few τ. A negative or noninteger dₕ excludes the stated candidate; positivity through H is only a finite test.
 
 ## Required outputs and proof obligations
 
@@ -116,6 +129,21 @@ Work on the baseline above. First make every input and convention explicit, then
 - [Witten, Three-Dimensional Gravity Revisited](https://arxiv.org/abs/0706.3359) — Motivation for the holomorphic extremal ansatz, not a proof that every candidate exists.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/01-AdS3-Modular-Bootstrap.md).
+
+For the holomorphic sector with $c=24k$, $q=e^{2\pi i\tau}$ and $J=j-744$,
+
+$$\chi_0=q^{-k}\prod_{n=2}^{\infty}(1-q^n)^{-1},\qquad
+\chi_h=\frac{q^{h-k+1/24}}{\eta(\tau)}\quad(h>0).$$
+
+$$Z_k=P_k(J)=\chi_0+\sum_{h\ge k+1}d_h\chi_h,\qquad
+P_k(J)-\chi_0=O(q).$$
+
+Determine $P_k$ exactly and test $d_h\in\mathbb Z_{\ge0}$ through a declared $H$. At $k=1$, $d_2=196883$. Passing this finite necessary test does not construct the CFT or establish OPE consistency.
 
 
 # Critique 01: Extremal holomorphic CFT partition functions: certified necessary tests
@@ -232,6 +260,19 @@ Work on the baseline above. First make every input and convention explicit, then
 - [Alberte et al., Positivity Bounds and the Massless Spin-2 Pole](https://arxiv.org/abs/2007.12667) — Why naive pole-subtracted forward positivity can fail.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/02-Gravitational-Positivity-Bounds.md).
+
+$$s+t+u=4m^2,\qquad \nu=s-2m^2+\frac t2,\qquad
+b_2(t)=\frac12\partial_\nu^2 B(0,t).$$
+
+$$B=A-A_{\mathrm{light\ poles}}-A_{\mathrm{chosen\ low\ cuts}},\qquad
+b_2(t)=I_{\mathrm{UV}}(t)+R_\infty(t).$$
+
+The last equality is the sum rule to derive, with its kernel, subtractions and contour assumptions. Only a justified smearing or regulated forward prescription can turn it into a positivity statement. If that prescription proves $I_{\mathrm{UV}}\ge0$ and $R_\infty\ge-R_*$, then $b_2\ge-R_*$. An uncontrolled contour term must remain unknown.
 
 
 # Critique 02: Conditional positivity bounds for a specified gravitational amplitude
@@ -352,6 +393,22 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/03-Celestial-CFT-Bootstrap.md).
+
+$$p_i=\epsilon_i\omega_i q_i,\quad
+\Delta_i=1+i\lambda_i,\quad
+h_i=\frac{\Delta_i+J_i}{2},\quad
+\bar h_i=\frac{\Delta_i-J_i}{2}.$$
+
+$$\widetilde{\mathcal A}=
+\left(\prod_{i=1}^4\int_0^\infty d\omega_i\,\omega_i^{\Delta_i-1}\right)
+\delta^{(4)}\!\left(\sum_i\epsilon_i\omega_iq_i\right)\mathcal M_4.$$
+
+The expression is a regulated distribution. A leading soft term proportional to $\omega_s^{-1}$ yields the local integral $\int_0^\Lambda\omega_s^{\Delta_s-2}d\omega_s=\Lambda^{\Delta_s-1}/(\Delta_s-1)$ before continuation, exposing the pole at $\Delta_s=1$. Support, helicity, crossing and regulator removal remain proof obligations; ordinary Euclidean OPE positivity is not assumed.
+
+
 # Critique 03: Celestial amplitudes: distributional crossing and soft-limit consistency
 
 [Revised problem](../PRDs/03-Celestial-CFT-Bootstrap.md) · [Preserved original](../archive/original-PRDs/03-Celestial-CFT-Bootstrap.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/03-Celestial-CFT-Bootstrap.md)
@@ -468,6 +525,20 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/04-Modular-Lightcone-Bootstrap.md).
+
+$$F_{\Delta,\ell}=v^{\Delta_\phi}g_{\Delta,\ell}(u,v)
+-u^{\Delta_\phi}g_{\Delta,\ell}(v,u),\qquad
+F_{\mathrm{id}}+\sum_{\mathcal O}\lambda_{\phi\phi\mathcal O}^{2}F_{\Delta,\ell}=0.$$
+
+$$\Delta_{n,\ell}=2\Delta_\phi+2n+\ell+\gamma_{n,\ell},\qquad
+|\gamma_{0,\ell}-\widehat\gamma_{0,\ell}|\le R(\ell)\quad(\ell\ge\ell_0).$$
+
+The inequality is a target requiring explicit spectral and Regge assumptions and a proved remainder. An asymptotic series alone does not imply this finite-spin inequality. Higher-dimensional crossing is not torus modular invariance.
+
+
 # Critique 04: Lightcone bootstrap with controlled large-spin remainders
 
 [Revised problem](../PRDs/04-Modular-Lightcone-Bootstrap.md) · [Preserved original](../archive/original-PRDs/04-Modular-Lightcone-Bootstrap.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/04-Modular-Lightcone-Bootstrap.md)
@@ -582,6 +653,16 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/05-Positive-Geometry-Gravity.md).
+
+$$\Omega_{\mathrm{target}}=I(\ell;k)\,d^4\ell,
+\qquad \Omega_{\mathrm{target}}\stackrel{?}{=}f(k)\,\pi_*\Omega_G.$$
+
+For a standard positive geometry, each oriented boundary must satisfy the canonical residue relation $\operatorname{Res}_{\partial G}\Omega_G=\Omega_{\partial G}$. Fix the geometry class, maps, prefactors, representation and equality convention first. Verify finite boundaries, intersections and infinity; an obstruction is limited to that class. An integrated symbol is not the integrand's canonical form.
+
+
 # Critique 05: Positive-geometry tests for a fixed gravity integrand
 
 [Revised problem](../PRDs/05-Positive-Geometry-Gravity.md) · [Preserved original](../archive/original-PRDs/05-Positive-Geometry-Gravity.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/05-Positive-Geometry-Gravity.md)
@@ -667,7 +748,7 @@ This is complementary to Challenge 02: the focus is amplitude feasibility and pa
 
 ## Mathematical target
 
-Choose A=16πΣ_{ℓ≥0}(2ℓ+1)a_ℓ(s)P_ℓ(cosθ), s+t+u=4m², ρ=√(1−4m²/s), and S_ℓ=1+2iρa_ℓ. Then |S_ℓ|≤1 is equivalent to Im a_ℓ≥ρ|a_ℓ|². Equality needs an actually elastic sector.
+Choose $A=16\pi\sum_{\ell\ge0}(2\ell+1)a_\ell(s)P_\ell(\cos\theta)$, s+t+u=4m², ρ=√(1−4m²/s), and S_ℓ=1+2iρa_ℓ. Then |S_ℓ|≤1 is equivalent to Im a_ℓ≥ρ|a_ℓ|². Equality needs an actually elastic sector.
 
 State how crossing is imposed and distinguish an outer relaxation of necessary constraints from an inner finite amplitude ansatz. A dual exclusion from an outer relaxation transfers to the full problem only when every physical amplitude maps into that relaxation. Bound energy, angular-momentum, and basis tails; checking a finite mesh is insufficient.
 
@@ -694,6 +775,19 @@ Work on the baseline above. First make every input and convention explicit, then
 - [Alberte et al., Positivity Bounds and the Massless Spin-2 Pole](https://arxiv.org/abs/2007.12667) — Infrared and analyticity issues that must be resolved before importing standard bounds.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/06-Nonperturbative-S-matrix-Bootstrap.md).
+
+$$A=16\pi\sum_{\ell\ge0}(2\ell+1)a_\ell(s)P_\ell(\cos\theta),\quad
+\rho=\sqrt{1-4m^2/s},\quad S_\ell=1+2i\rho a_\ell.$$
+
+$$|S_\ell|\le1\quad\Longleftrightarrow\quad
+\operatorname{Im}a_\ell\ge\rho|a_\ell|^2\qquad(s>4m^2).$$
+
+Equality requires an elastic sector. A certified outer relaxation can exclude a physical amplitude only after the inclusion of every admissible amplitude and all tail bounds are proved. Failure of an inner ansatz excludes only that ansatz. The gravitational stage has a separate infrared prerequisite.
 
 
 # Critique 06: S-matrix bootstrap with an explicit gravitational infrared prescription
@@ -812,6 +906,21 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/07-Extremal-CFTs-Stress-Tensor.md).
+
+$$V_{\mathrm{id}}+V_T(C_T,t_4)+
+\sum_{\mathcal O}\lambda_{\mathcal O}^{\mathsf T}V_{\Delta,\ell,\pi}
+\lambda_{\mathcal O}=0.$$
+
+$$\alpha(V_{\mathrm{id}}+V_T)>0,\qquad
+\alpha(V_{\Delta,\ell,\pi})\succeq0
+\quad\text{for every allowed exchange}.$$
+
+These inequalities contradict crossing and exclude the proposed sector-specific gap. Tensor structures, conserved spinning blocks, Ward identities and continuous exchange coverage are required. In three dimensions a conserved symmetric-traceless spin-$\ell$ primary has $\Delta=\ell+1$.
+
+
 # Critique 07: Stress-tensor bootstrap: a sector-specific gap bound in three dimensions
 
 [Revised problem](../PRDs/07-Extremal-CFTs-Stress-Tensor.md) · [Preserved original](../archive/original-PRDs/07-Extremal-CFTs-Stress-Tensor.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/07-Extremal-CFTs-Stress-Tensor.md)
@@ -926,6 +1035,19 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/08-Swampland-Modularity-Symmetries.md).
+
+$$S^\dagger S=I,\quad S^2=C,\quad(ST)^3=C,\quad
+MS=SM,\quad MT=TM,\quad M_{00}=1,\quad M_{ij}\in\mathbb Z_{\ge0}.$$
+
+$$N_{ij}^{\ k}=\sum_a\frac{S_{ia}S_{ja}S_{ka}^*}{S_{0a}}
+\in\mathbb Z_{\ge0},\qquad \omega\in Z^3(G,U(1)),\quad\delta\beta=\omega.$$
+
+Fix the $T$ convention and any assumed symmetry of $S$. An explicit cochain $\beta$ trivializes the specified anomaly; a complete cohomology calculation may prove no such cochain exists. This gauging obstruction does not make an anomalous boundary theory inconsistent, and untwisted modular data alone do not supply defect data.
+
+
 # Critique 08: Exact modular-data and symmetry-anomaly consistency tests
 
 [Revised problem](../PRDs/08-Swampland-Modularity-Symmetries.md) · [Preserved original](../archive/original-PRDs/08-Swampland-Modularity-Symmetries.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/08-Swampland-Modularity-Symmetries.md)
@@ -1005,15 +1127,15 @@ Within a declared finite-range Hamiltonian family, which parameter regions have 
 
 ## Scope and assumptions
 
-Begin with the two-band square-lattice model H_m(k)=sin(k_x)σ_x+sin(k_y)σ_y+[m+cos(k_x)+cos(k_y)]σ_z, k∈[−π,π]². Use one occupied band and a fixed orientation. Analyze rational parameter intervals separated from m=−2,0,2.
+Begin with the two-band square-lattice model $H_m(k)=\sin(k_x)\sigma_x+\sin(k_y)\sigma_y+[m+\cos(k_x)+\cos(k_y)]\sigma_z$, k∈[−π,π]². Use one occupied band and a fixed orientation. Analyze rational parameter intervals separated from m=−2,0,2.
 
 For subsequent searches fix dimension, orbitals, filling, hopping support, coefficient domain, and symmetry representation. A rational grid is finite; a continuous coefficient box requires a different completeness argument. “All Hamiltonians for a space group” is not an enumerable specification.
 
 ## Mathematical target
 
-For a general family H(k)=Σ_R t_Re^{ik·R}, impose t_−R=t_R† and the stated symmetry equations. Prove E_{r+1}(k)−E_r(k)≥δ>0 for all k and all parameters claimed. With P the occupied projector, choose
+For a general family $H(k)=\sum_R t_Re^{ik\cdot R}$, impose t_−R=t_R† and the stated symmetry equations. Prove E_{r+1}(k)−E_r(k)≥δ>0 for all k and all parameters claimed. With P the occupied projector, choose
 
-$$C=\frac{1}{2πi}\int_{BZ}\operatorname{Tr}P[∂_xP,∂_yP],d²k.$$
+$$C=\frac{1}{2πi}\int_{BZ}\operatorname{Tr}P[∂_xP,∂_yP]\,d²k.$$
 
 Certify C through an analytic degree/homotopy argument or validated integration with an error enclosure containing a unique integer, including discretization and projector errors.
 
@@ -1040,6 +1162,20 @@ Work on the baseline above. First make every input and convention explicit, then
 - [Chen et al., The impossibility of exactly flat non-trivial Chern bands in strictly local periodic tight binding models](https://arxiv.org/abs/1311.4956) — A concrete example of why range/locality assumptions change realizability claims.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/09-Topological-Band-Theory.md).
+
+$$H_m(k)=\sin k_x\,\sigma_x+\sin k_y\,\sigma_y+
+(m+\cos k_x+\cos k_y)\sigma_z.$$
+
+$$E_{r+1}(k)-E_r(k)\ge\delta>0,\qquad
+C=\frac{1}{2\pi i}\int_{\mathrm{BZ}}
+\operatorname{Tr}\!\left(P[\partial_{k_x}P,\partial_{k_y}P]\right)\,d^2k.$$
+
+Prove the gap over the full claimed parameter and momentum domain. Fix orientation and the occupied projector. An analytic argument or validated integral enclosing one integer certifies $C$; a momentum mesh alone does not.
 
 
 # Critique 09: Certified Chern phases in a bounded tight-binding family
@@ -1154,6 +1290,22 @@ Work on the baseline above. First make every input and convention explicit, then
 - [Chen et al., Flat Chern-band locality obstruction](https://arxiv.org/abs/1311.4956) — No-go theorem for simultaneous exact flatness, nonzero Chern number, and strictly local hopping.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/10-Flat-Chern-Bands.md).
+
+$$W=\max_k E_n(k)-\min_k E_n(k),\quad
+\Delta=\min_k\min_{j\ne n}|E_j(k)-E_n(k)|,\quad\text{minimize }W/\Delta.$$
+
+$$g_{ij}=\operatorname{Re}\langle\partial_i u|(1-P)|\partial_j u\rangle,
+\quad \bar F=\frac{2\pi C}{A},\quad A=\operatorname{Area}(\mathrm{BZ}),$$
+
+$$\operatorname{Var}(F)=\frac1A\int_{\mathrm{BZ}}(F-\bar F)^2d^2k,
+\qquad D_g=\frac1A\int_{\mathrm{BZ}}(\operatorname{tr}g-|F|)d^2k.$$
+
+Fix a gap floor, norm bound, orbital positions and coordinate metric. Use the Chern convention of 09. Strictly finite-range approximate flatness and generally long-range exact flattening are separate tasks; these diagnostics alone do not prove an interacting fractional phase.
 
 
 # Critique 10: Flatness–locality–geometry tradeoffs for Chern bands
@@ -1272,6 +1424,17 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/11-Photonic-Topological-Crystals.md).
+
+$$(\nabla+ik)\times\mu^{-1}(r)(\nabla+ik)\times u
+=\omega^2\epsilon(r)u,\qquad
+\langle u,v\rangle_\epsilon=\int_{\mathrm{cell}}u^*\cdot\epsilon v\,dr.$$
+
+Use positive Hermitian constitutive tensors, the transverse constraint, units $c=1$, and an isolated positive-frequency band group. Certify its gap and projector invariant in the weighted metric. Nonzero total Chern number requires breaking the relevant physical time-reversal symmetry; scalar reciprocal benchmarks provide rejection controls.
+
+
 # Critique 11: Certified topological bands in an idealized Maxwell medium
 
 [Revised problem](../PRDs/11-Photonic-Topological-Crystals.md) · [Preserved original](../archive/original-PRDs/11-Photonic-Topological-Crystals.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/11-Photonic-Topological-Crystals.md)
@@ -1388,6 +1551,19 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/12-Topological-Mechanical-Metamaterials.md).
+
+$$Q=C^\dagger,\qquad n_0-n_{ss}=dN-N_b,\qquad
+K=C^\dagger\operatorname{diag}(k_b)C,\quad D=M^{-1/2}KM^{-1/2}.$$
+
+$$\nu_\gamma=\frac1{2\pi i}\oint_\gamma d\log\det C(k),
+\qquad \det C(k)\ne0\text{ on }\gamma.$$
+
+The first count includes rigid-body motions and self stress. Supply actual bond directions, unit-cell gauge and termination. Acoustic zeros and the local boundary count must be included before identifying edge modes from winding.
+
+
 # Critique 12: Rigidity and boundary modes of periodic Maxwell frames
 
 [Revised problem](../PRDs/12-Topological-Mechanical-Metamaterials.md) · [Preserved original](../archive/original-PRDs/12-Topological-Mechanical-Metamaterials.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/12-Topological-Mechanical-Metamaterials.md)
@@ -1502,6 +1678,19 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/13-Higher-Order-Topological-Insulators.md).
+
+$$W_x(k_y)=\mathcal P\exp\!\left(i\oint\mathcal A_x(k_x,k_y)\,dk_x\right),
+\qquad \mathcal A_{x,ab}=i\langle u_a|\partial_{k_x}u_b\rangle.$$
+
+$$\widetilde W_y=\mathcal P\exp\!\left(i\oint\widetilde{\mathcal A}_y\,dk_y\right),
+\qquad p_y^{\mathrm{sector}}=\frac1{2\pi}\arg\det\widetilde W_y\pmod1.$$
+
+Use consistent holonomy orientation in an overlap implementation. The second connection belongs to a smoothly transported, spectrally isolated Wannier sector, not to the first loop's eigenphases alone. Prove both bulk and Wannier gaps and the relevant quantizing symmetry. Define corner charge with a reference background and termination; zero-energy corner states require additional assumptions.
+
+
 # Critique 13: Higher-order topology with explicit boundary and symmetry assumptions
 
 [Revised problem](../PRDs/13-Higher-Order-Topological-Insulators.md) · [Preserved original](../archive/original-PRDs/13-Higher-Order-Topological-Insulators.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/13-Higher-Order-Topological-Insulators.md)
@@ -1581,13 +1770,13 @@ Can all nodes in a specified two-band three-dimensional Hamiltonian be isolated,
 
 ## Scope and assumptions
 
-Begin with H(k)=sin k_x σ_x+sin k_y σ_y+(2−cos k_x−cos k_y−cos k_z)σ_z, k∈T³, lower band occupied away from nodes. Fix orientation and Pauli-matrix conventions. This exact benchmark has nodes at (0,0,±π/2).
+Begin with $H(k)=\sin k_x\,\sigma_x+\sin k_y\,\sigma_y+(2-\cos k_x-\cos k_y-\cos k_z)\sigma_z$, k∈T³, lower band occupied away from nodes. Fix orientation and Pauli-matrix conventions. This exact benchmark has nodes at (0,0,±π/2).
 
 Subsequent searches must fix orbitals, hopping support, parameter box, and symmetry representation. Dirac points and nodal lines are separate extensions because their protection criteria differ.
 
 ## Mathematical target
 
-For H=d₀I+d·σ, nodes solve d(k)=0. A simple node has invertible velocity matrix V_ij=∂d_i/∂k_j. Define Weyl chirality χ=sgn det V, and explicitly relate this to the lower-band Chern flux under the chosen convention. Prove the complement of all isolating neighborhoods has |d(k)|>0.
+For H=d₀I+d·σ, nodes solve d(k)=0. A simple node has invertible velocity matrix $V_{ij}=\partial d_i/\partial k_j$. Define Weyl chirality χ=sgn det V, and explicitly relate this to the lower-band Chern flux under the chosen convention. Prove the complement of all isolating neighborhoods has |d(k)|>0.
 
 For fixed k_z away from nodes, certify the two-dimensional occupied Chern number. Its jumps track node charge. A slab calculation requires a chosen surface normal and termination; arc details are not determined solely by bulk node positions.
 
@@ -1614,6 +1803,19 @@ Work on the baseline above. First make every input and convention explicit, then
 - [Wan et al., Electronic Structure of Pyrochlore Iridates (published as Topological semimetal and Fermi-arc surface states)](https://arxiv.org/abs/1007.0016) — Reference for Weyl nodes and surface arcs; benchmark and proof obligations here are explicitly specified.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/14-Topological-Semimetals-Weyl-Dirac.md).
+
+$$d(k)=(\sin k_x,\sin k_y,2-\cos k_x-\cos k_y-\cos k_z),
+\quad d(k_*)=0,$$
+
+$$k_*=(0,0,\pm\pi/2),\qquad
+V_{ij}=\partial_{k_j}d_i(k_*),\qquad \chi=\operatorname{sgn}\det V.$$
+
+The two determinants are $+1$ and $-1$ in the stated coordinate order. Relate this convention explicitly to the occupied-band flux. Certify absence of other nodes on the complement and the topology of gapped slices; surface arcs additionally depend on the chosen boundary.
 
 
 # Critique 14: Certified Weyl nodes and slice topology in a lattice model
@@ -1730,6 +1932,19 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/15-Topological-Quantum-Chemistry.md).
+
+$$A\subset B\subset\mathbb Z^r,\qquad X=B/A,\qquad
+UA_{\mathrm{mat}}V=D,\quad U,V\text{ unimodular}.$$
+
+$$b=A_{\mathrm{mat}}n,\quad n\in\mathbb Z^s
+\qquad\text{versus}\qquad b=A_{\mathrm{mat}}n,\quad n\in\mathbb Z_{\ge0}^s.$$
+
+Use a declared basis for the compatibility lattice $B$ in the Smith decomposition. Integer membership and nonnegative atomic symmetry-data decomposition are distinct tests. Neither a zero indicator nor matching atomic labels alone constructs localized Wannier functions for a given Hamiltonian.
+
+
 # Critique 15: Symmetry-indicator algebra and the limits of band diagnosis
 
 [Revised problem](../PRDs/15-Topological-Quantum-Chemistry.md) · [Preserved original](../archive/original-PRDs/15-Topological-Quantum-Chemistry.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/15-Topological-Quantum-Chemistry.md)
@@ -1815,7 +2030,7 @@ Use ensemble N-representability. The task is to certify bounds within a finite o
 
 ## Mathematical target
 
-Set γ_ij=〈a_i†a_j〉 and Γ_ij,kl=〈a_i†a_j†a_l a_k〉. Require Hermiticity, fermionic antisymmetry, Tr γ=N, Σ_ij Γ_ij,ij=N(N−1), and Σ_j Γ_ij,kj=(N−1)γ_ik. Define Q and G using two-hole and particle-hole operator moments and derive their affine forms from anticommutation identities.
+Set $\gamma_{ij}=\langle a_i^\dagger a_j\rangle$ and $\Gamma_{ij,kl}=\langle a_i^\dagger a_j^\dagger a_l a_k\rangle$. Require Hermiticity, fermionic antisymmetry, Tr γ=N, $\sum_{ij}\Gamma_{ij,ij}=N(N-1)$, and $\sum_j\Gamma_{ij,kj}=(N-1)\gamma_{ik}$. Define Q and G using two-hole and particle-hole operator moments and derive their affine forms from anticommutation identities.
 
 Minimizing the linear energy over a necessary-condition outer relaxation gives E_relax≤E₀. A verified dual feasible point gives L≤E_relax; an explicit normalized N-fermion state gives U≥E₀. Report L≤E₀≤U, not an unsupported accuracy estimate from Γ alone.
 
@@ -1842,6 +2057,23 @@ Work on the baseline above. First make every input and convention explicit, then
 - [Liu, Christandl and Verstraete, N-representability is QMA-complete](https://arxiv.org/abs/quant-ph/0609125) — Complexity barrier to general exact representability.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/16-N-Representability-2RDM.md).
+
+$$\gamma_{ij}=\langle a_i^\dagger a_j\rangle,\qquad
+\Gamma_{ij,kl}=\langle a_i^\dagger a_j^\dagger a_l a_k\rangle,$$
+
+$$\operatorname{Tr}\gamma=N,\quad
+\sum_{ij}\Gamma_{ij,ij}=N(N-1),\quad
+\sum_j\Gamma_{ij,kj}=(N-1)\gamma_{ik}.$$
+
+$$L_{\mathrm{dual}}\le E_{\mathrm{relax}}\le E_0\le
+\langle\Psi|H|\Psi\rangle=U,\qquad \langle\Psi|\Psi\rangle=1.$$
+
+Derive two-particle, two-hole and particle-hole moment matrices from anticommutation in this convention. Necessary PSD constraints give an outer relaxation. Certify dual feasibility for $L$ and a physical $N$-fermion state for $U$; a relaxed RDM need not represent any state.
 
 
 # Critique 16: Certified energy brackets from reduced-density-matrix relaxations
@@ -1956,6 +2188,17 @@ Work on the baseline above. First make every input and convention explicit, then
 - [McKay, Isomorph-free exhaustive generation](https://users.cecs.anu.edu.au/~bdm/papers/orderly.pdf) — Canonical generation and completeness methodology.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/17-Isomer-Enumeration-Molecular-Graphs.md).
+
+Let $\mathcal G$ contain exactly the graphs satisfying the fixed atom, bond, valence and connectivity grammar. Then
+
+$$\text{catalog}=\mathcal G/\!\cong.$$
+
+Isomorphisms preserve the declared atom and bond labels. Every output must satisfy the grammar, no two representatives may be equivalent, and every allowed input must map to a representative. Canonical labeling proves deduplication only; completeness needs a coverage proof for generation and pruning. Stereochemistry requires a separately declared equivalence model.
 
 
 # Critique 17: Complete enumeration of a precisely defined molecular-graph class
@@ -2074,6 +2317,22 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/18-Optimal-Transport-Chemistry.md).
+
+$$\int\rho=N,\qquad \mu=\rho/N,\qquad
+c(r_1,\ldots,r_N)=\sum_{i<j}|r_i-r_j|^{-1},$$
+
+$$V_{\mathrm{SCE}}[\rho]=\inf_{\Gamma\in\Pi(\mu,\ldots,\mu)}\int c\,d\Gamma,
+\qquad \sum_i u(r_i)\le c(r_1,\ldots,r_N),$$
+
+$$\underbrace{\int u\rho}_{L}\ \le\ V_{\mathrm{SCE}}[\rho]\ \le\
+\underbrace{\int c\,d\Gamma_{\mathrm{feasible}}}_{U}.$$
+
+The coupling is a probability measure; it may be symmetrized and is not antisymmetric. This is a Coulomb interaction functional, not exact exchange. For a discrete problem, the same inequalities apply only to the discrete optimum until continuum error is bounded.
+
+
 # Critique 18: Certified optimal-transport bounds for strictly correlated electrons
 
 [Revised problem](../PRDs/18-Optimal-Transport-Chemistry.md) · [Preserved original](../archive/original-PRDs/18-Optimal-Transport-Chemistry.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/18-Optimal-Transport-Chemistry.md)
@@ -2186,6 +2445,19 @@ Work on the baseline above. First make every input and convention explicit, then
 - [Angeli, De Leenheer and Sontag, A Petri Net approach to persistence](https://arxiv.org/abs/q-bio/0608019) — Checkable sufficient conditions for persistence, with hypotheses.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/19-Chemical-Reaction-Networks.md).
+
+$$\dot x=S v(x),\qquad v_j(x)=k_j\prod_i x_i^{\alpha_{ij}},\qquad
+x\in(x_0+\operatorname{im}S)\cap\mathbb R_{\ge0}^n.$$
+
+$$f(x)=6-11x+6x^2-x^3=-(x-1)(x-2)(x-3),
+\qquad (f'(1),f'(2),f'(3))=(-2,1,-2).$$
+
+The scalar benchmark has two locally stable positive equilibria and one unstable equilibrium. General equilibrium enumeration needs complete coverage within the compatibility class, boundary treatment, and a reduced Jacobian. Positivity invariance, persistence and multistability are different claims.
 
 
 # Critique 19: Certified equilibria and conditional persistence in mass-action networks
@@ -2304,6 +2576,22 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/20-Ab-Initio-Path-Integrals.md).
+
+$$\beta_P=\beta/P,\quad\omega_P=P/(\beta\hbar),\quad q_{P+1}=q_1,$$
+
+$$\pi_P(q)\propto\exp\!\left[-\beta_P\sum_{s=1}^P
+\left\{\frac{m\omega_P^2}{2}(q_s-q_{s+1})^2+V(q_s)\right\}\right],$$
+
+$$E_{\mathrm{prim}}=\frac{P}{2\beta}
+-\frac{mP}{2\beta^2\hbar^2}\sum_s(q_s-q_{s+1})^2
++\frac1P\sum_sV(q_s).$$
+
+Coordinate observables use bead averages. Derive the estimator from the same partition-function convention. Separate sampling, integration, finite-$P$ and model errors; convergence fits and empirical autocorrelation diagnostics do not by themselves give rigorous enclosures.
+
+
 # Critique 20: Path-integral thermodynamics with a transparent error budget
 
 [Revised problem](../PRDs/20-Ab-Initio-Path-Integrals.md) · [Preserved original](../archive/original-PRDs/20-Ab-Initio-Path-Integrals.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/20-Ab-Initio-Path-Integrals.md)
@@ -2395,7 +2683,7 @@ For H_i of size m_i×n_i define
 
 $$H_X=[H_1\otimes I_{n_2}\mid I_{m_1}\otimes H_2^{\mathsf T}],\quad H_Z=[I_{n_1}\otimes H_2\mid H_1^{\mathsf T}\otimes I_{m_2}].$$
 
-Check H_XH_Zᵀ=0 over F₂, n=n₁n₂+m₁m₂, k=n−rank H_X−rank H_Z. Define d_X=min{|x|:x∈ker H_Z∖row H_X} and d_Z analogously, d=min(d_X,d_Z). A found logical operator upper-bounds distance; ruling out all smaller logical operators lower-bounds it.
+Check $H_XH_Z^{\mathsf T}=0$ over F₂, n=n₁n₂+m₁m₂, $k=n-\operatorname{rank}H_X-\operatorname{rank}H_Z$. Define $d_X=\min\{|x|:x\in\ker H_Z\setminus\operatorname{row}H_X\}$ and d_Z analogously, $d=\min(d_X,d_Z)$. A found logical operator upper-bounds distance; ruling out all smaller logical operators lower-bounds it.
 
 ## Required outputs and proof obligations
 
@@ -2420,6 +2708,23 @@ Work on the baseline above. First make every input and convention explicit, then
 - [Panteleev and Kalachev, Asymptotically Good Quantum and Locally Testable Classical LDPC Codes](https://arxiv.org/abs/2111.03654) — Existing asymptotically good quantum LDPC constructions; novelty baseline.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/21-Quantum-LDPC-Codes.md).
+
+$$H_X=[H_1\otimes I_{n_2}\mid I_{m_1}\otimes H_2^{\mathsf T}],
+\qquad H_Z=[I_{n_1}\otimes H_2\mid H_1^{\mathsf T}\otimes I_{m_2}],$$
+
+$$H_XH_Z^{\mathsf T}=0,\quad n=n_1n_2+m_1m_2,\quad
+k=n-\operatorname{rank}_{\mathbb F_2}H_X-\operatorname{rank}_{\mathbb F_2}H_Z,$$
+
+$$d_X=\min_{x\in\ker H_Z\setminus\operatorname{row}H_X}|x|,
+\qquad d_Z=\min_{z\in\ker H_X\setminus\operatorname{row}H_Z}|z|,
+\qquad d=\min(d_X,d_Z).$$
+
+Two full-rank $3\times7$ Hamming checks give $n=58$, $k=16$; the included independent validator also checks $d=3$. A logical witness gives an upper distance bound; exclusion of all smaller logicals gives the lower bound. Finite code parameters do not establish an asymptotic LDPC family or decoding threshold.
 
 
 # Critique 21: Quantum LDPC instances with independently certified code parameters
@@ -2540,6 +2845,17 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/22-Bell-Inequalities-Nonlocality.md).
+
+$$\beta(P)=\sum_{abxy}c_{abxy}P(ab|xy),\quad
+\beta_L=\max_{P\text{ deterministic local}}\beta(P),\quad
+L_Q\le\beta_Q\le U_Q.$$
+
+A finite-dimensional state and measurements certify $L_Q$; a verified NPA dual or operator SOS certifies $U_Q$. For CHSH, $\beta_L=2$ and an achieving two-qubit strategy plus an upper-bound identity give $\beta_Q=2\sqrt2$. NPA's commuting-operator limit must not be identified with the closure of finite-dimensional tensor-product strategies. A facet in affine dimension $D$ needs saturating affine rank $D-1$.
+
+
 # Critique 22: Bell inequalities with certified local and quantum value brackets
 
 [Revised problem](../PRDs/22-Bell-Inequalities-Nonlocality.md) · [Preserved original](../archive/original-PRDs/22-Bell-Inequalities-Nonlocality.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/22-Bell-Inequalities-Nonlocality.md)
@@ -2629,7 +2945,7 @@ The primary decision outputs are entangled, separable, or unresolved. Restrict c
 
 ## Mathematical target
 
-Compute partial transpose in a fixed tensor-index convention. Negativity is N(ρ)=(||ρ^{T_B}||₁−1)/2. For entanglement give W satisfying 〈a⊗b|W|a⊗b〉≥0 for all product vectors and Tr(Wρ)<0. For separability give ρ=Σ_jp_j|a_jb_j〉〈a_jb_j| with p_j≥0 and Σp_j=1, or another sufficient theorem in its valid dimensions.
+Compute partial transpose in a fixed tensor-index convention. Negativity is $\mathcal N(\rho)=(\|\rho^{T_B}\|_1-1)/2$. For entanglement give W satisfying $\langle a\otimes b|W|a\otimes b\rangle\ge0$ for all product vectors and Tr(Wρ)<0. For separability give $\rho=\sum_jp_j|a_jb_j\rangle\langle a_jb_j|$ with p_j≥0 and Σp_j=1, or another sufficient theorem in its valid dimensions.
 
 PPT/DPS feasibility is generally only a necessary separability test. DPS infeasibility with a validated dual can certify entanglement; passing a finite level generally remains unresolved.
 
@@ -2656,6 +2972,19 @@ Work on the baseline above. First make every input and convention explicit, then
 - [Doherty, Parrilo and Spedalieri, A complete family of separability criteria](https://arxiv.org/abs/quant-ph/0308032) — Symmetric-extension hierarchy and dual entanglement witnesses.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/23-Entanglement-Measures-Witnesses.md).
+
+$$\mathcal N(\rho)=\frac{\|\rho^{T_B}\|_1-1}{2},\qquad
+\langle a\otimes b|W|a\otimes b\rangle\ge0,\quad \operatorname{Tr}(W\rho)<0.$$
+
+$$\rho=\sum_jp_j|a_jb_j\rangle\langle a_jb_j|,
+\qquad p_j\ge0,\quad\sum_jp_j=1.$$
+
+The witness conditions certify entanglement; the normalized product-state decomposition certifies separability. In general, passing finite PPT/DPS tests remains unresolved. For the two-qubit family $\rho_p=p|\psi^-\rangle\langle\psi^-|+(1-p)I/4$, $0\le p\le1$, separability holds exactly for $p\le1/3$.
 
 
 # Critique 23: Entanglement certification with explicit inconclusive outcomes
@@ -2774,6 +3103,19 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/24-Topological-Quantum-Error-Correction.md).
+
+$$C_2\xrightarrow{\partial_2}C_1\xrightarrow{\partial_1}C_0,
+\quad\partial_1\partial_2=0,\quad H_X=\partial_1,\quad H_Z=\partial_2^{\mathsf T},$$
+
+$$n=2L^2,\quad k=2,\quad d=L\quad(L\ge3),\qquad
+e+r\in\operatorname{im}\partial_2\quad\text{for successful }Z\text{-error recovery}.$$
+
+A vanishing residual syndrome only gives $e+r\in\ker\partial_1$ and can hide a nontrivial logical cycle. Statistical decoder curves require the fixed noise model and decoder; finite-size crossings are threshold estimates, not limit theorems.
+
+
 # Critique 24: Topological code verification and noise-specific decoder evaluation
 
 [Revised problem](../PRDs/24-Topological-Quantum-Error-Correction.md) · [Preserved original](../archive/original-PRDs/24-Topological-Quantum-Error-Correction.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/24-Topological-Quantum-Error-Correction.md)
@@ -2890,6 +3232,17 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/25-Quantum-Algorithms-Complexity.md).
+
+$$\theta=\arcsin(N^{-1/2}),\qquad
+p_r=\sin^2((2r+1)\theta),\qquad
+r\approx\frac{\pi}{4\theta}-\frac12.$$
+
+Choose a nonnegative integer by checking neighboring counts and explicitly handle small instances under the declared oracle model. The target is a matched $O(\sqrt N)$ algorithm and $\Omega(\sqrt N)$ lower bound with identical promise and error tolerance. An oracle separation has the form $\mathrm{BQP}^O\ne\mathrm{BPP}^O$ and does not prove $\mathrm{BQP}\ne\mathrm{BPP}$.
+
+
 # Critique 25: Quantum query complexity with explicit oracle and output models
 
 [Revised problem](../PRDs/25-Quantum-Algorithms-Complexity.md) · [Preserved original](../archive/original-PRDs/25-Quantum-Algorithms-Complexity.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/25-Quantum-Algorithms-Complexity.md)
@@ -3004,6 +3357,21 @@ Work on the baseline above. First make every input and convention explicit, then
 - [Valvo and Locatelli, Hamiltonian Control of Magnetic Field Lines: Computer Assisted Results Proving the Existence of KAM Barriers](https://arxiv.org/abs/2101.07785) — Example of a complete computer-assisted Hamiltonian KAM workflow; use a theorem matching the chosen formulation.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/26-KAM-Theory-Planetary-Stability.md).
+
+$$H(I,\theta)=\omega\cdot I+\frac{|I|^2}{2}
++\epsilon[\cos\theta_1+\cos(\theta_1-\theta_2)],
+\qquad\omega=(1,(1+\sqrt5)/2),$$
+
+$$E(\theta)=X_H(K(\theta))-DK(\theta)\omega,
+\qquad |k\cdot\omega|\ge\frac\gamma{|k|_1^\tau}
+\quad(k\in\mathbb Z^2\setminus\{0\}).$$
+
+Prove the all-integer Diophantine bound and every analytic-width, twist, tail and smallness condition of a specified quantitative theorem. Its conclusion is a nearby invariant torus, not stability of arbitrary planetary initial conditions. Failure of a sufficient criterion is not instability.
 
 
 # Critique 26: A posteriori certification of an invariant Hamiltonian torus
@@ -3124,6 +3492,19 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/27-N-Body-Central-Configurations.md).
+
+$$U=\sum_{i<j}\frac{m_im_j}{|r_i-r_j|},\quad
+\sum_i m_i r_i=0,\quad I=\sum_i m_i|r_i|^2=1,$$
+
+$$\nabla_{r_i}U=-\lambda m_i r_i,\qquad\lambda=U/I>0,
+\qquad d_{ij}^2=|r_i-r_j|^2,\quad d_{ij}>0.$$
+
+Preserve collision exclusions when clearing denominators. For three labeled positive masses modulo $O(2)$, recover three collinear orderings and one equilateral shape. Complete coverage requires more than isolated root boxes. Relative-equilibrium stability uses the reduced rotating-frame system including Coriolis terms; a figure-eight choreography is not a central configuration.
+
+
 # Critique 27: Central configurations in a bounded, symmetry-reduced N-body problem
 
 [Revised problem](../PRDs/27-N-Body-Central-Configurations.md) · [Preserved original](../archive/original-PRDs/27-N-Body-Central-Configurations.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/27-N-Body-Central-Configurations.md)
@@ -3240,6 +3621,18 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/28-Nekhoroshev-Stability-Theory.md).
+
+$$H\circ\Phi=Z(J)+R(J,\theta),\qquad
+|I-J|\le\eta,\qquad\|\partial_\theta R\|\le r,$$
+
+$$|I(t)-I(0)|\le2\eta+r|t|.$$
+
+This estimate assumes the angle-independent normal form shown and a proved domain-containment interval. Include resonant drift if $Z$ depends on angles. A quantitative Nekhoroshev theorem instead requires all its constants, hypotheses and threshold in $T=C\exp(c\epsilon^{-a})$, with units supplied by $C$. The number $\exp(10^{0.3})\approx7.35413$ has no unit of time.
+
+
 # Critique 28: Explicit finite-time action confinement from a normal form
 
 [Revised problem](../PRDs/28-Nekhoroshev-Stability-Theory.md) · [Preserved original](../archive/original-PRDs/28-Nekhoroshev-Stability-Theory.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/28-Nekhoroshev-Stability-Theory.md)
@@ -3354,6 +3747,18 @@ Work on the baseline above. First make every input and convention explicit, then
 - [Hordijk and Steel, Autocatalytic sets in a partitioned biochemical network](https://pmc.ncbi.nlm.nih.gov/articles/PMC4034171/) — RAF closure and the distinction between maximal and irreducible RAFs.
 
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
+
+
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/29-Chemical-Reaction-Networks-Origins.md).
+
+$$R'\subseteq R,\quad R'\ne\varnothing,\quad
+\operatorname{reactants}(r)\subseteq\operatorname{cl}_{R'}(F),$$
+
+$$\forall r\in R'\ \exists s\in\operatorname{cl}_{R'}(F):\ (s,r)\in C.$$
+
+Compute closure by reactant availability without imposing catalysis in the closure step. These conditions define a RAF. Inclusion-maximal, inclusion-minimal (irreducible), and minimum-cardinality RAFs are separate targets. Catalysis-respecting startup and sustained growth require additional conditions.
 
 
 # Critique 29: Autocatalytic sets: maximality, irreducibility and dynamical viability
@@ -3474,6 +3879,19 @@ Work on the baseline above. First make every input and convention explicit, then
 References support definitions or limitations; the scope choices and proposed milestones are editorial recommendations, not claims that these results have already been obtained.
 
 
+## Displayed formulation and claim boundary
+
+[Canonical specification](../PRDs/30-Genotype-Phenotype-Mapping.md).
+
+$$\Phi:\{A,C,G,U\}^L\longrightarrow\mathcal S_L,\qquad
+r(s)=\frac{|\{t:d_H(s,t)=1,\ \Phi(t)=\Phi(s)\}|}{3L},$$
+
+$$\sum_{\varphi}|\Phi^{-1}(\varphi)|=4^L,\qquad
+\deg_{H(L,4)}s=3L.$$
+
+Specify pair-count maximization, allowed pairs, hairpin length, pseudoknot exclusion and deterministic tie-breaking. Enumerate every connected component of each phenotype preimage. This combinatorial map is not a thermodynamic predictor. At $L=20$, $4^L=1{,}099{,}511{,}627{,}776$; sampling does not establish a complete catalog.
+
+
 # Critique 30: An exact finite genotype–phenotype map and its mutation graph
 
 [Revised problem](../PRDs/30-Genotype-Phenotype-Mapping.md) · [Preserved original](../archive/original-PRDs/30-Genotype-Phenotype-Mapping.md) · [Pinned upstream source](https://github.com/rick-stevens-ai/Pure-Thought/blob/f854d4e12b55c1f5b5c2a964b75f2d23496d981e/PRDs/30-Genotype-Phenotype-Mapping.md)
@@ -3507,7 +3925,7 @@ Baseline: complete exact maps through L=8. Strong: increase L within measured re
 
 ---
 
-# Supplemental synthesis topics
+<a id="problem-s01"></a>
 
 # S01. Crystal-field and spin–orbit anisotropy in a finite ion model
 
@@ -3566,7 +3984,20 @@ Baseline: exact symmetry-allowed Hamiltonian basis and one doublet g tensor. Str
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
+## Displayed formulation and claim boundary
+
+[Supplemental specification](../supplemental/S01.md).
+
+$$H(B)=H_{\mathrm{CF}}+\lambda L\cdot S+\mu_B B\cdot(L+2S),$$
+
+$$P H(B)P=E_0I+\frac{\mu_B}{2}\sum_{a,b}B_a g_{ab}\sigma_b+O(|B|^2).$$
+
+Use the isolated Kramers-doublet projector $P$ and exact orbital-spin conventions. The singular values of $g$ remove doublet-basis ambiguity. Certify the gap above the doublet and bound any denominator in an anisotropy ratio on the compact parameter box. This finite ion model does not establish bulk magnetism.
+
+
 ---
+
+<a id="problem-s02"></a>
 
 # S02. Bandgap optimization in a bounded wave-operator family
 
@@ -3625,7 +4056,22 @@ Baseline: one certified complete gap for a supplied geometry. Strong: bound the 
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
+## Displayed formulation and claim boundary
+
+[Supplemental specification](../supplemental/S02.md).
+
+$$\lambda_- =\max_k\lambda_n(k),\qquad
+\lambda_+=\min_k\lambda_{n+1}(k),\qquad
+g=\lambda_+-\lambda_-. $$
+
+A possible normalized objective is $G=2g/(\lambda_++\lambda_-)$ when the denominator is positive; frequency-gap objectives must instead use $\omega_j=\sqrt{\lambda_j}$ consistently.
+
+Use a fixed self-adjoint wave model, bounded coefficients and geometry class, with a positive denominator. A complete gap needs $\lambda_+>\lambda_-$ across the entire Brillouin zone and all required polarizations. A certified candidate lower bound does not establish global optimality; that needs coverage of the full design class.
+
+
 ---
+
+<a id="problem-s03"></a>
 
 # S03. Effective conductivity bounds for two-phase composites
 
@@ -3684,7 +4130,22 @@ Baseline: verify arithmetic and harmonic directional bounds with layered composi
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
+## Displayed formulation and claim boundary
+
+[Supplemental specification](../supplemental/S03.md).
+
+$$e\cdot A^*e=\min_{\phi\ \mathrm{periodic}}
+\langle a(x)|e+\nabla\phi|^2\rangle,\qquad a(x)\in\{a_1,a_2\},$$
+
+$$\left(\frac f{a_1}+\frac{1-f}{a_2}\right)^{-1}|e|^2
+\le e\cdot A^*e\le(fa_1+(1-f)a_2)|e|^2.$$
+
+Assume positive scalar phases, fixed volume fraction $f$, and a normalized cell average. Potential trials give upper bounds and the corresponding flux principle gives lower bounds. A finite microstructure list does not characterize an unrestricted G-closure.
+
+
 ---
+
+<a id="problem-s04"></a>
 
 # S04. Finite-volume certification of a disordered topological index
 
@@ -3743,7 +4204,20 @@ Baseline: recover a clean model’s known index with a validated finite-to-bulk 
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
+## Displayed formulation and claim boundary
+
+[Supplemental specification](../supplemental/S04.md).
+
+$$\operatorname{dist}(E_F,\operatorname{spec}H_0)\ge g>0,
+\qquad\|V\|<g\quad\Longrightarrow\quad
+\operatorname{dist}(E_F,\operatorname{spec}(H_0+V))\ge g-\|V\|.$$
+
+This bounded self-adjoint perturbation estimate supplies a spectral-gap hypothesis. Equality of a chosen finite-volume index with the bulk index still requires a specific localizer or other index theorem with all radius, locality, commutator and scale conditions checked. Mobility-gap claims need a different theorem.
+
+
 ---
+
+<a id="problem-s05"></a>
 
 # S05. Finite-basis density functionals and exact convex constraints
 
@@ -3791,7 +4265,7 @@ For a fixed finite lattice Hamiltonian, can the ensemble constrained-search dens
 
 ## Precise scope, target and outputs
 
-Fix a finite N-particle Hilbert space, kinetic T, interaction W, and commuting site-density operators n_i. Define F(n)=min_{ρ≥0,Trρ=1,Trρn_i=n_i}(Trρ(T+W)) on ensemble-representable densities. Derive the dual F(n)=sup_v[E(v)−v·n] with E(v)=min_ρTrρ(T+W+Σv_i n_i), under the finite-dimensional convex formulation. Use exact states for primal upper bounds and potentials with certified E(v) lower bounds for dual lower bounds. If defining an exchange-correlation remainder, specify T_s and Hartree conventions separately.
+Fix a finite N-particle Hilbert space, kinetic T, interaction W, and commuting site-density operators $\widehat n_i$. Define $F(n)=\min_{\rho\succeq0,\operatorname{Tr}\rho=1,\operatorname{Tr}(\rho\widehat n_i)=n_i}\operatorname{Tr}\rho(T+W)$ on ensemble-representable densities. Derive the dual $F(n)=\sup_v[E(v)-v\cdot n]$ with $E(v)=\min_{\rho\succeq0,\operatorname{Tr}\rho=1}\operatorname{Tr}\rho(T+W+\sum_i v_i\widehat n_i)$, under the finite-dimensional convex formulation. Use exact states for primal upper bounds and potentials with certified E(v) lower bounds for dual lower bounds. If defining an exchange-correlation remainder, specify T_s and Hartree conventions separately.
 
 ## Detailed critique of the synthesis framing
 
@@ -3804,7 +4278,24 @@ Baseline: exact functional values and dual brackets on a two-site model. Strong:
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
+## Displayed formulation and claim boundary
+
+[Supplemental specification](../supplemental/S05.md).
+
+$$F(n)=\min_{\substack{\rho\succeq0,\ \operatorname{Tr}\rho=1\\
+\operatorname{Tr}(\rho\widehat n_i)=n_i}}
+\operatorname{Tr}\rho(T+W),$$
+
+$$E(v)=\min_{\rho\succeq0,\ \operatorname{Tr}\rho=1}
+\operatorname{Tr}\rho\!\left(T+W+\sum_i v_i\widehat n_i\right),
+\qquad F(n)=\sup_v[E(v)-v\cdot n].$$
+
+Work in the fixed finite $N$-particle Hilbert space and on ensemble-representable densities. The supremum need not be attained by a finite potential at boundary densities. Feasible density matrices give upper bounds; certified energy lower bounds at chosen potentials give lower bounds. Convexity of $F$ does not imply convexity of an exchange-correlation remainder.
+
+
 ---
+
+<a id="problem-s06"></a>
 
 # S06. Inverse pair-potential design over an explicit competitor class
 
@@ -3863,7 +4354,22 @@ Baseline: exact or interval-verified ordering for a finite competitor list. Stro
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
+## Displayed formulation and claim boundary
+
+[Supplemental specification](../supplemental/S06.md).
+
+$$v_\theta(r)=\sum_j\theta_j\phi_j(r),\qquad
+E_\theta(\Lambda)=\frac12\sum_{x\in\Lambda\setminus\{0\}}v_\theta(|x|),$$
+
+$$E_\theta(\Lambda_{\mathrm{target}})\le
+E_\theta(\Lambda_{\mathrm{competitor}})-\delta.$$
+
+Require convergent sums and certified tails, uniformly on the declared density interval and competitor set. The conclusion is best among those competitors. Unrestricted configurations, infinitesimal deformations and finite-temperature free energies require separate arguments.
+
+
 ---
+
+<a id="problem-s07"></a>
 
 # S07. Finite-size criteria for parent-Hamiltonian spectral gaps
 
@@ -3924,7 +4430,21 @@ Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessfu
 [Cubitt, Pérez-García and Wolf, Undecidability of the Spectral Gap](https://arxiv.org/abs/1502.04573) motivates the restriction to a specified certifiable family.
 
 
+## Displayed formulation and claim boundary
+
+[Supplemental specification](../supplemental/S07.md).
+
+$$H_N=\sum_i h_i,\qquad h_i\succeq0,\qquad
+\Delta_N=\min(\operatorname{spec}H_N\setminus\{0\}),$$
+
+$$\text{target: }\inf_{N\ \mathrm{in\ the\ stated\ family}}\Delta_N\ge\delta>0.$$
+
+Verify frustration freeness and ground-space assumptions. A specified finite-size gap theorem must supply the implication from validated local gaps to the displayed uniform bound. Positive gaps on finitely many chains are insufficient; failure of a sufficient criterion is not a gaplessness proof.
+
+
 ---
+
+<a id="problem-s08"></a>
 
 # S08. Gapped boundaries from exact anyon data
 
@@ -3985,7 +4505,19 @@ Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessfu
 [Li, Yang and Dong, Gapped Boundaries of Kitaev’s Quantum Double Models](https://arxiv.org/abs/2504.19512) provides a primary example of linking Lagrangian algebras to explicit lattice boundary terms.
 
 
+## Displayed formulation and claim boundary
+
+[Supplemental specification](../supplemental/S08.md).
+
+$$A=\bigoplus_a n_a a,\qquad n_a\in\mathbb Z_{\ge0},\qquad
+(\dim A)^2=\operatorname{Dim}\mathcal C.$$
+
+For a vacuum boundary this Lagrangian dimension condition supplements, rather than replaces, the unit, multiplication, associativity, commutativity and separability checks using exact categorical coherence data. In the toric-code category the reference condensates are $1\oplus e$ and $1\oplus m$. A microscopic boundary Hamiltonian needs its own gap proof.
+
+
 ---
+
+<a id="problem-s09"></a>
 
 # S09. Stoquasticity under a bounded class of basis changes
 
@@ -4046,7 +4578,21 @@ Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessfu
 [Marvian, Lidar and Hen, On the computational complexity of curing non-stoquastic Hamiltonians](https://pmc.ncbi.nlm.nih.gov/articles/PMC6450938/) supports the need to specify the allowed basis class.
 
 
+## Displayed formulation and claim boundary
+
+[Supplemental specification](../supplemental/S09.md).
+
+$$U=\bigotimes_{i=1}^nU_i,\quad U_i\in\mathrm{Clifford}_1/\mathrm{phase},
+\qquad H'=UHU^\dagger,$$
+
+$$\operatorname{Im}H'_{xy}=0,\qquad\operatorname{Re}H'_{xy}\le0\quad(x\ne y).$$
+
+Apply these conditions to the full transformed matrix, allowing cancellations between terms. Exhaustive coverage or an equivalent checked UNSAT proof excludes only this finite transformation class. Stoquasticity alone does not guarantee efficient mixing or sampling.
+
+
 ---
+
+<a id="problem-s10"></a>
 
 # S10. Certified periodic orbits of a specified three-body model
 
@@ -4105,7 +4651,19 @@ Baseline: certify one supplied orbit and its period. Strong: validated continuat
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
+## Displayed formulation and claim boundary
+
+[Supplemental specification](../supplemental/S10.md).
+
+$$F(z_0,T)=\varphi_T(z_0)-z_0=0,\qquad
+M=D\varphi_T(z_0).$$
+
+The shooting residual must first be augmented and reduced using a phase condition, conserved quantities and continuous symmetries so the validated root problem has the correct dimension. Interval flow and root bounds establish existence; the reduced Floquet multipliers classify linear behavior. Neither a near return nor stable-looking multipliers prove nonlinear stability or a manifold connection.
+
+
 ---
+
+<a id="problem-s11"></a>
 
 # S11. Minimal reaction implementations of a specified computational behavior
 
@@ -4166,7 +4724,20 @@ Baseline: one certified reaction implementation with explicit semantics. Strong:
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
+## Displayed formulation and claim boundary
+
+[Supplemental specification](../supplemental/S11.md).
+
+$$\min_{\mathcal R\in\mathfrak G}\operatorname{cost}(\mathcal R)
+\quad\text{subject to}\quad
+\forall x\in\mathcal X:\ \operatorname{error}(\mathcal R,x;T)\le\varepsilon.$$
+
+Declare the finite reaction grammar $\mathfrak G$, semantics, encoding, decoding, time requirement, input set and cost ordering. Correctness of one network gives an upper cost bound; excluding every lower-cost network gives minimality within that grammar. A finite truth table does not prove universal computation or self-replication.
+
+
 ---
+
+<a id="problem-s12"></a>
 
 # S12. Capacity of a specified finite noisy genotype–phenotype channel
 
@@ -4227,4 +4798,16 @@ Baseline: binary symmetric-channel capacity and deterministic-map capacity repro
 Use the shared [evidence standard](../reviews/EVIDENCE-STANDARD.md). Unsuccessful search is unresolved unless a complete exclusion proof is supplied. These are proposed baseline specifications, not completed scientific results.
 
 
----
+## Displayed formulation and claim boundary
+
+[Supplemental specification](../supplemental/S12.md).
+
+$$C=\max_p I_p(G;Y),\qquad
+I_p(G;Y)\le C\le\max_g D(W(\cdot|g)\|q).$$
+
+For a cost limit $c_*$, any $\lambda\ge0$ and adequately supported $q$ give
+
+$$C(c_*)\le\lambda c_*+
+\max_g\{D(W(\cdot|g)\|q)-\lambda c(g)\}.$$
+
+Use base-two logarithms and verified stochastic rows. A feasible input distribution supplies a lower bound, and interval logarithms certify numerical values. For a deterministic unrestricted finite map, capacity is $\log_2|\operatorname{im}\Phi|$; this differs from neutral-network connectivity.

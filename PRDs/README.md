@@ -4,7 +4,7 @@ Every problem includes a **Plain-language guide** with an everyday explanation, 
 
 Thirty canonical problem specifications, revised 2026-09-11. Each states a concrete question, assumptions, mathematical target, outputs, validation, and research extension. Two historical duplicate filenames redirect to the canonical 07 and 08 documents.
 
-The [review overview](../reviews/REVIEW.md) explains the main corrections. The [synthesis crosswalk](../reviews/SYNTHESIS-CROSSWALK.md) preserves different topics in the earlier portfolio. The original long reports remain historical and have not been regenerated.
+The [review overview](../reviews/REVIEW.md) explains the main corrections. The [synthesis crosswalk](../reviews/SYNTHESIS-CROSSWALK.md) preserves different topics in the earlier portfolio. The [regenerated LaTeX/PDF reports](../latex-reports/README.md) and [complete problem summaries](../COMPLETE-PROBLEM-SUMMARIES.md) now follow these specifications and critiques; original long reports are preserved in the archive.
 
 | ID | Revised problem | Detailed review |
 |---|---|---|

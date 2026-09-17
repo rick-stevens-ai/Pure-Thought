@@ -50,7 +50,7 @@ The primary decision outputs are entangled, separable, or unresolved. Restrict c
 
 ## Mathematical target
 
-Compute partial transpose in a fixed tensor-index convention. Negativity is N(ρ)=(||ρ^{T_B}||₁−1)/2. For entanglement give W satisfying 〈a⊗b|W|a⊗b〉≥0 for all product vectors and Tr(Wρ)<0. For separability give ρ=Σ_jp_j|a_jb_j〉〈a_jb_j| with p_j≥0 and Σp_j=1, or another sufficient theorem in its valid dimensions.
+Compute partial transpose in a fixed tensor-index convention. Negativity is $\mathcal N(\rho)=(\|\rho^{T_B}\|_1-1)/2$. For entanglement give W satisfying $\langle a\otimes b|W|a\otimes b\rangle\ge0$ for all product vectors and Tr(Wρ)<0. For separability give $\rho=\sum_jp_j|a_jb_j\rangle\langle a_jb_j|$ with p_j≥0 and Σp_j=1, or another sufficient theorem in its valid dimensions.
 
 PPT/DPS feasibility is generally only a necessary separability test. DPS infeasibility with a validated dual can certify entanglement; passing a finite level generally remains unresolved.
 

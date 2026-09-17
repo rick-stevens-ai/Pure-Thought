@@ -1,5 +1,7 @@
 # Validation of the revision package
 
+**2026-09-17 update:** Active reports and complete summaries have now been regenerated. See [report revision and current validation](REPORT-REVISION.md). The original report and synthesis bytes are preserved in the archive and checked against the same source manifest. The dated record below describes the earlier specification-only revision.
+
 Validated locally on 2026-09-11. These checks assess document coverage, preservation, and selected corrected examples. They do not certify the proposed research algorithms or all scientific claims in the portfolio.
 
 ## Coverage and preservation
