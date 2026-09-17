@@ -1,0 +1,998 @@
+\documentclass[11pt,a4paper]{article}
+
+% ============================================================
+% PACKAGES
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+
+% ============================================================
+% PAGE SETUP
+% ============================================================
+\geometry{margin=1in}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    citecolor=green!50!black,
+    urlcolor=purple!70!black
+}
+
+% ============================================================
+% CODE LISTINGS SETUP
+% ============================================================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    language=Python
+}
+
+\lstdefinestyle{leanstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    language=ML
+}
+
+\lstset{style=pythonstyle}
+
+% ============================================================
+% THEOREM ENVIRONMENTS
+% ============================================================
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}{Remark}[section]
+
+% ============================================================
+% CUSTOM COMMANDS
+% ============================================================
+\newcommand{\CFT}{\mathrm{CFT}}
+\newcommand{\AdS}{\mathrm{AdS}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\PSL}{\mathrm{PSL}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+
+% ============================================================
+% ANNOTATION BOX
+% ============================================================
+\newtcolorbox{annotation}[1][]{
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    title={Analysis Note},
+    #1
+}
+
+\newtcolorbox{pursuitbox}[1][]{
+    colback=green!5!white,
+    colframe=green!60!black,
+    fonttitle=\bfseries,
+    title={Research Direction},
+    #1
+}
+
+\newtcolorbox{warningbox}[1][]{
+    colback=red!5!white,
+    colframe=red!75!black,
+    fonttitle=\bfseries,
+    title={Critical Consideration},
+    #1
+}
+
+% ============================================================
+% DOCUMENT BEGIN
+% ============================================================
+\begin{document}
+
+% ============================================================
+% TITLE PAGE
+% ============================================================
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+
+    {\Huge\bfseries Challenge 01:\\[0.5em]
+    AdS$_3$ Pure Gravity via the\\Modular Bootstrap\par}
+
+    \vspace{1.5cm}
+
+    {\Large\itshape Comprehensive Technical Report\par}
+
+    \vspace{2cm}
+
+    \begin{tabular}{ll}
+        \textbf{Domain:} & Quantum Gravity \& Particle Physics \\
+        \textbf{Difficulty:} & High \\
+        \textbf{Timeline:} & 6--12 months \\
+        \textbf{Prerequisites:} & Conformal field theory, modular forms, \\
+        & semidefinite programming
+    \end{tabular}
+
+    \vfill
+
+    {\large Pure Thought AI Challenges\par}
+    {\large\today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ============================================================
+% SECTION 1: EXECUTIVE SUMMARY
+% ============================================================
+\section{Executive Summary}
+
+This challenge addresses one of the most profound open questions in quantum gravity: \textbf{the existence of extremal 2D conformal field theories} at central charges $c = 24k$ for $k > 1$. These theories, if they exist, would provide consistent quantum gravity theories in three-dimensional Anti-de Sitter space (AdS$_3$) and potentially reveal new connections between number theory, sporadic groups, and physics---extending the famous Monstrous Moonshine correspondence.
+
+\begin{annotation}
+The AdS/CFT correspondence, discovered by Maldacena in 1997, remains one of theoretical physics' most powerful tools. This challenge leverages the special tractability of the AdS$_3$/CFT$_2$ case, where infinite-dimensional Virasoro symmetry provides extraordinary computational control. The ``modular bootstrap'' approach requires \emph{no phenomenological input}---it derives constraints purely from mathematical consistency.
+\end{annotation}
+
+% ============================================================
+% SECTION 2: SCIENTIFIC CONTEXT
+% ============================================================
+\section{Scientific Context and Motivation}
+
+\subsection{The AdS/CFT Correspondence}
+
+The \textbf{AdS/CFT correspondence} posits an exact duality between:
+\begin{itemize}
+    \item Quantum gravity in $(d+1)$-dimensional Anti-de Sitter space
+    \item A $d$-dimensional conformal field theory on the boundary
+\end{itemize}
+
+For \textbf{AdS$_3$/CFT$_2$}, this correspondence is particularly tractable due to the infinite-dimensional Virasoro symmetry of 2D CFTs.
+
+\begin{pursuitbox}
+\textbf{Why AdS$_3$ is special:} In three spacetime dimensions, the graviton has no local propagating degrees of freedom---pure gravity is topological. This dramatically constrains the dual CFT, making explicit construction potentially achievable.
+\end{pursuitbox}
+
+\subsection{Pure Gravity and Extremal CFTs}
+
+\textbf{Pure gravity} in AdS$_3$ contains only the graviton---no additional matter fields. According to AdS/CFT, such a theory should be dual to an \textbf{extremal CFT}: a 2D conformal field theory where the spectrum is \emph{maximally sparse}, containing only:
+\begin{enumerate}
+    \item The vacuum state (identity operator)
+    \item The stress tensor and its Virasoro descendants
+    \item Primary operators only above a large conformal dimension gap $\Delta_{\text{gap}}$
+\end{enumerate}
+
+\subsection{The Monster CFT and Monstrous Moonshine}
+
+For central charge $c = 24$, the extremal theory is \textbf{unique} and corresponds to the celebrated \textbf{Monster CFT}:
+\begin{itemize}
+    \item Partition function given by the modular $j$-invariant
+    \item Symmetry group is the \textbf{Monster group} $\mathbb{M}$---the largest sporadic finite simple group
+    \item Degeneracies encode dimensions of Monster representations: $d(2) = 196884 = 196883 + 1$
+\end{itemize}
+
+\begin{annotation}
+The connection between the $j$-invariant, the Monster group, and string theory is known as \textbf{Monstrous Moonshine}. Discovering extremal CFTs at higher $c$ could reveal \emph{new moonshine phenomena}, potentially connecting to other sporadic groups or novel mathematical structures.
+\end{annotation}
+
+\subsection{The Core Question}
+
+\begin{tcolorbox}[colback=yellow!10!white,colframe=orange!80!black,title=\textbf{Central Research Question}]
+\textbf{Do extremal 2D CFTs exist for central charge $c = 24k$ (with $k > 1$) having only Virasoro primaries below the gap $\Delta_{\text{gap}} \approx c/12$?}
+
+\begin{itemize}
+    \item For $k = 1$ ($c = 24$): The Monster CFT provides an explicit example with $\Delta_{\text{gap}} = 2$.
+    \item For $k \geq 2$: \textbf{No such theories are known.} Numerical evidence suggests they may not exist for certain gaps.
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Why This Matters}
+
+\begin{enumerate}[label=\textbf{(\arabic*)}]
+    \item \textbf{Existence:} Constructing explicit extremal CFTs would prove pure AdS$_3$ gravity theories exist at these central charges and potentially reveal new moonshine phenomena.
+
+    \item \textbf{Impossibility:} Rigorous no-go theorems would constrain the landscape of quantum gravity theories and support \textbf{Swampland conjectures} about which effective theories can be UV-completed.
+
+    \item \textbf{Methodology:} The modular bootstrap uses only fundamental axioms (modular invariance, unitarity, integrality)---no phenomenological input required.
+
+    \item \textbf{Mathematical Discovery:} Connections between modular forms, sporadic groups, and physics have led to profound discoveries; extremal CFTs at higher $c$ might reveal new instances.
+\end{enumerate}
+
+% ============================================================
+% SECTION 3: MATHEMATICAL FORMULATION
+% ============================================================
+\section{Mathematical Formulation}
+
+\subsection{The Virasoro Algebra}
+
+A 2D CFT with central charge $c$ is characterized by its \textbf{Virasoro algebra}:
+\begin{equation}
+    \boxed{[L_m, L_n] = (m - n) L_{m+n} + \frac{c}{12} m(m^2 - 1) \delta_{m+n,0}}
+\end{equation}
+
+\begin{definition}[Primary Operators]
+Primary operators $\ket{h}$ satisfy:
+\begin{align}
+    L_0 \ket{h} &= h \ket{h} \quad \text{(conformal dimension $h$)} \\
+    L_m \ket{h} &= 0 \quad \text{for } m > 0
+\end{align}
+\end{definition}
+
+\subsection{Virasoro Characters}
+
+The \textbf{Virasoro character} at conformal dimension $h$ is:
+\begin{equation}
+    \chi_h(q) = \Tr_{\mathcal{V}_h} q^{L_0 - c/24} = \frac{q^{h - c/24}}{\prod_{n=1}^{\infty}(1 - q^n)} = \frac{q^{h - c/24}}{\eta(\tau)}
+\end{equation}
+where:
+\begin{itemize}
+    \item $q = e^{2\pi i \tau}$ with $\tau$ the modular parameter
+    \item $\eta(\tau)$ is the \textbf{Dedekind eta function}
+\end{itemize}
+
+\begin{definition}[Dedekind Eta Function]
+\begin{equation}
+    \eta(\tau) = q^{1/24} \prod_{n=1}^{\infty}(1 - q^n), \quad q = e^{2\pi i \tau}
+\end{equation}
+satisfying the modular transformation:
+\begin{equation}
+    \eta\left(-\frac{1}{\tau}\right) = \sqrt{-i\tau}\, \eta(\tau)
+\end{equation}
+\end{definition}
+
+\subsection{The Torus Partition Function}
+
+The torus \textbf{partition function} is:
+\begin{equation}
+    Z(\tau, \bar{\tau}) = \sum_h d(h) \left|\chi_h(\tau)\right|^2
+\end{equation}
+where $d(h)$ is the degeneracy of primary operators at conformal dimension $h$.
+
+For \textbf{holomorphic CFTs} (no anti-holomorphic dependence):
+\begin{equation}
+    Z(\tau) = \chi_0(\tau) + \sum_{h > 0} d(h) \chi_h(\tau)
+\end{equation}
+
+\subsection{Modular Invariance}
+
+\begin{theorem}[Modular Invariance Constraint]
+The partition function must be invariant under the modular group $\PSL(2,\Z) = \SL(2,\Z)/\{\pm I\}$, generated by:
+\begin{align}
+    S&: \tau \mapsto -\frac{1}{\tau} \\
+    T&: \tau \mapsto \tau + 1
+\end{align}
+This requires $Z(\tau) = Z(-1/\tau)$ and $Z(\tau) = Z(\tau + 1)$.
+\end{theorem}
+
+The \textbf{modular S-transformation} relates characters via:
+\begin{equation}
+    \chi_h\left(-\frac{1}{\tau}\right) = \sum_{h'} S_{h,h'} \chi_{h'}(\tau)
+\end{equation}
+
+For Virasoro characters at large $c$:
+\begin{equation}
+    S_{h,h'} \approx i \exp\left(-2\pi i \sqrt{hh'}\right)
+\end{equation}
+
+\begin{warningbox}
+The S-matrix approximation above is valid for large $c$. For exact results, one must compute the S-matrix by evaluating characters at multiple $\tau$ points and solving a linear system. Verify that $S S^\dagger = I$ (unitarity) as a consistency check.
+\end{warningbox}
+
+\subsection{Extremality Condition}
+
+\begin{definition}[Extremal CFT]
+An extremal CFT has \textbf{no primaries in the gap} $(0, \Delta_{\text{gap}})$ except the vacuum:
+\begin{align}
+    d(0) &= 1 \quad \text{(vacuum)} \\
+    d(h) &= 0 \quad \text{for } 0 < h < \Delta_{\text{gap}} \\
+    d(h) &\geq 0 \quad \text{for } h \geq \Delta_{\text{gap}}
+\end{align}
+For $c = 24k$, a natural gap choice is $\Delta_{\text{gap}} = c/12 = 2k$.
+\end{definition}
+
+\subsection{Optimization Problem Formulation}
+
+The modular bootstrap can be cast as a \textbf{linear programming (LP)} or \textbf{semidefinite programming (SDP)} feasibility problem.
+
+\subsubsection{Primal Problem}
+
+\begin{equation}
+\begin{aligned}
+    \text{Find:} \quad & \{d(h) \in \Z_{\geq 0}\} \text{ for } h \geq \Delta_{\text{gap}} \\
+    \text{Subject to:} \quad & Z(\tau) - Z\left(-\frac{1}{\tau}\right) = 0 \quad \text{(modular invariance)} \\
+    & d(h) \geq 0 \quad \text{(unitarity)} \\
+    & d(h) \in \Z \quad \text{(integrality)}
+\end{aligned}
+\end{equation}
+
+In practice, we truncate the spectrum at some large $h_{\max}$ and solve:
+\begin{equation}
+\begin{aligned}
+    \text{Minimize:} \quad & 0 \quad \text{(feasibility problem)} \\
+    \text{Variables:} \quad & d(h) \text{ for } h \in \{\Delta_{\text{gap}}, \Delta_{\text{gap}} + 1, \ldots, h_{\max}\} \\
+    \text{Constraints:} \quad & \text{Modular invariance equations} + d(h) \geq 0
+\end{aligned}
+\end{equation}
+
+\subsubsection{Dual Problem and Certificates}
+
+If the primal is infeasible, the LP dual provides a \textbf{certificate of impossibility}: a functional $\alpha(h)$ such that:
+\begin{equation}
+    \sum_h \alpha(h) \cdot [\text{modular constraint}]_h < 0, \quad \alpha(h) \geq 0 \text{ for allowed } h
+\end{equation}
+
+This proves \emph{mathematically} that no solution exists.
+
+\begin{pursuitbox}
+\textbf{Certificate Verification Strategy:} Export dual certificates in SMT-LIB format and verify with Z3 or other SMT solvers. For maximum rigor, formalize the proof in Lean 4 or Isabelle/HOL.
+\end{pursuitbox}
+
+% ============================================================
+% SECTION 4: IMPLEMENTATION APPROACH
+% ============================================================
+\section{Implementation Approach}
+
+\subsection{Phase 1: Virasoro Characters and Modular Forms (Months 1--2)}
+
+\textbf{Goal:} Build a high-precision calculator for Virasoro characters and modular transformations.
+
+\subsubsection{Dedekind Eta Function Implementation}
+
+\begin{lstlisting}[language=Python, caption={High-precision Dedekind eta function}]
+from mpmath import mp, exp, pi, sqrt
+
+mp.dps = 150  # 150 decimal places precision
+
+def dedekind_eta(tau: complex) -> complex:
+    """
+    Compute eta(tau) = q^{1/24} * prod_{n=1}^infty (1 - q^n)
+
+    Uses q-series truncation with error control.
+    Error bound: ~ q^{N_max} for truncation at N_max terms.
+
+    Args:
+        tau: Modular parameter with Im(tau) > 0
+
+    Returns:
+        eta(tau) to mp.dps precision
+    """
+    q = mp.exp(2 * mp.pi * 1j * tau)
+
+    # Product truncation (error ~ q^{N_max})
+    N_max = 100
+    product = mp.mpf(1)
+
+    for n in range(1, N_max + 1):
+        product *= (1 - q**n)
+
+    eta = q**(mp.mpf(1)/24) * product
+    return complex(eta)
+\end{lstlisting}
+
+\begin{annotation}
+\textbf{Precision Requirements:} The problem requires at least 100 decimal digits of precision to reliably verify modular invariance. Using \texttt{mpmath} with \texttt{mp.dps = 150} provides a safety margin. The truncation at $N_{\max} = 100$ is justified because $|q|^{100} < 10^{-50}$ for $\text{Im}(\tau) > 0.1$.
+\end{annotation}
+
+\subsubsection{Modular Transformation Test}
+
+\begin{lstlisting}[language=Python, caption={Verification of eta modular transformation}]
+def test_eta_modular():
+    """
+    Verify eta(-1/tau) = sqrt(-i*tau) * eta(tau)
+    """
+    tau = 0.3 + 0.5j
+
+    eta_tau = dedekind_eta(tau)
+    eta_S_tau = dedekind_eta(-1/tau)
+
+    # Expected relation from modular transformation
+    expected = mp.sqrt(-1j * tau) * eta_tau
+
+    error = abs(eta_S_tau - expected)
+    assert error < 1e-50, f"Modular check failed: error = {error}"
+    print(f"eta modular check PASSED: error = {error:.2e}")
+\end{lstlisting}
+
+\subsubsection{Virasoro Character}
+
+\begin{lstlisting}[language=Python, caption={Virasoro character computation}]
+def virasoro_character(c: float, h: float, tau: complex) -> complex:
+    """
+    Compute chi_h(tau) = q^{h - c/24} / eta(tau)
+
+    Args:
+        c: Central charge
+        h: Conformal dimension
+        tau: Modular parameter (Im(tau) > 0)
+
+    Returns:
+        Character value chi_h(tau)
+    """
+    q = mp.exp(2 * mp.pi * 1j * tau)
+    eta_tau = dedekind_eta(tau)
+
+    chi = q**(h - c/24) / eta_tau
+    return complex(chi)
+\end{lstlisting}
+
+\subsubsection{Partition Function}
+
+\begin{lstlisting}[language=Python, caption={Partition function from spectrum}]
+from typing import Dict
+
+def partition_function(c: float, spectrum: Dict[float, int],
+                       tau: complex) -> complex:
+    """
+    Compute Z(tau) = chi_0(tau) + sum_h d(h) * chi_h(tau)
+
+    Args:
+        c: Central charge
+        spectrum: Dictionary {h: d(h)} of degeneracies
+        tau: Modular parameter
+
+    Returns:
+        Partition function Z(tau)
+    """
+    # Vacuum contribution
+    Z = virasoro_character(c, 0, tau)
+
+    # Sum over primaries
+    for h, dh in spectrum.items():
+        if h > 0:
+            Z += dh * virasoro_character(c, h, tau)
+
+    return Z
+\end{lstlisting}
+
+\subsection{Phase 2: Modular S-Matrix and Constraints (Months 2--3)}
+
+\textbf{Goal:} Compute the S-matrix $S_{h,h'}$ and formulate modular invariance as linear equations.
+
+\subsubsection{Deriving the Constraint System}
+
+Modular invariance $Z(\tau) = Z(-1/\tau)$ gives:
+\begin{equation}
+    \chi_0\left(-\frac{1}{\tau}\right) + \sum_h d(h) \chi_h\left(-\frac{1}{\tau}\right) = \chi_0(\tau) + \sum_h d(h) \chi_h(\tau)
+\end{equation}
+
+Using the S-matrix expansion:
+\begin{equation}
+    \sum_{h'} S_{0,h'} \chi_{h'}(\tau) + \sum_h d(h) \sum_{h'} S_{h,h'} \chi_{h'}(\tau) = \chi_0(\tau) + \sum_h d(h) \chi_h(\tau)
+\end{equation}
+
+Matching coefficients of $\chi_{h'}(\tau)$ for each $h'$:
+\begin{equation}
+    S_{0,h'} + \sum_h d(h) S_{h,h'} = \delta_{h',0} + d(h')
+\end{equation}
+
+Rearranging yields a \textbf{linear system}:
+\begin{equation}
+    \boxed{\sum_h \left[S_{h,h'} - \delta_{h,h'}\right] d(h) = \delta_{h',0} - S_{0,h'}}
+\end{equation}
+
+\begin{lstlisting}[language=Python, caption={Setting up modular constraint matrix}]
+import numpy as np
+
+def setup_modular_constraints(c: float, gap: float, h_max: float,
+                               h_values: list) -> tuple:
+    """
+    Set up Ax = b for modular invariance.
+
+    Variables: x = [d(h_1), d(h_2), ..., d(h_N)]
+    where h_i in [gap, h_max]
+
+    Constraints: one equation per h' in h_values
+    """
+    N = len(h_values)
+
+    # Compute S-matrix
+    S = compute_s_matrix(c, h_values)
+
+    # Build constraint matrix A and RHS b
+    A = np.zeros((N, N), dtype=complex)
+    b = np.zeros(N, dtype=complex)
+
+    for i, hp in enumerate(h_values):
+        # Equation for h' = hp
+        for j, h in enumerate(h_values):
+            A[i, j] = S[j, i] - (1 if h == hp else 0)
+
+        # Right-hand side
+        b[i] = (1 if hp == 0 else 0) - S[0, i]
+
+    return A, b
+\end{lstlisting}
+
+\subsection{Phase 3: Linear Programming and Optimization (Months 3--4)}
+
+\textbf{Goal:} Solve for non-negative integer degeneracies or certify infeasibility.
+
+\begin{lstlisting}[language=Python, caption={LP solver for modular bootstrap}]
+import cvxpy as cp
+
+def solve_modular_bootstrap_lp(c: float, gap: float,
+                                h_max: float) -> dict:
+    """
+    Solve modular bootstrap as linear program.
+
+    Minimize: 0  (feasibility problem)
+    Subject to: A @ d = b, d >= 0
+    """
+    h_values = np.arange(gap, h_max + 1, 1.0)
+    N = len(h_values)
+
+    A, b = setup_modular_constraints(c, gap, h_max, h_values)
+
+    # Convert to real system (separate real/imaginary parts)
+    A_real = np.vstack([A.real, A.imag])
+    b_real = np.hstack([b.real, b.imag])
+
+    # Define variables
+    d = cp.Variable(N, nonneg=True)
+
+    # Constraints
+    constraints = [A_real @ d == b_real]
+
+    # Solve
+    problem = cp.Problem(cp.Minimize(0), constraints)
+    problem.solve(solver=cp.SCS, verbose=True)
+
+    if problem.status == cp.OPTIMAL:
+        spectrum = {h: d.value[i] for i, h in enumerate(h_values)}
+        return {'status': 'feasible', 'spectrum': spectrum}
+    elif problem.status == cp.INFEASIBLE:
+        dual = constraints[0].dual_value
+        return {'status': 'infeasible', 'dual_certificate': dual}
+    else:
+        return {'status': 'unknown'}
+\end{lstlisting}
+
+\begin{warningbox}
+\textbf{Integer Constraints:} The LP relaxation provides continuous solutions. For physical spectra, degeneracies must be non-negative integers. Use MILP solvers or rounding with verification for exact results.
+\end{warningbox}
+
+\subsection{Phase 4: Extremal CFT Search at $c = 24k$ (Months 4--6)}
+
+\textbf{Goal:} Systematically search for extremal CFTs at $c = 48, 72, 96, \ldots$
+
+\subsubsection{Monster CFT Validation ($c = 24$, $k = 1$)}
+
+\begin{lstlisting}[language=Python, caption={Validation against Monster CFT}]
+def test_monster_cft():
+    """
+    Verify we recover the Monster CFT at c=24.
+
+    Known spectrum:
+    d(1) = 0 (gap at Delta=2)
+    d(2) = 196884
+    d(3) = 21493760
+    d(4) = 864299970
+    """
+    c = 24
+    gap = 2
+    h_max = 10
+
+    result = solve_modular_bootstrap_milp(c, gap, h_max)
+    assert result['status'] == 'feasible'
+
+    # Check first few degeneracies
+    monster_spectrum = {
+        2: 196884,
+        3: 21493760,
+        4: 864299970
+    }
+
+    for h, d_expected in monster_spectrum.items():
+        d_computed = result['spectrum'][h]
+        assert abs(d_computed - d_expected) < 1
+        print(f"d({h}) = {d_computed} (expected {d_expected})")
+
+    print("Monster CFT validation: PASSED")
+\end{lstlisting}
+
+\begin{annotation}
+\textbf{Why Monster Validation is Critical:} The Monster CFT provides a known solution against which to test all numerical infrastructure. If the solver fails to reproduce $d(2) = 196884$ exactly, there is a bug in the implementation. Do not proceed to $k \geq 2$ until this passes.
+\end{annotation}
+
+\subsection{Phase 5: Dual Certificates and Impossibility Proofs (Months 6--8)}
+
+\textbf{Goal:} Extract machine-verifiable certificates when no solution exists.
+
+\begin{lstlisting}[language=Python, caption={Dual certificate extraction}]
+def extract_dual_certificate(c: float, gap: float,
+                              h_max: float) -> np.ndarray:
+    """
+    Solve dual LP to get impossibility certificate.
+
+    Dual problem:
+    Maximize: b^T y
+    Subject to: A^T y <= 0
+
+    If dual is unbounded, primal is infeasible.
+    """
+    h_values = np.arange(gap, h_max + 1, 1.0)
+    A, b = setup_modular_constraints(c, gap, h_max, h_values)
+
+    A_real = np.vstack([A.real, A.imag])
+    b_real = np.hstack([b.real, b.imag])
+
+    M = A_real.shape[0]
+    y = cp.Variable(M)
+
+    objective = cp.Maximize(b_real @ y)
+    constraints = [A_real.T @ y <= 0]
+
+    problem = cp.Problem(objective, constraints)
+    problem.solve()
+
+    if problem.status == cp.OPTIMAL and problem.value > 1e-6:
+        return y.value
+    return None
+\end{lstlisting}
+
+\subsection{Phase 6: Formal Verification (Months 8--12)}
+
+\textbf{Goal:} Formalize results in Lean 4 for machine-checked proofs.
+
+\begin{lstlisting}[style=leanstyle, caption={Lean 4 formalization template}]
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.LinearAlgebra.Matrix.Spectrum
+
+-- Define Virasoro character
+def virasoro_character (c h : Real) (tau : Complex) : Complex := sorry
+
+-- Modular invariance axiom
+axiom modular_invariance (c : Real) (Z : Complex -> Complex) :
+  (forall tau, Z tau = Z (-1/tau)) -> ModularInvariant Z
+
+-- Extremal CFT theorem
+theorem no_extremal_cft_c48_gap4 :
+  forall (spectrum : Real -> Nat),
+    (forall h, 0 < h and h < 4 -> spectrum h = 0) ->  -- gap
+    (forall h, spectrum h >= 0) ->                     -- unitarity
+    not (ModularInvariant (partition_function 48 spectrum)) := by
+  intro spectrum h_gap h_unit
+  -- Proof using dual certificate
+  sorry
+\end{lstlisting}
+
+% ============================================================
+% SECTION 5: DETAILED RESEARCH DIRECTIONS
+% ============================================================
+\section{Detailed Research Directions}
+
+\subsection{Direction 1: Systematic $k$-Scan}
+
+\begin{pursuitbox}
+\textbf{Approach:} For each $k = 2, 3, 4, \ldots, 10$, solve the modular bootstrap at $c = 24k$ with gap $\Delta_{\text{gap}} = c/12 = 2k$. Record feasibility status and extract certificates.
+
+\textbf{Expected Outcome:} A phase diagram in $(c, \Delta_{\text{gap}})$ space showing regions of existence vs.\ impossibility.
+
+\textbf{Novel Contribution:} If any extremal CFT is found for $k \geq 2$, this would be a major discovery potentially revealing new moonshine phenomena.
+\end{pursuitbox}
+
+\subsection{Direction 2: Gap Variation Study}
+
+The natural gap $\Delta_{\text{gap}} = c/12$ is not the only interesting choice:
+
+\begin{itemize}
+    \item \textbf{Smaller gaps} ($\Delta < c/12$): May be more feasible; would correspond to CFTs with additional light operators
+    \item \textbf{Larger gaps} ($\Delta > c/12$): Stronger constraint; if possible, would give ``super-extremal'' CFTs
+\end{itemize}
+
+\begin{pursuitbox}
+\textbf{Study:} For fixed $c = 48$, scan over gaps $\Delta \in \{2, 2.5, 3, 3.5, 4, 4.5, 5\}$ and map the feasibility boundary.
+\end{pursuitbox}
+
+\subsection{Direction 3: Symmetry Enhancement}
+
+If an extremal CFT is found, investigate its symmetry group:
+
+\begin{enumerate}
+    \item Compute the graded dimension $\dim_h = d(h)$ for low-lying states
+    \item Check if dimensions match irreducible representations of known groups
+    \item Look for sporadic group candidates (Conway groups, Baby Monster, etc.)
+\end{enumerate}
+
+\subsection{Direction 4: Holographic Interpretation}
+
+For any found extremal CFT, interpret in the AdS$_3$ gravity dual:
+
+\begin{itemize}
+    \item Gap $\Delta_{\text{gap}}$ corresponds to the mass of the lightest primary operator
+    \item In AdS units: $m^2 L^2 = \Delta(\Delta - 2)$ for $\Delta > 1$
+    \item Compare with BTZ black hole threshold and cosmic censorship bounds
+\end{itemize}
+
+\subsection{Direction 5: Connection to Quantum Error Correction}
+
+Recent work connects extremal CFTs to quantum error-correcting codes:
+
+\begin{pursuitbox}
+\textbf{Investigation:} If an extremal CFT exists at $c = 24k$, can its partition function be interpreted as a weight enumerator of a quantum stabilizer code? This could provide a ``code-theoretic'' construction of the CFT.
+\end{pursuitbox}
+
+% ============================================================
+% SECTION 6: SUCCESS CRITERIA
+% ============================================================
+\section{Success Criteria}
+
+\subsection{Minimum Viable Result (3--4 months)}
+
+\begin{itemize}
+    \item[$\checkmark$] Virasoro character calculator accurate to 100+ decimal digits
+    \item[$\checkmark$] Modular S-transformation verified numerically with error $< 10^{-50}$
+    \item[$\checkmark$] Monster CFT spectrum reproduced: $d(2) = 196884$, $d(3) = 21493760$, $d(4) = 864299970$
+    \item[$\checkmark$] \textbf{One new rigorous result} at $c = 48$: either feasible spectrum or impossibility certificate
+\end{itemize}
+
+\subsection{Strong Result (6--8 months)}
+
+\begin{itemize}
+    \item[$\checkmark$] Complete results for $k = 2, 3, 4$ ($c = 48, 72, 96$)
+    \item[$\checkmark$] All certificates in machine-verifiable format (JSON/SMT-LIB)
+    \item[$\checkmark$] Independent verification by Z3 or external LP solver
+    \item[$\checkmark$] Phase diagram initiated with gap scans
+\end{itemize}
+
+\subsection{Publication-Quality Result (9--12 months)}
+
+\begin{itemize}
+    \item[$\checkmark$] Results for $k$ up to 10 ($c$ up to 240)
+    \item[$\checkmark$] Formal verification in Lean 4 of key impossibility theorems
+    \item[$\checkmark$] Novel extremal CFTs discovered (if they exist) with symmetry analysis
+    \item[$\checkmark$] ArXiv preprint with public certificate repository
+\end{itemize}
+
+% ============================================================
+% SECTION 7: VERIFICATION PROTOCOL
+% ============================================================
+\section{Verification Protocol}
+
+\subsection{For Claimed Feasibility (Extremal CFT Exists)}
+
+\begin{lstlisting}[language=Python, caption={Comprehensive verification function}]
+def verify_extremal_cft(c: float, gap: float, spectrum: dict,
+                        tau_samples: list = None) -> dict:
+    """
+    Comprehensive verification of extremal CFT spectrum.
+    """
+    if tau_samples is None:
+        tau_samples = [0.05 + 0.5j, 0.2 + 0.8j, 0.5 + 1.0j,
+                       -0.4 + 0.7j, 0.3 + 1.2j]
+
+    results = {
+        'integrality_passed': True,
+        'unitarity_passed': True,
+        'gap_passed': True,
+        'modular_invariance_passed': True,
+        'max_error': 0.0
+    }
+
+    # 1. Check integrality
+    for h, d in spectrum.items():
+        if not isinstance(d, int) or d < 0:
+            results['integrality_passed'] = False
+
+    # 2. Check gap condition
+    if any(0 < h < gap for h in spectrum.keys()):
+        results['gap_passed'] = False
+
+    # 3. Check modular invariance
+    for tau in tau_samples:
+        Z_tau = partition_function(c, spectrum, tau)
+        Z_S_tau = partition_function(c, spectrum, -1/tau)
+        error = abs(Z_tau - Z_S_tau)
+        results['max_error'] = max(results['max_error'], error)
+        if error > 1e-30:
+            results['modular_invariance_passed'] = False
+
+    results['status'] = 'VERIFIED' if all([
+        results['integrality_passed'],
+        results['gap_passed'],
+        results['modular_invariance_passed']
+    ]) else 'FAILED'
+
+    return results
+\end{lstlisting}
+
+\subsection{For Claimed Infeasibility}
+
+\begin{enumerate}
+    \item Verify dual certificate satisfies $A^T y \leq 0$
+    \item Verify $b^T y > 0$ (proves primal infeasibility via Farkas lemma)
+    \item Export to SMT-LIB and verify with Z3: \texttt{z3 certificate\_c48\_gap4.smt2}
+    \item Formalize in Lean 4 for machine-checked proof
+\end{enumerate}
+
+% ============================================================
+% SECTION 8: COMMON PITFALLS
+% ============================================================
+\section{Common Pitfalls and Mitigations}
+
+\subsection{Numerical Precision Issues}
+
+\begin{warningbox}
+\textbf{Problem:} Modular invariance appears satisfied due to rounding errors, leading to false positives.
+
+\textbf{Solution:}
+\begin{itemize}
+    \item Use \texttt{mpmath} with \texttt{mp.dps = 150} or higher
+    \item Verify modular invariance to at least 50 decimal digits
+    \item Cross-check with multiple $\tau$ points in fundamental domain
+\end{itemize}
+\end{warningbox}
+
+\subsection{Non-Integer Solutions from LP Relaxation}
+
+\begin{warningbox}
+\textbf{Problem:} LP solution has $d(h) = 123.7$ (non-integer) accepted as valid.
+
+\textbf{Solution:}
+\begin{itemize}
+    \item Always enforce strict integrality using MILP
+    \item If rounding LP solution, verify all constraints still satisfied
+    \item Export only exact integer degeneracies
+\end{itemize}
+\end{warningbox}
+
+\subsection{Truncation Effects}
+
+\begin{warningbox}
+\textbf{Problem:} Setting $h_{\max}$ too small misses important high-dimension operators.
+
+\textbf{Solution:}
+\begin{itemize}
+    \item Start with $h_{\max} = c$ (usually sufficient)
+    \item Check sensitivity: increase $h_{\max}$ and verify solution stability
+    \item Use asymptotic bounds on degeneracies to justify truncation
+\end{itemize}
+\end{warningbox}
+
+% ============================================================
+% SECTION 9: RESOURCES
+% ============================================================
+\section{Resources and References}
+
+\subsection{Essential Papers}
+
+\begin{enumerate}
+    \item Hartman, Keller, Stoica (2014): ``Universal Spectrum of 2d Conformal Field Theory in the Large c Limit'' [arXiv:1405.5137]
+
+    \item Afkhami-Jeddi, Cohn, Hartman, Tajdini (2020): ``Free Partition Functions and an Averaged Holographic Duality'' [arXiv:2006.04839]
+
+    \item Collier, Lin, Yin (2019): ``Modular Bootstrap Revisited'' [arXiv:1608.06241]
+
+    \item Hellerman (2011): ``A Universal Inequality for CFT and Quantum Gravity'' [arXiv:0902.2790]
+
+    \item Friedan, Keller, Yin (2013): ``A Remark on AdS/CFT for the Extremal Virasoro Partition Function'' [arXiv:1312.1536]
+\end{enumerate}
+
+\subsection{Code Libraries}
+
+\begin{itemize}
+    \item \textbf{mpmath:} Arbitrary precision arithmetic --- \texttt{pip install mpmath}
+    \item \textbf{SymPy:} Symbolic mathematics --- \texttt{pip install sympy}
+    \item \textbf{CVXPY:} Convex optimization with SDP/LP solvers --- \texttt{pip install cvxpy}
+    \item \textbf{SciPy:} Scientific computing including MILP --- \texttt{pip install scipy}
+    \item \textbf{Lean 4:} Proof assistant --- \url{https://lean-lang.org}
+\end{itemize}
+
+\subsection{Mathematical Background}
+
+\begin{itemize}
+    \item \textbf{Modular Forms:} Serre's ``A Course in Arithmetic''; Diamond \& Shurman ``A First Course in Modular Forms''
+    \item \textbf{Virasoro Algebra:} Di Francesco et al.\ ``Conformal Field Theory'' (Yellow Book)
+    \item \textbf{Optimization:} Boyd \& Vandenberghe ``Convex Optimization'' (LP duality chapter)
+    \item \textbf{AdS/CFT:} Aharony et al.\ ``Large N Field Theories, String Theory and Gravity'' [arXiv:hep-th/9905111]
+\end{itemize}
+
+% ============================================================
+% SECTION 10: MILESTONE CHECKLIST
+% ============================================================
+\section{Milestone Checklist}
+
+\subsection{Infrastructure (Months 1--2)}
+\begin{itemize}
+    \item[$\square$] Dedekind eta function $\eta(\tau)$ implemented with 100+ digit precision
+    \item[$\square$] Modular transformation $\eta(-1/\tau) = \sqrt{-i\tau}\, \eta(\tau)$ verified
+    \item[$\square$] Virasoro character $\chi_h(\tau)$ calculator tested
+    \item[$\square$] Partition function $Z(\tau)$ builder with arbitrary spectrum
+    \item[$\square$] Modular S-matrix computed and verified for unitarity
+\end{itemize}
+
+\subsection{Validation (Month 2)}
+\begin{itemize}
+    \item[$\square$] Monster CFT ($c=24$, gap$=2$) reproduced exactly:
+    \begin{itemize}
+        \item[$\square$] $d(2) = 196884$
+        \item[$\square$] $d(3) = 21493760$
+        \item[$\square$] $d(4) = 864299970$
+    \end{itemize}
+    \item[$\square$] Modular invariance verified to $10^{-50}$
+\end{itemize}
+
+\subsection{Optimization Solvers (Months 2--3)}
+\begin{itemize}
+    \item[$\square$] LP relaxation solver (cvxpy) working
+    \item[$\square$] MILP solver enforcing integrality
+    \item[$\square$] Dual certificate extraction implemented
+    \item[$\square$] Certificate verification functions tested
+\end{itemize}
+
+\subsection{New Results (Months 3--6)}
+\begin{itemize}
+    \item[$\square$] $c=48$, gap$=4$: Result obtained
+    \item[$\square$] $c=48$ result independently verified
+    \item[$\square$] $c=72$, gap$=6$: Result obtained
+    \item[$\square$] $c=96$, gap$=8$: Result obtained
+    \item[$\square$] All certificates exported
+\end{itemize}
+
+\subsection{Classification (Months 6--9)}
+\begin{itemize}
+    \item[$\square$] Phase diagram for $k=1$ to $5$ complete
+    \item[$\square$] Gap scan: multiple $\Delta$ values tested
+    \item[$\square$] Database of spectra and impossibility proofs
+    \item[$\square$] Visualization: $(c, \Delta)$ phase diagram
+\end{itemize}
+
+\subsection{Formal Verification (Months 9--12)}
+\begin{itemize}
+    \item[$\square$] Lean 4 formalization begun
+    \item[$\square$] First impossibility theorem formalized
+    \item[$\square$] All certificates verified in proof assistant
+    \item[$\square$] Publication draft prepared
+\end{itemize}
+
+% ============================================================
+% CONCLUSION
+% ============================================================
+\section{Conclusion}
+
+The modular bootstrap approach to extremal CFTs represents a frontier research problem combining deep mathematics (modular forms, sporadic groups) with modern computational techniques (semidefinite programming, formal verification). Success would either:
+\begin{enumerate}
+    \item \textbf{Discover new extremal CFTs}, potentially revealing new moonshine phenomena and confirming the existence of pure AdS$_3$ gravity at higher central charges; or
+    \item \textbf{Prove impossibility theorems}, constraining the Swampland and demonstrating which effective theories cannot be UV-completed into quantum gravity.
+\end{enumerate}
+
+Either outcome constitutes a significant contribution to theoretical physics and mathematics.
+
+\end{document}

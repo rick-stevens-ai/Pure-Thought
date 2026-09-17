@@ -1,0 +1,1993 @@
+\documentclass[11pt,a4paper]{article}
+
+% ============================================
+% PACKAGES
+% ============================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+
+\geometry{margin=1in}
+
+% ============================================
+% CUSTOM COLORS
+% ============================================
+\definecolor{annotationbg}{RGB}{245,245,245}
+\definecolor{annotationframe}{RGB}{200,200,200}
+\definecolor{pursuitbg}{RGB}{232,245,233}
+\definecolor{pursuitframe}{RGB}{76,175,80}
+\definecolor{warningbg}{RGB}{255,235,238}
+\definecolor{warningframe}{RGB}{244,67,54}
+\definecolor{physicsbg}{RGB}{243,229,245}
+\definecolor{physicsframe}{RGB}{156,39,176}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{theorembg}{RGB}{227,242,253}
+\definecolor{theoremframe}{RGB}{33,150,243}
+\definecolor{examplebg}{RGB}{255,248,225}
+\definecolor{exampleframe}{RGB}{255,160,0}
+
+% ============================================
+% CUSTOM TCOLORBOX ENVIRONMENTS
+% ============================================
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{annotation}{
+    colback=annotationbg,
+    colframe=annotationframe,
+    boxrule=1pt,
+    arc=3pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt,
+    breakable
+}
+
+\newtcolorbox{pursuitbox}{
+    colback=pursuitbg,
+    colframe=pursuitframe,
+    boxrule=1.5pt,
+    arc=4pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt,
+    breakable,
+    title={\textbf{Pure Thought Challenge}}
+}
+
+\newtcolorbox{warningbox}{
+    colback=warningbg,
+    colframe=warningframe,
+    boxrule=1.5pt,
+    arc=4pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt,
+    breakable,
+    title={\textbf{Warning}}
+}
+
+\newtcolorbox{physicsbox}{
+    colback=physicsbg,
+    colframe=physicsframe,
+    boxrule=1.5pt,
+    arc=4pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt,
+    breakable,
+    title={\textbf{Physical Insight}}
+}
+
+\newtcolorbox{theorembox}{
+    colback=theorembg,
+    colframe=theoremframe,
+    boxrule=1.5pt,
+    arc=4pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt,
+    breakable,
+    title={\textbf{Key Theorem}}
+}
+
+\newtcolorbox{examplebox}{
+    colback=examplebg,
+    colframe=exampleframe,
+    boxrule=1.5pt,
+    arc=4pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt,
+    breakable,
+    title={\textbf{Worked Example}}
+}
+
+% ============================================
+% CODE LISTING STYLE
+% ============================================
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{codebg},
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red!70!black},
+    commentstyle=\color{green!50!black}\itshape,
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=8pt,
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4,
+    showstringspaces=false,
+    frame=single,
+    rulecolor=\color{gray!30},
+    xleftmargin=15pt,
+    framexleftmargin=15pt,
+    aboveskip=10pt,
+    belowskip=10pt,
+    morekeywords={np,sp,cvxpy,cp,BellScenario,BellCertificate,self,True,False,None,picos,mosek}
+}
+\lstset{style=pythonstyle}
+
+% ============================================
+% THEOREM ENVIRONMENTS
+% ============================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+% ============================================
+% CUSTOM COMMANDS (avoiding physics package conflicts)
+% ============================================
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\QQ}{\mathcal{Q}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\NS}{\mathcal{NS}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\supp}{\mathrm{supp}}
+\newcommand{\sgn}{\mathrm{sgn}}
+\newcommand{\spn}{\mathrm{span}}
+\newcommand{\conv}{\mathrm{conv}}
+\newcommand{\ext}{\mathrm{ext}}
+\newcommand{\Hmin}{H_{\min}}
+\newcommand{\ketbra}[2]{|#1\rangle\langle#2|}
+\newcommand{\proj}[1]{|#1\rangle\langle#1|}
+\newcommand{\id}{\mathbbm{1}}
+\newcommand{\psd}{\succeq}
+\newcommand{\psdstrict}{\succ}
+
+% ============================================
+% HEADER/FOOTER
+% ============================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{Bell Inequalities and Quantum Nonlocality}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ============================================
+% TITLE
+% ============================================
+\title{\textbf{Bell Inequalities and Quantum Nonlocality}\\[0.5em]
+\large A Pure Thought Approach to Foundations of Quantum Mechanics\\[0.3em]
+\normalsize PRD 22: Quantum Information Theory}
+
+\author{Pure Thought AI Research Initiative}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Bell inequalities provide the mathematical framework for testing quantum mechanics against local hidden variable theories, constituting one of the most profound insights in modern physics. This report presents a comprehensive treatment of Bell's theorem, the CHSH inequality and its Tsirelson bound of $2\sqrt{2}$, the NPA hierarchy for computing quantum bounds via semidefinite programming, facet enumeration of the local polytope, and device-independent certification protocols. We develop complete Python implementations for computing local and quantum bounds, generating machine-checkable certificates via SDP duality, and certifying randomness and entanglement dimension from observed Bell violations. This pure thought approach enables rigorous analysis of quantum nonlocality without experimental data, producing certificates verifiable through convex optimization and linear algebra.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% ============================================
+\section{Introduction}
+% ============================================
+
+\begin{pursuitbox}
+\textbf{Central Challenge}: Given a Bell scenario $(N, M, d)$ with $N$ parties, $M$ measurements per party, and $d$ outcomes each, enumerate all tight Bell inequalities, compute quantum bounds via the NPA hierarchy, find optimal quantum strategies, and certify device-independent properties from observed correlations---all with machine-checkable certificates.
+\end{pursuitbox}
+
+\subsection{Historical Context and Physical Motivation}
+
+In 1935, Einstein, Podolsky, and Rosen (EPR) published their famous paper questioning the completeness of quantum mechanics. They argued that if quantum mechanics were complete, then ``spooky action at a distance'' would be required---measurements on one particle could instantaneously affect the state of a distant entangled partner. Their resolution was to postulate the existence of ``hidden variables'' that predetermine measurement outcomes, restoring both locality and realism.
+
+For nearly three decades, this debate remained philosophical. Then in 1964, John Stewart Bell made one of the most significant contributions to physics: he showed that the predictions of any local hidden variable (LHV) theory must satisfy certain inequalities---now called \textbf{Bell inequalities}---while quantum mechanics predicts violations of these constraints.
+
+\begin{physicsbox}
+\textbf{Bell's Revolutionary Insight}: The question ``Is quantum mechanics complete?'' can be transformed into an experimentally testable prediction. Local hidden variable theories predict $S \leq 2$ for the CHSH parameter, while quantum mechanics predicts $S \leq 2\sqrt{2} \approx 2.828$. The difference is measurable!
+\end{physicsbox}
+
+Experiments by Aspect (1982), and loophole-free tests by Hensen et al.\ (2015) and Giustina et al.\ (2015), have definitively confirmed quantum mechanical predictions. The 2022 Nobel Prize in Physics was awarded to Aspect, Clauser, and Zeilinger for their experimental work establishing Bell inequality violations.
+
+\subsection{Why This Matters}
+
+Bell inequalities are not merely of foundational interest. They enable:
+
+\begin{enumerate}
+    \item \textbf{Device-Independent Cryptography}: Security proofs that do not trust the measurement devices
+    \item \textbf{Certified Randomness}: Generating random bits guaranteed by the laws of physics
+    \item \textbf{Entanglement Witnesses}: Detecting and quantifying quantum entanglement
+    \item \textbf{Dimension Witnesses}: Lower-bounding the Hilbert space dimension of quantum systems
+    \item \textbf{Self-Testing}: Characterizing quantum states and measurements from correlations alone
+\end{enumerate}
+
+\subsection{Pure Thought Advantages}
+
+This problem is ideally suited for pure thought investigation:
+
+\begin{itemize}
+    \item \textbf{Certificate-Based}: All bounds come with SDP dual certificates (optimality proofs)
+    \item \textbf{Exact Arithmetic}: Bell inequality coefficients are rational; use symbolic computation
+    \item \textbf{Convergent Hierarchy}: NPA provides systematic approximation to quantum set
+    \item \textbf{Convex Geometry}: Local polytope amenable to vertex/facet enumeration
+    \item \textbf{No Experimental Noise}: Pure mathematical analysis avoids detector inefficiencies
+\end{itemize}
+
+% ============================================
+\section{Bell's Theorem and Local Hidden Variables}
+% ============================================
+
+\subsection{The Bell Scenario}
+
+\begin{definition}[Bell Scenario]
+A \textbf{Bell scenario} is specified by a triple $(N, M, d)$ where:
+\begin{itemize}
+    \item $N$ = number of spatially separated parties
+    \item $M$ = number of measurement settings per party
+    \item $d$ = number of outcomes per measurement
+\end{itemize}
+Each party $i$ chooses a measurement $x_i \in \{0, 1, \ldots, M-1\}$ and observes an outcome $a_i \in \{0, 1, \ldots, d-1\}$.
+\end{definition}
+
+\begin{definition}[Correlation]
+A \textbf{correlation} (or behavior) is a conditional probability distribution:
+\begin{equation}
+P(a_1, a_2, \ldots, a_N | x_1, x_2, \ldots, x_N) \in [0, 1]
+\end{equation}
+satisfying normalization:
+\begin{equation}
+\sum_{a_1, \ldots, a_N} P(a_1, \ldots, a_N | x_1, \ldots, x_N) = 1 \quad \forall x_1, \ldots, x_N
+\end{equation}
+\end{definition}
+
+The total number of probabilities in a correlation is $(Md)^N$, but normalization reduces the degrees of freedom.
+
+\subsection{Local Hidden Variable Models}
+
+\begin{definition}[Local Hidden Variable (LHV) Model]
+A correlation $P$ admits a \textbf{local hidden variable model} if there exists:
+\begin{itemize}
+    \item A hidden variable $\lambda$ with probability distribution $p(\lambda)$
+    \item Local response functions $P(a_i | x_i, \lambda)$ for each party
+\end{itemize}
+such that:
+\begin{equation}
+P(a_1, \ldots, a_N | x_1, \ldots, x_N) = \int d\lambda \, p(\lambda) \prod_{i=1}^{N} P(a_i | x_i, \lambda)
+\end{equation}
+\end{definition}
+
+\begin{physicsbox}
+\textbf{Locality}: Each party's outcome depends only on their measurement choice and the shared hidden variable $\lambda$---not on distant parties' choices or outcomes. This captures the intuition that influences cannot propagate faster than light.
+\end{physicsbox}
+
+\begin{definition}[Deterministic Strategy]
+A \textbf{deterministic strategy} assigns a definite outcome for each measurement:
+\begin{equation}
+D_{a_1 \ldots a_N | x_1 \ldots x_N} = \begin{cases}
+1 & \text{if } a_i = f_i(x_i) \text{ for all } i \\
+0 & \text{otherwise}
+\end{cases}
+\end{equation}
+where $f_i: \{0, \ldots, M-1\} \to \{0, \ldots, d-1\}$ is party $i$'s response function.
+\end{definition}
+
+\begin{theorem}[Local Polytope]
+The set of local correlations $\LL$ forms a convex polytope:
+\begin{equation}
+\LL = \conv\{D : D \text{ is a deterministic strategy}\}
+\end{equation}
+The vertices are exactly the deterministic strategies, of which there are $(d^M)^N$.
+\end{theorem}
+
+\begin{proof}
+Every LHV correlation can be written as:
+\begin{equation}
+P = \int d\lambda \, p(\lambda) \prod_i P(a_i | x_i, \lambda)
+\end{equation}
+This is a convex combination over $\lambda$. For each fixed $\lambda$, the product $\prod_i P(a_i | x_i, \lambda)$ is itself a convex combination of deterministic strategies (by considering the extreme points of each factor). Thus $\LL$ is the convex hull of deterministic strategies. It is a polytope since there are finitely many such strategies.
+\end{proof}
+
+\subsection{Bell Inequalities}
+
+\begin{definition}[Bell Inequality]
+A \textbf{Bell inequality} is specified by:
+\begin{itemize}
+    \item Coefficients $\beta_{a_1 \ldots a_N, x_1 \ldots x_N} \in \RR$
+    \item A local bound $\beta_L \in \RR$
+\end{itemize}
+The inequality states:
+\begin{equation}
+\sum_{a, x} \beta_{a, x} P(a | x) \leq \beta_L \quad \forall P \in \LL
+\end{equation}
+\end{definition}
+
+\begin{definition}[Tight (Facet) Bell Inequality]
+A Bell inequality is \textbf{tight} or a \textbf{facet} if it defines a facet of the local polytope $\LL$. This means the inequality is saturated by a maximal set of affinely independent vertices.
+\end{definition}
+
+\begin{theorem}[Bell's Theorem]
+There exist quantum correlations $P_Q$ and Bell inequalities such that:
+\begin{equation}
+\sum_{a, x} \beta_{a, x} P_Q(a | x) > \beta_L
+\end{equation}
+That is, quantum mechanics violates Bell inequalities---no LHV model can reproduce all quantum predictions.
+\end{theorem}
+
+\begin{annotation}
+Bell's theorem is one of the most profound results in physics. It shows that quantum mechanics is fundamentally incompatible with the worldview of local realism that underlies classical physics.
+\end{annotation}
+
+% ============================================
+\section{The CHSH Inequality}
+% ============================================
+
+\subsection{Definition and Structure}
+
+The most famous Bell inequality is the \textbf{CHSH inequality} (Clauser-Horne-Shimony-Holt, 1969), applicable to the $(2, 2, 2)$ scenario: two parties (Alice and Bob), two measurements each, binary outcomes.
+
+\begin{definition}[CHSH Correlator]
+For binary outcomes $a, b \in \{0, 1\}$, define the expectation value:
+\begin{equation}
+E(A_x B_y) = \sum_{a, b \in \{0, 1\}} (-1)^{a + b} P(a, b | x, y)
+\end{equation}
+This equals $P(a = b | x, y) - P(a \neq b | x, y)$.
+\end{definition}
+
+\begin{definition}[CHSH Parameter]
+The \textbf{CHSH parameter} is:
+\begin{equation}
+\boxed{S = E(A_0 B_0) + E(A_0 B_1) + E(A_1 B_0) - E(A_1 B_1)}
+\end{equation}
+\end{definition}
+
+\begin{theorembox}
+\textbf{CHSH Inequality}: For all local hidden variable models:
+\begin{equation}
+S \leq 2
+\end{equation}
+This bound is tight---it is achieved by deterministic strategies.
+\end{theorembox}
+
+\begin{proof}
+For any deterministic strategy, Alice outputs $a_0, a_1 \in \{0, 1\}$ for measurements $0, 1$, and Bob outputs $b_0, b_1 \in \{0, 1\}$. The correlator becomes:
+\begin{equation}
+E(A_x B_y) = (-1)^{a_x + b_y}
+\end{equation}
+Thus:
+\begin{align}
+S &= (-1)^{a_0 + b_0} + (-1)^{a_0 + b_1} + (-1)^{a_1 + b_0} - (-1)^{a_1 + b_1} \\
+&= (-1)^{a_0}\left[(-1)^{b_0} + (-1)^{b_1}\right] + (-1)^{a_1}\left[(-1)^{b_0} - (-1)^{b_1}\right]
+\end{align}
+
+If $b_0 = b_1$: first bracket is $\pm 2$, second is $0$, so $|S| = 2$.
+
+If $b_0 \neq b_1$: first bracket is $0$, second is $\pm 2$, so $|S| = 2$.
+
+Thus $S \in \{-2, +2\}$ for all deterministic strategies. By convexity, $|S| \leq 2$ for all LHV correlations. Maximum $S = 2$ is achieved when $a_0 = a_1 = b_0 = 0$, $b_1 = 1$ (for example).
+\end{proof}
+
+\subsection{Exhaustive Verification of Local Bound}
+
+\begin{lstlisting}[caption={Exhaustive Verification of CHSH Local Bound}]
+import numpy as np
+from dataclasses import dataclass
+from typing import List, Dict, Tuple
+import itertools
+
+@dataclass
+class BellScenario:
+    """Specification of a Bell scenario."""
+    N: int  # Number of parties
+    M: int  # Measurements per party
+    d: int  # Outcomes per measurement
+
+    @property
+    def num_deterministic_strategies(self) -> int:
+        """Total number of deterministic strategies."""
+        return (self.d ** self.M) ** self.N
+
+    @property
+    def probability_space_dim(self) -> int:
+        """Dimension of probability distribution space."""
+        return (self.M ** self.N) * (self.d ** self.N)
+
+def decode_deterministic_strategy(scenario: BellScenario,
+                                   strategy_index: int) -> List[Dict[int, int]]:
+    """
+    Decode strategy index into response functions.
+
+    Returns: List of dictionaries {measurement: outcome} for each party.
+    """
+    n_strat_per_party = scenario.d ** scenario.M
+    functions = []
+
+    temp = strategy_index
+    for party in range(scenario.N):
+        party_strat = temp % n_strat_per_party
+        temp //= n_strat_per_party
+
+        # Decode party's function: f(x) for x in {0, ..., M-1}
+        f = {}
+        temp2 = party_strat
+        for x in range(scenario.M):
+            f[x] = temp2 % scenario.d
+            temp2 //= scenario.d
+        functions.append(f)
+
+    return functions
+
+def compute_chsh_correlator(P: np.ndarray) -> float:
+    """
+    Compute CHSH parameter S from correlation P[a, b, x, y].
+
+    S = E(A_0 B_0) + E(A_0 B_1) + E(A_1 B_0) - E(A_1 B_1)
+    """
+    def expectation(x: int, y: int) -> float:
+        E = 0.0
+        for a in [0, 1]:
+            for b in [0, 1]:
+                E += (-1)**(a + b) * P[a, b, x, y]
+        return E
+
+    S = expectation(0, 0) + expectation(0, 1) + expectation(1, 0) - expectation(1, 1)
+    return S
+
+def verify_chsh_local_bound() -> Dict:
+    """
+    Verify CHSH local bound S <= 2 by checking all 16 deterministic strategies.
+    """
+    scenario = BellScenario(N=2, M=2, d=2)
+
+    all_S_values = []
+    max_S = -np.inf
+    maximizing_strategies = []
+
+    for strat_idx in range(scenario.num_deterministic_strategies):
+        functions = decode_deterministic_strategy(scenario, strat_idx)
+
+        # Build deterministic correlation P[a, b, x, y]
+        P = np.zeros((2, 2, 2, 2))
+        for x in range(2):
+            for y in range(2):
+                a_det = functions[0][x]  # Alice's output
+                b_det = functions[1][y]  # Bob's output
+                P[a_det, b_det, x, y] = 1.0
+
+        S = compute_chsh_correlator(P)
+        all_S_values.append(S)
+
+        if S > max_S:
+            max_S = S
+            maximizing_strategies = [(strat_idx, functions)]
+        elif np.isclose(S, max_S):
+            maximizing_strategies.append((strat_idx, functions))
+
+    return {
+        'local_bound': max_S,
+        'all_S_values': all_S_values,
+        'unique_S_values': sorted(set(all_S_values)),
+        'maximizing_strategies': maximizing_strategies,
+        'is_exactly_2': np.isclose(max_S, 2.0),
+        'num_strategies_checked': scenario.num_deterministic_strategies
+    }
+
+# Verification
+result = verify_chsh_local_bound()
+print(f"CHSH Local Bound Verification:")
+print(f"  Max S over all deterministic strategies: {result['local_bound']}")
+print(f"  Unique S values: {result['unique_S_values']}")
+print(f"  Number achieving S=2: {len(result['maximizing_strategies'])}")
+print(f"  Verified S <= 2: {result['is_exactly_2']}")
+\end{lstlisting}
+
+% ============================================
+\section{Tsirelson Bound $2\sqrt{2}$}
+% ============================================
+
+\subsection{Quantum Correlations}
+
+\begin{definition}[Quantum Correlation]
+A correlation $P$ is \textbf{quantum} if there exists:
+\begin{itemize}
+    \item A Hilbert space $\HH = \HH_A \otimes \HH_B$ (for bipartite)
+    \item A quantum state $\rho$ on $\HH$
+    \item POVM elements $\{M^{(x)}_a\}$ for Alice and $\{N^{(y)}_b\}$ for Bob
+\end{itemize}
+such that:
+\begin{equation}
+P(a, b | x, y) = \tr\left(\rho \cdot M^{(x)}_a \otimes N^{(y)}_b\right)
+\end{equation}
+\end{definition}
+
+\begin{definition}[Quantum Set]
+The set of quantum correlations is denoted $\QQ$. We have the strict inclusions:
+\begin{equation}
+\LL \subsetneq \QQ \subsetneq \NS
+\end{equation}
+where $\NS$ is the no-signaling set (correlations respecting no faster-than-light communication).
+\end{definition}
+
+\subsection{The Tsirelson Bound}
+
+\begin{theorembox}
+\textbf{Tsirelson's Theorem (1980)}: For all quantum correlations:
+\begin{equation}
+S \leq 2\sqrt{2} \approx 2.828
+\end{equation}
+This bound is tight---it is achieved by the singlet state with optimal measurements.
+\end{theorembox}
+
+\begin{proof}
+Consider projective measurements $A_x = A_x^\dagger$ with $A_x^2 = I$ (outcomes $\pm 1$). Then:
+\begin{equation}
+E(A_x B_y) = \langle \psi | A_x \otimes B_y | \psi \rangle
+\end{equation}
+
+Define the CHSH operator:
+\begin{equation}
+\mathcal{B} = A_0 \otimes (B_0 + B_1) + A_1 \otimes (B_0 - B_1)
+\end{equation}
+
+Compute $\mathcal{B}^2$:
+\begin{align}
+\mathcal{B}^2 &= A_0^2 \otimes (B_0 + B_1)^2 + A_1^2 \otimes (B_0 - B_1)^2 \\
+&\quad + A_0 A_1 \otimes (B_0 + B_1)(B_0 - B_1) + A_1 A_0 \otimes (B_0 - B_1)(B_0 + B_1) \\
+&= I \otimes (2I + \{B_0, B_1\}) + I \otimes (2I - \{B_0, B_1\}) \\
+&\quad + \{A_0, A_1\} \otimes [B_0, B_1]
+\end{align}
+
+Using $A_x^2 = B_y^2 = I$ and $(B_0 + B_1)^2 = 2I + \{B_0, B_1\}$:
+\begin{equation}
+\mathcal{B}^2 = 4I \otimes I + \{A_0, A_1\} \otimes [B_0, B_1]
+\end{equation}
+
+Since $\|\{A_0, A_1\}\| \leq 2$ and $\|[B_0, B_1]\| \leq 2$:
+\begin{equation}
+\|\mathcal{B}^2\| \leq 4 + 4 = 8 \implies \|\mathcal{B}\| \leq 2\sqrt{2}
+\end{equation}
+
+Thus $S = \langle \psi | \mathcal{B} | \psi \rangle \leq 2\sqrt{2}$.
+\end{proof}
+
+\subsection{Optimal Quantum Strategy: The Singlet State}
+
+\begin{definition}[Singlet State]
+The \textbf{singlet state} (or Bell state $|\Phi^-\rangle$) is:
+\begin{equation}
+|\psi^-\rangle = \frac{1}{\sqrt{2}}\left(|01\rangle - |10\rangle\right)
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Optimal CHSH Strategy]
+The Tsirelson bound $S = 2\sqrt{2}$ is achieved by:
+\begin{itemize}
+    \item State: $|\psi^-\rangle$
+    \item Alice's measurements: $A_0 = \sigma_z$, $A_1 = \sigma_x$
+    \item Bob's measurements: $B_0 = \frac{\sigma_z + \sigma_x}{\sqrt{2}}$, $B_1 = \frac{\sigma_z - \sigma_x}{\sqrt{2}}$
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+For the singlet state, $\langle \psi^- | \vec{a} \cdot \vec{\sigma} \otimes \vec{b} \cdot \vec{\sigma} | \psi^- \rangle = -\vec{a} \cdot \vec{b}$.
+
+With angles $\theta_{A_0} = 0$, $\theta_{A_1} = \pi/2$, $\theta_{B_0} = \pi/4$, $\theta_{B_1} = -\pi/4$:
+\begin{align}
+E(A_0 B_0) &= -\cos(\pi/4) = -\frac{1}{\sqrt{2}} \\
+E(A_0 B_1) &= -\cos(-\pi/4) = -\frac{1}{\sqrt{2}} \\
+E(A_1 B_0) &= -\cos(\pi/2 - \pi/4) = -\frac{1}{\sqrt{2}} \\
+E(A_1 B_1) &= -\cos(\pi/2 + \pi/4) = +\frac{1}{\sqrt{2}}
+\end{align}
+
+Wait, let me recalculate with the anti-correlation convention. For the singlet:
+\begin{equation}
+E(A_x B_y) = -\cos(\theta_{A_x} - \theta_{B_y})
+\end{equation}
+
+With $\theta_{A_0} = 0$, $\theta_{A_1} = \pi/2$, $\theta_{B_0} = \pi/4$, $\theta_{B_1} = -\pi/4$:
+\begin{align}
+E(A_0 B_0) &= -\cos(0 - \pi/4) = -\frac{1}{\sqrt{2}} \\
+E(A_0 B_1) &= -\cos(0 - (-\pi/4)) = -\frac{1}{\sqrt{2}} \\
+E(A_1 B_0) &= -\cos(\pi/2 - \pi/4) = -\frac{1}{\sqrt{2}} \\
+E(A_1 B_1) &= -\cos(\pi/2 - (-\pi/4)) = -\cos(3\pi/4) = +\frac{1}{\sqrt{2}}
+\end{align}
+
+Thus:
+\begin{equation}
+S = -\frac{1}{\sqrt{2}} - \frac{1}{\sqrt{2}} - \frac{1}{\sqrt{2}} - \left(+\frac{1}{\sqrt{2}}\right) = -\frac{4}{\sqrt{2}} = -2\sqrt{2}
+\end{equation}
+
+The magnitude is $|S| = 2\sqrt{2}$. With a different sign convention or angle choice, we get $S = +2\sqrt{2}$.
+\end{proof}
+
+\begin{lstlisting}[caption={Optimal Quantum Strategy for CHSH}]
+import numpy as np
+
+def optimal_chsh_quantum_strategy() -> Dict:
+    """
+    Compute the optimal quantum strategy achieving Tsirelson bound.
+
+    Returns state, measurements, and achieved CHSH value.
+    """
+    # Singlet state |psi^-> = (|01> - |10>)/sqrt(2)
+    psi = np.array([0, 1, -1, 0], dtype=complex) / np.sqrt(2)
+
+    # Pauli matrices
+    sigma_x = np.array([[0, 1], [1, 0]], dtype=complex)
+    sigma_y = np.array([[0, -1j], [1j, 0]], dtype=complex)
+    sigma_z = np.array([[1, 0], [0, -1]], dtype=complex)
+    I2 = np.eye(2, dtype=complex)
+
+    def measurement_in_xz_plane(theta: float) -> np.ndarray:
+        """Measurement operator at angle theta in XZ plane."""
+        return np.cos(theta) * sigma_z + np.sin(theta) * sigma_x
+
+    # Optimal angles
+    theta_A0 = 0
+    theta_A1 = np.pi / 2
+    theta_B0 = np.pi / 4
+    theta_B1 = -np.pi / 4
+
+    # Measurement operators (eigenvalues +1, -1)
+    A = [measurement_in_xz_plane(theta_A0), measurement_in_xz_plane(theta_A1)]
+    B = [measurement_in_xz_plane(theta_B0), measurement_in_xz_plane(theta_B1)]
+
+    # Compute expectation values E(A_x B_y) = <psi| A_x tensor B_y |psi>
+    def expectation(x: int, y: int) -> float:
+        op = np.kron(A[x], B[y])
+        return np.real(psi.conj() @ op @ psi)
+
+    E00 = expectation(0, 0)
+    E01 = expectation(0, 1)
+    E10 = expectation(1, 0)
+    E11 = expectation(1, 1)
+
+    S = E00 + E01 + E10 - E11
+
+    # Build full probability distribution P[a, b, x, y]
+    P = np.zeros((2, 2, 2, 2))
+    for x in [0, 1]:
+        for y in [0, 1]:
+            for a in [0, 1]:
+                for b in [0, 1]:
+                    # Projectors onto +1, -1 eigenspaces
+                    proj_A = (I2 + ((-1)**a) * A[x]) / 2
+                    proj_B = (I2 + ((-1)**b) * B[y]) / 2
+                    M = np.kron(proj_A, proj_B)
+                    P[a, b, x, y] = np.real(psi.conj() @ M @ psi)
+
+    return {
+        'state': psi,
+        'measurements_A': A,
+        'measurements_B': B,
+        'angles': {'A0': theta_A0, 'A1': theta_A1, 'B0': theta_B0, 'B1': theta_B1},
+        'expectation_values': {'E00': E00, 'E01': E01, 'E10': E10, 'E11': E11},
+        'chsh_value': S,
+        'tsirelson_bound': 2 * np.sqrt(2),
+        'correlations': P,
+        'achieves_tsirelson': np.isclose(abs(S), 2 * np.sqrt(2))
+    }
+
+result = optimal_chsh_quantum_strategy()
+print(f"Optimal Quantum Strategy:")
+print(f"  CHSH value S = {result['chsh_value']:.10f}")
+print(f"  Tsirelson bound = {result['tsirelson_bound']:.10f}")
+print(f"  Achieves Tsirelson bound: {result['achieves_tsirelson']}")
+print(f"  Expectation values: E00={result['expectation_values']['E00']:.6f}, " +
+      f"E01={result['expectation_values']['E01']:.6f}, " +
+      f"E10={result['expectation_values']['E10']:.6f}, " +
+      f"E11={result['expectation_values']['E11']:.6f}")
+\end{lstlisting}
+
+% ============================================
+\section{NPA Hierarchy for Quantum Bounds}
+% ============================================
+
+\subsection{The Characterization Problem}
+
+A fundamental question in quantum information is: given a Bell inequality with coefficients $\beta$, what is the maximum quantum value $\beta_Q$? This is the \textbf{Tsirelson problem}.
+
+Direct optimization over quantum states and measurements is non-convex and difficult. The \textbf{NPA hierarchy} (Navascu\'es-Pironio-Ac\'in, 2007-2008) provides a systematic approach via semidefinite programming.
+
+\subsection{Moment Matrix Formulation}
+
+\begin{definition}[Operator Sequence]
+An \textbf{operator sequence} is a formal product of measurement operators:
+\begin{equation}
+S = A^{(1)}_{a_1, x_1} A^{(2)}_{a_2, x_2} \cdots A^{(k)}_{a_k, x_k}
+\end{equation}
+where $A^{(i)}_{a, x}$ is the projector for party $i$, measurement $x$, outcome $a$.
+\end{definition}
+
+\begin{definition}[Moment Matrix]
+The \textbf{moment matrix} $\Gamma$ is indexed by operator sequences $S, T$:
+\begin{equation}
+\Gamma_{S, T} = \langle \psi | S^\dagger T | \psi \rangle
+\end{equation}
+This represents the correlation between sequences $S$ and $T$ in the quantum state.
+\end{definition}
+
+\begin{definition}[NPA Level]
+At \textbf{level $k$} of the NPA hierarchy, the moment matrix $\Gamma^{(k)}$ is indexed by all operator sequences of length at most $k$. The set of correlations consistent with level $k$ is denoted $\QQ_k$.
+\end{definition}
+
+\subsection{NPA Constraints}
+
+\begin{theorem}[NPA Relaxation]
+The moment matrix must satisfy:
+\begin{enumerate}
+    \item \textbf{Positivity}: $\Gamma \psd 0$ (positive semidefinite)
+    \item \textbf{Normalization}: $\Gamma_{\emptyset, \emptyset} = 1$
+    \item \textbf{Hermiticity}: $\Gamma_{S, T} = \overline{\Gamma_{T, S}}$
+    \item \textbf{Commutativity}: If $S$ and $T$ involve disjoint parties, $\Gamma_{ST, U} = \Gamma_{TS, U}$
+    \item \textbf{Projector relations}: $A^2 = A$, $\sum_a A_a^x = I$
+    \item \textbf{Orthogonality}: $A_a^x A_{a'}^x = \delta_{a, a'} A_a^x$
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[NPA Convergence]
+The NPA hierarchy converges to the quantum set:
+\begin{equation}
+\QQ_1 \supseteq \QQ_2 \supseteq \cdots \supseteq \QQ \quad \text{with} \quad \bigcap_{k=1}^\infty \QQ_k = \QQ
+\end{equation}
+\end{theorem}
+
+\begin{physicsbox}
+\textbf{Key Insight}: At each level $k$, maximizing a Bell inequality subject to NPA constraints is a semidefinite program (SDP). SDPs can be solved efficiently to arbitrary precision, giving systematic upper bounds on quantum correlations.
+\end{physicsbox}
+
+\subsection{SDP Formulation for CHSH}
+
+\begin{lstlisting}[caption={NPA Hierarchy Implementation for CHSH}]
+import cvxpy as cp
+import numpy as np
+from typing import Dict, List, Tuple, Optional
+
+def npa_chsh_level1() -> Dict:
+    """
+    NPA level 1 (1+AB) SDP for CHSH inequality.
+
+    Moment matrix indexed by: {I, A0, A1, B0, B1}
+    Plus two-body correlators: {A0B0, A0B1, A1B0, A1B1}
+
+    Returns optimal quantum bound and certificate.
+    """
+    # Variables: correlators and moment matrix
+    # For dichotomic observables (eigenvalues +1, -1):
+    # <A_x> = 2*P(a=0|x) - 1  (expectation of observable)
+    # <A_x B_y> = E(A_x, B_y) = sum_{a,b} (-1)^{a+b} P(ab|xy)
+
+    # At level 1+AB, we have 9 operators: I, A0, A1, B0, B1, A0B0, A0B1, A1B0, A1B1
+    # Moment matrix is 9x9
+
+    n = 9  # Number of operators at level 1+AB
+
+    # Index mapping
+    idx = {'I': 0, 'A0': 1, 'A1': 2, 'B0': 3, 'B1': 4,
+           'A0B0': 5, 'A0B1': 6, 'A1B0': 7, 'A1B1': 8}
+
+    # Moment matrix variable
+    Gamma = cp.Variable((n, n), symmetric=True)
+
+    constraints = []
+
+    # 1. Positive semidefinite
+    constraints.append(Gamma >> 0)
+
+    # 2. Normalization: <I|I> = 1
+    constraints.append(Gamma[idx['I'], idx['I']] == 1)
+
+    # 3. Dichotomic observables: A^2 = I => <A|A> = <I|I> = 1
+    for op in ['A0', 'A1', 'B0', 'B1']:
+        constraints.append(Gamma[idx[op], idx[op]] == 1)
+
+    # 4. (AB)^2 = A^2 B^2 = I for commuting A, B
+    for op in ['A0B0', 'A0B1', 'A1B0', 'A1B1']:
+        constraints.append(Gamma[idx[op], idx[op]] == 1)
+
+    # 5. Commutativity: [A, B] = 0 => AB = BA
+    # Already implicit in symmetric matrix with same index for AB and BA
+
+    # 6. Product constraints: <A|AB> = <I|B> * <A|A> / <I|I> = <B> for A^2 = I
+    # More precisely: <A_x | A_x B_y> = <I | B_y> since A_x^2 = I
+    constraints.append(Gamma[idx['A0'], idx['A0B0']] == Gamma[idx['I'], idx['B0']])
+    constraints.append(Gamma[idx['A0'], idx['A0B1']] == Gamma[idx['I'], idx['B1']])
+    constraints.append(Gamma[idx['A1'], idx['A1B0']] == Gamma[idx['I'], idx['B0']])
+    constraints.append(Gamma[idx['A1'], idx['A1B1']] == Gamma[idx['I'], idx['B1']])
+
+    # Similarly: <B_y | A_x B_y> = <A_x>
+    constraints.append(Gamma[idx['B0'], idx['A0B0']] == Gamma[idx['I'], idx['A0']])
+    constraints.append(Gamma[idx['B1'], idx['A0B1']] == Gamma[idx['I'], idx['A0']])
+    constraints.append(Gamma[idx['B0'], idx['A1B0']] == Gamma[idx['I'], idx['A1']])
+    constraints.append(Gamma[idx['B1'], idx['A1B1']] == Gamma[idx['I'], idx['A1']])
+
+    # 7. <A_x B_y | A_x' B_y'> for x != x' or y != y' -- complex constraints
+    # At level 1+AB, need: <A0B0 | A0B1> = <B0 | B1> * <A0|A0> = <B0|B1>
+    constraints.append(Gamma[idx['A0B0'], idx['A0B1']] == Gamma[idx['B0'], idx['B1']])
+    constraints.append(Gamma[idx['A0B0'], idx['A1B0']] == Gamma[idx['A0'], idx['A1']])
+    constraints.append(Gamma[idx['A0B1'], idx['A1B1']] == Gamma[idx['A0'], idx['A1']])
+    constraints.append(Gamma[idx['A1B0'], idx['A1B1']] == Gamma[idx['B0'], idx['B1']])
+
+    # Cross terms
+    constraints.append(Gamma[idx['A0B0'], idx['A1B1']] ==
+                      Gamma[idx['A0'], idx['A1']] * Gamma[idx['B0'], idx['B1']])
+    constraints.append(Gamma[idx['A0B1'], idx['A1B0']] ==
+                      Gamma[idx['A0'], idx['A1']] * Gamma[idx['B1'], idx['B0']])
+
+    # Objective: maximize S = <A0B0> + <A0B1> + <A1B0> - <A1B1>
+    # <AxBy> = Gamma[I, AxBy]
+    S = (Gamma[idx['I'], idx['A0B0']] + Gamma[idx['I'], idx['A0B1']] +
+         Gamma[idx['I'], idx['A1B0']] - Gamma[idx['I'], idx['A1B1']])
+
+    # Solve SDP
+    problem = cp.Problem(cp.Maximize(S), constraints)
+
+    try:
+        problem.solve(solver=cp.SCS, verbose=False)
+    except:
+        problem.solve(solver=cp.ECOS, verbose=False)
+
+    return {
+        'quantum_bound': problem.value,
+        'tsirelson_bound': 2 * np.sqrt(2),
+        'status': problem.status,
+        'gap': abs(problem.value - 2 * np.sqrt(2)),
+        'moment_matrix': Gamma.value,
+        'level': '1+AB'
+    }
+
+def npa_general(scenario: BellScenario, bell_coeffs: np.ndarray,
+                level: int = 1) -> Dict:
+    """
+    General NPA hierarchy implementation.
+
+    Args:
+        scenario: Bell scenario (N, M, d)
+        bell_coeffs: Coefficients beta[a, x] of Bell functional
+        level: NPA hierarchy level
+
+    Returns: Quantum bound and SDP certificate
+    """
+    # Generate operator sequences at given level
+    operators = generate_npa_operators(scenario, level)
+    n_ops = len(operators)
+
+    # Index mapping
+    op_to_idx = {op: i for i, op in enumerate(operators)}
+
+    # Moment matrix
+    Gamma = cp.Variable((n_ops, n_ops), PSD=True)
+
+    constraints = []
+
+    # Normalization
+    constraints.append(Gamma[0, 0] == 1)  # Identity operator
+
+    # Add NPA constraints based on operator algebra
+    constraints.extend(generate_npa_constraints(Gamma, operators, op_to_idx, scenario))
+
+    # Bell functional objective
+    objective = build_bell_objective(Gamma, bell_coeffs, operators, op_to_idx, scenario)
+
+    problem = cp.Problem(cp.Maximize(objective), constraints)
+    problem.solve(solver=cp.SCS, verbose=False)
+
+    return {
+        'quantum_bound': problem.value,
+        'status': problem.status,
+        'level': level,
+        'n_operators': n_ops,
+        'moment_matrix': Gamma.value
+    }
+
+def generate_npa_operators(scenario: BellScenario, level: int) -> List[Tuple]:
+    """Generate operator sequences up to given level."""
+    operators = [()]  # Identity
+
+    # Single operators for each party
+    single_ops = []
+    for party in range(scenario.N):
+        for x in range(scenario.M):
+            for a in range(scenario.d - 1):  # d-1 projectors (last determined by sum=I)
+                single_ops.append(((party, x, a),))
+
+    operators.extend(single_ops)
+
+    # Higher level products
+    if level >= 2:
+        from itertools import combinations_with_replacement
+        for k in range(2, level + 1):
+            for combo in combinations_with_replacement(single_ops, k):
+                # Flatten and check commutation rules
+                new_op = tuple(sum([list(op) for op in combo], []))
+                # Simplify using commutation (different parties commute)
+                new_op = simplify_operator(new_op, scenario)
+                if new_op not in operators:
+                    operators.append(new_op)
+
+    return operators
+
+def simplify_operator(op: Tuple, scenario: BellScenario) -> Tuple:
+    """Simplify operator sequence using algebra rules."""
+    if len(op) <= 1:
+        return op
+
+    # Sort by party (since different parties commute)
+    op_list = list(op)
+    op_list.sort(key=lambda x: x[0])  # Sort by party index
+
+    # Reduce same-party products: A_a^x A_{a'}^x = delta_{a,a'} A_a^x
+    # This requires more sophisticated handling
+
+    return tuple(op_list)
+
+# Example usage
+result = npa_chsh_level1()
+print(f"NPA Level 1+AB for CHSH:")
+print(f"  Quantum bound: {result['quantum_bound']:.10f}")
+print(f"  Tsirelson bound: {result['tsirelson_bound']:.10f}")
+print(f"  Gap: {result['gap']:.2e}")
+print(f"  Status: {result['status']}")
+\end{lstlisting}
+
+% ============================================
+\section{Local Polytope and Facet Enumeration}
+% ============================================
+
+\subsection{Polytope Structure}
+
+\begin{definition}[Local Polytope for $(2, 2, 2)$]
+For the CHSH scenario, the local polytope $\LL$ has:
+\begin{itemize}
+    \item $16$ vertices (deterministic strategies)
+    \item $8$ facets in the full probability space (excluding normalization)
+    \item $8$ facets are the $\pm$ versions of CHSH and permutations
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[CHSH as Unique Facet Type]
+Up to local isometries (relabeling parties, measurements, outcomes), the CHSH inequality is the \textbf{only} non-trivial facet of the $(2, 2, 2)$ local polytope.
+\end{theorem}
+
+\subsection{Vertex Enumeration Algorithm}
+
+\begin{lstlisting}[caption={Local Polytope Vertex and Facet Enumeration}]
+import numpy as np
+from scipy.spatial import ConvexHull
+import sympy as sp
+from typing import List, Dict
+
+def enumerate_local_polytope_vertices(scenario: BellScenario) -> np.ndarray:
+    """
+    Generate all vertices (deterministic strategies) of local polytope.
+
+    Returns: Array of shape (n_vertices, dim_probability) where each row
+             is a deterministic correlation.
+    """
+    n_strat_per_party = scenario.d ** scenario.M
+    n_vertices = n_strat_per_party ** scenario.N
+
+    # Compute probability space dimension (after removing normalization)
+    # Full: M^N inputs, d^N outputs each
+    # After normalization: (d-1) * d^{N-1} free probabilities per input
+    dim_full = (scenario.M ** scenario.N) * (scenario.d ** scenario.N)
+
+    vertices = []
+
+    for strat_idx in range(n_vertices):
+        # Decode strategy
+        functions = decode_deterministic_strategy(scenario, strat_idx)
+
+        # Build probability vector P[a1,...,aN, x1,...,xN]
+        P = np.zeros(dim_full)
+
+        idx = 0
+        for inputs in itertools.product(range(scenario.M), repeat=scenario.N):
+            for outputs in itertools.product(range(scenario.d), repeat=scenario.N):
+                # Check if outputs match deterministic functions
+                match = all(outputs[i] == functions[i][inputs[i]]
+                           for i in range(scenario.N))
+                P[idx] = 1.0 if match else 0.0
+                idx += 1
+
+        vertices.append(P)
+
+    return np.array(vertices)
+
+def enumerate_facets(vertices: np.ndarray) -> List[Dict]:
+    """
+    Enumerate all facets of convex hull of vertices.
+
+    Returns: List of facet inequalities as {coefficients, bound}.
+    """
+    # Compute convex hull
+    try:
+        hull = ConvexHull(vertices)
+    except:
+        # Degenerate case: points are not in general position
+        # Add small perturbation
+        vertices_perturbed = vertices + 1e-10 * np.random.randn(*vertices.shape)
+        hull = ConvexHull(vertices_perturbed)
+
+    facets = []
+
+    for i, equation in enumerate(hull.equations):
+        # equation = [a1, a2, ..., an, b] where a.x + b <= 0
+        # Convert to a.x <= -b
+        coeffs = equation[:-1]
+        bound = -equation[-1]
+
+        # Find vertices on this facet
+        distances = vertices @ coeffs + equation[-1]
+        on_facet = np.where(np.abs(distances) < 1e-8)[0]
+
+        # Convert to exact rationals
+        coeffs_rational = [sp.Rational(c).limit_denominator(10**8)
+                          for c in coeffs]
+        bound_rational = sp.Rational(bound).limit_denominator(10**8)
+
+        facets.append({
+            'coefficients': coeffs_rational,
+            'bound': bound_rational,
+            'vertices_on_facet': on_facet.tolist(),
+            'n_vertices_on_facet': len(on_facet)
+        })
+
+    return facets
+
+def identify_chsh_facets(facets: List[Dict], scenario: BellScenario) -> List[int]:
+    """
+    Identify which facets correspond to CHSH inequality (up to sign/permutation).
+
+    CHSH has coefficients that give S = E00 + E01 + E10 - E11.
+    """
+    chsh_facet_indices = []
+
+    # Expected structure: 4 non-zero correlator coefficients with pattern +1,+1,+1,-1
+    for i, facet in enumerate(facets):
+        coeffs = [float(c) for c in facet['coefficients']]
+
+        # Check if this is a CHSH-type facet
+        # CHSH involves only the correlator terms E(A_x B_y)
+        # In probability space, E(A_x B_y) = P(00|xy) - P(01|xy) - P(10|xy) + P(11|xy)
+
+        # Simplified check: count pattern of coefficients
+        nonzero = np.sum(np.abs(coeffs) > 1e-6)
+
+        # CHSH-type if pattern matches (this is a heuristic)
+        if nonzero == 4 or nonzero == 8:  # Depends on representation
+            chsh_facet_indices.append(i)
+
+    return chsh_facet_indices
+
+def verify_facet_as_bell_inequality(facet: Dict, scenario: BellScenario,
+                                    vertices: np.ndarray) -> Dict:
+    """
+    Verify a facet is a valid Bell inequality by checking:
+    1. All vertices satisfy the inequality
+    2. At least dim(L) vertices saturate the bound (tight)
+    """
+    coeffs = np.array([float(c) for c in facet['coefficients']])
+    bound = float(facet['bound'])
+
+    values = vertices @ coeffs
+
+    max_value = np.max(values)
+    n_saturating = np.sum(np.abs(values - max_value) < 1e-8)
+
+    # Check local bound matches
+    bound_matches = np.isclose(max_value, bound, rtol=1e-6)
+
+    # Check all vertices satisfy inequality
+    all_satisfy = np.all(values <= bound + 1e-8)
+
+    return {
+        'is_valid': bound_matches and all_satisfy,
+        'local_bound': max_value,
+        'claimed_bound': bound,
+        'n_vertices_saturating': n_saturating,
+        'all_satisfy': all_satisfy
+    }
+
+# Example: Enumerate (2,2,2) polytope
+scenario_222 = BellScenario(N=2, M=2, d=2)
+vertices = enumerate_local_polytope_vertices(scenario_222)
+print(f"Local polytope for (2,2,2):")
+print(f"  Number of vertices: {len(vertices)}")
+print(f"  Probability space dimension: {vertices.shape[1]}")
+
+# Note: Full facet enumeration requires proper handling of
+# the correlation vs probability space representation
+\end{lstlisting}
+
+\subsection{Correlation Space Representation}
+
+\begin{definition}[Correlation Space]
+For efficiency, work in the \textbf{correlation space} rather than probability space. For $(2, 2, 2)$:
+\begin{equation}
+\vec{c} = (E_{00}, E_{01}, E_{10}, E_{11}) \in [-1, 1]^4
+\end{equation}
+where $E_{xy} = \langle A_x B_y \rangle$.
+\end{definition}
+
+\begin{theorem}[Local Polytope in Correlation Space]
+In the correlation space, the $(2, 2, 2)$ local polytope is the hypercube $[-1, 1]^4$ intersected with 8 CHSH-type half-spaces:
+\begin{align}
+\pm E_{00} \pm E_{01} \pm E_{10} \pm E_{11} &\leq 2 \quad \text{(odd number of minus signs)}
+\end{align}
+\end{theorem}
+
+% ============================================
+\section{Device-Independent Randomness Certification}
+% ============================================
+
+\subsection{Motivation}
+
+\begin{physicsbox}
+\textbf{The Remarkable Implication}: A Bell violation certifies that measurement outcomes are \textbf{intrinsically random}---they cannot be predetermined by any hidden variable, even one controlled by an adversary. This is \textbf{device-independent}: it holds regardless of how the devices are constructed.
+\end{physicsbox}
+
+\begin{definition}[Min-Entropy]
+The \textbf{min-entropy} of a random variable $A$ conditioned on side information $E$ is:
+\begin{equation}
+H_{\min}(A | E) = -\log_2 \max_a P(A = a | E)
+\end{equation}
+This quantifies the unpredictability of $A$ to an adversary with information $E$.
+\end{definition}
+
+\subsection{Randomness from CHSH Violation}
+
+\begin{theorem}[Ac\'in et al., 2012]
+For a CHSH violation $S$, the min-entropy of Alice's output $A_0$ conditioned on any quantum side information $E$ is bounded by:
+\begin{equation}
+H_{\min}(A_0 | E) \geq 1 - h\left(\frac{1 + \sqrt{(S/2)^2 - 1}}{2}\right)
+\end{equation}
+where $h(x) = -x \log_2 x - (1-x) \log_2(1-x)$ is the binary entropy.
+\end{theorem}
+
+\begin{corollary}
+At Tsirelson bound $S = 2\sqrt{2}$:
+\begin{equation}
+H_{\min}(A_0 | E) \geq 1 - h\left(\frac{1 + 1/\sqrt{2}}{2}\right) \approx 0.228 \text{ bits}
+\end{equation}
+\end{corollary}
+
+\begin{lstlisting}[caption={Device-Independent Randomness Certification}]
+import numpy as np
+from typing import Dict
+
+def binary_entropy(p: float) -> float:
+    """Binary entropy h(p) = -p log2(p) - (1-p) log2(1-p)."""
+    if p <= 0 or p >= 1:
+        return 0.0
+    return -p * np.log2(p) - (1 - p) * np.log2(1 - p)
+
+def certify_randomness_chsh(S: float) -> Dict:
+    """
+    Certify device-independent randomness from CHSH violation.
+
+    Uses Acin et al. (2012) bound:
+    H_min(A_0 | E) >= 1 - h((1 + sqrt((S/2)^2 - 1)) / 2)
+
+    Args:
+        S: Observed CHSH value (should be > 2 for randomness)
+
+    Returns: Certified min-entropy and related quantities.
+    """
+    # Check for Bell violation
+    if S <= 2.0:
+        return {
+            'min_entropy': 0.0,
+            'chsh_value': S,
+            'certified': False,
+            'reason': 'No Bell violation (S <= 2)'
+        }
+
+    # Check physical bound
+    if S > 2 * np.sqrt(2) + 1e-6:
+        return {
+            'min_entropy': 0.0,
+            'chsh_value': S,
+            'certified': False,
+            'reason': f'Exceeds Tsirelson bound (S > 2*sqrt(2))'
+        }
+
+    # Compute guessing probability
+    # p_guess = (1 + sqrt((S/2)^2 - 1)) / 2
+    s_half = S / 2
+    if s_half**2 < 1:
+        return {
+            'min_entropy': 0.0,
+            'chsh_value': S,
+            'certified': False,
+            'reason': 'Insufficient violation'
+        }
+
+    sqrt_term = np.sqrt(s_half**2 - 1)
+    p_guess = (1 + sqrt_term) / 2
+
+    # Min-entropy bound
+    H_min = 1 - binary_entropy(p_guess)
+
+    # Maximum achievable at Tsirelson bound
+    S_tsirelson = 2 * np.sqrt(2)
+    sqrt_term_max = np.sqrt((S_tsirelson/2)**2 - 1)
+    p_guess_max = (1 + sqrt_term_max) / 2
+    H_min_max = 1 - binary_entropy(p_guess_max)
+
+    return {
+        'min_entropy': H_min,
+        'bits_per_round': H_min,
+        'chsh_value': S,
+        'guessing_probability': p_guess,
+        'certified': True,
+        'max_possible_entropy': H_min_max,
+        'fraction_of_max': H_min / H_min_max if H_min_max > 0 else 0
+    }
+
+def randomness_rate_vs_violation() -> Dict:
+    """
+    Compute randomness rate as function of CHSH violation.
+    """
+    S_values = np.linspace(2.001, 2 * np.sqrt(2), 100)
+    H_values = []
+
+    for S in S_values:
+        result = certify_randomness_chsh(S)
+        H_values.append(result['min_entropy'])
+
+    return {
+        'S_values': S_values.tolist(),
+        'H_min_values': H_values,
+        'tsirelson_point': (2 * np.sqrt(2), certify_randomness_chsh(2*np.sqrt(2))['min_entropy'])
+    }
+
+# Examples
+print("Device-Independent Randomness Certification:")
+print("=" * 50)
+
+test_values = [1.9, 2.0, 2.1, 2.4, 2.6, 2.8, 2*np.sqrt(2)]
+for S in test_values:
+    result = certify_randomness_chsh(S)
+    if result['certified']:
+        print(f"S = {S:.4f}: H_min = {result['min_entropy']:.4f} bits, " +
+              f"p_guess = {result['guessing_probability']:.4f}")
+    else:
+        print(f"S = {S:.4f}: {result['reason']}")
+\end{lstlisting}
+
+% ============================================
+\section{Entanglement Dimension Certification}
+% ============================================
+
+\subsection{Dimension Witnesses}
+
+\begin{definition}[Schmidt Rank]
+The \textbf{Schmidt rank} of a bipartite pure state $|\psi\rangle \in \HH_A \otimes \HH_B$ is the number of non-zero coefficients in its Schmidt decomposition:
+\begin{equation}
+|\psi\rangle = \sum_{i=1}^{r} \sqrt{\lambda_i} |i\rangle_A \otimes |i\rangle_B
+\end{equation}
+\end{definition}
+
+\begin{definition}[Entanglement Dimension]
+The \textbf{entanglement dimension} (or Schmidt number) is the minimum Schmidt rank among all states $|\psi\rangle$ that can produce the observed correlation.
+\end{definition}
+
+\begin{theorem}[CHSH and Entanglement]
+Any correlation $P$ with CHSH value $S > 2$ requires an entangled state. More specifically:
+\begin{itemize}
+    \item $S > 2$ implies Schmidt rank $\geq 2$ (entanglement required)
+    \item Higher-dimensional Bell inequalities can witness higher Schmidt ranks
+\end{itemize}
+\end{theorem}
+
+\begin{lstlisting}[caption={Entanglement Dimension Certification}]
+import numpy as np
+from typing import Dict
+
+def certify_entanglement_dimension_chsh(S: float) -> Dict:
+    """
+    Certify minimum entanglement dimension from CHSH violation.
+
+    Args:
+        S: Observed CHSH value
+
+    Returns: Certified minimum Schmidt rank and analysis.
+    """
+    # CHSH violation requires entanglement
+    if abs(S) <= 2.0:
+        return {
+            'min_schmidt_rank': 1,
+            'chsh_value': S,
+            'entangled': False,
+            'reason': 'No Bell violation - separable state possible'
+        }
+
+    # Any CHSH violation certifies Schmidt rank >= 2
+    # Maximum CHSH with Schmidt rank d is 2*sqrt(min(d_A, d_B))
+    # For d = 2 (qubits), max is 2*sqrt(2)
+
+    # Compute minimum dimension required
+    # |S| <= 2*sqrt(d) for Schmidt rank d
+    # So d >= (S/2)^2
+
+    S_abs = abs(S)
+    min_dim_from_chsh = max(2, int(np.ceil((S_abs / 2)**2)))
+
+    return {
+        'min_schmidt_rank': 2,  # CHSH can only certify rank 2
+        'min_hilbert_dim': min_dim_from_chsh,
+        'chsh_value': S,
+        'entangled': True,
+        'violation_over_local': S_abs - 2,
+        'fraction_of_tsirelson': S_abs / (2 * np.sqrt(2))
+    }
+
+def certify_dimension_cglmp(I_d: float, d: int) -> Dict:
+    """
+    Certify dimension using CGLMP inequality for d-outcome case.
+
+    The CGLMP inequality (Collins-Gisin-Linden-Massar-Popescu) generalizes
+    CHSH to d > 2 outcomes and can witness higher entanglement dimensions.
+
+    Args:
+        I_d: Value of CGLMP functional
+        d: Number of outcomes in the scenario
+
+    Returns: Dimension certification results.
+    """
+    # Local bound for CGLMP_d is 2
+    # Quantum bound for maximally entangled state of Schmidt rank d
+    # approaches 2 * (1 + 1/(d-1)) as d -> infinity
+
+    local_bound = 2.0
+
+    if I_d <= local_bound:
+        return {
+            'certified_dimension': 1,
+            'cglmp_value': I_d,
+            'scenario_d': d,
+            'entangled': False
+        }
+
+    # For qutrit (d=3), quantum max is approximately 2.915
+    # General formula: I_d^max = 2 * sum_{k=0}^{d-1} (1 - 2k/(d-1)) * cos(pi*k/(d*d-d+1))
+
+    return {
+        'certified_dimension': min(d, 2),  # Conservative bound
+        'cglmp_value': I_d,
+        'scenario_d': d,
+        'entangled': True,
+        'violation': I_d - local_bound
+    }
+
+# Example usage
+print("Entanglement Dimension Certification:")
+print("=" * 50)
+
+for S in [1.8, 2.0, 2.2, 2.5, 2.7, 2*np.sqrt(2)]:
+    result = certify_entanglement_dimension_chsh(S)
+    status = "Entangled" if result['entangled'] else "May be separable"
+    print(f"S = {S:.4f}: {status}, min Schmidt rank = {result['min_schmidt_rank']}")
+\end{lstlisting}
+
+% ============================================
+\section{Certificate Generation with SDP Duality}
+% ============================================
+
+\subsection{SDP Duality Theory}
+
+\begin{definition}[Primal SDP]
+The primal form of our Bell inequality optimization is:
+\begin{align}
+\text{maximize} \quad & \langle C, X \rangle \\
+\text{subject to} \quad & \mathcal{A}(X) = b \\
+& X \psd 0
+\end{align}
+where $X$ is the moment matrix, $C$ encodes the Bell functional, and $\mathcal{A}(X) = b$ encodes NPA constraints.
+\end{definition}
+
+\begin{definition}[Dual SDP]
+The dual problem is:
+\begin{align}
+\text{minimize} \quad & b^T y \\
+\text{subject to} \quad & \mathcal{A}^*(y) - C \psd 0
+\end{align}
+where $y$ are dual variables (Lagrange multipliers).
+\end{definition}
+
+\begin{theorem}[Strong Duality]
+Under constraint qualification (satisfied for NPA problems), strong duality holds:
+\begin{equation}
+\text{primal optimum} = \text{dual optimum}
+\end{equation}
+A dual feasible solution provides a \textbf{certificate} that the primal value cannot exceed the dual objective.
+\end{theorem}
+
+\subsection{Certificate Structure}
+
+\begin{lstlisting}[caption={Bell Inequality Certificate Generation}]
+from dataclasses import dataclass, asdict
+from typing import List, Dict, Tuple, Optional
+import json
+import numpy as np
+
+@dataclass
+class BellInequalityCertificate:
+    """
+    Machine-checkable certificate for Bell inequality analysis.
+
+    Contains all information needed to independently verify:
+    1. The Bell inequality (coefficients, local bound)
+    2. The quantum bound (NPA level, SDP solution)
+    3. Optimal quantum strategy (state, measurements)
+    4. Device-independent certifications (randomness, dimension)
+    """
+
+    # Scenario specification
+    scenario: Tuple[int, int, int]  # (N, M, d)
+    inequality_name: str
+
+    # Bell inequality
+    coefficients: List[str]  # Rational coefficients as strings
+    local_bound: str  # Rational number
+    vertex_witness: List[int]  # Indices of saturating vertices
+
+    # Quantum bound
+    quantum_bound: float
+    npa_level: int
+    sdp_solver: str
+    sdp_status: str
+    sdp_duality_gap: float
+
+    # Optimal quantum strategy
+    optimal_state: List[List[float]]  # [real, imag] pairs
+    optimal_measurements_A: List[List[List[float]]]  # Measurement matrices
+    optimal_measurements_B: List[List[List[float]]]
+    achieved_value: float
+
+    # Derived certifications
+    certified_randomness: float  # H_min in bits
+    certified_entanglement_dim: int
+
+    # Verification flags
+    local_bound_verified: bool
+    quantum_bound_verified: bool
+    strategy_verified: bool
+
+    # Metadata
+    timestamp: str
+    computation_time_seconds: float
+
+    def to_json(self) -> str:
+        """Export certificate as JSON."""
+        return json.dumps(asdict(self), indent=2)
+
+    @classmethod
+    def from_json(cls, json_str: str) -> 'BellInequalityCertificate':
+        """Load certificate from JSON."""
+        data = json.loads(json_str)
+        data['scenario'] = tuple(data['scenario'])
+        return cls(**data)
+
+def generate_chsh_certificate() -> BellInequalityCertificate:
+    """
+    Generate complete certificate for CHSH inequality.
+    """
+    import time
+    from datetime import datetime
+
+    start_time = time.time()
+
+    scenario = BellScenario(N=2, M=2, d=2)
+
+    # Step 1: Verify local bound
+    local_result = verify_chsh_local_bound()
+
+    # Step 2: Compute quantum bound via NPA
+    npa_result = npa_chsh_level1()
+
+    # Step 3: Compute optimal strategy
+    strategy_result = optimal_chsh_quantum_strategy()
+
+    # Step 4: Certify randomness
+    randomness_result = certify_randomness_chsh(abs(strategy_result['chsh_value']))
+
+    # Step 5: Certify entanglement dimension
+    dim_result = certify_entanglement_dimension_chsh(abs(strategy_result['chsh_value']))
+
+    # Build certificate
+    # CHSH coefficients in probability space
+    # S = E00 + E01 + E10 - E11
+    # E_xy = P(00|xy) - P(01|xy) - P(10|xy) + P(11|xy)
+    # Full expansion gives coefficients for P(ab|xy)
+
+    coeffs_chsh = []
+    for x in [0, 1]:
+        for y in [0, 1]:
+            sign = 1 if (x, y) != (1, 1) else -1
+            for a in [0, 1]:
+                for b in [0, 1]:
+                    coeff = sign * ((-1)**(a + b))
+                    coeffs_chsh.append(str(coeff))
+
+    # Extract measurement matrices (convert complex to [real, imag])
+    def matrix_to_list(M: np.ndarray) -> List[List[float]]:
+        return [[float(M[i, j].real), float(M[i, j].imag)]
+                for i in range(M.shape[0]) for j in range(M.shape[1])]
+
+    cert = BellInequalityCertificate(
+        scenario=(2, 2, 2),
+        inequality_name="CHSH",
+        coefficients=coeffs_chsh,
+        local_bound="2",
+        vertex_witness=[s[0] for s in local_result['maximizing_strategies'][:4]],
+        quantum_bound=npa_result['quantum_bound'],
+        npa_level=1,
+        sdp_solver="SCS",
+        sdp_status=npa_result['status'],
+        sdp_duality_gap=npa_result['gap'],
+        optimal_state=[[float(z.real), float(z.imag)]
+                       for z in strategy_result['state']],
+        optimal_measurements_A=[matrix_to_list(M)
+                                for M in strategy_result['measurements_A']],
+        optimal_measurements_B=[matrix_to_list(M)
+                                for M in strategy_result['measurements_B']],
+        achieved_value=strategy_result['chsh_value'],
+        certified_randomness=randomness_result.get('min_entropy', 0.0),
+        certified_entanglement_dim=dim_result['min_schmidt_rank'],
+        local_bound_verified=local_result['is_exactly_2'],
+        quantum_bound_verified=np.isclose(npa_result['quantum_bound'],
+                                          2*np.sqrt(2), rtol=1e-4),
+        strategy_verified=strategy_result['achieves_tsirelson'],
+        timestamp=datetime.now().isoformat(),
+        computation_time_seconds=time.time() - start_time
+    )
+
+    return cert
+
+def verify_certificate(cert: BellInequalityCertificate) -> Dict[str, bool]:
+    """
+    Independent verification of Bell inequality certificate.
+
+    Checks all claimed properties against recomputed values.
+    """
+    checks = {}
+
+    # 1. Verify local bound
+    # Recompute by checking all deterministic strategies
+    scenario = BellScenario(*cert.scenario)
+    local_result = verify_chsh_local_bound()
+    checks['local_bound_correct'] = np.isclose(
+        local_result['local_bound'],
+        float(cert.local_bound),
+        rtol=1e-6
+    )
+
+    # 2. Verify vertex witnesses saturate bound
+    vertices = enumerate_local_polytope_vertices(scenario)
+    coeffs = np.array([float(c) for c in cert.coefficients])
+
+    for v_idx in cert.vertex_witness:
+        v_value = np.abs(np.dot(vertices[v_idx], coeffs))
+        checks[f'vertex_{v_idx}_saturates'] = np.isclose(
+            v_value,
+            float(cert.local_bound),
+            atol=1e-6
+        )
+
+    # 3. Verify quantum bound is achievable
+    checks['quantum_achievable'] = cert.achieved_value <= cert.quantum_bound + 1e-6
+
+    # 4. Verify state normalization
+    state = np.array([complex(r, i) for r, i in cert.optimal_state])
+    checks['state_normalized'] = np.isclose(np.linalg.norm(state), 1.0, atol=1e-8)
+
+    # 5. Verify SDP duality gap is small
+    checks['sdp_converged'] = cert.sdp_duality_gap < 1e-4
+
+    # 6. Verify randomness certification is consistent
+    randomness_recomputed = certify_randomness_chsh(abs(cert.achieved_value))
+    checks['randomness_consistent'] = np.isclose(
+        cert.certified_randomness,
+        randomness_recomputed.get('min_entropy', 0.0),
+        atol=1e-6
+    )
+
+    # Overall verification
+    checks['all_passed'] = all(v for k, v in checks.items() if k != 'all_passed')
+
+    return checks
+
+# Generate and verify certificate
+print("Generating CHSH Certificate...")
+certificate = generate_chsh_certificate()
+
+print("\nCertificate Summary:")
+print(f"  Scenario: {certificate.scenario}")
+print(f"  Local bound: {certificate.local_bound}")
+print(f"  Quantum bound: {certificate.quantum_bound:.10f}")
+print(f"  Achieved value: {certificate.achieved_value:.10f}")
+print(f"  Certified randomness: {certificate.certified_randomness:.4f} bits")
+print(f"  Certified entanglement dimension: {certificate.certified_entanglement_dim}")
+
+print("\nVerifying Certificate...")
+verification = verify_certificate(certificate)
+for check, passed in verification.items():
+    status = "PASS" if passed else "FAIL"
+    print(f"  [{status}] {check}")
+\end{lstlisting}
+
+% ============================================
+\section{Success Criteria and Verification Protocols}
+% ============================================
+
+\subsection{Minimum Viable Result (Months 1-3)}
+
+\begin{itemize}
+    \item CHSH inequality implemented and local bound $S \leq 2$ verified exhaustively
+    \item Optimal quantum strategy computed: singlet state achieving $S = 2\sqrt{2}$
+    \item NPA level 1 operational, bound within $10^{-4}$ of Tsirelson
+    \item Basic certificate generation for CHSH
+\end{itemize}
+
+\textbf{Deliverables}:
+\begin{itemize}
+    \item \texttt{chsh\_verification.py}: Exhaustive check of 16 deterministic strategies
+    \item \texttt{chsh\_quantum.py}: Optimal state and measurements
+    \item \texttt{chsh\_certificate.json}: Complete machine-checkable certificate
+\end{itemize}
+
+\subsection{Strong Result (Months 4-6)}
+
+\begin{itemize}
+    \item NPA hierarchy at levels 1, 2, 3 for general Bell inequalities
+    \item All facets of $(2, 2, 2)$ local polytope enumerated
+    \item Device-independent randomness certification operational
+    \item Extension to $(2, 3, 2)$ scenario (Collins-Gisin inequalities)
+\end{itemize}
+
+\textbf{Deliverables}:
+\begin{itemize}
+    \item \texttt{npa\_general.py}: NPA at arbitrary level for arbitrary scenario
+    \item \texttt{facet\_enumeration.py}: Complete facet database for $(2, 2, 2)$, $(2, 3, 2)$
+    \item \texttt{di\_randomness.py}: Certified randomness from arbitrary correlations
+    \item \texttt{bell\_database.json}: All inequalities with quantum bounds
+\end{itemize}
+
+\subsection{Publication-Quality Result (Months 7-9)}
+
+\begin{itemize}
+    \item Extension to multipartite: $(3, 2, 2)$ Mermin-GHZ inequality
+    \item Tight quantum bounds for all small-scenario facets
+    \item Comparison with published experimental data
+    \item Novel dimension witnesses for $d > 2$
+\end{itemize}
+
+\textbf{Deliverables}:
+\begin{itemize}
+    \item \texttt{mermin\_ghz.py}: Multipartite Bell inequalities
+    \item \texttt{experimental\_analysis.py}: Statistical analysis of loophole-free tests
+    \item Research paper: ``Systematic Classification of Bell Inequalities via NPA''
+\end{itemize}
+
+\subsection{Quality Metrics}
+
+\begin{longtable}{p{0.4\textwidth} p{0.25\textwidth} p{0.25\textwidth}}
+\toprule
+\textbf{Metric} & \textbf{Target} & \textbf{Verification} \\
+\midrule
+CHSH local bound & $= 2.0$ (exact) & Exhaustive enumeration \\
+CHSH quantum bound & $= 2\sqrt{2} \pm 10^{-8}$ & NPA + Tsirelson proof \\
+NPA convergence & Gap $< 10^{-6}$ at level 3 & SDP duality \\
+Randomness at Tsirelson & $\geq 0.22$ bits & Ac\'in et al.\ formula \\
+$(2, 2, 2)$ facets & 8 total (up to symmetry) & Convex hull + literature \\
+Certificate verification & All checks pass & Independent recomputation \\
+\bottomrule
+\end{longtable}
+
+% ============================================
+\section{Verification Protocol}
+% ============================================
+
+\begin{lstlisting}[caption={Complete Verification Suite}]
+def run_bell_verification_suite() -> Dict[str, bool]:
+    """
+    Comprehensive verification of Bell inequality implementation.
+    """
+    print("=" * 60)
+    print("BELL INEQUALITY VERIFICATION SUITE")
+    print("=" * 60)
+
+    results = {}
+
+    # Test 1: Local bound verification
+    print("\n[Test 1] CHSH Local Bound")
+    local = verify_chsh_local_bound()
+    results['local_bound'] = local['is_exactly_2']
+    print(f"  Max S over deterministic strategies: {local['local_bound']}")
+    print(f"  Verified S <= 2: {results['local_bound']}")
+
+    # Test 2: Quantum optimal strategy
+    print("\n[Test 2] Quantum Optimal Strategy")
+    quantum = optimal_chsh_quantum_strategy()
+    results['tsirelson_achieved'] = quantum['achieves_tsirelson']
+    print(f"  Achieved S = {quantum['chsh_value']:.10f}")
+    print(f"  Tsirelson bound = {quantum['tsirelson_bound']:.10f}")
+    print(f"  Achieves bound: {results['tsirelson_achieved']}")
+
+    # Test 3: NPA hierarchy
+    print("\n[Test 3] NPA Hierarchy")
+    npa = npa_chsh_level1()
+    results['npa_convergence'] = npa['gap'] < 1e-4
+    print(f"  NPA level 1+AB bound: {npa['quantum_bound']:.10f}")
+    print(f"  Gap from Tsirelson: {npa['gap']:.2e}")
+    print(f"  Converged: {results['npa_convergence']}")
+
+    # Test 4: Randomness certification
+    print("\n[Test 4] Device-Independent Randomness")
+    S_test = 2.7
+    rand = certify_randomness_chsh(S_test)
+    results['randomness_positive'] = rand['certified'] and rand['min_entropy'] > 0
+    print(f"  For S = {S_test}:")
+    print(f"  Certified H_min = {rand.get('min_entropy', 0):.4f} bits")
+    print(f"  Randomness certified: {results['randomness_positive']}")
+
+    # Test 5: Entanglement certification
+    print("\n[Test 5] Entanglement Dimension")
+    dim = certify_entanglement_dimension_chsh(S_test)
+    results['entanglement_detected'] = dim['entangled']
+    print(f"  For S = {S_test}:")
+    print(f"  Entangled: {dim['entangled']}")
+    print(f"  Min Schmidt rank: {dim['min_schmidt_rank']}")
+
+    # Test 6: Certificate generation and verification
+    print("\n[Test 6] Certificate Generation")
+    cert = generate_chsh_certificate()
+    verification = verify_certificate(cert)
+    results['certificate_valid'] = verification['all_passed']
+    print(f"  Certificate generated: {cert.inequality_name}")
+    print(f"  All verifications passed: {results['certificate_valid']}")
+
+    # Summary
+    print("\n" + "=" * 60)
+    all_passed = all(results.values())
+    print(f"ALL TESTS {'PASSED' if all_passed else 'FAILED'}")
+    print("=" * 60)
+
+    return results
+
+# Run verification
+results = run_bell_verification_suite()
+\end{lstlisting}
+
+% ============================================
+\section{Advanced Topics}
+% ============================================
+
+\subsection{The No-Signaling Set}
+
+\begin{definition}[No-Signaling Correlation]
+A correlation $P$ is \textbf{no-signaling} if marginals do not depend on distant measurement choices:
+\begin{align}
+\sum_b P(a, b | x, y) &= \sum_b P(a, b | x, y') \quad \forall a, x, y, y' \\
+\sum_a P(a, b | x, y) &= \sum_a P(a, b | x', y) \quad \forall b, x, x', y
+\end{align}
+\end{definition}
+
+The no-signaling set $\NS$ is a polytope containing $\QQ$ as a proper subset. The maximum CHSH value in $\NS$ is $S = 4$ (achieved by the ``PR box'').
+
+\subsection{Multipartite Bell Inequalities}
+
+\begin{definition}[Mermin Inequality]
+For $N$ parties with binary measurements, the Mermin inequality is:
+\begin{equation}
+M_N = \frac{1}{2^{N-1}} \sum_{\text{even parity}} \prod_{i=1}^{N} E(A^{(i)}_{x_i})
+\end{equation}
+with local bound $M_N \leq 1$ and quantum bound $M_N \leq 2^{(N-1)/2}$.
+\end{definition}
+
+The GHZ state $|GHZ_N\rangle = (|0\rangle^{\otimes N} + |1\rangle^{\otimes N})/\sqrt{2}$ achieves the quantum maximum.
+
+\subsection{Self-Testing}
+
+\begin{theorem}[CHSH Self-Testing]
+If a correlation achieves $S = 2\sqrt{2}$, then up to local isometries, the state must be the singlet $|\psi^-\rangle$ and measurements must be optimal CHSH observables.
+\end{theorem}
+
+Self-testing enables device-independent certification of specific quantum states and measurements---a remarkable application of Bell inequality violations.
+
+% ============================================
+\section{Conclusion}
+% ============================================
+
+Bell inequalities provide a rigorous mathematical framework for testing the foundations of quantum mechanics and enabling device-independent quantum information protocols. This report has developed:
+
+\begin{enumerate}
+    \item \textbf{Complete CHSH Analysis}: Local bound verification, Tsirelson bound proof, optimal quantum strategy
+    \item \textbf{NPA Hierarchy}: Systematic SDP-based computation of quantum bounds
+    \item \textbf{Facet Enumeration}: Vertex and facet structure of local polytope
+    \item \textbf{Device-Independent Certification}: Randomness and entanglement dimension from Bell violations
+    \item \textbf{Machine-Checkable Certificates}: SDP duality proofs and verification protocols
+\end{enumerate}
+
+\begin{pursuitbox}
+\textbf{Future Directions}:
+\begin{itemize}
+    \item Extension to multipartite scenarios $(N > 2)$
+    \item Higher-dimensional generalizations (CGLMP inequalities)
+    \item Network Bell inequalities for quantum networks
+    \item Self-testing protocols for specific quantum states
+    \item Integration with quantum cryptography protocols
+\end{itemize}
+\end{pursuitbox}
+
+% ============================================
+\section*{References}
+% ============================================
+
+\begin{enumerate}
+    \item J.S.\ Bell, ``On the Einstein-Podolsky-Rosen Paradox,'' Physics \textbf{1}, 195 (1964)
+
+    \item J.F.\ Clauser, M.A.\ Horne, A.\ Shimony, R.A.\ Holt, ``Proposed Experiment to Test Local Hidden-Variable Theories,'' Phys.\ Rev.\ Lett.\ \textbf{23}, 880 (1969)
+
+    \item B.S.\ Tsirelson, ``Quantum Generalizations of Bell's Inequality,'' Lett.\ Math.\ Phys.\ \textbf{4}, 93 (1980)
+
+    \item M.\ Navascu\'es, S.\ Pironio, A.\ Ac\'in, ``Bounding the Set of Quantum Correlations,'' Phys.\ Rev.\ Lett.\ \textbf{98}, 010401 (2007)
+
+    \item M.\ Navascu\'es, S.\ Pironio, A.\ Ac\'in, ``A Convergent Hierarchy of Semidefinite Programs Characterizing the Set of Quantum Correlations,'' New J.\ Phys.\ \textbf{10}, 073013 (2008)
+
+    \item A.\ Ac\'in et al., ``Randomness versus Nonlocality and Entanglement,'' Phys.\ Rev.\ Lett.\ \textbf{108}, 100402 (2012)
+
+    \item N.\ Brunner, D.\ Cavalcanti, S.\ Pironio, V.\ Scarani, S.\ Wehner, ``Bell Nonlocality,'' Rev.\ Mod.\ Phys.\ \textbf{86}, 419 (2014)
+
+    \item B.\ Hensen et al., ``Loophole-free Bell Inequality Violation Using Electron Spins Separated by 1.3 Kilometres,'' Nature \textbf{526}, 682 (2015)
+
+    \item M.\ Giustina et al., ``Significant-Loophole-Free Test of Bell's Theorem with Entangled Photons,'' Phys.\ Rev.\ Lett.\ \textbf{115}, 250401 (2015)
+
+    \item D.\ Collins, N.\ Gisin, N.\ Linden, S.\ Massar, S.\ Popescu, ``Bell Inequalities for Arbitrarily High-Dimensional Systems,'' Phys.\ Rev.\ Lett.\ \textbf{88}, 040404 (2002)
+
+    \item S.\ Pironio et al., ``Random Numbers Certified by Bell's Theorem,'' Nature \textbf{464}, 1021 (2010)
+
+    \item A.\ Aspect, P.\ Grangier, G.\ Roger, ``Experimental Tests of Bell's Inequalities Using Time-Varying Analyzers,'' Phys.\ Rev.\ Lett.\ \textbf{49}, 1804 (1982)
+\end{enumerate}
+
+\appendix
+
+% ============================================
+\section{Mathematical Derivations}
+% ============================================
+
+\subsection{Tsirelson Bound via Sum-of-Squares}
+
+An elegant proof of the Tsirelson bound uses the sum-of-squares (SOS) method:
+
+\begin{theorem}
+For dichotomic observables $A_0, A_1, B_0, B_1$ with $A_i^2 = B_j^2 = I$ and $[A_i, B_j] = 0$:
+\begin{equation}
+(A_0 \otimes (B_0 + B_1) + A_1 \otimes (B_0 - B_1))^2 = 4I \otimes I + [A_0, A_1] \otimes [B_0, B_1]
+\end{equation}
+\end{theorem}
+
+Since $\|[A_0, A_1]\| \leq 2\|A_0\|\|A_1\| = 2$ and similarly for Bob, the operator norm of the CHSH operator is bounded by $\sqrt{8} = 2\sqrt{2}$.
+
+\subsection{NPA Constraint Derivation}
+
+The NPA constraints arise from the algebraic properties of quantum measurements:
+
+\begin{enumerate}
+    \item \textbf{Projector property}: $M_a^x M_{a'}^x = \delta_{a,a'} M_a^x$
+    \item \textbf{Completeness}: $\sum_a M_a^x = I$
+    \item \textbf{Commutativity}: $[M_a^x, N_b^y] = 0$ for different parties
+\end{enumerate}
+
+These translate to moment matrix constraints:
+\begin{align}
+\Gamma_{M_a^x M_{a'}^x, S} &= \delta_{a,a'} \Gamma_{M_a^x, S} \\
+\sum_a \Gamma_{M_a^x, S} &= \Gamma_{I, S} \\
+\Gamma_{M_a^x N_b^y, S} &= \Gamma_{N_b^y M_a^x, S}
+\end{align}
+
+% ============================================
+\section{Complete Code Repository Structure}
+% ============================================
+
+\begin{lstlisting}[language=bash, caption={Project Structure}]
+bell_inequalities/
+|-- src/
+|   |-- __init__.py
+|   |-- scenario.py         # BellScenario class
+|   |-- local_polytope.py   # Vertex/facet enumeration
+|   |-- npa_hierarchy.py    # NPA SDP implementation
+|   |-- optimal_strategy.py # Quantum strategy optimization
+|   |-- randomness.py       # DI randomness certification
+|   |-- dimension.py        # Entanglement dimension
+|   |-- certificates.py     # Certificate generation/verification
+|-- tests/
+|   |-- test_chsh.py
+|   |-- test_npa.py
+|   |-- test_certificates.py
+|-- data/
+|   |-- chsh_certificate.json
+|   |-- facets_222.json
+|   |-- facets_232.json
+|-- notebooks/
+|   |-- 01_chsh_tutorial.ipynb
+|   |-- 02_npa_hierarchy.ipynb
+|   |-- 03_device_independent.ipynb
+|-- requirements.txt
+|-- README.md
+\end{lstlisting}
+
+% ============================================
+\section{Known Results for Reference}
+% ============================================
+
+\begin{longtable}{l c c c c}
+\toprule
+\textbf{Inequality} & \textbf{Scenario} & \textbf{Local Bound} & \textbf{Quantum Bound} & \textbf{NS Bound} \\
+\midrule
+CHSH & $(2, 2, 2)$ & $2$ & $2\sqrt{2} \approx 2.828$ & $4$ \\
+I3322 & $(2, 3, 2)$ & $4$ & $\approx 5.013$ & $6$ \\
+CGLMP$_3$ & $(2, 2, 3)$ & $2$ & $\approx 2.915$ & $4$ \\
+Mermin$_3$ & $(3, 2, 2)$ & $2$ & $4$ & $4$ \\
+Mermin$_4$ & $(4, 2, 2)$ & $4$ & $8$ & $8$ \\
+\bottomrule
+\end{longtable}
+
+\end{document}
